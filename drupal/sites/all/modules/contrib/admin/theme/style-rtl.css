@@ -1,0 +1,177 @@
+body.admin { background:#eee url(page.png) 100% 0px repeat-y; }
+.limiter { padding:0px 180px 0px 20px; }
+
+/**
+ * Generic ============================================================
+ */
+#content ul li,
+#content dl dd,
+#content dl dl {
+  margin-left:0px;
+  margin-right:20px;
+  }
+
+/**
+ * Branding ===========================================================
+ */
+#branding h1.site-name {
+  left:auto;
+  right:20px;
+  }
+
+#branding div.right {
+  left:20px;
+  right:auto;
+  }
+
+#branding div.breadcrumb,
+#branding div.block,
+#branding div.block form div.form-item { float:right; }
+
+#branding div.block form input.form-text { margin-left:10px; }
+
+/**
+ * Breadcrumbs ========================================================
+ */
+div.breadcrumb a { padding:0px 0px 0px 10px; }
+
+/**
+ * Help ===============================================================
+ */
+a.help-toggle {
+  float:right;
+  margin:5px 0px 0px 10px;
+  }
+
+#help div.help-label { left:90%; }
+
+#help div.more-help-link { text-align:left; }
+
+/**
+ * Page title =========================================================
+ */
+#page-title h2.page-title { float:right; }
+
+#page-title a.subnav-toggle {
+  float:right;
+  margin-left:10px;
+  margin-right:0px;
+  }
+
+#page-title div.tools {
+  padding-left:10px;
+  float:left;
+  }
+
+/**
+ * Tabs ===============================================================
+ */
+ul.tabs li {
+  float:right;
+  padding-left:1px;
+  }
+
+ul.primary { float:left; }
+
+ul.tabs li a,
+ul.tabs li a:hover,
+ul.tabs li.active a,
+ul.tabs li.active a.active { float:right; }
+
+/**
+ * Page layout ========================================================
+ */
+#page {
+  padding-right:180px;
+  padding-left:0px;
+  }
+
+#primary-links {
+  right:20px;
+  left:0px;
+  }
+
+  #primary-links ul.links li a { padding:5px 5px 4px 0px; }
+
+  #primary-links ul.links li.active-trail a,
+  #primary-links ul.links li a.active {
+    background:#111 url(sprite.png) 0% -120px no-repeat;
+    }
+
+#secondary-links {
+  right:180px;
+  left:0px;
+  padding:10px 10px 0px 0px;
+  }
+
+#content ul.menu li,
+#content ul.menu li a,
+#secondary-links ul.links li,
+#secondary-links ul.links li a { float:right; }
+
+#content ul.menu li,
+#secondary-links ul.links li { padding:0px 0px 10px 10px; }
+
+#content ul.node-type-list li,
+#content ul.admin-list li {
+  padding-right:40px;
+  margin-right:0px;
+  }
+
+  #content ul.admin-list li a span.icon {
+    right:0px;
+    left:100%;
+    }
+
+  #content ul.node-type-list li {
+    padding-left:0px;
+    padding-right:0px;
+    background:transparent;
+    }
+
+/**
+ * Tables =============================================================
+ */
+table.system-status-report th { padding-right:30px; }
+
+/**
+ * Pagers =============================================================
+ */
+#content div.item-list ul.pager { padding-left:80px; }
+
+#content ul.pager li,
+#content ul.pager li a { float:right; }
+
+  #content ul.pager li { border-left:1px solid #ccc; }
+
+  #content ul.pager li.pager-next,
+  #content ul.pager li.pager-last {
+    border-right:1px solid #ccc;
+    border-left:0px;
+    float:left;
+    }
+
+  /* This whole portion is to accommodate the correct order of next/last pager links. */
+  #content ul.pager li.last { position:absolute; left:0px; right:100%; }
+
+/**
+ * Node forms =========================================================
+ */
+div.node-form div.left { float:right; }
+div.node-form div.right { float:left; }
+div.node-form div.main { padding-left:20px; }
+
+/**
+ * System =============================================================
+ */
+
+/* admin/content/node & admin/user/user */
+#content dl.multiselect,
+#content dl.multiselect dt,
+#content dl.multiselect dd { margin:0px 0px 0px 10px; }
+
+div.admin-options label,
+div.admin-options div.form-item {
+  margin-left:10px;
+  float:right;
+  }

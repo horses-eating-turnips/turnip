@@ -1,0 +1,14 @@
+<?php
+// $Id: coder_format.test,v 1.1.2.1 2008/01/19 19:21:17 sun Exp $
+
+/**
+ * @file
+ * This is a stub file to let SimpleTest module know of coder_format tests
+ * residing in scripts/coder_format/tests/.
+ */
+
+/**
+ * Load coder_format unit tests.
+ */
+require_once drupal_get_path('module', 'coder') .'/scripts/coder_format/tests/all.test';
+

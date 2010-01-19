@@ -1,0 +1,19 @@
+<?php
+// $Id: strongarm.install 891 2009-12-01 19:18:51Z jhedstrom $
+
+/**
+ * Implementation of hook_enable().
+ */
+function strongarm_enable() {
+  // Weight strongarm exceptionally light.
+  db_query("UPDATE {system} SET weight = -1000 WHERE name = 'strongarm' AND type = 'module'");
+}
+
+/**
+ * Update 6100: Weight strongarm exceptionally light.
+ */
+function strongarm_update_6100() {
+  $ret = array();
+  $ret[] = update_sql("UPDATE {system} SET weight = -1000 WHERE name = 'strongarm' AND type = 'module'");
+  return $ret;
+}

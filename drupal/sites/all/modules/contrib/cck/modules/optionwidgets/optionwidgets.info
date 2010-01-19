@@ -1,0 +1,12 @@
+; $Id: optionwidgets.info 891 2009-12-01 19:18:51Z jhedstrom $
+name = Option Widgets
+description = Defines selection, check box and radio button widgets for text and numeric fields.
+dependencies[] = content
+package = CCK
+core = 6.x
+; Information added by drupal.org packaging script on 2009-11-05
+version = "6.x-2.6"
+core = "6.x"
+project = "cck"
+datestamp = "1257464735"
+

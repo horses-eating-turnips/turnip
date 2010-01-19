@@ -1,0 +1,66 @@
+<?php
+// $Id: imagefield_tokens.module 844 2009-07-08 01:04:33Z jhedstrom $
+
+/**
+ * @file
+ */
+
+/**
+ * Return a list of supported CCK widgets.
+ */
+function _imagefield_tokens_support_list() {
+  return array(
+    'image_fupload_imagefield',
+    'imagefield',
+    'imagefield_crop',
+  );
+}
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function imagefield_tokens_form_alter(&$form, $form_state, $form_id) {
+  if (isset($form['widget_module']) && in_array($form['widget_module']['#value'], _imagefield_tokens_support_list())) {
+    $ifp = array(
+      'alt' => array(
+        'title' => 'ALT text',
+        'form_path' => &$form['widget']['alt_settings']
+      ),
+
+      'title' => array(
+        'title' => 'Title text',
+        'form_path' => &$form['widget']['title_settings']
+      ),
+    );
+
+    foreach ($ifp as $name => &$field) {
+      unset($field['form_path'][$name]['#suffix']);
+
+      $field['form_path'][$name .'_tokens'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('!title replacement patterns', array('!title' => $field['title'])),
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+        '#description' => theme_filefield_paths_token_help(),
+      );
+    }
+  }
+}
+
+/**
+ * Implementation of hook_filefield_paths_process_file().
+ */
+function imagefield_tokens_filefield_paths_process_file($new, &$file, $settings, $node, $update) {
+  if (in_array($file['widget'], _imagefield_tokens_support_list())) {
+    $orig = array(
+      'alt' => $file['field']['data']['alt'],
+      'title' => $file['field']['data']['title'],
+    );
+
+    $file['field']['data']['alt'] = filefield_paths_process_string($file['field']['data']['alt'], 'node', $node);
+    $file['field']['data']['alt'] = filefield_paths_process_string($file['field']['data']['alt'], 'field', array(0 => $file['field']));
+
+    $file['field']['data']['title'] = filefield_paths_process_string($file['field']['data']['title'], 'node', $node);
+    $file['field']['data']['title'] = filefield_paths_process_string($file['field']['data']['title'], 'field', array(0 => $file['field']));
+  }
+}

@@ -1,0 +1,118 @@
+<?php
+
+// $Id$
+
+/**
+ * @file SimpleTests for @custom site.
+ */
+
+module_load_include('test', 'simpletest_clone');
+
+/**
+ * Helper module for tests.
+ */
+class OsCustomHelperTestCase extends SimpleTestCloneTestCase {
+  /**
+   * When testing data-intensive sites, if the tests will still run correctly,
+   * tables can be excluded here. The structure will still be cloned, but the
+   * data will not be copied over.
+   */
+  function __construct($testId = NULL) {
+    parent::__construct($testId);
+    $this->excludeTables = array(
+      // List of tables to exclude goes here.
+    );
+  }
+
+
+  /**
+   * Create user with Web Admin role.
+   */
+  protected function drupalCreateWebAdmin() {
+    return $this->drupalCreateUserWithRole('web admin');
+  }
+
+  /**
+   * Create user with Site Editor role.
+   */
+  protected function drupalCreateSiteEditor() {
+    return $this->drupalCreateUserWithRole('site editor');
+  }
+
+}
+
+/**
+ * Tests for user role and access.
+ */
+class OsCustomUserRoles extends OsCustomHelperTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => t('User roles and access.'),
+      'description' => t('Proper roles and privileges.'),
+      'group' => t('OpenSourcery'),
+    );
+  }
+
+  function testUserRoles() {
+    $expected = array(
+      'site editor',
+      'web admin',
+      'anonymous user',
+      'authenticated user',
+    );
+    $results = db_query("SELECT * FROM {role}");
+    while ($role = db_fetch_object($results)) {
+      $this->assertTrue(in_array($role->name, $expected), t('Found role %role', array('%role' => $role->name)));
+      unset($expected[array_search($role->name, $expected)]);
+    }
+    foreach ($expected as $name) {
+      $this->fail(t('Unaccounted for role: %name', array('%name' => $name)));
+    }
+  }
+}
+
+/**
+ * Tests for confirming the site is structured properly.
+ */
+class OsCustomSiteMap extends OsCustomHelperTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => t('Site layout and navigation'),
+      'description' => t('Tests for site map and navigation.'),
+      'group' => t('OpenSourcery'),
+    );
+  }
+
+  function testSiteLayout() {
+    $web_admin = $this->drupalCreateWebAdmin();
+    $this->fail(t('test'));
+  }
+}
+
+/**
+ * Installation tests.
+ */
+class OsCustomInstallTestCase extends DrupalWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => t('Test OS Custom installation'),
+      'description' => t('Test the structure resulting from the installation of OS Custom.'),
+      'group' => t('OpenSourcery'),
+    );
+  }
+
+  function setUp() {
+    parent::setUp('better_formats', 'os_custom');
+  }
+
+  /**
+   * Test structure.
+   */
+  function testSiteStructure() {
+    $admin = $this->drupalCreateUser(array('administer nodes'));
+    $this->drupalLogin($admin);
+
+    $this->drupalGet('node/add/story');
+    $this->assertNoText(t('Story'), t('The story content type has been properly removed.'));
+  }
+}

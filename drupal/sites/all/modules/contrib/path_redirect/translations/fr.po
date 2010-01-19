@@ -1,0 +1,342 @@
+# French translation for drupal-path-redirect
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the drupal-path-redirect package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: drupal-path-redirect\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-01-27 13:29-0600\n"
+"PO-Revision-Date: 2009-02-16 22:52+0000\n"
+"Last-Translator: Narno <Unknown>\n"
+"Language-Team: French <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-02-16 22:56+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: path_redirect.admin.inc:14;78
+msgid "From"
+msgstr "Source"
+
+#: path_redirect.admin.inc:15;90
+msgid "To"
+msgstr "Destination"
+
+#: path_redirect.admin.inc:16
+msgid "Type"
+msgstr "Type"
+
+#: path_redirect.admin.inc:17
+msgid "Operations"
+msgstr "Opérations"
+
+#: path_redirect.admin.inc:30 path_redirect.module:45
+msgid "edit"
+msgstr "modifier"
+
+#: path_redirect.admin.inc:31
+msgid "delete"
+msgstr "supprimer"
+
+#: path_redirect.admin.inc:36
+msgid "No redirects have been added."
+msgstr "Aucune redirection n'a été ajoutée."
+
+#: path_redirect.admin.inc:40;59 path_redirect.module:89
+msgid "Add redirect"
+msgstr "Ajouter une redirection"
+
+#: path_redirect.admin.inc:79
+msgid ""
+"Enter a Drupal path or path alias to redirect. Fragment anchors "
+"<em>#foo</em> are <strong>not</strong> allowed."
+msgstr ""
+"Saisissez un chemin Drupal ou un alias à rediriger. Les ancres <em>#foo</em> "
+"ne sont <strong>pas</strong> autorisés."
+
+#: path_redirect.admin.inc:91
+msgid ""
+"Enter a Drupal path, path alias, or external URL to redirect to. Use %front "
+"to redirect to the front page. Enter (optional) queries after \"?\" and "
+"(optional) anchor after \"#\". Most redirects will not contain queries or "
+"fragment anchors."
+msgstr ""
+"Saisissez un chemin Drupal, un alias ou une URL externe vers laquelle "
+"rediriger. Utilisez %front pour rediriger vers la page d'accueil. Saisissez "
+"(optionnel) des paramètres après \"?\" et (optionnel) une ancre après \"#\". "
+"La plupart des redirections ne contiennent pas de paramètres ou d'ancres."
+
+#: path_redirect.admin.inc:129
+msgid "Redirect Type"
+msgstr "Type de redirection"
+
+#: path_redirect.admin.inc:145;244
+msgid ""
+"You can find more information about HTTP redirect status codes at <a "
+"href=\"@link\">@link</a>."
+msgstr ""
+"Vous trouverez d'avantage d'informations à propos des codes de statut de "
+"redirection HTTP via <a href=\"@link\">@link</a>."
+
+#: path_redirect.admin.inc:155
+msgid "Update redirect"
+msgstr "Mettre à jour la redirection"
+
+#: path_redirect.admin.inc:155
+msgid "Create new redirect"
+msgstr "Créer une nouvelle redirection"
+
+#: path_redirect.admin.inc:163
+msgid "You must enter a <strong>from</strong> path."
+msgstr "Vous devez saisir le chemin <strong>source</strong>."
+
+#: path_redirect.admin.inc:171
+msgid ""
+"The <strong>from</strong> path you entered is already redirected. You can <a "
+"href=\"@edit-page\">edit this redirect</a> instead."
+msgstr ""
+"Le chemin <strong>source</strong> que vous avez saisi est déjà redirigé. "
+"Néanmoins vous pouvez <a href=\"@edit-page\">éditer cette redirection</a>."
+
+#: path_redirect.admin.inc:175
+msgid "You cannot redirect from a fragment anchor."
+msgstr "Vous ne pouvez pas rediriger à partir d'une ancre."
+
+#: path_redirect.admin.inc:179
+msgid ""
+"The redirect <strong>from</strong> path does not appear valid. This must be "
+"a local Drupal path."
+msgstr ""
+"Le chemin <strong>source</strong> ne semble pas valide. Ce doit être un "
+"chemin local de Drupal."
+
+#: path_redirect.admin.inc:188
+msgid "The redirect <strong>to</strong> path does not appear valid."
+msgstr "Le chemin de <strong>destination</strong> ne semble pas valide."
+
+#: path_redirect.admin.inc:197
+msgid ""
+"You are attempting to redirect the page to itself. This will result in an "
+"infinite loop."
+msgstr ""
+"Vous tentez de rediriger une page vers elle même. Cela provoquera une "
+"redirection infinie."
+
+#: path_redirect.admin.inc:206
+msgid "Redirect has been saved."
+msgstr "La redirection à été enregistrée."
+
+#: path_redirect.admin.inc:217
+msgid "Are you sure you want to delete the redirect from %path to %redirect?"
+msgstr ""
+"Etes-vous sûre de vouloir supprimer la redirection %path vers %redirect ?"
+
+#: path_redirect.admin.inc:224
+msgid "The redirect has been deleted."
+msgstr "La redirection à été supprimé."
+
+#: path_redirect.admin.inc:231
+msgid "Display a warning message to users when they are redirected."
+msgstr ""
+"Afficher un message d'alerte aux utilisateurs lorsqu'ils sont redirigés."
+
+#: path_redirect.admin.inc:237
+msgid "Allow users to bypass redirects by adding %code to the URL."
+msgstr ""
+"Autoriser les utilisateurs à outrepasser les redirections en ajoutant %code "
+"à l'URL."
+
+#: path_redirect.admin.inc:243
+msgid "Default redirect status"
+msgstr "Statut de redirection par défaut"
+
+#: path_redirect.admin.inc:261
+msgid "300 Multiple Choices"
+msgstr "300 Choix Multiples"
+
+#: path_redirect.admin.inc:262
+msgid ""
+"The request is ambiguous and needs clarification as to which resource was "
+"requested."
+msgstr ""
+"La requête est ambiguë and nécessite une clarification quant aux ressources "
+"qui ont été demandées."
+
+#: path_redirect.admin.inc:265
+msgid "301 Moved Permanently"
+msgstr "301 Redirection Permanente"
+
+#: path_redirect.admin.inc:266
+msgid ""
+"Moved Permanently. The resource has permanently moved elsewhere, the "
+"response indicates where it has gone to. <strong>Recommended.</strong>"
+msgstr ""
+"Redirection Permanente. La ressource a été déplacée de manière définitive "
+"d'ailleurs, la réponse indique où il est allé. <strong> Recommandé </ "
+"strong>."
+
+#: path_redirect.admin.inc:269
+msgid "302 Found"
+msgstr "302 Trouvé"
+
+#: path_redirect.admin.inc:270
+msgid ""
+"The resource has temporarily moved elsewhere, the response indicates where "
+"it is at present. <strong>This is Drupal's default redirect type.</strong>"
+msgstr ""
+"La ressource a été temporairement déplacée ailleurs, la réponse indique où "
+"il est à l'heure actuelle. <strong>C'est le type de redirection par défaut "
+"de Drupal.</ strong>"
+
+#: path_redirect.admin.inc:273
+msgid "303 See Other"
+msgstr "303 Voir Ailleurs"
+
+#: path_redirect.admin.inc:274
+msgid ""
+"See Other/Redirect. A preferred alternative source should be used at present."
+msgstr ""
+"Voir Ailleurs. Une alternative qui devrait être privilégiée à l'heure "
+"actuelle."
+
+#: path_redirect.admin.inc:277
+msgid "304 Not Modified"
+msgstr "304 Non Modifié"
+
+#: path_redirect.admin.inc:278
+msgid ""
+"The server has identified from the request information that the client's "
+"copy of the information is up-to-date and the requested information does not "
+"need to be sent again."
+msgstr ""
+"Le serveur a identifié à partir de la demande d'informations que le client "
+"de la copie de l'information est à jour et l'information demandée ne doit "
+"pas être envoyé à nouveau."
+
+#: path_redirect.admin.inc:281
+msgid "305 Use Proxy"
+msgstr "305 Utilise un Proxy"
+
+#: path_redirect.admin.inc:282
+msgid "The request must be sent through the indicated proxy server."
+msgstr ""
+"La demande doit être envoyée par l'intermédiaire du serveur proxy indiqué."
+
+#: path_redirect.admin.inc:285
+msgid "307 Temporary Redirect"
+msgstr "307 Redirection Temporaire"
+
+#: path_redirect.admin.inc:286
+msgid ""
+"The resource has temporarily moved elsewhere, the response indicates where "
+"it is at present. Client should still use this URL."
+msgstr ""
+"La ressource a été temporairement déplacée ailleurs, la réponse indique où "
+"il est à l'heure actuelle. Client doit toujours utiliser cette URL."
+
+#: path_redirect.module:10
+msgid ""
+"Here you can set up URL redirecting for this site. Any existing or non-"
+"existing path within this site can redirect to any internal or external URL."
+msgstr ""
+"Ici, vous pouvez mettre en place des redirections pour ce site. Tout chemin "
+"existant ou non existant au sein de ce site peuvent rediriger vers une URL "
+"interne ou externe."
+
+#: path_redirect.module:13
+msgid ""
+"The <strong>from</strong> path must be an internal Drupal path in the form "
+"of 'node/123', 'admin/reports', or 'taxonomy/term/123'. The "
+"<strong>to</strong> path can be either an internal Drupal path as above or a "
+"complete external URL such as http://www.example.com/. Furthermore, the "
+"<strong>to</strong> path may contain query arguments (such as 'page=2') and "
+"fragment anchors, to make it possible to redirect to "
+"'admin/user?page=1#help'. Most redirects will not contain queries or anchors."
+msgstr ""
+"La chemin <strong>source</ strong> doit être un chemin interne à Drupal sous "
+"la forme de \"node/123\", \"admin/reports\" ou \"taxonomy/term/123\". Le "
+"chemin de <strong>destination</ strong> peut être soit un chemin interne à "
+"Drupal comme ci-dessus ou une URL externe, telle que "
+"http://www.exemple.com/. En outre, le chemin de <strong>destination</ "
+"strong> peut contenir des paramètres (par exemple \"page=2\") et des ancres, "
+"pour qu'il soit possible de rediriger vers \"admin/user?page=1#help\". La "
+"plupart des redirections ne contiennent pas de paramètres ou d'ancres."
+
+#: path_redirect.module:49
+msgid "This page has been redirected to <a href=\"@redirect\">@redirect</a>."
+msgstr "Cette page à été redirigée vers <a href=\"@redirect\">@redirect</a>."
+
+#: path_redirect.module:52
+msgid ""
+"This page has been moved to <a href=\"@redirect\">@redirect</a> and will "
+"redirect in 5 seconds. You may want to update your bookmarks."
+msgstr ""
+"Cette page à déplacée vers <a href=\"@redirect\">@redirect</a> et vous serez "
+"redirigé dans 5 secondes. Vous devriez mettre à jour vos favoris."
+
+#: path_redirect.module:45;0
+msgid "path_redirect"
+msgstr "path_redirect"
+
+#: path_redirect.module:45
+msgid ""
+"Redirect to <code>%redirect</code> is causing an infinite loop; redirect "
+"cancelled."
+msgstr ""
+"La redirection <code>%redirect</code> provoque une redirection infinie. "
+"Redirection annulée."
+
+#: path_redirect.module:130
+msgid "administer redirects"
+msgstr "Administrer les redirections"
+
+#: path_redirect.module:75;116
+msgid "URL redirects"
+msgstr "URL redirigées"
+
+#: path_redirect.module:76
+msgid "Redirect users from one URL to another"
+msgstr "Rediriger les utilisateurs d'une URL vers une autre"
+
+#: path_redirect.module:82
+msgid "List"
+msgstr "Liste"
+
+#: path_redirect.module:83
+msgid "List all URL redirects"
+msgstr "Liste de toutes les URL redirigées"
+
+#: path_redirect.module:90
+msgid "Add a new URL redirect"
+msgstr "Ajouter une nouvelle redirection"
+
+#: path_redirect.module:98
+msgid "Edit"
+msgstr "Modifier"
+
+#: path_redirect.module:99
+msgid "Edit an existing URL redirect"
+msgstr "Modifier une redirection d'URL"
+
+#: path_redirect.module:107
+msgid "Delete redirect"
+msgstr "Supprimer une redirection"
+
+#: path_redirect.module:108
+msgid "Delete an existing URL redirect"
+msgstr "Supprimer une URL existante"
+
+#: path_redirect.module:117
+msgid "Configure behavior for URL redirects"
+msgstr "Configurer le comportement des redirections d'URL"
+
+#: path_redirect.info:0
+msgid "Path redirect"
+msgstr "Path redirect"
+
+#: path_redirect.info:0
+msgid "Redirect users from one URL to another."
+msgstr "Redirige les utilisateurs d'une URL vers une autre."

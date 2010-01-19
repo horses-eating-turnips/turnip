@@ -1,0 +1,10 @@
+// $Id: CHANGELOG.txt 844 2009-07-08 01:04:33Z jhedstrom $
+
+ImageField Tokens 6.x-1.x-dev, xxxx-xx-xx (development release)
+-------------------------------------
+
+
+ImageField Tokens 6.x-1.0, 2009-05-02
+-------------------------------------
+
+- Initial 6.x release

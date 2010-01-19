@@ -1,0 +1,90 @@
+; $Id: zen.info 5 2009-06-10 01:11:31Z jhedstrom $
+
+
+  ; The name and description of the theme used on the admin/build/themes page.
+name        = Zen
+description = The ultimate starting theme for Drupal 6.
+
+  ; The screenshot used on the admin/build/themes page.
+screenshot = screenshot.png
+
+  ; "core" specifies the version of Drupal that this theme is compatible with.
+  ; "engine" specifies that this is a theme that uses the phptemplate engine,
+  ; Drupal's default theme engine. Its unlikely you will ever need to change
+  ; these, but they are required fields for a phptemplate theme.
+core   = 6.x
+engine = phptemplate
+
+  ; This section adds CSS files to your theme. The media type is specified in
+  ; the brackets. Typical CSS media types include "all", "screen", "print", and
+  ; "handheld". See http://www.w3.org/TR/CSS21/media.html#media-types for a full
+  ; list of stylesheet media types in CSS 2.1.
+  ;
+  ; You can also override any of Zen's stylesheets or any module's stylesheets,
+  ; an /extremely/ useful feature. See the excellent Drupal 6 Theme Guide at
+  ; http://drupal.org/node/171209 for more details.
+stylesheets[all][]   = html-elements.css
+stylesheets[all][]   = tabs.css
+stylesheets[all][]   = messages.css
+stylesheets[all][]   = block-editing.css
+stylesheets[all][]   = wireframes.css
+stylesheets[all][]   = zen.css
+stylesheets[print][] = print.css
+
+  ; The layout CSS files are added by Zen's template.php file (based on its
+  ; theme settings,) so we don't need to add them here. But if we did, it would
+  ; look like this:
+  ;   stylesheets[all][] = layout.css
+  ;   stylesheets[all][] = layout-liquid.css
+
+  ; Set the conditional stylesheets that are processed by IE.
+conditional-stylesheets[if IE][all][] = ie.css
+
+  ; The regions defined in Zen's default page.tpl.php file.  The name in
+  ; brackets is the name of the variable in the page.tpl.php file, (e.g.
+  ; "[content_top]" in the .info file means there should be a $content_top
+  ; variable in the page.tpl.php file.) The text after the equals sign is a
+  ; descriptive text used on the admin/build/blocks page.
+regions[left]           = left sidebar
+regions[right]          = right sidebar
+regions[navbar]         = navigation bar
+regions[content_top]    = content top
+regions[content_bottom] = content bottom
+regions[header]         = header
+regions[footer]         = footer
+regions[closure_region] = closure
+
+  ; Various page elements output by the theme can be toggled on and off. The
+  ; "features" control which of these check boxes display on the
+  ; admin/build/themes config page. This is useful for suppressing check boxes
+  ; for elements not used by your sub-theme. To suppress a check box, omit the
+  ; entry for it below. See the Drupal 6 Theme Guide for more info:
+  ; http://drupal.org/node/171205#features
+features[] = logo
+features[] = name
+features[] = slogan
+features[] = mission
+features[] = node_user_picture
+features[] = comment_user_picture
+features[] = search
+features[] = favicon
+features[] = primary_links
+features[] = secondary_links
+
+  ; Set the default settings to be used in theme-settings.php
+settings[zen_block_editing]        = 1
+settings[zen_breadcrumb]           = yes
+settings[zen_breadcrumb_separator] = ' › '
+settings[zen_breadcrumb_home]      = 1
+settings[zen_breadcrumb_trailing]  = 1
+settings[zen_breadcrumb_title]     = 0
+settings[zen_layout]               = border-politics-liquid
+settings[zen_rebuild_registry]     = 0
+settings[zen_wireframes]           = 0
+
+; Information added by drupal.org packaging script on 2009-02-13
+version = "6.x-1.0"
+core = "6.x"
+project = "zen"
+datestamp = "1234555897"
+

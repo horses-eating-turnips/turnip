@@ -1,0 +1,70 @@
+/* $Id: theme-settings.css 5 2009-06-10 01:11:31Z jhedstrom $ */
+
+/*
+ * THEME SETTINGS STYLES
+ *
+ * This file is only loaded on the Theme Settings page for Zen and its
+ * subthemes: admin/build/themes/settings
+ */
+
+
+  #zen-settings fieldset .form-item
+  {
+    padding-left: 200px;
+  }
+
+  #zen-settings fieldset .form-checkboxes .form-item,
+  #zen-settings fieldset .form-radios .form-item
+  {
+    padding-left: 0;
+  }
+
+  #zen-settings fieldset .form-item label
+  {
+    float: left;
+    width: 190px;
+    margin-left: -200px;
+    margin-right: 10px;
+    text-align: right;
+    _display: inline-block; /* IE6 is dumb. */
+  }
+
+  #zen-settings fieldset .form-item label.option
+  {
+    float: none;
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+  }
+
+  #div-zen-registry,
+  #div-zen-wireframes
+  {
+    margin: 1em 0;
+  }
+
+  #div-zen-registry strong,
+  #div-zen-wireframes strong
+  {
+    float: left;
+    width: 190px;
+    margin-left: 0;
+    margin-right: 10px;
+    text-align: right;
+  }
+
+  #div-zen-registry fieldset .form-item,
+  #div-zen-wireframes fieldset .form-item
+  {
+    display: inline;
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  #div-zen-registry fieldset .form-item .description,
+  #div-zen-wireframes fieldset .form-item .description
+  {
+    display: block;
+    margin-left: 200px;
+  }

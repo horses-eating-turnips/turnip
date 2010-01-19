@@ -1,0 +1,11 @@
+; $Id: strongarm.info 891 2009-12-01 19:18:51Z jhedstrom $
+name = "Strongarm"
+description = "Enforces variable values defined by modules that need settings set to operate properly."
+core = "6.x"
+
+; Information added by drupal.org packaging script on 2009-11-18
+version = "6.x-1.1"
+core = "6.x"
+project = "strongarm"
+datestamp = "1258571187"
+

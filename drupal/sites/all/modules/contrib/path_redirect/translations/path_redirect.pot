@@ -1,0 +1,348 @@
+# $Id: path_redirect.pot,v 1.1.2.9 2009/03/15 10:32:40 hass Exp $
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  path_redirect.admin.inc,v 1.1.2.41 2009/03/15 10:02:55 hass
+#  path_redirect.module,v 1.3.2.7.2.45 2009/03/15 07:25:25 davereid
+#  path_redirect.info,v 1.1.2.3.2.6 2009/01/27 17:37:53 davereid
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2009-03-15 11:07+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: path_redirect.admin.inc:17;91
+msgid "From"
+msgstr ""
+
+#: path_redirect.admin.inc:18;105
+msgid "To"
+msgstr ""
+
+#: path_redirect.admin.inc:19
+msgid "Type"
+msgstr ""
+
+#: path_redirect.admin.inc:20
+msgid "Operations"
+msgstr ""
+
+#: path_redirect.admin.inc:23;145
+msgid "Language"
+msgstr ""
+
+#: path_redirect.admin.inc:38 path_redirect.module:192;55
+msgid "Edit"
+msgstr ""
+
+#: path_redirect.admin.inc:39
+msgid "Delete"
+msgstr ""
+
+#: path_redirect.admin.inc:49;461
+msgid "No redirects available."
+msgstr ""
+
+#: path_redirect.admin.inc:71 path_redirect.module:46
+msgid "Add redirect"
+msgstr ""
+
+#: path_redirect.admin.inc:92
+msgid "Enter an interal Drupal path or path alias to redirect (e.g. %example1 or %example2). Fragment anchors (e.g. %anchor) are <strong>not</strong> allowed."
+msgstr ""
+
+#: path_redirect.admin.inc:106
+msgid "Enter an interal Drupal path, path alias, or complete external URL (like http://example.com/) to redirect to. Use %front to redirect to the front page. Enter (optional) queries after \"?\" and (optional) anchor after \"#\". Most redirects will not contain queries or fragment anchors."
+msgstr ""
+
+#: path_redirect.admin.inc:146
+msgid "All languages"
+msgstr ""
+
+#: path_redirect.admin.inc:148
+msgid "A redirect set for a specific language will always be used when requesting this page in that language, and takes precedence over redirects set for <em>All languages</em>."
+msgstr ""
+
+#: path_redirect.admin.inc:157
+msgid "Advanced options"
+msgstr ""
+
+#: path_redirect.admin.inc:170
+msgid "Redirect status"
+msgstr ""
+
+#: path_redirect.admin.inc:171;283
+msgid "You can find more information about HTTP redirect status codes at <a href=\"@link\">@link</a>."
+msgstr ""
+
+#: path_redirect.admin.inc:177
+msgid "Save"
+msgstr ""
+
+#: path_redirect.admin.inc:178
+msgid "Cancel"
+msgstr ""
+
+#: path_redirect.admin.inc:187
+msgid "You cannot redirect from a fragment anchor."
+msgstr ""
+
+#: path_redirect.admin.inc:195
+msgid "The <strong>from</strong> path you entered is already redirected. You can <a href=\"@edit-page\">edit this redirect</a> instead."
+msgstr ""
+
+#: path_redirect.admin.inc:203
+msgid "The redirect <strong>to</strong> path does not appear valid."
+msgstr ""
+
+#: path_redirect.admin.inc:212
+msgid "You are attempting to redirect the page to itself. This will result in an infinite loop."
+msgstr ""
+
+#: path_redirect.admin.inc:221
+msgid "Redirect has been saved."
+msgstr ""
+
+#: path_redirect.admin.inc:231
+msgid "Are you sure you want to delete the redirect from %path to %redirect?"
+msgstr ""
+
+#: path_redirect.admin.inc:238
+msgid "The redirect has been deleted."
+msgstr ""
+
+#: path_redirect.admin.inc:250
+msgid "Display a warning message to users when they are redirected."
+msgstr ""
+
+#: path_redirect.admin.inc:256
+msgid "Allow users to bypass redirects by adding %code to the URL."
+msgstr ""
+
+#: path_redirect.admin.inc:262
+msgid "Automatically create redirects when URL aliases are changed."
+msgstr ""
+
+#: path_redirect.admin.inc:269
+msgid "Discard redirects that have not been accessed for"
+msgstr ""
+
+#: path_redirect.admin.inc:271
+msgid "Never (do not discard)"
+msgstr ""
+
+#: path_redirect.admin.inc:282
+msgid "Default redirect status"
+msgstr ""
+
+#: path_redirect.admin.inc:297
+msgid "300 Multiple Choices"
+msgstr ""
+
+#: path_redirect.admin.inc:298
+msgid "The request is ambiguous and needs clarification as to which resource was requested."
+msgstr ""
+
+#: path_redirect.admin.inc:301
+msgid "301 Moved Permanently"
+msgstr ""
+
+#: path_redirect.admin.inc:302
+msgid "Moved Permanently. The resource has permanently moved elsewhere, the response indicates where it has gone to. <strong>Recommended.</strong>"
+msgstr ""
+
+#: path_redirect.admin.inc:305
+msgid "302 Found"
+msgstr ""
+
+#: path_redirect.admin.inc:306
+msgid "The resource has temporarily moved elsewhere, the response indicates where it is at present. <strong>This is Drupal's default redirect type.</strong>"
+msgstr ""
+
+#: path_redirect.admin.inc:309
+msgid "303 See Other"
+msgstr ""
+
+#: path_redirect.admin.inc:310
+msgid "See Other/Redirect. A preferred alternative source should be used at present."
+msgstr ""
+
+#: path_redirect.admin.inc:313
+msgid "304 Not Modified"
+msgstr ""
+
+#: path_redirect.admin.inc:314
+msgid "The server has identified from the request information that the client's copy of the information is up-to-date and the requested information does not need to be sent again."
+msgstr ""
+
+#: path_redirect.admin.inc:317
+msgid "305 Use Proxy"
+msgstr ""
+
+#: path_redirect.admin.inc:318
+msgid "The request must be sent through the indicated proxy server."
+msgstr ""
+
+#: path_redirect.admin.inc:321
+msgid "307 Temporary Redirect"
+msgstr ""
+
+#: path_redirect.admin.inc:322
+msgid "The resource has temporarily moved elsewhere, the response indicates where it is at present. Client should still use this URL."
+msgstr ""
+
+#: path_redirect.admin.inc:369
+msgid "Upload import file"
+msgstr ""
+
+#: path_redirect.admin.inc:374
+msgid "File format"
+msgstr ""
+
+#: path_redirect.admin.inc:376
+msgid "Auto detect"
+msgstr ""
+
+#: path_redirect.admin.inc:377;469
+msgid "CSV (Tab-delimited)"
+msgstr ""
+
+#: path_redirect.admin.inc:378;470
+msgid "XML"
+msgstr ""
+
+#: path_redirect.admin.inc:385
+msgid "Mode"
+msgstr ""
+
+#: path_redirect.admin.inc:386
+msgid "What action should be taken when there are duplicate redirects?"
+msgstr ""
+
+#: path_redirect.admin.inc:388
+msgid "Redirects in the uploaded file replace existing ones, new ones are added."
+msgstr ""
+
+#: path_redirect.admin.inc:389
+msgid "Existing redirects are kept, only new redirects are added."
+msgstr ""
+
+#: path_redirect.admin.inc:395
+msgid "Import"
+msgstr ""
+
+#: path_redirect.admin.inc:421
+msgid "Could not determine the correct file type. Please select the file format manually and check the import file."
+msgstr ""
+
+#: path_redirect.admin.inc:431
+msgid "Could not import file."
+msgstr ""
+
+#: path_redirect.admin.inc:435
+msgid "Import file not found."
+msgstr ""
+
+#: path_redirect.admin.inc:467
+msgid "Export format"
+msgstr ""
+
+#: path_redirect.admin.inc:477 path_redirect.module:92
+msgid "Export"
+msgstr ""
+
+#: path_redirect.admin.inc:549
+msgid "This option requires PHP 5.1."
+msgstr ""
+
+#: path_redirect.module:11
+msgid "Here you can set up URL redirecting for this site. Any existing or non-existing path within this site can redirect to any internal or external URL."
+msgstr ""
+
+#: path_redirect.module:196
+msgid "This page has been moved to <a href=\"@redirect\">@redirect</a>."
+msgstr ""
+
+#: path_redirect.module:200
+msgid "This page has been moved to <a href=\"@redirect\">@redirect</a>. You will be automatically redirected in 10 seconds."
+msgstr ""
+
+#: path_redirect.module:370;371
+msgid "Default variable for %variable not found."
+msgstr ""
+
+#: path_redirect.module:192;371;0
+msgid "path_redirect"
+msgstr ""
+
+#: path_redirect.module:192
+msgid "Redirect to <code>%redirect</code> is causing an infinite loop; redirect cancelled."
+msgstr ""
+
+#: path_redirect.module:138
+msgid "Removed 1 inactive redirect from the database."
+msgid_plural "Removed @count inactive redirects from the database."
+msgstr[0] ""
+msgstr[1] ""
+
+#: path_redirect.module:23
+msgid "administer redirects"
+msgstr ""
+
+#: path_redirect.module:32
+msgid "URL redirects"
+msgstr ""
+
+#: path_redirect.module:33 path_redirect.info:0
+msgid "Redirect users from one URL to another."
+msgstr ""
+
+#: path_redirect.module:39
+msgid "List"
+msgstr ""
+
+#: path_redirect.module:40
+msgid "List all URL redirects."
+msgstr ""
+
+#: path_redirect.module:47
+msgid "Add a new URL redirect."
+msgstr ""
+
+#: path_redirect.module:56
+msgid "Edit an existing URL redirect."
+msgstr ""
+
+#: path_redirect.module:64
+msgid "Delete redirect"
+msgstr ""
+
+#: path_redirect.module:65
+msgid "Delete an existing URL redirect."
+msgstr ""
+
+#: path_redirect.module:73
+msgid "Settings"
+msgstr ""
+
+#: path_redirect.module:74
+msgid "Configure behavior for URL redirects."
+msgstr ""
+
+#: path_redirect.module:93
+msgid "Export URL redirects."
+msgstr ""
+
+#: path_redirect.info:0
+msgid "Path redirect"
+msgstr ""
+

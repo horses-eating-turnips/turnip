@@ -1,0 +1,235 @@
+<?php
+
+// $Id: simpletest_clone.test,v 1.1.2.2 2009/12/02 17:55:42 jhedstrom Exp $
+
+/**
+ * @file
+ * Helper test case for cloning an existing Drupal configuration.
+ */
+
+/**
+ * Clone existing Drupal instance.
+ */
+class SimpleTestCloneTestCase extends DrupalWebTestCase {
+
+  /**
+   * Tables listed in this array will not have data copied, only table
+   * structure. This is so that sites with large amounts of data can still be
+   * tested to a certain extent, without having the tests run on forever while
+   * the tables are copied over.
+   */
+  protected $excludeTables = array();
+
+  /**
+   * String to check for verifying a user is logged in.
+   */
+  protected $_authenticated_user_text;
+
+  /**
+   * Don't create test db via install, instead copy existing db.
+   */
+  function setUp() {
+    // BEGIN BLOCK FROM DrupalWebTestCase::setUp().
+    global $db_prefix, $user;
+
+    // Store necessary current values before switching to prefixed database.
+    $this->originalPrefix = $db_prefix;
+    $clean_url_original = variable_get('clean_url', 0);
+    // END BLOCK FROM DrupalWebTestCase::setUp()
+
+    // Get the schema, being sure to rebuild it
+    $schemas = drupal_get_schema(NULL, TRUE);
+
+    // Generate temporary prefixed database to ensure that tests have a clean starting point.
+    $db_prefix = 'simpletest' . mt_rand(1000, 1000000);
+
+    // Copy each table into new database.
+    foreach ($schemas as $name => $schema) {
+      $this->cloneTable($name, $schema);
+    }
+
+    // If it isn't set, set the authenticated user text to check for
+    // to the same as the parent method.
+    if (!isset($this->_authenticated_user_text)) {
+      $this->_authenticated_user_text = t('Log out');
+    }
+
+    // BEGIN BLOCK FROM DrupalWebTestCase::setUp().
+    // Because the schema is static cached, we need to flush
+    // it between each run. If we don't, then it will contain
+    // stale data for the previous run's database prefix and all
+    // calls to it will fail.
+    drupal_get_schema(NULL, TRUE);
+
+    // Rebuild caches.
+    actions_synchronize();
+    _drupal_flush_css_js();
+    $this->refreshVariables();
+    $this->checkPermissions(array(), TRUE);
+
+    // Log in with a clean $user.
+    $this->originalUser = $user;
+    session_save_session(FALSE);
+    $user = user_load(array('uid' => 1));
+
+    // Restore necessary variables.
+    //    variable_set('install_profile', 'default');
+    //    variable_set('install_task', 'profile-finished');
+    //    variable_set('clean_url', $clean_url_original);
+    //    variable_set('site_mail', 'simpletest@example.com');
+
+    // Use temporary files directory with the same prefix as database.
+    $this->originalFileDirectory = file_directory_path();
+    variable_set('file_directory_path', file_directory_path() . '/' . $db_prefix);
+    $directory = file_directory_path();
+    file_check_directory($directory, FILE_CREATE_DIRECTORY); // Create the files directory.
+    set_time_limit($this->timeLimit);
+    // END BLOCK FROM DrupalWebTestCase::setUp().
+  }
+
+
+  /**
+   * Need to override DrupalWebTestCase's tearDown() which rebuilds
+   * module_list() in bootstrap mode and will cause things like
+   * drupal_get_schema() to only think devel modules are loaded.  Put it back
+   * into run mode.
+   */
+  function tearDown() {
+    parent::tearDown();
+    module_list(TRUE, FALSE);
+  }
+
+
+  /**
+   * Correctly prefix a table name.
+   *
+   * This code is based off of core's db_prefix_tables().
+   *
+   * @param $db_prefix
+   *   Mixed array or string with prefixes.
+   * @param $name
+   *   String with the table name.
+   * @return
+   *   String with prefixed table name.
+   */
+  protected function prefixTable($db_prefix, $name) {
+    if (is_array($db_prefix)) {
+      if (array_key_exists($name, $db_prefix)) {
+        return $db_prefix[$name] . $name;
+      }
+      elseif (array_key_exists('default', $db_prefix)) {
+        return $db_prefix['default'] . $name;
+      }
+      return $name;
+    }
+    return $db_prefix . $name;
+  }
+
+  /**
+   * Mirror over an existing tables structure, and copy the data.
+   *
+   * @param $name
+   *   Table name.
+   * @param $schema
+   *   A Schema API definition array.
+   * @return
+   *   Array of table creation results.
+   */
+  protected function cloneTable($name, $schema) {
+    global $db_prefix;
+
+    $return = array();
+    db_create_table($return, $name, $schema);
+
+    // Do our own prefixing of the table names.
+    $source = db_escape_table($this->prefixTable($this->originalPrefix, $name));
+    $target = db_escape_table($this->prefixTable($db_prefix, $name));
+    if (!in_array($name, $this->excludeTables)) {
+      if ($name == 'users') {
+        // UID = 0 confuses mysql. Special handling here, taken from system.install
+        db_query("INSERT INTO %s (uid, name, pass, mail, mode, sort, threshold, theme, signature, created, access, login, status, timezone, language, picture, init, data)
+        SELECT uid + 1, name, pass, mail, mode, sort, threshold, theme, signature, created, access, login, status, timezone, language, picture, init, data FROM %s ORDER BY uid", $target, $source);
+        // Update uid
+        db_query("UPDATE %s SET uid = uid - 1", $target);
+      }
+      else {
+        db_query("INSERT INTO %s SELECT * FROM %s", $target, $source);
+      }
+    }
+  }
+
+  /**
+   * Create user with Web Admin role.
+   *
+   * @param string $role
+   *   An existing Drupal user role to assign to the newly created user.
+   * @return object
+   *   A Drupal user object.
+   */
+  protected function drupalCreateUserWithRole($role) {
+    $rid = $this->_getRoleId($role);
+    if ($rid) {
+      $user = $this->drupalCreateUser(array('access content'));
+      $edit['roles'] = array($rid => $rid);
+      $account = user_save($user, $edit);
+      $account->pass_raw = $user->pass_raw;
+      return $account;
+    }
+  }
+
+  /**
+   * Create normal user.
+   */
+  protected function drupalCreateNormalUser() {
+    $user = $this->drupalCreateUser(array('access content'));
+    $edit['roles'] = array();
+    $account = user_save($user, $edit);
+    $account->pass_raw = $user->pass_raw;
+    return $account;
+  }
+
+  /**
+   * Override drupalLogin method to allow for custom string checking
+   * (parent method hard-codes the text 'Log out' as the check for
+   * authentication).
+   * @param $user
+   *   User object representing the user to login.
+   */
+  protected function drupalLogin(stdClass $user) {
+    if ($this->loggedInUser) {
+      $this->drupalLogout();
+    }
+
+    $edit = array(
+      'name' => $user->name,
+      'pass' => $user->pass_raw
+    );
+    $this->drupalPost('user', $edit, t('Log in'));
+
+    // If a "log out" link appears on the page, it is almost certainly because
+    // the login was successful.
+    $pass = $this->assertLink($this->_authenticated_user_text, 0, t('User %name successfully logged in.', array('%name' => $user->name)), t('User login'));
+
+    if ($pass) {
+      $this->loggedInUser = $user;
+    }
+  }
+
+
+  /**
+   * Find the role ID for a given role name.
+   *
+   * @param string $name
+   *   The role name
+   * @return integer
+   *   The corresponding role ID.
+   */
+  private function _getRoleId($name) {
+    $rid = db_result(db_query("SELECT rid FROM {role} WHERE name = '%s'", array(':name' => $name)));
+    if (!$rid) {
+      $this->fail(t('No corresponding rid found for the %role role.', array('%role' => $name)));
+      return FALSE;
+    }
+    return $rid;
+  }
+}

@@ -1,0 +1,7 @@
+; $Id: os_help.info 878 2009-08-27 21:25:19Z jhedstrom $
+name = OpenSourcery Inline Help
+description = Ties in the advanced help icons for the generated help documents.
+dependencies[] = advanced_help
+stylesheets[all][] = os_help.css
+core = 6.x
+package = OpenSourcery

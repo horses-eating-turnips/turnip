@@ -1,0 +1,7 @@
+$Id: CHANGELOG.txt 42 2009-06-16 20:08:13Z jhedstrom $
+
+2009-03-20
+----------
+- Install hook now enables 2 new roles (site editor and web admin),
+  creates sensible default permissions for them, and sets the default
+  input format to Full HTML

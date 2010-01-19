@@ -1,0 +1,12 @@
+; $Id: text.info 891 2009-12-01 19:18:51Z jhedstrom $
+name = Text
+description = Defines simple text field types.
+dependencies[] = content
+package = CCK
+core = 6.x
+; Information added by drupal.org packaging script on 2009-11-05
+version = "6.x-2.6"
+core = "6.x"
+project = "cck"
+datestamp = "1257464735"
+

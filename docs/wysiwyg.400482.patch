@@ -1,0 +1,54 @@
+Index: editors/js/tinymce-3.js
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/wysiwyg/editors/js/tinymce-3.js,v
+retrieving revision 1.16
+diff -u -p -r1.16 tinymce-3.js
+--- editors/js/tinymce-3.js	15 May 2009 15:06:06 -0000	1.16
++++ editors/js/tinymce-3.js	13 Jun 2009 00:43:11 -0000
+@@ -185,16 +185,22 @@ Drupal.wysiwyg.editor.instance.tinymce =
+       img: { 'class': 'mceItem' }
+     };
+     var $content = $('<div>' + content + '</div>'); // No .outerHTML() in jQuery :(
+-    jQuery.each(specialProperties, function(element, properties) {
+-      $content.find(element).each(function() {
+-        for (var property in properties) {
+-          if (property == 'class') {
+-            $(this).addClass(properties[property]);
++    // Find all placeholder/replacement content of Drupal plugins.
++    $content.find('.drupal-content').each(function() {
++      // Recursively process DOM elements below this element to apply special
++      // properties.
++      var $drupalContent = $(this);
++      $.each(specialProperties, function(element, properties) {
++        $drupalContent.find(element).andSelf().each(function() {
++          for (var property in properties) {
++            if (property == 'class') {
++              $(this).addClass(properties[property]);
++            }
++            else {
++              $(this).attr(property, properties[property]);
++            }
+           }
+-          else {
+-            $(this).attr(property, properties[property]);
+-          }
+-        }
++        });
+       });
+     });
+     return $content.html();
+Index: plugins/break/break.js
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/wysiwyg/plugins/break/break.js,v
+retrieving revision 1.5
+diff -u -p -r1.5 break.js
+--- plugins/break/break.js	10 Jun 2009 00:28:17 -0000	1.5
++++ plugins/break/break.js	13 Jun 2009 00:26:02 -0000
+@@ -61,6 +61,6 @@ Drupal.wysiwyg.plugins['break'] = {
+    * Helper function to return a HTML placeholder.
+    */
+   _getPlaceholder: function (settings) {
+-    return '<img src="' + settings.path + '/images/spacer.gif" alt="&lt;--break-&gt;" title="&lt;--break--&gt;" class="wysiwyg-break" />';
++    return '<img src="' + settings.path + '/images/spacer.gif" alt="&lt;--break-&gt;" title="&lt;--break--&gt;" class="wysiwyg-break drupal-content" />';
+   }
+ };

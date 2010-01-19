@@ -1,0 +1,25 @@
+ul.menu li,
+ul.menu li a,
+ul.links li,
+ul.links li a,
+#page { height:1%; }
+
+/* Fieldsets... a nest of headaches */
+html.js body.admin fieldset.collapsible,
+html.js body.admin fieldset { height:1%; }
+
+html.js body.admin fieldset.collapsible legend a { top:0px; }
+
+body.admin fieldset legend {
+  position:absolute;
+  left:0px;
+  top:0px;
+  border:0px;
+  padding:20px 0px 0px;
+  margin:-20px 0px 0px;
+  }
+
+  html.js body.admin fieldset.collapsed { border:0px; }
+  html.js body.admin fieldset.collapsible legend { position:static; }
+
+body.admin fieldset { position:relative; }

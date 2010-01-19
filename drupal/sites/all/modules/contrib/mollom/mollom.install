@@ -1,0 +1,124 @@
+<?php
+// $Id: mollom.install,v 1.2.2.10 2009/03/31 01:49:25 dries Exp $
+
+/**
+ * @file
+ * Install and uninstall functions as well as schema definition for the Mollom module.
+ */
+
+/**
+ * Implementation of hook_schema().
+ */
+function mollom_schema() {
+  $schema['mollom'] = array(
+    'description' => 'Tracks content spam statuses.',
+    'fields' => array(
+      'did' => array(
+        'description' => 'Unique ID of the content.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'session' => array(
+        'description' => "Content author's session ID.",
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      // The 'quality' field is still experimental; Mollom might not return a (consistent) value.
+      'quality' => array(
+        'description' => "A quality rating assigned to the content to tell whether or not it's spam.",
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      // The 'reputation' field is still experimental; Mollom might not return a (consistent) value.
+      'reputation' => array(
+        'description' => "The reputation of the author.",
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      // The 'languages' field is still experimental; Mollom might not return a (consistent) value.
+      'languages' => array(
+        'description' => "The language(s) that the content might be written in.",
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'indexes' => array('session' => array('session')),
+    'primary key' => array('did'),
+  );
+
+  $schema['cache_mollom'] = drupal_get_schema_unprocessed('system', 'cache');
+  $schema['cache_mollom']['description'] = 'Cache table for the Mollom module to store information for forms it protects.';
+
+  return $schema;
+}
+
+/**
+ * Implementation of hook_install().
+ */
+function mollom_install() {
+  drupal_install_schema('mollom');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function mollom_uninstall() {
+  db_query("DELETE FROM {variable} WHERE name LIKE 'mollom_%'");
+  drupal_uninstall_schema('mollom');
+}
+
+/**
+ * An update function to add the language field.
+ */
+function mollom_update_1() {
+  $ret = array();
+  db_add_field($ret, 'mollom', 'languages', array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''));
+  return $ret;
+}
+
+/**
+ * Create the cache_mollom table.
+ */
+function mollom_update_2() {
+  $ret = array();
+  $schema = drupal_get_schema_unprocessed('system', 'cache');
+  db_create_table($ret, 'cache_mollom', $schema);
+  return $ret;
+}
+
+/**
+ * Upgrade form protection storage.
+ */
+function mollom_update_3() {
+  // Load the Drupal module so that _mollom_protectable_forms() is available.
+  drupal_load('module', 'mollom');
+
+  foreach (_mollom_protectable_forms() as $form_id => $details) {
+    $name = 'mollom_'. $form_id;
+    $mode = variable_get($name, NULL);
+    if ($mode && $details['mode'] == MOLLOM_MODE_ANALYSIS) {
+      // $mode was stored as 1, default to MOLLOM_MODE_ANALYSIS if the form supports it.
+      variable_set($name, MOLLOM_MODE_ANALYSIS);
+    }
+  }
+  return array(array('success' => TRUE, 'query' => 'Updated Mollom form protection settings.'));
+}
+
+/**
+ * Add a reputation field to the mollom table.
+ */
+function mollom_update_4() {
+  $ret = array();
+  db_add_field($ret, 'mollom', 'reputation', array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''));
+  return $ret;
+}

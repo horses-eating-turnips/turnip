@@ -1,0 +1,19 @@
+; $Id: slate.info 881 2009-09-04 00:11:44Z jhedstrom $
+name = "Slate"
+description = "Slate theme. Provided/managed by the admin module."
+version = "0.1"
+core = "6.x"
+engine = "phptemplate"
+
+stylesheets[screen][] = "reset.css"
+stylesheets[print][] = "style.css"
+stylesheets[screen][] = "ie6.css"
+
+scripts[] = "theme.js"
+
+; Information added by drupal.org packaging script on 2009-07-30
+version = "6.x-1.0-beta3"
+core = "6.x"
+project = "admin"
+datestamp = "1248966919"
+

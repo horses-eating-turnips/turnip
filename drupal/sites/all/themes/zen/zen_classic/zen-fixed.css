@@ -1,0 +1,7 @@
+/* $Id: zen-fixed.css 5 2009-06-10 01:11:31Z jhedstrom $ */
+
+  #page
+  {
+    width: 960px; /* page width  */
+    margin: 0 auto; /* Center the page */
+  }

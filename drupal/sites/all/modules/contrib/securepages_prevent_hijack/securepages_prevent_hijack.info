@@ -1,0 +1,12 @@
+; $Id: securepages_prevent_hijack.info 5 2009-06-10 01:11:31Z jhedstrom $
+name = Secure Pages Hijack Prevention
+description = "Prevents hijacked session from accessing pages protected by the securepages module."
+dependencies[] = securepages
+core = 6.x
+
+; Information added by drupal.org packaging script on 2009-04-13
+version = "6.x-1.4"
+core = "6.x"
+project = "securepages_prevent_hijack"
+datestamp = "1239667022"
+

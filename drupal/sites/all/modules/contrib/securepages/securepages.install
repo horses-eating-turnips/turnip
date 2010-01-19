@@ -1,0 +1,33 @@
+<?php
+// $Id: securepages.install 5 2009-06-10 01:11:31Z jhedstrom $
+/**
+ * @file
+ * Provides installation details for Secure Pages
+ */
+
+/**
+ * Implementation of hook_enable().
+ */
+function securepages_enable() {
+  drupal_set_message(t('Secure pages needs to be enabled on !settings', array('!settings' => l(t('admin/build/securepages'), 'admin/build/securepages'))));
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function securepages_uninstall() {
+  variable_del('securepages_enable');
+  variable_del('securepages_switch');
+  variable_del('securepages_secure');
+  variable_del('securepages_pages');
+  variable_del('securepages_ignore');
+}
+
+/**
+ * Implementation of hook_update_n().
+ */
+function securepages_update_1() {
+  variable_set('securepages_enable', 1);
+
+  return array();
+}

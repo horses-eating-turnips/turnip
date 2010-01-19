@@ -1,0 +1,309 @@
+# Danish translation of Drupal (path_redirect.module)
+msgid ""
+msgstr ""
+"Project-Id-Version: Danish translation for Drupal (path_redirect.module) $Id: da.po,v 1.1.2.1 2008/05/31 17:45:57 hass Exp $\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-04-28 19:00+0200\n"
+"PO-Revision-Date: 2008-05-02 22:58+0200\n"
+"Last-Translator: Frederik 'Freso' S. Olesen <freso.dk@gmail.com>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1)\n"
+"X-Poedit-Language: Danish\n"
+"X-Poedit-Country: DENMARK\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: path_redirect.admin.inc:9;68
+msgid "From"
+msgstr "Fra"
+
+#: path_redirect.admin.inc:10;80
+msgid "To"
+msgstr "Til"
+
+#: path_redirect.admin.inc:11
+msgid "Type"
+msgstr "Type"
+
+#: path_redirect.admin.inc:12
+msgid "Operations"
+msgstr "Operationer"
+
+#: path_redirect.admin.inc:28
+msgid "test"
+msgstr "test"
+
+#: path_redirect.admin.inc:29
+#: path_redirect.module:54
+msgid "edit"
+msgstr "rediger"
+
+#: path_redirect.admin.inc:30
+msgid "delete"
+msgstr "slet"
+
+#: path_redirect.admin.inc:36
+msgid "No redirects have been defined."
+msgstr "Der er ikke defineret nogen omdirigering."
+
+#: path_redirect.admin.inc:40
+msgid "Add new redirect"
+msgstr "Tilføj ny omdirigering"
+
+#: path_redirect.admin.inc:59
+#: path_redirect.module:80
+msgid "Add redirect"
+msgstr "Tilføj omdirigering"
+
+#: path_redirect.admin.inc:69
+msgid "Enter a Drupal path or path alias to redirect. Fragment anchors <em>#foo</em> are <strong>not</strong> allowed."
+msgstr ""
+
+#: path_redirect.admin.inc:81
+msgid "Enter a Drupal path, path alias, or external URL to redirect to. Use %front to redirect to the front page. Enter (optional) queries after \"?\" and (optional) anchor after \"#\". Most redirects will not contain queries or fragment anchors."
+msgstr ""
+
+#: path_redirect.admin.inc:119
+msgid "Redirect Type"
+msgstr "Omdirigeringstype"
+
+#: path_redirect.admin.inc:135
+msgid "Find more information about http redirect codes <a href=\"http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3\">here</a>."
+msgstr "Yderligere information om http-omdirigeringskoder kan findes <a href=\"http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3\">her</a>."
+
+#: path_redirect.admin.inc:145
+msgid "Update redirect"
+msgstr "Opdatér omdirigering"
+
+#: path_redirect.admin.inc:145
+msgid "Create new redirect"
+msgstr "Opret ny omdirigering"
+
+#: path_redirect.admin.inc:153
+msgid "You must enter a <strong>from</strong> path."
+msgstr "Du skal angive en <strong>fra</strong>-sti."
+
+#: path_redirect.admin.inc:161
+msgid "The <strong>from</strong> path you entered is already redirected. You can <a href=\"@edit-page\">edit this redirect</a> instead."
+msgstr "<strong>Fra</strong>-stien du angav bliver allerede omdirigeret. Du kan <a href=\"@edit-page\">redigere omdirigeringen</a> i stedet."
+
+#: path_redirect.admin.inc:165
+msgid "You cannot redirect from a fragment anchor."
+msgstr ""
+
+#: path_redirect.admin.inc:169
+msgid "The redirect <strong>from</strong> path does not appear valid. This must be a local Drupal path."
+msgstr "Omdirigeringen <strong>fra</strong> sti ser ikke ud til at være gyldig. Det skal være en lokal Drupal-sti."
+
+#: path_redirect.admin.inc:178
+msgid "The redirect <strong>to</strong> path does not appear valid."
+msgstr "Omdirigeringen <strong>til</strong> sti ser ikke ud til at være gyldig."
+
+#: path_redirect.admin.inc:187
+msgid "You are attempting to redirect the page to itself. This will result in an infinite loop."
+msgstr "Du prøver på at omdirigere en side til sig selv. Dette vil resultere i en uendelig løkke."
+
+#: path_redirect.admin.inc:196
+msgid "Redirect has been saved."
+msgstr "Omdirigering er blevet gemt."
+
+#: path_redirect.admin.inc:207
+msgid "Are you sure you want to delete the redirect from %path to %redirect?"
+msgstr "Er du sikker på du vil slette omdirigeringen fra %path til %redirect?"
+
+#: path_redirect.admin.inc:214
+msgid "The redirect has been deleted."
+msgstr "Omdirigeringen er blevet slettet."
+
+#: path_redirect.admin.inc:221
+msgid "Warn on redirect"
+msgstr "Advar ved omdirigering"
+
+#: path_redirect.admin.inc:223;231
+msgid "Disabled"
+msgstr "Deaktiveret"
+
+#: path_redirect.admin.inc:223;231
+msgid "Enabled"
+msgstr "Aktiveret"
+
+#: path_redirect.admin.inc:224
+msgid "Display a warning message to users when a redirect takes place."
+msgstr "Vis en advarselsbesked til brugere når der sker en omdirigering."
+
+#: path_redirect.admin.inc:229
+msgid "Allow bypassing"
+msgstr "Tillad omgåning"
+
+#: path_redirect.admin.inc:232
+msgid "Allow users to bypass redirects by appending <code>?redirect=no</code> to the URL."
+msgstr "Tillad brugere at omgå omdirigeringer ved at tilføje <code>?redirect=no</code> til URL'en."
+
+#: path_redirect.admin.inc:244
+msgid "300 Multiple Choices"
+msgstr "300 Flere valg"
+
+#: path_redirect.admin.inc:244
+msgid "The request is ambiguous and needs clarification as to which resource was requested."
+msgstr "Anmodningen er flertydig og kræver opklaring for at bestemme hvilken ressource der blev bedt om."
+
+#: path_redirect.admin.inc:245
+msgid "301 Moved Permanently"
+msgstr "301 Flyttet permanent"
+
+#: path_redirect.admin.inc:245
+msgid "Moved Permanently. The resource has permanently moved elsewhere, the response indicates where it has gone to. <strong>Recommended.</strong>"
+msgstr "Flyttet permanent. Ressourcen er permanent flyttet andetsteds - svaret angiver hvor det er flyttet hen. <strong>Anbefalet.</strong>"
+
+#: path_redirect.admin.inc:246
+msgid "302 Found"
+msgstr "302 Fundet"
+
+#: path_redirect.admin.inc:246
+msgid "The resource has temporarily moved elsewhere, the response indicates where it is at present. <strong>This is Drupal's default redirect type.</strong>"
+msgstr "Ressourcen er midlertidigt flyttet et andet sted hen - svaret angiver hvor det er lige nu. <strong>Dette er Drupals standard omdirigeringstype.</strong>"
+
+#: path_redirect.admin.inc:247
+msgid "303 See Other"
+msgstr "303 Se anden placering"
+
+#: path_redirect.admin.inc:247
+msgid "See Other/Redirect. A preferred alternative source should be used at present."
+msgstr ""
+
+#: path_redirect.admin.inc:248
+msgid "304 Not Modified"
+msgstr "304 Ikke ændret"
+
+#: path_redirect.admin.inc:248
+msgid "The server has identified from the request information that the client's copy of the information is up-to-date and the requested information does not need to be sent again."
+msgstr "Serveren har, fra forespørgslens information, identificeret at klientens kopi af informationen er opdateret og den forespurgte information behøver ikke blive sendt igen."
+
+#: path_redirect.admin.inc:249
+msgid "305 Use Proxy"
+msgstr "305 Brug proxy"
+
+#: path_redirect.admin.inc:249
+msgid "The request must be sent through the indicated proxy server."
+msgstr "Anmodningen skal sendes gennem den angivne proxyserver."
+
+#: path_redirect.admin.inc:250
+msgid "307 Temporary Redirect"
+msgstr "307 Midlertidig omdirigering"
+
+#: path_redirect.admin.inc:250
+msgid "The resource has temporarily moved elsewhere, the response indicates where it is at present. Client should still use this URL."
+msgstr "Ressourcen er midlertidigt flyttet et andet sted hen - svaret angiver hvor det er lige nu. Klienten bør stadig bruge denne URL."
+
+#: path_redirect.module:13
+msgid "Here you can set up URL redirecting for this site. Any existing or non-existing path within this site can redirect to any internal or external URL."
+msgstr "Her kan du sætte URL-omdirigering op for dit site. Enhver eksisterende eller ikke-eksisterende sti på sitet kan omdirigere til en hvilken som helst intern eller ekstern URL."
+
+#: path_redirect.module:16
+msgid "The <strong>from</strong> path must be an internal Drupal path in the form of 'node/123', 'admin/logs', or 'taxonomy/term/123'. The <strong>to</strong> path can be either an internal Drupal path as above or a complete external URL such as http://www.example.com/. Furthermore, the <strong>to</strong> path may contain query arguments (such as 'page=2') and fragment anchors, to make it possible to redirect to 'admin/user?page=1#help'. Most redirects will not contain queries or anchors."
+msgstr ""
+
+#: path_redirect.module:41
+#, fuzzy
+msgid "This page has been moved. You may want to update your bookmarks."
+msgstr "Denne side er blevet flyttet. [[You may want to update your bookmarks.]]"
+
+#: path_redirect.module:57
+msgid "This page is redirected to:"
+msgstr "Denne side omdirigerer til:"
+
+#: path_redirect.module:108
+msgid "Configure behavior for URL redirects"
+msgstr "Indstil opførsel for URL-omdirigeringer"
+
+#: path_redirect.module:54;0
+msgid "path_redirect"
+msgstr "path_redirect"
+
+#: path_redirect.module:54
+msgid "Redirect to <code>%redirect</code> is causing an infinite loop; redirect cancelled."
+msgstr "Omdirigering til <code>%redirect</code> forårsager en uendelig løkke; omdirigering annulleret."
+
+#: path_redirect.module:121
+msgid "administer redirects"
+msgstr "administrer omdirigeringer"
+
+#: path_redirect.module:66;107
+msgid "URL redirects"
+msgstr "URL-omdirigeringer"
+
+#: path_redirect.module:67
+msgid "Redirect users from one URL to another"
+msgstr "Omdiriger brugere fra en URL til en anden"
+
+#: path_redirect.module:73
+#, fuzzy
+msgid "List"
+msgstr "List"
+
+#: path_redirect.module:74
+msgid "List all URL redirects"
+msgstr "List alle URL-omdirigeringer"
+
+#: path_redirect.module:81
+msgid "Add a new URL redirect"
+msgstr "Tilføj en ny URL-omdirigering"
+
+#: path_redirect.module:89
+msgid "Edit"
+msgstr "Rediger"
+
+#: path_redirect.module:90
+msgid "Edit an existing URL redirect"
+msgstr "Redgér en eksisterende URL-omdirigering"
+
+#: path_redirect.module:98
+msgid "Delete redirect"
+msgstr "Slet omdirigering"
+
+#: path_redirect.module:99
+msgid "Delete an existing URL redirect"
+msgstr "Slet en eksisterende URL-omdirigering"
+
+#: path_redirect.install:23
+msgid "Stores information on redirects."
+msgstr "Lagrer information om omdirigeringer."
+
+#: path_redirect.install:28
+msgid "Primary Key: Unique path redirect ID."
+msgstr "Primær nøgle: Unikt stiomdirigerings-id."
+
+#: path_redirect.install:34;74
+msgid "The source path to redirect from."
+msgstr "Kildestien der skal omdirigeres fra."
+
+#: path_redirect.install:40;82
+msgid "The destination path to redirect to."
+msgstr "Destinationsstien der skal omdirigeres til."
+
+#: path_redirect.install:46;130
+msgid "The query string to send to the destination."
+msgstr ""
+
+#: path_redirect.install:52
+msgid "An internal page anchor append to the destination."
+msgstr ""
+
+#: path_redirect.install:58;105
+msgid "The HTTP status code to use for the redirect."
+msgstr "HTTP-statuskoden der skal bruges til omdirigeringen."
+
+#: path_redirect.install:123
+msgid "Menu paths for the Path Redirect module have been updated."
+msgstr "Menustier for Path Redirect-modulet er blevet opdateret."
+
+#: path_redirect.info:0
+msgid "Path Redirect"
+msgstr "Stiomdirigering"
+
+#: path_redirect.info:0
+msgid "Redirect users from one URL to another."
+msgstr "Omdiriger brugere fra en URL til en anden."
+

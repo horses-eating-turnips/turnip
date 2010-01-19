@@ -1,0 +1,13 @@
+; $Id: imageapi_imagemagick.info 828 2009-06-16 17:56:46Z jhedstrom $
+name = ImageAPI ImageMagick
+description = Command Line ImageMagick support.
+package = ImageCache
+core = 6.x
+
+
+; Information added by drupal.org packaging script on 2009-04-17
+version = "6.x-1.6"
+core = "6.x"
+project = "imageapi"
+datestamp = "1239992203"
+

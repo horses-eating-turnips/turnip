@@ -1,0 +1,12 @@
+; $Id: admin.info 881 2009-09-04 00:11:44Z jhedstrom $
+name = "Admin"
+description = "UI helpers for Drupal admins and managers. Includes a special admin theme, custom admin header with JS support, and contextual admin links."
+package = "Administration"
+core = 6.x
+
+; Information added by drupal.org packaging script on 2009-07-30
+version = "6.x-1.0-beta3"
+core = "6.x"
+project = "admin"
+datestamp = "1248966919"
+

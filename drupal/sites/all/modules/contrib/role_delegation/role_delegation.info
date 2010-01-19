@@ -1,0 +1,12 @@
+; $Id: role_delegation.info 841 2009-07-03 00:10:37Z jhedstrom $
+name = "Role Delegation"
+description = "Allows site administrators to grant some roles the authority to assign selected roles to users."
+core = "6.x"
+
+
+; Information added by drupal.org packaging script on 2009-06-29
+version = "6.x-1.2"
+core = "6.x"
+project = "role_delegation"
+datestamp = "1246288605"
+

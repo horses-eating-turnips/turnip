@@ -1,0 +1,96 @@
+<?php
+// $Id: securepages_prevent_hijack.module 5 2009-06-10 01:11:31Z jhedstrom $
+
+/**
+ * @file
+ * Prevents hijacked session from accessing pages protected by the securepages module.
+ */
+
+define('SECUREPAGES_SESSID', 'SSL_'. session_name());
+
+/**
+ * Implementation of hook_init().
+ *
+ * If this is and is supposed to be a secure page, and a user has
+ * logged in, verify that the secure cookie (set in hook_user below)
+ * is a valid token.
+ */
+function securepages_prevent_hijack_init() {
+  $path = isset($_GET['q']) ? $_GET['q'] : '';
+  $page_match = securepages_match($path);
+
+  global $user;
+  if ($user->uid > 0 && $page_match && securepages_is_secure() && variable_get('securepages_enable', FALSE)) {
+    if (! isset($_COOKIE[SECUREPAGES_SESSID]) ||
+    ! drupal_valid_token($_COOKIE[SECUREPAGES_SESSID], 'securepages_prevent_hijack')) {
+      watchdog('security',
+      t('Session hijack attempt detected for user %user!',
+      array('%user' => $user->name)));
+
+      menu_set_active_item('');
+      drupal_set_header('HTTP/1.1 403 Forbidden');
+      drupal_set_title(t('Access denied by Secure Pages module'));
+      $return = t('<p> The Secure Pages module has detected an invalid '.
+       'session access attempt. Please <a href="!url">log in again</a>.</p>',
+      array('!url' => url('user/login', array('query' => array('destination' => $path)))));
+      print theme('page', $return);
+      module_invoke_all('exit', $url);
+      session_destroy();
+      exit;
+    }
+  }
+}
+
+/**
+ * Implementation of hook_user().
+ */
+function securepages_prevent_hijack_user($op, &$edit, &$user, $category = NULL) {
+  switch ($op) {
+  case 'login':
+    _securepages_prevent_hijack_cookie();
+    break;
+  }
+}
+
+/**
+ * Set a secure cookie (that will only be returned to SSL-protected pages)
+ * containing a non-guessable token.
+ */
+function _securepages_prevent_hijack_cookie() {
+  if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+    $tok = drupal_get_token('securepages_prevent_hijack');
+    $cookie_params = session_get_cookie_params();
+    setcookie(SECUREPAGES_SESSID, $tok, time() + $cookie_params['lifetime'],
+    $cookie_params['path'], $cookie_params['domain'], 1);
+  }
+  else {
+    watchdog('security', 'Secure Pages Prevent Hijack failed to set secure cookie.', NULL, WATCHDOG_CRITICAL);
+  }
+}
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function securepages_prevent_hijack_form_alter(&$form, &$form_state, $form_id) {
+
+  // Refresh the cookie whenever the settings page is submitted.
+  if ($form['#id'] == 'securepages-settings') {
+    $form['#submit'][] = '_securepages_prevent_hijack_cookie';
+  }
+
+  // Secure the login form, so that we always have a secure connection to transmit the
+  // initial cookie.  Also, protect the password in transit.
+  if ($form['#id'] == 'user-login-form' || $form['#id'] == 'user-login') {
+    $url = parse_url($form['#action']);
+
+    $base_path = base_path();
+    $path = (!strncmp($url['path'], $base_path, drupal_strlen($base_path)) ? drupal_substr($url['path'], drupal_strlen($base_path)) : $url['path']);
+    $form['#action'] = securepages_url(
+      $path,
+      array(
+        'secure' => TRUE,
+        'query' => $url['query'],
+      )
+    );
+  }
+}

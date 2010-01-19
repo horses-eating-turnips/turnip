@@ -1,0 +1,13 @@
+; $Id: path_redirect.info 900 2010-01-18 23:01:52Z jhedstrom $
+name = Path redirect
+description = Redirect users from one URL to another.
+core = 6.x
+enhances[] = pathauto
+suggests[] = global_redirect
+
+; Information added by drupal.org packaging script on 2009-11-27
+version = "6.x-1.0-beta5"
+core = "6.x"
+project = "path_redirect"
+datestamp = "1259302241"
+

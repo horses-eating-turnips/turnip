@@ -1,0 +1,31 @@
+<?php
+
+// $Id: os_simplenews.module 5 2009-06-10 01:11:31Z jhedstrom $
+
+/**
+ * @file
+ * OpenSourcery Simplenews customizations.
+ */
+
+/**
+ * Implementation of hook_form_alter().
+ *
+ * Simplify form for anonymous users.
+ */
+function os_simplenews_form_alter(&$form, $form_state, $form_id) {
+  global $user;
+  if ((!$user->uid) && strpos($form_id, 'simplenews_block_form') !== FALSE) {
+    $action = $form['action'];
+    unset($form['action']);
+    $form['action_section'] = array(
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      '#title' => t('Unsubscribe'),
+    );
+    $form['action_section']['action'] = $action;
+    $form['#prefix'] = '<div class="container-inline">';
+    $form['#suffix'] = '</div>';
+    $form['submit']['#value'] = t('Go!');
+  }
+}

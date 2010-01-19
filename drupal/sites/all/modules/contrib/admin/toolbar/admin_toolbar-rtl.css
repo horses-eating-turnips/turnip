@@ -1,0 +1,25 @@
+/**
+ * Toolbar
+ */
+div#admin-toolbar ul.links li,
+div#admin-toolbar ul.links li a,
+div#admin-toolbar div.depth-1 ul.links,
+div#admin-toolbar div.depth-0 #admin-toolbar-admin { float:right; }
+
+div#admin-toolbar div.depth-0 #admin-toolbar-user { float:left; }
+
+div#admin-toolbar div.depth-1 ul.links li.view-all {
+  left:40px;
+  right:auto;
+  }
+
+div#admin-toolbar div.depth-1 span.close {
+  left:10px;
+  right:auto;
+  }
+
+div#admin-toolbar div.depth-1 span.icon {
+  float:right;
+  margin-left:5px;
+  margin-right:0px;
+  }
