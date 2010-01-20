@@ -16,16 +16,6 @@
   <!--[if lte IE 6]>
   	<link href="<?php print $path; ?>css/ie6.css" rel="stylesheet"  type="text/css"  media="screen, projection" />
   <![endif]-->  
-  <link type="text/css" rel="stylesheet" media="all" href="http://randall.test.opensourcery.com/opensourcery/propertymaster/overrides.css" />
-  <!--[if IE 6]>
-    <link type="text/css" rel="stylesheet" media="all" href="http://randall.test.opensourcery.com/opensourcery/propertymaster/overrides_ie6.css" />
-  <![endif]-->
-  <!--[if IE 7]>
-    <link type="text/css" rel="stylesheet" media="all" href="http://randall.test.opensourcery.com/opensourcery/propertymaster/overrides_ie7.css" />
-  <![endif]-->
-  <!--[if IE 8]>
-    <link type="text/css" rel="stylesheet" media="all" href="http://randall.test.opensourcery.com/opensourcery/propertymaster/overrides_ie8.css" />
-  <![endif]-->
 </head>
 
 <body class="<?php print $body_classes; ?>">
