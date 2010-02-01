@@ -22,9 +22,9 @@
 
 <div class="container">
   <div id="header">
-    <h1 id="logo">
+    <<?php print $head_tag; ?> id="logo">
       <a title="<?php print $site_name; ?><?php if ($site_slogan != '') print ' &ndash; '. $site_slogan; ?>" href="<?php print url(); ?>"><?php print $site_name; ?><?php if ($site_slogan != '') print ' &ndash; '. $site_slogan; ?></a>
-    </h1>
+    </<?php print $head_tag; ?>>
     <?php print $header; ?>
     <?php if (isset($primary_links)) : ?>
       <?php print theme('links', $primary_links, array('id' => 'nav', 'class' => 'links')) ?>
@@ -53,7 +53,7 @@
       }
       
       if ($title != '') {
-        print '<h2>'. $title .'</h2>';
+        print '<' . $title_tag . '>'. $title .'</' . $title_tag . '>';
       }      
 
       print $help; // Drupal already wraps this one in a class      
