@@ -15,12 +15,15 @@
 function os_custom_form_alter(&$form, $form_state, $form_id) {
   switch ($form_id) {
     case 'node_type_form':
-      $options = array();
-      // Set to published by default.
-      $options[] = 'status';
-      // Enable revisions by default.
-      $options[] = 'revision';
-      $form['workflow']['node_options']['#default_value'] = $options;
+      if (!isset($form['#node_type']->orig_type)) {
+        $options = array();
+        // Set to published by default.
+        $options[] = 'status';
+        // Enable revisions by default.
+        $options[] = 'revision';
+        $form['workflow']['node_options']['#default_value'] = $options;
+      }
+      break;
   }
 }
 
