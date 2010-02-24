@@ -39,6 +39,7 @@ function os_custom_imagecache_default_presets() {
  * Implementation of hook_strongarm().
  */
 function os_custom_strongarm() {
+  $conf = array();
 
   // Set front page here.
   // $conf['site_frontpage'] = '';
