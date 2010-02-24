@@ -1,5 +1,5 @@
 <?php
-// $Id: better_formats.module 827 2009-06-16 17:13:25Z jhedstrom $
+// $Id: better_formats.module,v 1.23.2.17 2010/02/05 13:59:18 dragonwize Exp $
 
 /**
  * @file
@@ -103,8 +103,8 @@ function better_formats_form_alter(&$form, $form_state, $form_id) {
       better_formats_set_node_format($form);
       break;
 
-     case 'block-add-block-form':
-     case 'block-admin-configure':
+    case 'block-add-block-form':
+    case 'block-admin-configure':
       better_formats_set_block_format($form);
       break;
   }
@@ -310,7 +310,7 @@ function better_formats_text_process($element, $edit, $form_state, $form) {
     $default    = better_formats_get_default_format('node', $form['type']['#value']);
 
     // Overwrite format default if new node.
-    if (!isset($form_state['values']['nid']) || !isset($format)) {
+    if (!isset($form_state['values']['nid']) || empty($format)) {
       $format = $default;
     }
     $format = filter_resolve_format($format);
@@ -334,7 +334,7 @@ function better_formats_set_node_format(&$form) {
     // Get default for new entries.
     $default = better_formats_get_default_format('node', $form['type']['#value']);
 
-    if (empty($form['nid']['#value'])) {
+    if (empty($form['nid']['#value']) && !isset($form['#parameters'][1]['node_preview'])) {
       // Set format to default for new entries.
       $format = $default;
     }

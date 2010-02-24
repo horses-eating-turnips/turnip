@@ -1,5 +1,5 @@
 <?php
-// $Id: better_formats_defaults.admin.inc 827 2009-06-16 17:13:25Z jhedstrom $
+// $Id: better_formats_defaults.admin.inc,v 1.3.2.11 2010/02/05 13:52:48 dragonwize Exp $
 
 /**
  * @file
@@ -56,7 +56,8 @@ function better_formats_defaults_admin_form_validate($form, &$form_state) {
         continue;
       }
       $fid = $values['format'];
-      if ($fid != 0 && !in_array($rid, $roles[$fid])) {
+      $site_default = filter_resolve_format(FILTER_FORMAT_DEFAULT);
+      if ($fid != 0 && !in_array($rid, $roles[$fid]) && $fid !== $site_default) {
         form_set_error($key, t('Role does not have access to selected format.'));
       }
     }
@@ -100,7 +101,6 @@ function better_formats_get_role_default_fields($mode, $node_type = '') {
   $format_options = better_formats_get_formats_per_role();
   $type = $types = $mode;
   $per_node_type = variable_get('better_formats_per_node_type', FALSE);
-  $block_admins  = better_formats_get_roles_by_perm('administer blocks');
 
   if ($per_node_type && $node_type) {
     $type = $mode . '/' . $node_type;
@@ -119,7 +119,7 @@ function better_formats_get_role_default_fields($mode, $node_type = '') {
   $roles_set = array();
 
   while ($role = db_fetch_object($result)) {
-    if (in_array($role->rid, $roles_set) || ($mode === 'block' && !in_array($role->rid, $block_admins))) {
+    if (in_array($role->rid, $roles_set)) {
       continue;
     }
 
@@ -192,7 +192,7 @@ function better_formats_get_formats_per_role() {
  */
 function better_formats_get_roles_by_perm($perm, $reset = FALSE) {
   static $roles;
-  if ($reset || !$roles[$perm]) {
+  if ($reset || !isset($roles[$perm])) {
     $sql = "SELECT rid
             FROM {permission}
             WHERE perm LIKE '%$perm%'
