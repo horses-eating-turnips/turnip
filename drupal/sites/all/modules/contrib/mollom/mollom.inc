@@ -1,12 +1,14 @@
 <?php
-// $Id: mollom.inc 887 2009-09-24 15:51:14Z jhedstrom $
+// $Id: mollom.inc,v 1.1.2.3 2010/01/29 15:06:32 dries Exp $
 
 /**
  * @file
- * Miscellaneous functions for the mollom module.
+ * Mollom client/server interaction functions.
  */
 
 /**
+ * Generate authentication data for XML-RPC communication with Mollom servers.
+ *
  * This function generates an array with all information required to
  * authenticate against Mollom.  To prevent forged requests where you are
  * impersonated, each request is signed with a hash based on a private
@@ -23,11 +25,19 @@
  *
  * Make sure your server's time is synchronized with the world clocks,
  * and that you don't share your private key with anyone else.
+ *
+ * @param $public_key
+ *   (optional) The public key to use for authentication. Only used internally.
+ * @param $private_key
+ *   (optional) The private key to use for authentication. Only used internally.
  */
-function _mollom_authentication() {
-
-  $public_key = variable_get('mollom_public_key', '');
-  $private_key = variable_get('mollom_private_key', '');
+function _mollom_authentication($public_key = NULL, $private_key = NULL) {
+  if (!isset($public_key)) {
+    $public_key = variable_get('mollom_public_key', '');
+  }
+  if (!isset($private_key)) {
+    $private_key = variable_get('mollom_private_key', '');
+  }
 
   // Generate a timestamp according to the dateTime format (http://www.w3.org/TR/xmlschema-2/#dateTime):
   $time = gmdate("Y-m-d\TH:i:s.\\0\\0\\0O", time());
@@ -39,7 +49,7 @@ function _mollom_authentication() {
   $hash = base64_encode(
     pack('H*', sha1((str_pad($private_key, 64, chr(0x00)) ^ (str_repeat(chr(0x5c), 64))) .
     pack('H*', sha1((str_pad($private_key, 64, chr(0x00)) ^ (str_repeat(chr(0x36), 64))) .
-    $time .':'. $nonce .':'. $private_key))))
+    $time . ':' . $nonce . ':' . $private_key))))
   );
 
   // Store everything in an array.  Elsewhere in the code, we'll add the
@@ -53,7 +63,7 @@ function _mollom_authentication() {
 }
 
 /**
- * This function refreshes the list of servers that can be used to contact Mollom.
+ * Refreshes the list of Mollom's XML-RPC servers.
  */
 function _mollom_retrieve_server_list() {
   // Start from a hard coded list of servers:
@@ -61,7 +71,7 @@ function _mollom_retrieve_server_list() {
 
   // Use the list of servers to retrieve a list of servers from mollom.com:
   foreach ($servers as $server) {
-    $result = xmlrpc($server .'/'. MOLLOM_API_VERSION, 'mollom.getServerList', _mollom_authentication());
+    $result = xmlrpc($server . '/' . MOLLOM_API_VERSION, 'mollom.getServerList', _mollom_authentication());
     if (!xmlrpc_error()) {
       return $result;
     }
@@ -70,5 +80,6 @@ function _mollom_retrieve_server_list() {
     }
   }
 
-  return array();
+  return xmlrpc_errno();
 }
+

@@ -1,4 +1,4 @@
-$Id: README.txt 900 2010-01-18 23:01:52Z jhedstrom $
+$Id: README.txt,v 1.1.6.4 2009/12/02 09:50:06 davereid Exp $
 
 CONTENTS OF THIS FILE
 ---------------------
@@ -27,12 +27,11 @@ any HTTP redirect status (301 - Permanent Redirect, etc.).
 INSTALLATION
 ------------
 
-See http://drupal.org/getting-started/5/install-contrib for instructions on
+See http://drupal.org/getting-started/install-contrib for instructions on
 how to install or update Drupal modules.
 
-Once Path Redirect is installed and enabled, you can add redirections at
-admin/build/path-redirect and check your site's redirection settigns at
-admin/build/path-redirect/settings.
+Once Path redirect is installed and enabled, you can add and configure your
+site's redirections at admin/build/path-redirect.
 
 
 FREQUENTLY ASKED QUESTIONS
@@ -52,6 +51,9 @@ http://drupal.org/project/issues/path_redirect.
 
 HOW CAN YOU CONTRIBUTE?
 ---------------------
+
+- Help with the effort to bring path redirection functionality into core.
+  http://drupal.org/node/133552
 
 - Write a review for this module at drupalmodules.com.
   http://drupalmodules.com/module/path-redirect

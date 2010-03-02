@@ -1,5 +1,5 @@
 <?php
-// $Id: path_redirect.install 900 2010-01-18 23:01:52Z jhedstrom $
+// $Id: path_redirect.install,v 1.2.2.6.2.26 2009/12/01 05:40:09 davereid Exp $
 
 /**
  * @file
@@ -18,7 +18,7 @@ function path_redirect_schema() {
         'not null' => TRUE,
         'description' => 'Primary Key: Unique path redirect ID.',
       ),
-      'path' => array(
+      'source' => array(
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
@@ -64,7 +64,7 @@ function path_redirect_schema() {
       ),
     ),
     'primary key' => array('rid'),
-    'unique keys' => array('path_language' => array('path', 'language')),
+    'unique keys' => array('source_language' => array('source', 'language')),
   );
 
   return $schema;
@@ -164,6 +164,11 @@ function path_redirect_update_5100() {
 }
 
 /**
+ * @defgroup updates-6.x-extra Extra path_redirect updates for 6.x
+ * @{
+ */
+
+/**
  * Add a last used timestamp field.
  */
 function path_redirect_update_6100() {
@@ -193,3 +198,19 @@ function path_redirect_update_6102() {
   $ret[] = update_sql("UPDATE {path_redirect} SET redirect = '<front>' WHERE redirect = '$frontpage'");
   return $ret;
 }
+
+/**
+ * Rename the path field to source.
+ */
+function path_redirect_update_6103() {
+  $ret = array();
+  db_drop_unique_key($ret, 'path_redirect', 'path_language');
+  db_change_field($ret, 'path_redirect', 'path', 'source', array('type' => 'varchar', 'length' => 255, 'not null' => TRUE));
+  db_add_unique_key($ret, 'path_redirect', 'source_language', array('source', 'language'));
+  return $ret;
+}
+
+/**
+ * @} End of "defgroup updates-6.x-extra"
+ * The next series of updates should start at 7000.
+ */

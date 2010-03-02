@@ -1,5 +1,5 @@
 <?php
-// $Id: mollom.install,v 1.2.2.10 2009/03/31 01:49:25 dries Exp $
+// $Id: mollom.install,v 1.2.2.23 2010/02/18 22:20:15 dries Exp $
 
 /**
  * @file
@@ -7,16 +7,58 @@
  */
 
 /**
- * Implementation of hook_schema().
+ * Implements hook_requirements().
+ */
+function mollom_requirements($phase = 'runtime') {
+  $requirements = array();
+  if ($phase == 'runtime') {
+    $status = _mollom_status(TRUE);
+    // Immediately return if everything is in order.
+    if ($status === TRUE) {
+      return $requirements;
+    }
+    // If not, something is wrong; prepare the requirements entry and set
+    // defaults for any yet unknown edge-cases.
+    $requirements['mollom'] = array(
+      'title' => 'Mollom API keys',
+      'value' => '',
+      'severity' => REQUIREMENT_ERROR,
+    );
+    // Missing API keys.
+    if (!$status['keys']) {
+      $requirements['mollom']['value'] = t('Not configured');
+      $requirements['mollom']['description'] = t('Mollom API keys are not <a href="@settings-url">configured</a> yet.', array('@settings-url' => url('admin/settings/mollom/settings')));
+    }
+    elseif ($status['keys valid'] === NETWORK_ERROR) {
+      $requirements['mollom']['value'] = t('Network error');
+      $requirements['mollom']['description'] = t('The Mollom servers could not be contacted. Please make sure that your web server can make outgoing HTTP requests.');
+    }
+    elseif ($status['keys valid'] === MOLLOM_ERROR) {
+      $requirements['mollom']['value'] = t('Invalid');
+      $requirements['mollom']['description'] = t('The <a href="@settings-url">configured</a> Mollom API keys are invalid.', array('@settings-url' => url('admin/settings/mollom/settings')));
+    }
+  }
+  return $requirements;
+}
+
+/**
+ * Implements hook_schema().
  */
 function mollom_schema() {
   $schema['mollom'] = array(
     'description' => 'Tracks content spam statuses.',
     'fields' => array(
-      'did' => array(
-        'description' => 'Unique ID of the content.',
+      'entity' => array(
+        'description' => 'The entity type of the content.',
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'did' => array(
+        'description' => 'Unique data ID of the content.',
+        'type' => 'varchar',
+        'length' => 32,
         'not null' => TRUE,
         'default' => '',
       ),
@@ -27,25 +69,22 @@ function mollom_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
-      // The 'quality' field is still experimental; Mollom might not return a (consistent) value.
       'quality' => array(
-        'description' => "A quality rating assigned to the content to tell whether or not it's spam.",
+        'description' => "A quality rating assigned to the content to tell whether or not it's spam. Experimental; Mollom might return inconsistent values.",
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
         'default' => '',
       ),
-      // The 'reputation' field is still experimental; Mollom might not return a (consistent) value.
       'reputation' => array(
-        'description' => "The reputation of the author.",
+        'description' => "The reputation of the author. Experimental; Mollom might return inconsistent values.",
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
         'default' => '',
       ),
-      // The 'languages' field is still experimental; Mollom might not return a (consistent) value.
       'languages' => array(
-        'description' => "The language(s) that the content might be written in.",
+        'description' => "A space-delimited language codes the content might be written in. Experimental; Mollom might return inconsistent values.",
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
@@ -53,7 +92,40 @@ function mollom_schema() {
       ),
     ),
     'indexes' => array('session' => array('session')),
-    'primary key' => array('did'),
+    'primary key' => array('entity', 'did'),
+  );
+
+  $schema['mollom_form'] = array(
+    'description' => 'Stores configuration for forms protected by Mollom.',
+    'fields' => array(
+      'form_id' => array(
+        'description' => 'The $form_id of the form being protected.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'mode' => array(
+        'description' => 'The configured protection mode to use for the form.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'enabled_fields' => array(
+        'description' => 'A list of form elements configured for textual analysis.',
+        'type' => 'text',
+        'serialize' => TRUE,
+      ),
+      'module' => array(
+        'description' => 'The module name the $form_id belongs to.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'primary key' => array('form_id'),
   );
 
   $schema['cache_mollom'] = drupal_get_schema_unprocessed('system', 'cache');
@@ -63,14 +135,35 @@ function mollom_schema() {
 }
 
 /**
- * Implementation of hook_install().
+ * Implements hook_install().
  */
 function mollom_install() {
   drupal_install_schema('mollom');
+
+  // Install default form configuration for enabled, supported modules.
+  foreach (module_list(FALSE, FALSE) as $module) {
+    drupal_load('module', $module);
+  }
+  drupal_load('module', 'mollom');
+
+  $form_info = mollom_get_form_info();
+  foreach ($form_info as $form_id => $info) {
+    if (!empty($info['mode'])) {
+      $info['enabled_fields'] = array_keys($info['elements']);
+      // Upon installation, our own schema is not available yet, so we cannot
+      // use mollom_form_save(), resp. drupal_write_record().
+      db_query("INSERT INTO {mollom_form} (form_id, mode, enabled_fields, module) VALUES ('%s', %d, '%s', '%s')", array(
+        $info['form_id'],
+        $info['mode'],
+        serialize($info['enabled_fields']),
+        $info['module'],
+      ));
+    }
+  }
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function mollom_uninstall() {
   db_query("DELETE FROM {variable} WHERE name LIKE 'mollom_%'");
@@ -100,18 +193,21 @@ function mollom_update_2() {
  * Upgrade form protection storage.
  */
 function mollom_update_3() {
-  // Load the Drupal module so that _mollom_protectable_forms() is available.
+  // Load mollom_get_form_info() and hook_mollom_form_info() implementations.
+  foreach (module_list(FALSE, FALSE) as $module) {
+    drupal_load('module', $module);
+  }
   drupal_load('module', 'mollom');
 
-  foreach (_mollom_protectable_forms() as $form_id => $details) {
-    $name = 'mollom_'. $form_id;
+  foreach (mollom_get_form_info() as $form_id => $info) {
+    $name = 'mollom_' . $form_id;
     $mode = variable_get($name, NULL);
-    if ($mode && $details['mode'] == MOLLOM_MODE_ANALYSIS) {
-      // $mode was stored as 1, default to MOLLOM_MODE_ANALYSIS if the form supports it.
+    // $mode was stored as 1; default to MOLLOM_MODE_ANALYSIS if the form
+    // supports it.
+    if (isset($mode) && $info['mode'] == MOLLOM_MODE_ANALYSIS) {
       variable_set($name, MOLLOM_MODE_ANALYSIS);
     }
   }
-  return array(array('success' => TRUE, 'query' => 'Updated Mollom form protection settings.'));
 }
 
 /**
@@ -122,3 +218,143 @@ function mollom_update_4() {
   db_add_field($ret, 'mollom', 'reputation', array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''));
   return $ret;
 }
+
+/**
+ * Add the {mollom_form} table.
+ */
+function mollom_update_6105() {
+  $ret = array();
+  $schema = array(
+    'fields' => array(
+      'form_id' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'mode' => array(
+        'description' => 'The configured protection mode to use for the form.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'enabled_fields' => array(
+        'type' => 'text',
+        'serialize' => TRUE,
+      ),
+      'module' => array(
+        'description' => 'The module name the $form_id belongs to.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'primary key' => array('form_id'),
+  );
+  db_create_table($ret, 'mollom_form', $schema);
+
+  // Migrate form configuration for enabled, supported modules.
+  foreach (module_list(FALSE, FALSE) as $module) {
+    drupal_load('module', $module);
+  }
+  drupal_load('module', 'mollom');
+
+  // Ensure that we don't get stale form or schema information.
+  mollom_get_form_info(NULL, TRUE);
+  drupal_get_schema('mollom_form', TRUE);
+
+  $form_info = mollom_get_form_info();
+  $result = db_query("SELECT name, value FROM {variable} WHERE name LIKE 'mollom_%%' AND name NOT IN ('mollom_servers', 'mollom_fallback', 'mollom_public_key', 'mollom_private_key')");
+  while ($row = db_fetch_object($result)) {
+    $form_id = substr($row->name, 7);
+    $mode = unserialize($row->value);
+    if (!empty($mode) && isset($form_info[$form_id])) {
+      $info = $form_info[$form_id];
+      $info['mode'] = $mode;
+      $info['enabled_fields'] = array_keys($info['elements']);
+      mollom_form_save($info);
+    }
+    variable_del($row->name);
+  }
+  return $ret;
+}
+
+/**
+ * Add the {mollom}.form_id column.
+ *
+ * @todo Rename 'did' column after mollom_set_data() and mollom_get_data() have
+ *   been removed.
+ */
+function mollom_update_6106() {
+  $ret = array();
+  // Add the 'entity' column.
+  db_add_field($ret, 'mollom', 'entity', array(
+    'description' => 'The entity type of the content.',
+    'type' => 'varchar',
+    'length' => 32,
+    'not null' => TRUE,
+    'default' => '',
+  ));
+  // Change the primary key to prevent duplicate key errors in the following
+  // data conversions.
+  db_drop_primary_key($ret, 'mollom');
+  db_add_primary_key($ret, 'mollom', array('entity', 'did'));
+
+  // Migrate existing node data.
+  $ret[] = update_sql("UPDATE {mollom} SET entity = 'node' WHERE did LIKE 'node-%'");
+  $ret[] = update_sql("UPDATE {mollom} SET did = SUBSTR(did, 6) WHERE entity = 'node'");
+  // Migrate existing comment data.
+  $ret[] = update_sql("UPDATE {mollom} SET entity = 'comment' WHERE did LIKE 'comment-%'");
+  $ret[] = update_sql("UPDATE {mollom} SET did = SUBSTR(did, 9) WHERE entity = 'comment'");
+
+  // Decrease the size of the 'did' column.
+  // @todo We do not change the type to 'int' here to still support named
+  //   identifiers. Reconsider this.
+  db_change_field($ret, 'mollom', 'did', 'did', array(
+    'description' => 'Unique data ID of the content.',
+    'type' => 'varchar',
+    'length' => 32,
+    'not null' => TRUE,
+    'default' => '',
+  ));
+
+  return $ret;
+}
+
+/**
+ * Disable the privacy policy link for existing sites by default.
+ */
+function mollom_update_6107() {
+  $ret = array();
+  variable_set('mollom_privacy_link', 0);
+  $ret[] = array('success' => TRUE, 'query' => "Link to Mollom's privacy policy on forms protected via textual analysis has been disabled.");
+  return $ret;
+}
+
+/**
+ * Rename 'post with no checking' permission to 'bypass mollom protection'.
+ */
+function mollom_update_6108() {
+  $ret = array();
+  $ret[] = update_sql("UPDATE {permission} SET perm = REPLACE(perm, 'post with no checking', 'bypass mollom protection')");
+  return $ret;
+}
+
+/**
+ * Rename 'fields' column to 'enabled_fields'; previously introduced in mollom_update_6105().
+ *
+ * 'fields' is a reserved keyword in MySQL.
+ */
+function mollom_update_6109() {
+  $ret = array();
+  if (db_column_exists('mollom_form', 'fields')) {
+    db_change_field($ret, 'mollom_form', 'fields', 'enabled_fields', array(
+      'type' => 'text',
+      'serialize' => TRUE,
+    ));
+  }
+  return $ret;
+}
+

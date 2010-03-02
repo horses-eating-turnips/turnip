@@ -1,41 +1,70 @@
-// $Id: mollom.js,v 1.2.2.5 2009/04/12 19:29:20 dries Exp $
+// $Id: mollom.js,v 1.2.2.11 2010/02/19 05:50:39 dries Exp $
 
-Drupal.behaviors.mollom = function() {
-  // Add onclick.event handlers for CAPTCHA links:
-  $('a#mollom-audio-captcha').click(getAudioCaptcha);
-  $('a#mollom-image-captcha').click(getImageCaptcha);
-}
+(function ($) {
+
+/**
+ * Open Mollom privacy policy link in a new window.
+ *
+ * Required for valid XHTML Strict markup.
+ */
+Drupal.behaviors.mollomPrivacy = function (context) {
+  $('.mollom-privacy a', context).click(function () {
+    this.target = '_blank';
+  });
+};
+
+/**
+ * Attach click event handlers for CAPTCHA links.
+ */
+Drupal.behaviors.mollomCaptcha = function (context) {
+  $('a.mollom-audio-captcha', context).click(getAudioCaptcha);
+  $('a.mollom-image-captcha', context).click(getImageCaptcha);
+};
 
 function getAudioCaptcha() {
+  var context = $(this).parents('form');
+
   // Extract the Mollom session ID from the form:
-  var mollomSessionId = $("input#edit-mollom-session-id").val();
+  var mollomSessionId = $('input.mollom-session-id', context).val();
 
   // Retrieve an audio CAPTCHA:
-  var data = $.get(Drupal.settings.basePath + 'mollom/captcha/audio/' + mollomSessionId,
-    function(data) {
-     // When data is successfully loaded, replace
-     // contents of captcha-div with an audio CAPTCHA:
-     $('a#mollom-captcha').parent().html(data);
-
-     // Add an onclick-event handler for the new link:
-     $('a#mollom-image-captcha').click(getImageCaptcha);
-   });
-   return false;
+  $.getJSON(Drupal.settings.basePath + 'mollom/captcha/audio/' + mollomSessionId,
+    function (data) {
+      if (!(data && data.content)) {
+        return;
+      }
+      // Inject new audio CAPTCHA.
+      $('.mollom-captcha-content', context).parent().html(data.content);
+      // Update session id.
+      $('input.mollom-session-id', context).val(data.session_id);
+      // Add an onclick-event handler for the new link.
+      $('a.mollom-image-captcha', context).click(getImageCaptcha);
+    }
+  );
+  return false;
 }
 
 function getImageCaptcha() {
+  var context = $(this).parents('form');
+
   // Extract the Mollom session ID from the form:
-  var mollomSessionId = $('input#edit-mollom-session-id').val();
+  var mollomSessionId = $('input.mollom-session-id', context).val();
 
   // Retrieve an image CAPTCHA:
-  var data = $.get(Drupal.settings.basePath + 'mollom/captcha/image/' + mollomSessionId,
-    function(data) {
-     // When data is successfully loaded, replace
-     // contents of captcha-div with an image CAPTCHA:
-     $('a#mollom-captcha').parent().html(data);
-
-     // Add an onclick-event handler for the new link:
-     $('a#mollom-audio-captcha').click(getAudioCaptcha);
-   });
-   return false;
+  $.getJSON(Drupal.settings.basePath + 'mollom/captcha/image/' + mollomSessionId,
+    function (data) {
+      if (!(data && data.content)) {
+        return;
+      }
+      // Inject new image CAPTCHA.
+      $('.mollom-captcha-content', context).parent().html(data.content);
+      // Update session id.
+      $('input.mollom-session-id', context).val(data.session_id);
+      // Add an onclick-event handler for the new link.
+      $('a.mollom-audio-captcha', context).click(getAudioCaptcha);
+    }
+  );
+  return false;
 }
+
+})(jQuery);
