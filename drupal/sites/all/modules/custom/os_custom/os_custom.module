@@ -36,20 +36,42 @@ function os_custom_imagecache_default_presets() {
 }
 
 /**
- * Implementation of hook_strongarm().
+ * Implementations of hook_date_format_types().
  */
-function os_custom_strongarm() {
-  $conf = array();
+function os_custom_date_format_types() {
+  return array(
+    'day' => t('Day'),
+    'time' => t('Time'),
+  );
+}
 
-  // Set front page here.
-  // $conf['site_frontpage'] = '';
-
-  if (module_exists('path_redirect')) {
-    // Pathauto.
-    $conf['pathauto_update_action'] = 3;
+/**
+ * Implementation of hook_date_formats().
+ */
+function os_custom_date_formats() {
+  $condensed = array(
+    'day' => array(
+      'j F Y',
+      'l, M j',
+      'l, j M',
+      'n/j/Y',
+    ),
+    'time' => array(
+      'g:ia',
+      'H:i',
+    ),
+  );
+  $formats = array();
+  foreach ($condensed as $type => $f) {
+    foreach ($f as $format) {
+      $formats[] = array(
+        'type' => $type,
+        'format' => $format,
+        'locales' => array(),
+      );
+    }
   }
-
-  return $conf;
+  return $formats;
 }
 
 /**
