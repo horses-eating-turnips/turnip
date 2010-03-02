@@ -8,6 +8,6 @@ shopt -s expand_aliases
 output=`pwd`/local.sql.gz
 
 cd ../drupal
-drush cache clear all
-drush watchdog delete all
-drush sql dump | gzip > $output
+drush cache-clear all
+drush watchdog-delete all
+drush sql-dump | gzip > $output
