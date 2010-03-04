@@ -16,5 +16,5 @@ $dbname = $$Y{'test server'}{'dbhost'}{'dbname'};
 
 print "Downloading $dbname from $dbhost....\n\n";
 
-`ssh $user\@$host mysqldump -u $dbuser -p$dbpass -h $dbhost $dbname | gzip > test_current.sql.gz`;
+`ssh $user\@$host "mysqldump -u $dbuser -p$dbpass -h $dbhost $dbname | gzip" > test_current.sql.gz`;
 
