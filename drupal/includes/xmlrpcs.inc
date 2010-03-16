@@ -1,5 +1,5 @@
 <?php
-// $Id: xmlrpcs.inc 896 2009-12-29 17:38:09Z jhedstrom $
+// $Id: xmlrpcs.inc,v 1.24.2.3 2009/12/07 11:36:28 goba Exp $
 
 /**
  * The main entry point for XML-RPC requests.

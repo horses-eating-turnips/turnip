@@ -1,5 +1,5 @@
 <?php
-// $Id: user-profile.tpl.php 896 2009-12-29 17:38:09Z jhedstrom $
+// $Id: user-profile.tpl.php,v 1.2.2.2 2009/10/06 11:50:06 goba Exp $
 
 /**
  * @file user-profile.tpl.php

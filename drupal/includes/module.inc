@@ -1,5 +1,5 @@
 <?php
-// $Id: module.inc 896 2009-12-29 17:38:09Z jhedstrom $
+// $Id: module.inc,v 1.115.2.3 2009/11/16 17:17:35 goba Exp $
 
 /**
  * @file

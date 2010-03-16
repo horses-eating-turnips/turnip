@@ -1,5 +1,5 @@
 <?php
-// $Id: contact.admin.inc 896 2009-12-29 17:38:09Z jhedstrom $
+// $Id: contact.admin.inc,v 1.3.2.1 2009/12/16 20:47:10 goba Exp $
 
 /**
  * @file

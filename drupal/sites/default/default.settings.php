@@ -1,5 +1,5 @@
 <?php
-// $Id: default.settings.php 896 2009-12-29 17:38:09Z jhedstrom $
+// $Id: default.settings.php,v 1.8.2.4 2009/09/14 12:59:18 goba Exp $
 
 /**
  * @file

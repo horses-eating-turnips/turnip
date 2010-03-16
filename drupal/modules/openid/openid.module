@@ -1,5 +1,5 @@
 <?php
-// $Id: openid.module 896 2009-12-29 17:38:09Z jhedstrom $
+// $Id: openid.module,v 1.19.2.9 2009/12/07 12:52:22 goba Exp $
 
 /**
  * @file

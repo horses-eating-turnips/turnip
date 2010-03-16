@@ -1,5 +1,5 @@
 <?php
-// $Id: system.module 896 2009-12-29 17:38:09Z jhedstrom $
+// $Id: system.module,v 1.585.2.49 2010/03/04 00:15:28 goba Exp $
 
 /**
  * @file
@@ -9,7 +9,7 @@
 /**
  * The current system version.
  */
-define('VERSION', '6.15');
+define('VERSION', '6.16');
 
 /**
  * Core API compatibility.

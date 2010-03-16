@@ -1,5 +1,5 @@
 <?php
-// $Id: search.module 896 2009-12-29 17:38:09Z jhedstrom $
+// $Id: search.module,v 1.250.2.8 2009/12/07 15:44:33 goba Exp $
 
 /**
  * @file
