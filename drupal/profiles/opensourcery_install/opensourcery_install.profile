@@ -16,7 +16,6 @@ function opensourcery_install_profile_modules() {
     'admin_menu',
     'advanced_help',
     'better_formats',
-    'mollom',
     'pathauto',
     'path_redirect',
     'role_delegation',
