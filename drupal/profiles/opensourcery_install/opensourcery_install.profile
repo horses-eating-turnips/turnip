@@ -220,9 +220,6 @@ function _opensourcery_install_set_permissions() {
   $admin_rid = array_search('web admin', $roles);
   $admin_user_perms = array(
     'access administration menu',
-    'access fckeditor',
-    'administer fckeditor',
-    'allow fckeditor file uploads',
     'create url aliases',
     'administer menu',
     'administer nodes',
@@ -243,8 +240,6 @@ function _opensourcery_install_set_permissions() {
 
   $site_editor_rid = array_search('site editor', $roles);
   $site_editor_user_perms = array(
-    'access fckeditor',
-    'allow fckeditor file uploads',
     'create url aliases',
     'create page content',
     'delete own page content',
