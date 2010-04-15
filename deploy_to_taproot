@@ -13,10 +13,10 @@
 # Change @HOST accordingly, e.g. project_name.test.opensourcery.com
 USER=
 HOST=
-DOCUMENTROOT=
+DOCUMENTROOT=/home/$USER
 
 # Branch to deploy from--CURRENTLY UNUSED
-BRANCH=
+BRANCH=.
 
 ##### Things below here generally won't need to be changed #####
 
@@ -26,9 +26,10 @@ TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
 
 # grab everything from git into /tmp/$TIMESTAMP
 mkdir /tmp/$TIMESTAMP
-git archive --format=tar HEAD ./drupal/ | (cd /tmp/$TIMESTAMP && tar xf -)
-cp -a /tmp/$TIMESTAMP/drupal/* /tmp/$TIMESTAMP/drupal/.* /tmp/$TIMESTAMP
-rm -rf /tmp/$TIMESTAMP/drupal
+mkdir /tmp/"$TIMESTAMP"_tmp
+git archive --format=tar HEAD ./drupal/ | (cd /tmp/"$TIMESTAMP"_tmp && tar xf -)
+rsync -azC /tmp/"$TIMESTAMP"_tmp/drupal/ /tmp/$TIMESTAMP/
+rm -rf /tmp/"$TIMESTAMP"_tmp
 
 # This script only does re-deployment, so remove files directory
 rm -Rf /tmp/$TIMESTAMP/sites/default/files
