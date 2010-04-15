@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# $Id$
+
+##
+# @file
+# OpenSourcery Drupal Deployment Script
+#
+# @todo This currently won't work for initial deployment to a Drupal
+# host. Several things still need to be done manually the first time
+# around.
+
+# Change @HOST accordingly, e.g. project_name.test.opensourcery.com
+USER=
+HOST=
+DOCUMENTROOT=
+
+# Branch to deploy from--CURRENTLY UNUSED
+BRANCH=
+
+##### Things below here generally won't need to be changed #####
+
+TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
+
+# Values below here shouldn't need to be modified for standard OS Drupal deployments
+
+# grab everything from git into /tmp/$TIMESTAMP
+mkdir /tmp/$TIMESTAMP
+git archive --format=tar HEAD ./drupal/ | (cd /tmp/$TIMESTAMP && tar xf -)
+cp -a /tmp/$TIMESTAMP/drupal/* /tmp/$TIMESTAMP/drupal/.* /tmp/$TIMESTAMP
+rm -rf /tmp/$TIMESTAMP/drupal
+
+# This script only does re-deployment, so remove files directory
+rm -Rf /tmp/$TIMESTAMP/sites/default/files
+
+# Create links to settings and files.
+# NOTE: This is done locally, prior to upload, even though locally
+# they are broken links.
+ln -s $DOCUMENTROOT/shared/files /tmp/$TIMESTAMP/sites/default/files
+ln -s $DOCUMENTROOT/shared/settings.php /tmp/$TIMESTAMP/sites/default/settings.php
+
+ssh $USER@$HOST cp -Rp $DOCUMENTROOT/public_html/ $DOCUMENTROOT/releases/$TIMESTAMP
+rsync -avzC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$DOCUMENTROOT/releases/$TIMESTAMP/
+
+# Change group to www-data
+#ssh $USER@$HOST chgrp -R www-data $DOCUMENTROOT
+
+# remove old release link and link the new version
+ssh $USER@$HOST "rm $DOCUMENTROOT/public_html; ln -s $DOCUMENTROOT/releases/$TIMESTAMP $DOCUMENTROOT/public_html"
+
+# Cleanup local machine
+rm -Rf /tmp/$TIMESTAMP
