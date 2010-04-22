@@ -3,11 +3,17 @@
 shopt -s expand_aliases
 # Must set this option, else script will not expand "drush" alias.
 
-# @todo - maybe use drupal's site_name to name the output file?
+if [ -z "$1" ]; then
+  # get drupal's site name, then make lowercase and change spaces to dashes
+  output="`drush --root=../drupal php-eval "print variable_get('site_name', 'local')"`.sql.gz"
+  output=`echo "$output" | sed -e 's/.*/\L&/' | sed -e 's/ /-/'`
+else
+  if [[ "$1" == "--release" ]]; then
+    output="release-`date +%Y_%m_%d__%H_%M_%S`.sql.gz"
+  else
+    output="$1"
+  fi
+fi
 
-output=`pwd`/local.sql.gz
-
-cd ../drupal
-drush cache-clear all
-drush watchdog-delete all
-drush sql-dump | gzip > $output
+# @note - drush sql-dump's --result-file=<file> seems to Just Not Work (doesn't even create the file)
+drush --root=../drupal --config=drushrc.php sql-dump --structure-tables-key=opensourcery | gzip > $output
