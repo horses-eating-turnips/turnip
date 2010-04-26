@@ -15,5 +15,5 @@ else
   fi
 fi
 
-# @note - drush sql-dump's --result-file=<file> seems to Just Not Work (doesn't even create the file)
+drush --root=../drupal cc all
 drush --root=../drupal --config=drushrc.php sql-dump --structure-tables-key=opensourcery | gzip > $output
