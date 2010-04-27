@@ -1,0 +1,3 @@
+#Deny access to any browsing of this directory
+order allow,deny
+deny from all
