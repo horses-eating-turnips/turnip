@@ -1,0 +1,45 @@
+diff --git gateways/simple_payments_paypal/simple_payments_paypal.module gateways/simple_payments_paypal/simple_payments_paypal.module
+index 48c4baa..a5d7be2 100644
+--- gateways/simple_payments_paypal/simple_payments_paypal.module
++++ gateways/simple_payments_paypal/simple_payments_paypal.module
+@@ -2,6 +2,7 @@
+ // $Id: simple_payments_paypal.module,v 1.1 2009/11/17 03:48:49 jbrown Exp $
+ 
+ define('SIMPLE_PAYMENTS_PAYPAL_SUBMIT_URL', 'https://www.paypal.com/cgi-bin/webscr');
++define('SIMPLE_PAYMENTS_PAYPAL_SUBIT_URL_SANDBOX', 'https://sandbox.paypal.com/cgi-bin/webscr');
+ define('SIMPLE_PAYMENTS_PAYPAL_IPN_PATH', 'system/simple_payments_paypal/ipn');
+ 
+ 
+@@ -36,7 +37,7 @@ function simple_payments_paypal_payment_form($vars = array()) {
+ 
+   $form = simple_payments_build_form($vars);
+ 	
+-	$form['#action'] = SIMPLE_PAYMENTS_PAYPAL_SUBMIT_URL;
++	$form['#action'] = variable_get('simple_payments_paypal_sandbox', 0) ? SIMPLE_PAYMENTS_PAYPAL_SUBIT_URL_SANDBOX : SIMPLE_PAYMENTS_PAYPAL_SUBMIT_URL;
+ 
+ 	return $form;
+ }
+@@ -79,6 +80,14 @@ function simple_payments_paypal_admin_form($form_state) {
+ 		'#description' => '(email address)',
+ 	);
+ 
++  $form['simple_payments_paypal_sandbox'] = array(
++    '#type' => 'radios',
++    '#title' => t('Sandbox/Development mode'),
++    '#description' => t('When in development mode, the payment gateway will point at sandbox.paypal.com for testing purposes.'),
++    '#options' => array(0 => t('Off'), t('On')),
++    '#default_value' => variable_get('simple_payments_paypal_sandbox', 0),
++  );
++
+   return system_settings_form($form);
+ }
+ 
+@@ -96,7 +105,7 @@ function _simple_payments_paypal_post($data = array()) {
+ 
+ function _simple_payments_paypal_ipn_verify($vars = array()) {
+ 
+-  $ch = curl_init(SIMPLE_PAYMENTS_PAYPAL_SUBMIT_URL);
++  $ch = curl_init(variable_get('simple_payments_paypal_sandbox', 0) ? SIMPLE_PAYMENTS_PAYPAL_SUBIT_URL_SANDBOX : SIMPLE_PAYMENTS_PAYPAL_SUBMIT_URL);
+ 
+   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+   curl_setopt($ch, CURLOPT_POST, 1);
