@@ -1,5 +1,5 @@
-OpenSourcery Drupal documentation
----------------------------------
+Donor Rally Drupal documentation and patches
+--------------------------------------------
 
 All files in this directory, unless otherwise noted, are patch files against various contrib modules, and in some rare cases, Drupal core.
 
