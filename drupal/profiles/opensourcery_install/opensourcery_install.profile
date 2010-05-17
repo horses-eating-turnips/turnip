@@ -174,10 +174,10 @@ function opensourcery_install_form_alter(&$form, $form_state, $form_id) {
 }
 
 /**
- * Creates Site Editor and Web Admin roles.
+ * Creates Site Editor and Administrator roles.
  */
 function _opensourcery_install_user_roles() {
-  foreach (array('site editor', 'web admin') as $role) {
+  foreach (array('site editor', 'administrator') as $role) {
     if (!db_result(db_query("SELECT rid FROM {role} WHERE name = '%s'", array(':role_name' => $role)))) {
       db_query("INSERT INTO {role} (name) VALUES ('%s')", $role);
       drupal_set_message(t('The %role role has been added.', array('%role' => $role)));
@@ -188,12 +188,12 @@ function _opensourcery_install_user_roles() {
 }
 
 /**
- * Set site editor and web admin default input format to full HTML.
+ * Set site editor and administrator default input format to full HTML.
  */
 function _opensourcery_install_better_formats() {
   $roles = array();
   foreach (user_roles() as $rid => $name) {
-    if (in_array($name, array('site editor', 'web admin'))) {
+    if (in_array($name, array('site editor', 'administrator'))) {
       $roles[] = $rid;
       // Float admin to top, site editor 2nd highest.
       $weight = -2 * $rid;
@@ -207,7 +207,7 @@ function _opensourcery_install_better_formats() {
     $roles = array_merge($current, $roles);
   }
   $roles = ','. implode(',', $roles) .',';
-  // Allow site editors and web admins to use HTML;
+  // Allow site editors and administrators to use HTML;
   db_query("UPDATE {filter_formats} SET roles = '%s' WHERE format = 2", array(':roles' => $roles));
 }
 
@@ -216,7 +216,7 @@ function _opensourcery_install_better_formats() {
  */
 function _opensourcery_install_set_permissions() {
   $roles = user_roles();
-  $admin_rid = array_search('web admin', $roles);
+  $admin_rid = array_search('administrator', $roles);
   $admin_user_perms = array(
     'access administration menu',
     'create url aliases',
@@ -228,13 +228,13 @@ function _opensourcery_install_set_permissions() {
     'revert revisions',
     'view revisions',
     'assign site editor role',
-    'assign web admin role',
+    'assign administrator role',
     'administer users',
     'access administration pages',
   );
-  if (!db_result(db_query("SELECT rid FROM {permission} LEFT JOIN {role} USING (rid) WHERE name = '%s'", array(':role_name' => 'web admin')))) {
+  if (!db_result(db_query("SELECT rid FROM {permission} LEFT JOIN {role} USING (rid) WHERE name = '%s'", array(':role_name' => 'administrator')))) {
     db_query("INSERT INTO {permission} (rid, perm) VALUES (%d, '%s')", array(':rid' => $admin_rid, implode(', ', $admin_user_perms)));
-    drupal_set_message(t("Set sensible defaults for %role role.", array('%role' => 'web admin')));
+    drupal_set_message(t("Set sensible defaults for %role role.", array('%role' => 'administrator')));
   }
 
   $site_editor_rid = array_search('site editor', $roles);
