@@ -1,5 +1,5 @@
 <?php
-// $Id: devel.module,v 1.258.2.64 2010/01/31 21:11:27 weitzman Exp $
+// $Id: devel.module,v 1.258.2.70 2010/04/21 20:03:10 salvis Exp $
 
 // This module holds functions useful for Drupal development.
 // Please contribute!
@@ -142,7 +142,7 @@ function devel_menu() {
   );
   $items['admin/settings/devel'] = array(
     'title' => 'Devel settings',
-    'description' =>  'Helper functions, pages, and blocks to assist Drupal developers. The devel blocks can be managed via the <a href="!block">block administration</a> page.', array('!block' => url('admin/build/block')),
+    'description' => 'Helper functions, pages, and blocks to assist Drupal developers. The devel blocks can be managed via the <a href="/admin/build/block">block administration</a> page.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('devel_admin_settings'),
     'access arguments' => array('administer site configuration'),
@@ -201,6 +201,13 @@ function devel_menu() {
     'access arguments' => array('access devel information'),
     'type' => MENU_LOCAL_TASK,
     'weight' => 10,
+  );
+  $items['devel/theme/registry'] = array(     
+    'title' => 'Theme registry',     
+    'description' => 'View a list of available theme functions across the whole site.',     
+    'page callback' => 'devel_theme_registry',     
+    'access arguments' => array('access devel information'),     
+    'menu_name' => 'devel',     
   );
 
   return $items;
@@ -532,7 +539,11 @@ function devel_block($op = 'list', $delta = 0, $edit = array()) {
   if ($op == 'list') {
     $blocks[0]['info'] = t('Switch user');
 //     $blocks[1]['info'] = t('Devel');
-    $blocks[2]['info'] = t('Execute PHP');
+    $blocks[2] = array(
+      'info' => t('Execute PHP'),
+      'visibility' => 0,
+      'pages' => 'devel/php',
+    );
     return $blocks;
   }
   elseif ($op == 'configure' && $delta == 0) {
@@ -559,8 +570,7 @@ function devel_block($op = 'list', $delta = 0, $edit = array()) {
         break;
       case 2:
         if (user_access('execute php code')) {
-          $block['subject'] = t('Execute PHP');
-          $block['content'] = drupal_get_form('devel_execute_form');
+          $block['content'] = drupal_get_form('devel_execute_block_form');
         }
         break;
     }
@@ -570,7 +580,7 @@ function devel_block($op = 'list', $delta = 0, $edit = array()) {
 
 function devel_block_switch_user() {
   $links = devel_switch_user_list();
-  if (!empty($links)) {
+  if (!empty($links) || user_access('switch users')) {
     $block['subject'] = t('Switch user');
     $block['content'] = theme('links', $links);
     $block['content'] .= drupal_get_form('devel_switch_user_form');
@@ -1042,13 +1052,27 @@ function devel_cache_clear() {
 /**
  * Generates the execute block form.
  */
+function devel_execute_block_form() {
+  $form['execute'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Execute PHP Code'),
+    '#collapsible' => TRUE,
+    '#collapsed' => (!isset($_POST['code'])),
+  );
+  $form['#submit'] = array('devel_execute_form_submit');
+  return array_merge_recursive($form, devel_execute_form());
+}
+
+/**
+ * Generates the execute form.
+ */
 function devel_execute_form() {
-  $form['code'] = array(
+  $form['execute']['code'] = array(
     '#type' => 'textarea',
     '#title' => t('PHP code to execute'),
-    '#description' => t('Enter some code. Do not use <code>&lt;?php ?&gt;</code> tags.')
+    '#description' => t('Enter some code. Do not use <code>&lt;?php ?&gt;</code> tags.'),
   );
-  $form['op'] = array('#type' => 'submit', '#value' => t('Execute'));
+  $form['execute']['op'] = array('#type' => 'submit', '#value' => t('Execute'));
   $form['#redirect'] = FALSE;
   $form['#skip_duplicate_check'] = TRUE;
   return $form;
@@ -1836,9 +1860,7 @@ function devel_rebuild_node_comment_statistics_page() {
 }
 
 /**
- * Update node_comment_statistics table for nodes with comments.
- * TODO: if 2 comments have exact same timestamp, the function can get wrong uid and name fields.
- * Handles when comment timestamps have been manually set in admin
+ * Regenerate the data in node_comment_statistics table.
  *
  * @return void
  **/
@@ -1847,10 +1869,10 @@ function devel_rebuild_node_comment_statistics() {
   $sql = "DELETE FROM {node_comment_statistics}";
   db_query($sql);
 
-  $sql = "INSERT INTO {node_comment_statistics} (nid, last_comment_timestamp, last_comment_name, last_comment_uid, comment_count) (select nid, c.timestamp, name, uid, comment_count FROM {comments} c INNER JOIN (SELECT MAX(timestamp) AS timestamp, COUNT(*) AS comment_count FROM {comments} WHERE status=%d GROUP BY nid) as c2 ON c.timestamp=c2.timestamp)";
+  $sql = "INSERT INTO {node_comment_statistics} (nid, last_comment_timestamp, last_comment_name, last_comment_uid, comment_count) (select nid, c.timestamp, name, uid, comment_count FROM {comments} c INNER JOIN (SELECT MAX(timestamp) AS timestamp, COUNT(*) AS comment_count FROM {comments} WHERE status=%d GROUP BY nid) AS c2 ON c.nid = c2.nid AND c.timestamp=c2.timestamp)";
   db_query($sql, COMMENT_PUBLISHED);
 
   // Insert 0 count records into the node_comment_statistics for nodes that are missing. See comment_enable()
-  db_query_temporary("SELECT n.nid, n.changed, n.uid FROM {node} n LEFT JOIN {node_comment_statistics} c ON n.nid = c.nid WHERE c.comment_count IS NULL", 'missing_nids');
-  db_query("INSERT INTO {node_comment_statistics} (nid, last_comment_timestamp, last_comment_name, last_comment_uid, comment_count) SELECT n.nid, n.changed, NULL, n.uid, 0 FROM missing_nids n");
+  db_query_temporary("SELECT n.nid, n.created, n.uid FROM {node} n LEFT JOIN {node_comment_statistics} c ON n.nid = c.nid WHERE c.comment_count IS NULL", 'missing_nids');
+  db_query("INSERT INTO {node_comment_statistics} (nid, last_comment_timestamp, last_comment_name, last_comment_uid, comment_count) SELECT n.nid, n.created, NULL, n.uid, 0 FROM missing_nids n");
 }

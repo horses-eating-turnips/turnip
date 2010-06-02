@@ -5,9 +5,9 @@ package = Development
 dependencies[] = menu
 core = 6.x
 
-; Information added by drupal.org packaging script on 2010-03-19
-version = "6.x-1.19"
+; Information added by drupal.org packaging script on 2010-04-21
+version = "6.x-1.20"
 core = "6.x"
 project = "devel"
-datestamp = "1268976904"
+datestamp = "1271886306"
 

@@ -1,5 +1,5 @@
 <?php
-// $Id: devel_generate.inc,v 1.14.2.19 2010/02/03 18:29:45 weitzman Exp $
+// $Id: devel_generate.inc,v 1.14.2.21 2010/04/21 15:27:44 weitzman Exp $
 // If not in 'safe mode', increase the maximum execution time:
 if (!ini_get('safe_mode')) {
   set_time_limit(240);
@@ -388,12 +388,11 @@ function devel_generate_add_upload(&$node) {
   $file->description = 'b log.png was here';
   $file->filesize = $size;
   $file->weight = mt_rand(0,10);
+  $file->new = TRUE;
 
   // If we made it this far it's safe to record this file in the database.
   db_query("INSERT INTO {files} (uid, filename, filepath, filemime, filesize, status, timestamp) VALUES (%d, '%s', '%s', '%s', %d, %d, %d)", $node->uid, $file->filename, $file->filepath, $file->filemime, $file->filesize, FILE_STATUS_TEMPORARY, time());
   $file->fid = db_last_insert_id('files', 'fid');
-  
-  $_SESSION['upload_files'][$file->fid] = $file;
   $node->files[$file->fid] = $file;
 }
 
@@ -491,6 +490,10 @@ function devel_generate_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
 
         if ($results['add_terms']) {
           devel_generate_add_terms($node);
+        }
+        if (isset($results['add_language']) && variable_get('language_content_type_' . $node->type, 0)) {
+          $languages = array_keys($results['add_language']);
+          $node->language = $languages[array_rand($languages)];
         }
         break;
     case 'insert':
