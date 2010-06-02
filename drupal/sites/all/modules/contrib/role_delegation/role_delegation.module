@@ -1,5 +1,5 @@
 <?php
-// $Id: role_delegation.module 841 2009-07-03 00:10:37Z jhedstrom $
+// $Id: role_delegation.module,v 1.14.2.4 2010/01/12 20:37:27 davidlesieur Exp $
 
 /**
  * @file
@@ -46,7 +46,6 @@ function role_delegation_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('role_delegation_roles_form', 1),
     'access callback' => 'role_delegation_access',
-    'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
   );
   return $items;
@@ -120,13 +119,13 @@ function role_delegation_roles_form_submit($form, &$form_state) {
 /**
  * Access callback for menu hook.
  */
-function role_delegation_access($account) {
+function role_delegation_access() {
   // Check access to user profile page.
-  if (!user_view_access($account)) {
+  if (!user_access('access user profiles')) {
     return FALSE;
   }
-  // Check if they can use the Edit tab instead.
-  if (user_edit_access($account)) {
+  // Check if they can edit users. In that case, the Roles tab is not needed.
+  if (user_access('administer users')) {
     return FALSE;
   }
   // Check access to role assignment page.
@@ -153,80 +152,118 @@ function _role_delegation_roles() {
 }
 
 /**
- * Returns the delegation permission for a role. Any characters from the role
- * that are not allowed in permission names are filtered out.
+ * Returns the delegation permission for a role.
  */
 function _role_delegation_make_perm($role) {
-  // Allow alphanumerics, space, hyphen, underscore.
-  $role = preg_replace('/[^a-zA-Z0-9 \\-_]/', '', $role);
   return "assign $role role";
 }
 
-/**
- * Implementation of hook_form_alter().
- */
-function role_delegation_form_alter(&$form, $form_state, $form_id) {
-  // Only alter user form when user can't assign permissions without Role Delegation.
-  if ($form_id != 'user_register' && $form_id != 'user_profile_form') {
-    return;
-  }
-  if (user_access('administer permissions')) {
-    return;
-  }
-  // Split up roles based on whether they can be delegated or not.
-  $current_roles = (isset($form['#uid']) && $user = user_load(array('uid' => $form['#uid']))) ? $user->roles : array();
-  $rids_default = array();
-  $rids_preserve = array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID);
-  $roles_preserve = array('authenticated user');
-  $roles_options = array();
-  $roles = _role_delegation_roles();
-  foreach ($roles as $rid => $role) {
-    if (user_access('assign all roles') || user_access(_role_delegation_make_perm($role))) {
-      if (array_key_exists($rid, $current_roles)) {
-        $rids_default[] = $rid;
-      }
-      $roles_options[$rid] = $role;
-    }
-    else {
-      if (array_key_exists($rid, $current_roles)) {
-        $rids_preserve[$rid] = $rid;
-        $roles_preserve[] = $role;
-      }
-    }
-  }
-  if (empty($roles_options)) {
-    // No role can be assigned.
-    return; 
-  }
-  // Generate the form items.
-  $form['roles_preserve'] = array(
-    '#type' => 'value',
-    '#value' => $rids_preserve,
-  );
-  $assign_item = array(
-    '#type' => 'checkboxes',
-    '#title' => t('Roles'),
-    '#description' => t('The user receives the combined permissions of the %roles role(s), and all roles selected here. ', array('%roles' => implode(', ', $roles_preserve))),
-    '#options' => $roles_options,
-    '#default_value' => $rids_default,
-  );
-  if (isset($form['account'])) {
-    $form['account']['roles_assign'] = $assign_item;
-  }
-  else {
-    $form['roles_assign'] = $assign_item;
-  }
-}
 
 /**
  * Implementation of hook_user().
  */
 function role_delegation_user($op, &$edit, &$account, $category = NULL) {
-  if ($op != 'insert' && $op != 'submit') {
+  if ($op == 'register' || ($op == 'form' && $category == 'account')) {
+    // Only alter user form when user can't assign permissions without Role Delegation.
+    if (!user_access('administer permissions')) {
+      // Split up roles based on whether they can be delegated or not.
+      $current_roles = isset($account->roles) ? $account->roles : array();
+      $rids_default = array();
+      $rids_preserve = array(DRUPAL_AUTHENTICATED_RID => DRUPAL_AUTHENTICATED_RID);
+      $roles_preserve = array('authenticated user');
+      $roles_options = array();
+      $roles = _role_delegation_roles();
+      foreach ($roles as $rid => $role) {
+        if (user_access('assign all roles') || user_access(_role_delegation_make_perm($role))) {
+          if (array_key_exists($rid, $current_roles)) {
+            $rids_default[] = $rid;
+          }
+          $roles_options[$rid] = $role;
+        }
+        else {
+          if (array_key_exists($rid, $current_roles)) {
+            $rids_preserve[$rid] = $rid;
+            $roles_preserve[] = $role;
+          }
+        }
+      }
+      if (empty($roles_options)) {
+        // No role can be assigned.
+        return; 
+      }
+      // Generate the form items.
+      $form['roles_preserve'] = array(
+        '#type' => 'value',
+        '#value' => $rids_preserve,
+      );
+      $form['roles_assign'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('Roles'),
+        '#description' => t('The user receives the combined permissions of the %roles role(s), and all roles selected here. ', array('%roles' => implode(', ', $roles_preserve))),
+        '#options' => $roles_options,
+        '#default_value' => $rids_default,
+      );
+      return $form;
+    }
+  }
+  elseif (isset($edit['roles_assign']) && ($op == 'insert' || $op == 'submit')) {
+    $edit['roles'] = $edit['roles_preserve'] + array_filter($edit['roles_assign']);
+  }
+}
+
+/**
+ * Implementation of hook_user_operations().
+ */
+function role_delegation_user_operations($form_state = array()) {
+  // Only provide role add/remove operations when user can't assign permissions
+  // without Role Delegation.
+  if (user_access('administer permissions')) {
     return;
   }
-  if (!isset($edit['roles_assign'])) {
+
+  // Provide add/remove operations for delegated roles.
+  $roles = _role_delegation_roles();
+  $add_roles = array();
+  $remove_roles = array();
+  foreach ($roles as $rid => $role) {
+    if (user_access('assign all roles') || user_access(_role_delegation_make_perm($role))) {
+      // Use different operation names than those from user_user_operations(),
+      // to keep user_user_operations() from emitting a warning about the
+      // permissions.
+      $add_roles['role_delegation_add_role-' . $rid] = $role;
+      $remove_roles['role_delegation_remove_role-' . $rid] = $role;
+    }
+  }
+  if (!count($add_roles)) {
     return;
   }
-  $edit['roles'] = $edit['roles_preserve'] + array_filter($edit['roles_assign']);
+  $operations = array(
+    t('Add a role to the selected users') => array(
+      'label' => $add_roles,
+    ),
+    t('Remove a role from the selected users') => array(
+      'label' => $remove_roles,
+    ),
+  );
+
+  // If the form has been posted, insert the proper data for role editing if necessary.
+  if (!empty($form_state['submitted'])) {
+    $operation_rid = explode('-', $form_state['values']['operation']);
+    $operation = $operation_rid[0];
+    if ($operation == 'role_delegation_add_role' || $operation == 'role_delegation_remove_role') {
+      $rid = $operation_rid[1];
+      if ($add_roles['role_delegation_add_role-' . $rid]) {
+        $operations[$form_state['values']['operation']] = array(
+          'callback' => 'user_multiple_role_edit',
+          'callback arguments' => array(str_replace('role_delegation_', '', $operation), $rid),
+        );
+      }
+      else {
+        watchdog('security', 'Detected malicious attempt to alter protected user fields.', array(), WATCHDOG_WARNING);
+        return;
+      }
+    }
+  }
+
+  return $operations;
 }
