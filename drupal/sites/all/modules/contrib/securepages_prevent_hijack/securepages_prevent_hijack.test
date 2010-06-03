@@ -1,0 +1,78 @@
+<?php
+// $Id: securepages_prevent_hijack.test,v 1.1.2.4 2009/05/27 18:10:26 grendzy Exp $
+
+/**
+ * @file
+ * Simpletests for securepages_prevent_hijack.
+ */
+
+class SecurepagesPreventHijackTestCase extends DrupalWebTestCase {
+
+  /**
+   * Implementation of getInfo().
+   */
+  public static function getInfo() {
+    return array(
+      'name' => t('Securepages Hijack Prevention'),
+      'description' => t('Functional tests for Securepages Hijack Prevention.'),
+      'group' => t('Securepages Hijack Prevention'),
+    );
+  }
+
+  /**
+   * Implementation of setUp().
+   */
+  function setUp() {
+    parent::setUp('securepages', 'securepages_prevent_hijack');
+    variable_set('securepages_enable', TRUE);
+  }
+
+  /**
+   * Make sure the login forms are using an SSL action.
+   */
+  function testSecurepagesPreventHijackLoginAction() {
+    $this->drupalGet('user/login');
+    $this->assertPattern('/action="https.*id="user-login"/',
+      t('Make sure login page action is secured.'));
+
+    $this->drupalGet('');
+    $this->assertPattern('/action="https.*id="user-login-form"/',
+      t('Make sure login page action is secured.'));
+  }
+
+  /**
+   * Test the ability to detect hijacked sessions.
+   */
+  function testSecurepagesPreventHijackDetection() {
+    $user = $this->drupalCreateUser(array('access content', 'administer nodes'));
+    $this->drupalLogin($user);
+
+    // Check that SSL pages work normally.  node/add/* is protected by default in securepages.
+    $this->drupalGet('node/add/page');
+    $this->assertResponse(200);
+    $this->assertIdentical(strpos($this->getUrl(), 'https'), 0, t('Verify node/add/page is secure.'));
+
+    // Force the private key to regenerate.  This is a sneaky hack to invalidate the secure cookie.
+    variable_set('drupal_private_key', 0);
+    $this->drupalGet('node/add/page');
+    $this->assertResponse(403, t('Make sure hijacked requests are denied.'));
+  }
+
+  /**
+   * Verify that secure cookie is re-sent after a password change
+   */
+  function testSecurepagesPreventHijackPasswordReset() {
+    $user = $this->drupalCreateUser(array('access content', 'administer nodes'));
+    $this->drupalLogin($user);
+
+    $url = 'user/'. $user->uid . '/edit';
+    $edit = array(
+      'pass[pass1]' => 'secret',
+      'pass[pass2]' => 'secret',
+    );
+    $this->drupalPost($url, $edit, t('Save'));
+    $this->drupalGet('node/add/page');
+    // @FIXME - this assertion fails because of this bug: http://drupal.org/node/471970
+    // $this->assertResponse(200);
+  }
+}

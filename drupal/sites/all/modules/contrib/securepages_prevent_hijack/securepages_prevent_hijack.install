@@ -1,5 +1,5 @@
 <?php
-// $Id: securepages_prevent_hijack.install 5 2009-06-10 01:11:31Z jhedstrom $
+// $Id: securepages_prevent_hijack.install,v 1.1.2.2 2009/02/12 23:02:05 grendzy Exp $
 
 /**
  * @file
