@@ -1,7 +1,45 @@
-// $Id: CHANGELOG.txt 5 2009-06-10 01:11:31Z jhedstrom $
+// $Id: CHANGELOG.txt,v 1.1.2.110 2009/12/30 22:37:21 boombatower Exp $
 
-SimpleTest 6.x-2.9, xxxx-xx-xx (development version)
+SimpleTest 6.x-2.10, 2009-12-30
+-------------------------------
+- Bugs
+   * Correct INSTALL.txt link URL in requirement check.
+   * #587304: Call to undefined function drupal_realpath().
+   * #587988: drupal_http_request() does not use drupal_generate_test_ua().
+   * Manual fix of --file argument for run-tests.sh.
+   * #596440 by grendzy: assertMail doesn't work on real modules - Class 'DrupalWebTestCase' not found.
+   * #603410: Missing backported error handler in _drupal_bootstrap_full().
+   * #640076: Link to file INSTALL.txt should use url().
+   * #654534 by sun: SimpleTest deletes *all* files.
+   * #649344 by joachim: Link in admin help message to INSTALL file is broken.
+- Changes:
+   * #580406: DrupalUnitTestCase requires Database class.
+   * #667546: INSTALL.txt text correction.
+- Backports:
+   * #653860 by yhahn: Ensure simpletest JS handlers are attached only once.
+
+SimpleTest 6.x-2.9, 2009-09-14
 ------------------------------
+- Changes:
+   * #576256: Theme laying needs to be initialized during setUp().
+   * Correct comment on previous workaround.
+   * #400296 by neilnz: Make simpletest_get_like_tables() work in MySQL and PostgreSQL.
+   * #573822: Update SimpleTestMailCaptureTestCase from simpletest.test.
+   * #577324 by Dave Reid: Module tests with extending submodule tests not included correctly.
+- Bugs:
+   * #442890: HEAD info left in simpletest.info.
+   * #474394 by RockyRoad: block.test should treat delta as string.
+- Backports:
+   * #335756: SimpleTest: $this->originalFileDirectory should be set before
+              installation to ensure non-standard directories are picked up.
+   * #567422: Fresh backport of Drupal 7 SimpleTest.
+   * #545228: Missing D7 constants.
+   * Remove simpletest.function.inc.
+   * Correct file_scan_directory() $mask parameter API change.
+   * Correct another 'class' atrribute as array().
+   * Update files.
+   * Changes to install.php included in D6 core patch.
+   * #577496: drupal_mail_wrapper() conflicts.
 
 SimpleTest 6.x-2.8, 2009-04-23
 ------------------------------

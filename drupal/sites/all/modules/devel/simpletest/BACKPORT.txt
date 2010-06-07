@@ -1,4 +1,4 @@
-$Id: BACKPORT.txt 5 2009-06-10 01:11:31Z jhedstrom $
+$Id: BACKPORT.txt,v 1.1.2.7 2009/09/14 23:03:27 boombatower Exp $
 
 AUTHOR
 ------
@@ -23,10 +23,6 @@ DrupalWebTestCase
 -----------------
 Document as described above.
 
-Error/Exception handling (simpletest.function.inc)
----------------------------------------------
-The necessary core error/exception handling function from common.inc.
-
 SimpleTest module (simpletest.module)
 -------------------------------------
   * simpletest_get_all_tests()
@@ -41,7 +37,7 @@ SimpleTest module (simpletest.module)
 
 SimpleTest installer (simpletest.install)
 -----------------------------------------
-  * Added update hooks.
+  * Added update hook.
   * Added requirements check for configuration file modifications.
 
 JavaScript (simpletest.js)
