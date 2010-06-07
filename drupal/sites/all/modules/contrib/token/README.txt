@@ -1,4 +1,4 @@
-$Id: README.txt 823 2009-06-10 02:04:15Z jhedstrom $
+$Id: README.txt,v 1.1.6.1 2009/04/19 21:31:24 greggles Exp $
 
 Description
 ===========
