@@ -1,5 +1,5 @@
 <?php
-// $Id: securepages_prevent_hijack.module 5 2009-06-10 01:11:31Z jhedstrom $
+// $Id: securepages_prevent_hijack.module,v 1.1.2.7 2009/07/31 03:52:05 grendzy Exp $
 
 /**
  * @file
@@ -49,6 +49,13 @@ function securepages_prevent_hijack_user($op, &$edit, &$user, $category = NULL) 
   case 'login':
     _securepages_prevent_hijack_cookie();
     break;
+
+  case 'after_update':
+    // Regenerate our cookie after password changes.
+    if (!empty($edit['pass'])) {
+      _securepages_prevent_hijack_cookie();
+    }
+    break;
   }
 }
 
@@ -60,7 +67,11 @@ function _securepages_prevent_hijack_cookie() {
   if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
     $tok = drupal_get_token('securepages_prevent_hijack');
     $cookie_params = session_get_cookie_params();
-    setcookie(SECUREPAGES_SESSID, $tok, time() + $cookie_params['lifetime'],
+    $lifetime = 0;
+    if ($cookie_params['lifetime'] > 0) {
+      $lifetime = $_SERVER['REQUEST_TIME'] + $cookie_params['lifetime'];
+    }
+    setcookie(SECUREPAGES_SESSID, $tok, $lifetime,
     $cookie_params['path'], $cookie_params['domain'], 1);
   }
   else {

@@ -1,4 +1,4 @@
-// $Id: README.txt 5 2009-06-10 01:11:31Z jhedstrom $
+// $Id: README.txt,v 1.1.2.2 2009/04/13 23:50:41 grendzy Exp $
 
 INSTALLATION
 ------------
