@@ -1,142 +1,90 @@
-# Hungarian translation of admin (6.x-1.0-beta1)
-# Copyright (c) 2009 by the Hungarian translation team
-# Generated from files:
-#  admin.admin.inc,v 1.1.2.3 2009/06/15 04:31:31 yhahn
-#  admin.module,v 1.1.2.12 2009/06/21 14:21:46 yhahn
-#  admin.info,v 1.1.2.2 2009/06/08 00:55:33 yhahn
-#  admin/theme/page.tpl.php: n/a
-#  admin/toolbar/admin-toolbar.tpl.php: n/a
-#  slate.info,v 1.1.2.1 2009/06/15 03:18:56 yhahn
-#  admin/toolbar/theme.inc: n/a
+# Hungarian translation of Admin (6.x-2.0-beta2)
+# Copyright (c) 2010 by the Hungarian translation team
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: admin (6.x-1.0-beta1)\n"
-"POT-Creation-Date: 2009-06-25 18:25+0200\n"
-"PO-Revision-Date: 2009-06-13 20:49+0200\n"
-"Last-Translator: Balogh Zoltán\n"
-"Language-Team: Hungarian http://forditas.mindworks.hu\n"
+"Project-Id-Version: Admin (6.x-2.0-beta2)\n"
+"POT-Creation-Date: 2010-03-01 20:44+0000\n"
+"PO-Revision-Date: 2010-03-01 20:43+0000\n"
+"Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: admin.admin.inc:60
-msgid "Enabled"
-msgstr "Engedélyezett"
-
-#: admin.admin.inc:62
-msgid "Weight"
-msgstr "Súly"
-
-#: admin.admin.inc:63
-msgid "Operations"
-msgstr "Műveletek"
-
-#: admin.module:254
-msgid "Delete"
-msgstr "Törlés"
-
-#: admin.module:272
-msgid "Configure"
-msgstr "Beállítás"
-
-#: admin.info:0
+msgid "Save configuration"
+msgstr "Beállítások mentése"
+msgid "Administer"
+msgstr "Adminisztráció"
 msgid "Administration"
 msgstr "Adminisztráció"
-
-#: admin.module:246
-msgid "Edit"
-msgstr "Szerkesztés"
-
-#: theme/page.tpl.php:17
-msgid "Help"
-msgstr "Súgó"
-
-#: admin.admin.inc:58
-msgid "Menu item"
-msgstr "Menüpont"
-
-#: admin.admin.inc:61
-msgid "Expanded"
-msgstr "Nyitott"
-
-#: admin.module:0
-msgid "admin"
-msgstr "admin"
-
-#: toolbar/admin-toolbar.tpl.php:12
-msgid "Close"
-msgstr "Bezár"
-
-#: admin.admin.inc:59; admin.info:0
+msgid "Layout"
+msgstr "Elrendezés"
+msgid "Horizontal"
+msgstr "Vízszintes"
+msgid "Vertical"
+msgstr "Függőleges"
+msgid "Add block"
+msgstr "Blokk hozzáadása"
+msgid "Performance"
+msgstr "Teljesítmény"
+msgid "Create content"
+msgstr "Tartalom beküldése"
+msgid "Position"
+msgstr "Elhelyezkedés"
+msgid "Top left"
+msgstr "Fenn balra"
+msgid "Top right"
+msgstr "Fenn jobbra"
+msgid "Bottom right"
+msgstr "Lenn jobbra"
+msgid "Bottom left"
+msgstr "Lenn balra"
+msgid "Switch user"
+msgstr "Felhasználóváltás"
+msgid "Devel"
+msgstr "Devel"
+msgid "Execute PHP"
+msgstr "PHP futtatása"
 msgid "Admin"
 msgstr "Admin"
-
-#: admin.admin.inc:25
-msgid "Display in admin menu"
-msgstr "Megjelenítés az admin menüben"
-
-#: admin.admin.inc:26
+msgid "Administration menu"
+msgstr "Adminisztrációs menü"
 msgid ""
-"If selected, this item will be displayed in the admin menu at the top "
-"of each page."
+"Choose a layout for the admin toolbar. Vertical works well with large, "
+"wide screens. Horizontal works well on screens with limited real "
+"estate."
 msgstr ""
-"Ha ez bekapcsolt, akkor ez az elem megjelenik az admin menüben minden "
-"lap tetején."
-
-#: admin.module:306
-msgid "Edit view"
-msgstr "Nézet szerkesztése"
-
-#: admin.module:422
-msgid "Hello <strong>!username</strong>"
-msgstr "Üdvözlet <strong>!username</strong>"
-
-#: admin.module:426
-msgid "Logout"
-msgstr "Kilépés"
-
-#: admin.module:179
-msgid "admin menu"
-msgstr "admin menü"
-
-#: admin.module:179
-msgid "admin inline"
-msgstr "admin beágyazva"
-
-#: admin.info:0
+"Kiválasztható az adminisztrációs eszköztár elrendezése. A "
+"függőleges működik jól nagy, széles képernyőkkel, míg a "
+"vízszintes lesz jobb korlátozott lehetőségek esetén."
 msgid ""
-"UI helpers for Drupal admins and managers. Includes a special admin "
-"theme, custom admin header with JS support, and contextual admin "
-"links."
+"Choose a position for the admin toolbar that will not collide with "
+"other elements in your current theme."
 msgstr ""
-"Felhasználói felület segítők Drupal adminisztrátorok és "
-"menedzserek számára. Tartalmaz egy speciális adminisztrációs "
-"sminket, egyedi adminisztrációs fejlécet JS támogatással, és "
-"helyérzékeny adminisztrációs hivatkozásokat."
-
-#: theme/page.tpl.php:26
-msgid "Need help?"
-msgstr "Segítség szükséges?"
-
-#: theme/page.tpl.php:40
-msgid "Expand"
-msgstr "Kiterjeszt"
-
-#: admin.admin.inc:158
-msgid "Slate (formerly 'Admin')"
-msgstr "Slate (korábban 'Admin')"
-
-#: theme/slate.info:0
-msgid "Slate"
-msgstr "Slate"
-
-#: theme/slate.info:0
-msgid "Slate theme. Provided/managed by the admin module."
-msgstr "Slate smink. Szolgáltatja/kezeli az admin modul."
-
-#: toolbar/theme.inc:20
-msgid "View all"
-msgstr "Mindet megnéz"
-
+"Kiválasztható az adminisztrációs eszköztár helyzete, hogy ne "
+"ütközzön az aktuális smink egyéb elemeivel."
+msgid "use admin toolbar"
+msgstr "adminisztrációs eszköztár használata"
+msgid "UI helpers for Drupal admins and managers."
+msgstr ""
+"Drupal felhasználói felület segítők adminisztrátoroknak és "
+"kezelőknek."
+msgid "Other tools"
+msgstr "Egyéb eszközök"
+msgid "Show querylog"
+msgstr "Lekérdezésnapló mutatása"
+msgid "Hide querylog"
+msgstr "Lekérdezésnapló elrejtése"
+msgid "Choose a block"
+msgstr "Blokk kiválasztása"
+msgid "Enable other blocks for use in the admin toolbar."
+msgstr "Más blokkok engedélyezése az admin eszköztárhoz."
+msgid "Administrative blocks"
+msgstr "Adminisztratív blokkok"
+msgid "Other blocks"
+msgstr "Más blokkok"
+msgid "Theme switcher"
+msgstr "Sminkválasztó"
+msgid "Switch theme"
+msgstr "Sminkváltás"

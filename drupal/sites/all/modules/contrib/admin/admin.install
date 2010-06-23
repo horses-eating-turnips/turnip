@@ -1,11 +1,18 @@
 <?php
-// $Id: admin.install 881 2009-09-04 00:11:44Z jhedstrom $
+// $Id: admin.install,v 1.1.2.7.2.1 2009/11/20 02:44:31 yhahn Exp $
 
 /**
  * Implementation of hook_install().
  */
 function admin_install() {
   db_query("INSERT INTO {menu_custom} (menu_name, title, description) VALUES ('%s', '%s', '%s')", 'admin', 'Admin', 'Admin links.');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function admin_uninstall() {
+  variable_del('admin_toolbar');
 }
 
 /**
@@ -58,5 +65,33 @@ function admin_update_6003() {
   // Weight admin to come after other modules -- in particular, admin_theme().
   $return = array();
   $return[] = update_sql("UPDATE {system} SET weight = 1 WHERE name = 'admin' AND type = 'module'");
+  return $return;
+}
+
+/**
+ * Update 6201: Migrate previous permissions for "admin menu" to "use admin toolbar".
+ */
+function admin_update_6201() {
+  $return = array();
+
+  $result = db_query("SELECT * FROM {permission}");
+  while ($row = db_fetch_object($result)) {
+    $perms = explode(', ', $row->perm);
+    if (in_array('admin menu', $perms, TRUE)) {
+      $key = array_search('admin menu', $perms);
+      $perms[$key] = 'use admin toolbar';
+      $perms = implode(', ', $perms);
+      $return[] = update_sql("UPDATE {permission} SET perm = '{$perms}' WHERE pid = {$row->pid}");
+    }
+  }
+
+  // Remove old theme instantiation stack & reset admin theme if
+  // referring to deprecated admin themes.
+  variable_del('admin_theme_invalidated');
+  $theme = variable_get('admin_theme', '0');
+  if ($theme === 'admin' || $theme === 'slate') {
+    variable_del('admin_theme');
+  }
+
   return $return;
 }

@@ -1,83 +1,108 @@
-DESCRIPTION
-===========
+Admin 2.x
+=========
+The admin module provides UI improvements to the standard Drupal admin interface. The 2.x branch focuses on the following goals:
 
-The admin module provides UI improvements to the standard Drupal admin
-interface. It implements some of the ideas being explored for
-usability improvements in Drupal 7.
+1. Sustainability - avoid excessive overrides of code, markup, and
+   interface strings to ensure the module keeps the workload overhead
+   on the maintainers and community to a minimum.
+
+2. Pluggable/extensible architecture - ensure that admin serves as a
+   starting point for other modules in contrib to implement admin
+   interfaces.
+
+3. Expose Drupal's strengths and downplay its weaknesses where possible.
+   An honest approach to the underlying framework and architecture
+   of Drupal will be less confusing to the user down the road.
+
+Admin is not an original work - many of its decisions have had direct
+influences from other work in the community:
+
+- [Administration menu](http://drupal.org/project/admin_menu)
+  Daniel Kudwien (sun)
+
+- [Navigate](http://drupal.org/project/navigate)
+  Chris Shattuck (chrisshattuck)
+
+- [d7ux](http://www.d7ux.org)
+  Mark Boulton & Leisa Reichelt
 
 
-INSTALLATION
+Installation
 ============
-
 1. Install & enable the module.
 
-2. If you do not have an admin theme selected, admin will provide its
-   admin theme as the default.
+2. Admin makes a permission available that allows only properly
+   permissioned users to make use of the admin toolbar. Users with the
+   'use admin toolbar' permission will be able to use the toolbar.
 
-3. To make use of the admin header within your theme, you must add the
-   following line to your theme's page.tpl.php file immediately
-   following the <body> tag:
-
-   <?php if (!empty($admin)) print $admin; ?>
-
-4. Admin makes 2 different permissions available. In addition to using
-   these permissions to enable/disable admin features for different
-   roles, specific themes can specify their compatibility (see
-   'Theme compatibility' below).
-
-   'admin inline': Grant users access to inline contextual links for
-     editing nodes, views, blocks, etc.
-
-   'admin menu': Grant users access to the admin header/menu.
+3. You can configure the layout, position, and enabled tools for the
+   admin toolbar on `admin/settings/admin`.
 
 
-GRAPHICS
-========
+Implementing your own Admin "plugins"
+=====================================
+Admin's "plugins" are simply Drupal blocks. In order to expose one of your
+module's blocks as one suitable for use in the admin toolbar you can set the `admin` key in your `hook_block()` to `TRUE`. Note that users can add any blocks to the admin toolbar if they wish at `admin/settings/admin`, though not all will work well in the context of the admin toolbar.
 
-The icons used by the admin module were designed by Young Hahn and
-AJ Ashton specifically for use with Drupal's admin interface.
-The iconset is available for use under a dual GPL/BSD license,
-meaning you may choose the license which is most appropriate for
-your project.
-
-
-THEME COMPATIBILITY
-===================
-
-A theme can specify its compatibility with different features
-provided by the admin module in its .info file. If no compatibility
-flag is set, admin assumes the theme is compatible with all of its
-features.
-
-To disable the admin menu when using your theme:
-
-  admin[admin menu] = 0
-
-To disable the admin inline links when using your theme:
-
-  admin[admin inline] = 0
+    /**
+     * Implementation of hook_block().
+     */
+    function my_module_block($op = 'list', $delta = 0, $edit = array()) {
+      switch ($op) {
+        case 'list':
+          $blocks = array();
+          $blocks['example'] = array(
+            'info' => t('Example block'),
+            'admin' => TRUE
+          );
+          return $blocks;
+      }
+    }
 
 
-API & HOOKS
-===========
+Theming your block and other tips
+=================================
+Your block should provide general rules for either of the admin toolbar
+layouts (horizontal or vertical). You can specify CSS rules using the
+following selectors:
 
-There is a small API included in admin for adding inline links to
-various objects. The hooks are parallel to hook_link() and
-hook_link_alter(), except that they are used for admin inline links
-only. The admin-edit, admin-delete, and admin-configure classes
-are available for rendering links with icons (more to come).
+    #admin-toolbar.horizontal {}
+    #admin-toolbar.vertical {}
 
-- hook_admin_link($type, $object)
+Admin provides fairly decent defaults for the following Drupal core
+theme functions:
 
-  Should return a $links array suitable for theming by theme_links().
+  - `theme('item_list')`
+  - menu output (e.g. `menu_tree_output()`).
+  - most form elements (with the exception of fieldsets)
+  - admin panes (see below)
 
-- hook_admin_link_alter(&$links, $type, $object)
+Admin provides an additional FormAPI element type `admin_panes`. Admin
+panes allow you to fit multiple elements of content into a togglable
+interface. The panes will automatically adjust to the layout to the toolbar
+and display as either vertical tabs (horizontal layout) or accordian boxes
+(vertical layout).
 
-  A typical drupal_alter() hook that takes the links array, as well
-  as object type and object as parameters.
+Here is an example of using admin panes in a form API array:
+
+    $form['panes'] = array(
+      '#tree' => FALSE,
+      '#type' => 'admin_panes',
+      'foo' => array(
+        '#title' => t('Pane 1'),
+        ...
+      ),
+      'bar' => array(
+        '#title' => t('Pane 2'),
+        ...
+      ),
+    );
+
+Note that each child element must have a #title attribute to be labeled
+properly.
 
 
-CONTRIBUTORS
+Contributors
 ============
-Young Hahn young@developmentseed.org
-AJ Ashton aj@developmentseed.org
+- yhahn (Young Hahn)
+- ajashton (AJ Ashton)
