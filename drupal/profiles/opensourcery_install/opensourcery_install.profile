@@ -19,7 +19,6 @@ function opensourcery_install_profile_modules() {
     'pathauto',
     'path_redirect',
     'role_delegation',
-    'strongarm',
     'token',
     'wysiwyg',
 
