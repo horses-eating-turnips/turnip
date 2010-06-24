@@ -1,0 +1,33 @@
+=== modified file 'template.php'
+--- template.php	2010-03-29 03:16:02 +0000
++++ template.php	2010-04-19 07:24:01 +0000
+@@ -227,9 +227,27 @@
+     $render_sidebars = $show_blocks;
+   }
+ 
++  // Is the Context module enabled? If so make sure that the blocks Context wants to display get displayed 
++  if (module_exists("context")) {
++	$output = '';
++
++	// Get the Context plugin needed to get the blocks that needs to be displayed for this region 
++    $plugin = context_get_plugin('reaction', 'block');
++
++    // Let's get the blocks that should be displayed from Context.
++    $output .= $plugin->execute($region);
++
++    // Add any other content assigned to this region through drupal_set_content() calls.
++    $output .= drupal_get_content($region);
++
++    $elements['#children'] = $output;
++    $elements['#region'] = $region;
++
++    return $output ? theme('region', $elements) : '';
++  }
+   // If zen_blocks was called with a NULL region, its likely we were just
+   // setting the $render_sidebars static variable.
+-  if ($region) {
++  else if ($region) {
+     $output = '';
+ 
+     // If $renders_sidebars is FALSE, don't render any region whose name begins
+
