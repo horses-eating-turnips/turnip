@@ -77,14 +77,6 @@ function doune_theme(&$existing, $type, $theme, $path) {
 }
 
 /**
- * In the context of the way action center is using events, the All day appended to dates never makes sense. Here an empty string is returned.
- */
- function doune_date_all_day_label() {
-   return '';
- }
-
-
-/**
  * Override or insert variables into all templates.
  *
  * @param $vars
@@ -155,10 +147,13 @@ function doune_preprocess_comment(&$vars, $hook) {
  * @param $hook
  *   The name of the template being rendered ("block" in this case.)
  */
+/* -- Delete this line if you want to use this function
 function doune_preprocess_block(&$vars, $hook) {
+  // Example use:
   switch ($vars['block']->delta) {
-    case 'ac_location-block_1':
+    case 'my_view-block_1':
       $vars['classes_array'][] = 'clearfix';
       break;
   }
 }
+// */
