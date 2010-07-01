@@ -1,0 +1,13 @@
+; $Id: less.info,v 1.1 2010/03/04 00:15:31 coreym29 Exp $
+
+name = "LESS CSS Preprocessor"
+description = "Allows themes or modules to use LESS files."
+
+core = 6.x
+
+; Information added by drupal.org packaging script on 2010-04-22
+version = "6.x-2.1"
+core = "6.x"
+project = "less"
+datestamp = "1271967609"
+

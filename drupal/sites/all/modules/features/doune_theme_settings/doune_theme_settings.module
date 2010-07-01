@@ -1,0 +1,3 @@
+<?php
+
+include_once('doune_theme_settings.features.inc');

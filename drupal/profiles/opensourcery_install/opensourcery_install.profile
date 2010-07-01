@@ -57,6 +57,8 @@ function opensourcery_install_profile_details() {
  *   task list.
  */
 function opensourcery_install_profile_task_list() {
+  $tasks['opensourcery-modules-batch'] = st('Install base OpenSourcery modules');
+  return $tasks;
 }
 
 /**
@@ -111,52 +113,97 @@ function opensourcery_install_profile_task_list() {
  *   modify the $task, otherwise discarded.
  */
 function opensourcery_install_profile_tasks(&$task, $url) {
+  if ($task == 'profile') {
+    // Insert default user-defined node types into the database. For a complete
+    // list of available node type attributes, refer to the node type API
+    // documentation at: http://api.drupal.org/api/HEAD/function/hook_node_info.
+    $types = array(
+      array(
+        'type' => 'page',
+        'name' => st('Page'),
+        'module' => 'node',
+        'description' => st("A <em>page</em> is a simple method for creating and displaying information that rarely changes, such as an \"About us\" section of a website. By default, a <em>page</em> entry does not allow visitor comments and is not featured on the site's initial home page."),
+        'custom' => TRUE,
+        'modified' => TRUE,
+        'locked' => FALSE,
+        'help' => '',
+        'min_word_count' => '',
+      ),
+    );
 
-  // Insert default user-defined node types into the database. For a complete
-  // list of available node type attributes, refer to the node type API
-  // documentation at: http://api.drupal.org/api/HEAD/function/hook_node_info.
-  $types = array(
-    array(
-      'type' => 'page',
-      'name' => st('Page'),
-      'module' => 'node',
-      'description' => st("A <em>page</em> is a simple method for creating and displaying information that rarely changes, such as an \"About us\" section of a website. By default, a <em>page</em> entry does not allow visitor comments and is not featured on the site's initial home page."),
-      'custom' => TRUE,
-      'modified' => TRUE,
-      'locked' => FALSE,
-      'help' => '',
-      'min_word_count' => '',
-    ),
-  );
+    foreach ($types as $type) {
+      $type = (object) _node_type_set_defaults($type);
+      node_type_save($type);
+    }
 
-  foreach ($types as $type) {
-    $type = (object) _node_type_set_defaults($type);
-    node_type_save($type);
+    // Default page to not be promoted, and have comments disabled, and create new revisions.
+    variable_set('node_options_page', array('status', 'revision'));
+    variable_set('comment_page', COMMENT_NODE_DISABLED);
+
+    // Don't display date and author information for page nodes by default.
+    $theme_settings = variable_get('theme_settings', array());
+    $theme_settings['toggle_node_info_page'] = FALSE;
+    variable_set('theme_settings', $theme_settings);
+
+    // Set default theme. This needes some more set up on next page load
+    // We cannot do everything here because of _system_theme_data() static cache
+    system_theme_data();
+    db_query("UPDATE {system} SET status = 0 WHERE type = 'theme' AND name ='%s'", 'garland');
+    variable_set('theme_default', 'doune');
+    db_query("UPDATE {system} SET status = 1 WHERE type = 'theme' AND name ='%s'", 'doune');
+    db_query("UPDATE {blocks} SET status = 0, region = ''"); // disable all DB blocks
+
+    // Create roles.
+    _opensourcery_install_user_roles();
+    // Assign sensible input filter defaults to roles.
+    _opensourcery_install_better_formats();
+    // Initial permissions.
+    _opensourcery_install_set_permissions();
+    // Pathauto defaults.
+    _opensourcery_install_pathauto();
+    // Core configuration and tweaks.
+    _opensourcery_install_core();
+
+    // Update the menu router information.
+    menu_rebuild();
+    $task = 'opensourcery-modules';
   }
 
-  // Default page to not be promoted, and have comments disabled, and create new revisions.
-  variable_set('node_options_page', array('status', 'revision'));
-  variable_set('comment_page', COMMENT_NODE_DISABLED);
+  // We are running a batch task for this profile so basically do
+  // nothing and return page.
+  if (in_array($task, array('opensourcery-modules-batch'))) {
+    include_once 'includes/batch.inc';
+    $output = _batch_page();
+  }
 
-  // Don't display date and author information for page nodes by default.
-  $theme_settings = variable_get('theme_settings', array());
-  $theme_settings['toggle_node_info_page'] = FALSE;
-  variable_set('theme_settings', $theme_settings);
+  if ($task == 'opensourcery-modules') {
+    $modules = _opensourcery_install_modules();
+    $files = module_rebuild_cache();
+    // Create batch
+    foreach ($modules as $module) {
+      $batch['operations'][] = array('_install_module_batch', array($module, $files[$module]->info['name']));
+    }
+    $batch['operations'][] = array('_opensourcery_install_clean', array());
+    $batch['finished'] = '_opensourcery_install_profile_batch_finished';
+    $batch['title'] = st('Installing @drupal', array('@drupal' => drupal_install_profile_name()));
+    $batch['error_message'] = st('The installation has encountered an error.');
 
-  // Create roles.
-  _opensourcery_install_user_roles();
-  // Assign sensible input filter defaults to roles.
-  _opensourcery_install_better_formats();
-  // Initial permissions.
-  _opensourcery_install_set_permissions();
-  // Pathauto defaults.
-  _opensourcery_install_pathauto();
-  // Core configuration and tweaks.
-  _opensourcery_install_core();
+    // Start a batch, switch to 'intranet-modules-batch' task. We need to
+    // set the variable here, because batch_process() redirects.
+    variable_set('install_task', 'opensourcery-modules-batch');
+    batch_set($batch);
+    batch_process($url, $url);
+    // Jut for cli installs. We'll never reach here on interactive installs.
+    return;
+  }
+  return $output;
+}
 
-
-  // Update the menu router information.
-  menu_rebuild();
+/**
+ * Finished callback.
+ */
+function _opensourcery_install_profile_batch_finished($success, $results) {
+  variable_set('install_task', 'profile-finished');
 }
 
 /**
@@ -295,6 +342,54 @@ function _opensourcery_install_core() {
   /* Set "Only site administrators can create new user accounts."
    * Drupal's default is open registration, which is easily overlooked.
    */
-  variable_set("user_register", 0);
-  
+  variable_set('user_register', 0);
+}
+
+/**
+ * Clear and rebuild caches.
+ */
+function _opensourcery_install_clean() {
+  // Since content_profile adds a value for this variable during
+  // install, we must delete it here.
+  variable_del('content_profile_profile');
+
+  // Rebuild key tables/caches
+  module_rebuild_cache(); // Detects the newly added bootstrap modules
+  node_access_rebuild();
+  drupal_get_schema(NULL, TRUE); // Clear schema DB cache
+  drupal_flush_all_caches();    
+  system_theme_data();  // Rebuild theme cache.
+  _block_rehash();      // Rebuild block cache.
+  // views_invalidate_cache(); // Rebuild the views.
+  menu_rebuild();       // Rebuild the menu.
+  features_rebuild();   // Features rebuild scripts.
+  node_access_needs_rebuild(FALSE);
+}
+
+/**
+ * Additional modules to enable.
+ */
+function _opensourcery_install_modules() {
+  return array(
+    'features',
+    'ctools',
+    'strongarm',
+
+    // Theme
+    'less',
+    'doune_theme_settings',
+
+    // Admin section.
+    'admin',
+    'os_admin',
+  );
+}
+
+/**
+ * Set OpenSourcery as the default install profile.
+ */
+function system_form_install_select_profile_form_alter(&$form, $form_state) {
+  foreach($form['profile'] as $key => $element) {
+    $form['profile'][$key]['#value'] = 'opensourcery_install';
+  }
 }
