@@ -1,5 +1,5 @@
 <?php
-// $Id: page.tpl.php,v 1.26.2.2 2010/02/07 21:05:54 johnalbin Exp $
+// $Id: page.tpl.php,v 1.26.2.3 2010/06/26 15:36:04 johnalbin Exp $
 
 /**
  * @file
@@ -121,7 +121,7 @@
 <body class="<?php print $classes; ?>">
 
   <?php if ($primary_links): ?>
-    <div id="skip-to-nav"><a href="#main-menu"><?php print t('Jump to Navigation'); ?></a></div>
+    <div id="skip-link"><a href="#main-menu"><?php print t('Jump to Navigation'); ?></a></div>
   <?php endif; ?>
 
   <div id="page-wrapper"><div id="page">
