@@ -1,9 +1,9 @@
-; $Id: STARTERKIT.info.txt,v 1.16.2.1 2009/12/12 15:31:54 johnalbin Exp $
+; $Id: STARTERKIT.info.txt,v 1.16.2.2 2010/06/26 16:05:31 johnalbin Exp $
 
 
   ; The name and description of the theme used on the admin/build/themes page.
 name        = Zen Sub-theme Starter Kit
-description = Read the <a href="http://drupal.org/node/226507">online docs</a> or the included README.txt on how to create a Zen sub-theme.
+description = Read the <a href="http://drupal.org/node/629510">online docs</a> or the included README.txt on how to create a Zen sub-theme.
 
   ; The screenshot used on the admin/build/themes page.
 screenshot = screenshot.png

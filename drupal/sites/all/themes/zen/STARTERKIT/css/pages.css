@@ -1,4 +1,4 @@
-/* $Id: pages.css,v 1.18.2.1 2009/11/16 10:15:47 johnalbin Exp $ */
+/* $Id: pages.css,v 1.18.2.3 2010/06/26 17:18:58 johnalbin Exp $ */
 
 /**
  * @file
@@ -25,11 +25,11 @@ body {
 }
 
 /*
- * The skip-to-nav link will be completely hidden until a user tabs to the link.
- * See http://www.webaim.org/techniques/skipnav/
+ * The skip navigation link will be completely hidden until a user tabs to the
+ * link. See http://www.webaim.org/techniques/skipnav/
  */
-#skip-to-nav a,
-#skip-to-nav a:visited {
+#skip-link a,
+#skip-link a:visited {
   position: absolute;
   display: block;
   left: 0;
@@ -42,9 +42,9 @@ body {
   color: #fff;
 }
 
-#skip-to-nav a:hover,
-#skip-to-nav a:active,
-#skip-to-nav a:focus {
+#skip-link a:hover,
+#skip-link a:active,
+#skip-link a:focus {
   position: static;
   width: 100%;
   height: auto;
@@ -306,10 +306,11 @@ ul.links li {
  * the site where visual display is undesirable. Information provided in this
  * manner should be kept concise, to avoid unnecessary burden on the user. Must
  * not be used for focusable elements (such as links and form elements) as this
- * causes issues for keyboard only or voice recognition users.
+ * causes issues for keyboard only or voice recognition users. "!important" is
+ * used to prevent unintentional overrides.
  */
 .element-invisible {
-  height: 0;
-  overflow: hidden;
-  position: absolute;
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
 }

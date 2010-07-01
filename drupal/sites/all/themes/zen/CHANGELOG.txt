@@ -1,18 +1,23 @@
-// $Id: CHANGELOG.txt,v 1.163.2.11 2010/06/24 03:40:16 johnalbin Exp $
+// $Id: CHANGELOG.txt,v 1.163.2.17 2010/06/26 19:31:19 johnalbin Exp $
 
-Zen 6.x-2.x-dev, xxxx-xx-xx (development release)
-------------------------
-- Added $block_html_id to block.tpl.php.
-- #772488 by andreiashu: Fatal error: Call to undefined function ctools_menu_primary_local_tasks()
+Zen 6.x-2.0, 2010-06-26
+-----------------------
+- #791056 by meatsack and JohnAlbin: Zen clobbers Views 3 classes
+- #838338: element-invisible class doesn't fully hide elements
+- #723514 by kmonty: Link in STARTERKIT description incorrect
+- Skip navigation's ID changed from #skip-to-nav to #skip-link
+- Added $block_html_id to block.tpl.php
+- #772488 by andreiashu: Fatal error: Call to undefined function
+  ctools_menu_primary_local_tasks()
 - #707410 by agentrickard and JohnAlbin: Add page-views and page-panels body classes
 - #691426: Add D7-style named implementations of theme_links in page.tpl
 - #683904: SUBTHEME_process functions do not work
 - #552156: broken clearfix class causes overlapping containers in IE7
 - #593290 by sfyn and JohnAlbin: Chaos Tools/Panels edit tab not working with Zen
 - #661628 by Jacine and JohnAlbin: Integration with Skinr module
-- by Jacine: Added views-view.tpl.php with support for $classes variables.
+- by Jacine: Added views-view.tpl.php with support for $classes variables
 - by caroltron, gleroux02, _natron, and JohnAlbin: Add panels 3 layouts using
-  Zen layout method.
+  Zen layout method
 
 Zen 6.x-2.0-beta1, 2009-11-10
 -----------------------------

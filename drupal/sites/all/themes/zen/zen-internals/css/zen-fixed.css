@@ -1,14 +1,17 @@
--n /* $
-Id$ */
+/* $Id: zen-fixed.css,v 1.12.2.3 2010/06/26 18:29:22 johnalbin Exp $ */
 
-/* Id: html-reset.css,v 1.6 2009/11/10 07:37:04 johnalbin Exp */
+/* Id: html-reset.css,v 1.6.2.2 2010/06/26 15:36:03 johnalbin Exp */
 
 /**
  * @file
  * HTML Element Styling
  *
- * This is the "reset" style sheet. It standardizes the properties of the HTML
- * elements across browsers.
+ * Ok, I admit it. I fooled you. This isn't a "reset" stylesheet. Instead this
+ * is the place where you should set (not reset) the default styling for all
+ * HTML elements.
+ *
+ * @see http://meiert.com/en/blog/20080419/reset-style-sheets-are-bad/
+ * @see http://snook.ca/archives/html_and_css/no_css_reset/
  */
 
 
@@ -28,7 +31,7 @@ body {
   font-size: 100%; /* Fixes exaggerated text resizing in IE6 and IE7 */
 }
 
-#skip-to-nav,
+#skip-link,
 #page {
   /*
    * To use a 12px font size on the page, delete the 14px declarations.
@@ -749,7 +752,7 @@ div.messages ul {
   margin-top: 0;
   margin-bottom: 0;
 }
-/* Id: pages.css,v 1.18.2.1 2009/11/16 10:15:47 johnalbin Exp */
+/* Id: pages.css,v 1.18.2.3 2010/06/26 17:18:58 johnalbin Exp */
 
 /**
  * @file
@@ -776,11 +779,11 @@ body {
 }
 
 /*
- * The skip-to-nav link will be completely hidden until a user tabs to the link.
- * See http://www.webaim.org/techniques/skipnav/
+ * The skip navigation link will be completely hidden until a user tabs to the
+ * link. See http://www.webaim.org/techniques/skipnav/
  */
-#skip-to-nav a,
-#skip-to-nav a:visited {
+#skip-link a,
+#skip-link a:visited {
   position: absolute;
   display: block;
   left: 0;
@@ -793,9 +796,9 @@ body {
   color: #fff;
 }
 
-#skip-to-nav a:hover,
-#skip-to-nav a:active,
-#skip-to-nav a:focus {
+#skip-link a:hover,
+#skip-link a:active,
+#skip-link a:focus {
   position: static;
   width: 100%;
   height: auto;
@@ -1057,12 +1060,13 @@ ul.links li {
  * the site where visual display is undesirable. Information provided in this
  * manner should be kept concise, to avoid unnecessary burden on the user. Must
  * not be used for focusable elements (such as links and form elements) as this
- * causes issues for keyboard only or voice recognition users.
+ * causes issues for keyboard only or voice recognition users. "!important" is
+ * used to prevent unintentional overrides.
  */
 .element-invisible {
-  height: 0;
-  overflow: hidden;
-  position: absolute;
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
 }
 /* Id: block-editing.css,v 1.3 2009/11/05 14:01:26 johnalbin Exp */
 

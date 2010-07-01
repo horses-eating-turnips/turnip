@@ -1,4 +1,6 @@
-/* $Id: print.css,v 1.7.2.1 2010/02/07 21:13:59 johnalbin Exp $ */
+/* $Id: print.css,v 1.7.2.2 2010/06/26 16:01:52 johnalbin Exp $ */
+
+/* Id: print.css,v 1.8.2.1 2010/06/26 15:36:04 johnalbin Exp */
 
 /**
  * @file
@@ -51,7 +53,7 @@ body,
 }
 
 /* Hide sidebars and nav elements */
-#skip-to-nav,
+#skip-link,
 #navigation,
 .region-sidebar-first,
 .region-sidebar-second,

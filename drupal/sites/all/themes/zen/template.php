@@ -1,5 +1,5 @@
 <?php
-// $Id: template.php,v 1.45.2.6 2010/06/24 03:40:16 johnalbin Exp $
+// $Id: template.php,v 1.45.2.7 2010/06/26 19:18:23 johnalbin Exp $
 
 /**
  * @file
@@ -589,7 +589,8 @@ function zen_preprocess_views_view(&$vars, $hook) {
  *   The name of the template being rendered.
  */
 function zen_process(&$vars, $hook) {
-  if (array_key_exists('classes_array', $vars)) {
+  // Don't clobber Views 3 classes.
+  if (array_key_exists('classes_array', $vars) && !array_key_exists('classes', $vars)) {
     $vars['classes'] = implode(' ', $vars['classes_array']);
   }
 }
