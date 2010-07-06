@@ -25,6 +25,11 @@ function os_custom_form_alter(&$form, $form_state, $form_id) {
       }
       break;
   }
+
+  if (isset($form['type']['#value']) && $form_id == $form['type']['#value'] . '_node_form' && isset($form['revision_information'])) {
+    // Hide the revision log input.
+    $form['revision_information']['#access'] = FALSE;
+  }
 }
 
 /**

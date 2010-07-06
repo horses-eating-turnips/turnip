@@ -1,5 +1,5 @@
 <?php
-// $Id: number.module 891 2009-12-01 19:18:51Z jhedstrom $
+// $Id: number.module,v 1.91.2.37 2009/10/15 10:45:03 markuspetrux Exp $
 
 /**
  * @file
