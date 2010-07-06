@@ -1,19 +1,25 @@
 <?php
-// $Id: filefield_paths.module 843 2009-07-08 01:03:08Z jhedstrom $
-
+// $Id: filefield_paths.module,v 1.19.2.38 2010/01/11 06:07:16 deciphered Exp $
 /**
  * @file
- * Adds extra functionality to FileFields Path settings.
+ * Contains core functions for the FileField Paths module.
  */
 
 /**
- * Implementation of hook_filefield_paths_field_settings().
+ * Implements hook_filefield_paths_field_settings().
  */
 function filefield_paths_filefield_paths_field_settings() {
   return array(
     'file_path' => array(
       'title' => 'File path',
       'sql' => 'filepath',
+
+      'form' => array(
+        'file_path' => array(
+          '#maxlength' => 512,
+          '#size' => 128,
+        ),
+      ),
     ),
 
     'file_name' => array(
@@ -25,14 +31,14 @@ function filefield_paths_filefield_paths_field_settings() {
           '#type' => 'textfield',
           '#title' => t('File name'),
           '#default_value' => '[filefield-onlyname-original].[filefield-extension-original]',
-        )
+        ),
       ),
     )
   );
 }
 
 /**
- * Implementation of hook_theme().
+ * Implements hook_theme().
  */
 function filefield_paths_theme() {
   return array(
@@ -49,11 +55,11 @@ function theme_filefield_paths_token_help($prefix = '[', $suffix = ']') {
     $temp_tokens = filefield_token_list();
     $full_list['file'] = array_merge($temp_tokens['file'], $full_list['file']);
   }
-  
+
   $headers = array(t('Token'), t('Replacement value'));
   $rows = array();
   foreach ($full_list as $key => $category) {
-    $rows[] = array(array('data' => drupal_ucfirst($key) .' '. t('tokens'), 'class' => 'region', 'colspan' => 2));
+    $rows[] = array(array('data' => drupal_ucfirst($key) . ' ' . t('tokens'), 'class' => 'region', 'colspan' => 2));
     foreach ($category as $token => $description) {
       $row = array();
       $row[] = $prefix . $token . $suffix;
@@ -62,30 +68,29 @@ function theme_filefield_paths_token_help($prefix = '[', $suffix = ']') {
     }
   }
 
-  $output = theme('table', $headers, $rows, array('class' => 'description'));
-  return $output;
+  return theme('table', $headers, $rows, array('class' => 'description'));
 }
 
 /**
- * Implementation of hook_init().
+ * Implements hook_init().
  */
 function filefield_paths_init() {
   foreach (module_list() as $module) {
-    if (file_exists($file = drupal_get_path('module', 'filefield_paths') .'/modules/'. $module .'.inc')) {
+    if (file_exists($file = drupal_get_path('module', 'filefield_paths') . '/modules/' . $module . '.inc')) {
       require_once $file;
     }
   }
 }
 
 /**
- * Implementation of hook_form_alter().
+ * Implements hook_form_alter().
  */
 function filefield_paths_form_alter(&$form, $form_state, $form_id) {
   $ffp = array();
 
   // Invoke hook_filefield_paths_form_alter().
   foreach (module_implements('filefield_paths_form_alter') as $module) {
-    $function = $module .'_filefield_paths_form_alter';
+    $function = $module . '_filefield_paths_form_alter';
     $function($form, $ffp);
   }
 
@@ -115,7 +120,7 @@ function filefield_paths_form_alter(&$form, $form_state, $form_id) {
           }
           unset($keys);
 
-          $field_data['form_path'] = array_merge($field_data['form_path'], $field['form']);
+          $field_data['form_path'] = array_merge_recursive($field_data['form_path'], $field['form']);
         }
 
         $field_data['form_path']['#tree'] = TRUE;
@@ -132,21 +137,21 @@ function filefield_paths_form_alter(&$form, $form_state, $form_id) {
           }
         }
 
-        $field_data['form_path'][$name .'_cleanup'] = array(
+        $field_data['form_path'][$name . '_cleanup'] = array(
           '#type' => 'fieldset',
           '#title' => t('!title cleanup settings', array('!title' => $field['title'])),
           '#collapsible' => TRUE,
           '#collapsed' => TRUE,
           '#weight' => ($count - 1) * 3 + 1,
           '#attributes' => array(
-            'class' => $name .' cleanup'
+            'class' => array($name . ' cleanup')
           )
         );
 
         // Cleanup field with Pathauto module.
-        $field_data['form_path'][$name .'_cleanup'][$name .'_pathauto'] = array(
+        $field_data['form_path'][$name . '_cleanup'][$name . '_pathauto'] = array(
           '#type' => 'checkbox',
-          '#title' => t('Cleanup using Pathauto') .'.',
+          '#title' => t('Cleanup using Pathauto') . '.',
           '#default_value' => isset($field['settings']['pathauto'])
             ? $field['settings']['pathauto']
             : 0
@@ -154,38 +159,38 @@ function filefield_paths_form_alter(&$form, $form_state, $form_id) {
           '#description' => t('Cleanup !title using !url', array('!title' => $field['title'], '!url' => l(t('Pathauto settings'), 'admin/build/path/pathauto'))),
         );
         if (!module_exists('pathauto')) {
-          $field_data['form_path'][$name .'_cleanup'][$name .'_pathauto']['#disabled'] = TRUE;
-          $field_data['form_path'][$name .'_cleanup'][$name .'_pathauto']['#default_value'] = 0;
+          $field_data['form_path'][$name . '_cleanup'][$name . '_pathauto']['#disabled'] = TRUE;
+          $field_data['form_path'][$name . '_cleanup'][$name . '_pathauto']['#default_value'] = 0;
         }
 
         // Convert field to lower case.
-        $field_data['form_path'][$name .'_cleanup'][$name .'_tolower'] = array(
+        $field_data['form_path'][$name . '_cleanup'][$name . '_tolower'] = array(
           '#type' => 'checkbox',
-          '#title' => t('Convert to lower case') .'.',
+          '#title' => t('Convert to lower case') . '.',
           '#default_value' => isset($field['settings']['tolower'])
             ? $field['settings']['tolower']
             : 0
           ,
-          '#description' => t('Convert !title to lower case', array('!title' => $field['title'])) .'.'
+          '#description' => t('Convert !title to lower case', array('!title' => $field['title'])) . '.'
         );
 
         // Transliterate field with Transliteration module.
-        $field_data['form_path'][$name .'_cleanup'][$name .'_transliterate'] = array(
+        $field_data['form_path'][$name . '_cleanup'][$name . '_transliterate'] = array(
           '#type' => 'checkbox',
-          '#title' => t('Transliterate') .'.',
+          '#title' => t('Transliterate') . '.',
           '#default_value' => isset($field['settings']['transliterate'])
             ? $field['settings']['transliterate']
             : 0
           ,
-          '#description' => t('Transliterate !title', array('!title' => $field['title'])) .'.'
+          '#description' => t('Transliterate !title', array('!title' => $field['title'])) . '.'
         );
         if (!module_exists('transliteration')) {
-          $field_data['form_path'][$name .'_cleanup'][$name .'_transliterate']['#disabled'] = TRUE;
-          $field_data['form_path'][$name .'_cleanup'][$name .'_transliterate']['#default_value'] = 0;
+          $field_data['form_path'][$name . '_cleanup'][$name . '_transliterate']['#disabled'] = TRUE;
+          $field_data['form_path'][$name . '_cleanup'][$name . '_transliterate']['#default_value'] = 0;
         }
 
         // Replacement patterns for field.
-        $field_data['form_path'][$name .'_tokens'] = array(
+        $field_data['form_path'][$name . '_tokens'] = array(
           '#type' => 'fieldset',
           '#title' => t('!title replacement patterns', array('!title' => $field['title'])),
           '#collapsible' => TRUE,
@@ -193,7 +198,7 @@ function filefield_paths_form_alter(&$form, $form_state, $form_id) {
           '#description' => theme('filefield_paths_token_help'),
           '#weight' => ($count - 1) * 3 + 2,
           '#attributes' => array(
-            'class' => $name .' tokens'
+            'class' => $name . ' tokens'
           )
         );
       }
@@ -202,10 +207,21 @@ function filefield_paths_form_alter(&$form, $form_state, $form_id) {
       $field_data['form_path']['retroactive_update'] = array(
         '#type' => 'checkbox',
         '#title' => t('Retroactive update'),
-        '#description' => t('Move and rename previously uploaded files') .'.'.
-          '<br /> <strong style="color: #FF0000;">'. t('Warning') .':</strong> '.
-          t('This feature should only be used on developmental servers or with extreme caution') .'.',
+        '#description' => t('Move and rename previously uploaded files') . '.' .
+          '<br /> <strong style="color: #FF0000;">' . t('Warning') . ':</strong> ' .
+          t('This feature should only be used on developmental servers or with extreme caution') . '.',
         '#weight' => 10
+      );
+
+      // Active updating.
+      $field_data['form_path']['active_updating'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Active updating'),
+        '#default_value' => variable_get("ffp_{$field_data['type']}_{$field_name}", 0),
+        '#description' => t('Actively move and rename previously uploaded files as required') . '.' .
+          '<br /> <strong style="color: #FF0000;">' . t('Warning') . ':</strong> ' .
+          t('This feature should only be used on developmental servers or with extreme caution') . '.',
+        '#weight' => 11
       );
 
       if (!in_array('filefield_paths_form_submit', $form['#submit'])) {
@@ -216,14 +232,14 @@ function filefield_paths_form_alter(&$form, $form_state, $form_id) {
 }
 
 /**
- * Implementation of hook_form_submit().
+ * Implements hook_form_submit().
  */
 function filefield_paths_form_submit($form, &$form_state) {
   $ffp = array();
 
   // Invoke hook_filefield_paths_form_submit().
   foreach (module_implements('filefield_paths_form_submit') as $module) {
-    $function = $module .'_filefield_paths_form_submit';
+    $function = $module . '_filefield_paths_form_submit';
     $function($form_state, $ffp);
   }
 
@@ -235,16 +251,16 @@ function filefield_paths_form_submit($form, &$form_state) {
 
       foreach ($fields as $name => &$field) {
         $field['settings'] = array(
-          'value' => $form_state['values']['ffp_'. $field_name][$name],
-          'tolower' => $form_state['values']['ffp_'. $field_name][$name .'_cleanup'][$name .'_tolower'],
-          'pathauto' => $form_state['values']['ffp_'. $field_name][$name .'_cleanup'][$name .'_pathauto'],
-          'transliterate' => $form_state['values']['ffp_'. $field_name][$name .'_cleanup'][$name .'_transliterate']
+          'value' => $form_state['values']['ffp_' . $field_name][$name],
+          'tolower' => $form_state['values']['ffp_' . $field_name][$name . '_cleanup'][$name . '_tolower'],
+          'pathauto' => $form_state['values']['ffp_' . $field_name][$name . '_cleanup'][$name . '_pathauto'],
+          'transliterate' => $form_state['values']['ffp_' . $field_name][$name . '_cleanup'][$name . '_transliterate']
         );
 
         // Store additional settings from addon modules.
         if (isset($field['data'])) {
           foreach ($field['data'] as $key => $value) {
-            $field['settings'][$key] = $form_state['values']['ffp_'. $field_name][$value];
+            $field['settings'][$key] = $form_state['values']['ffp_' . $field_name][$value];
           }
         }
 
@@ -260,28 +276,33 @@ function filefield_paths_form_submit($form, &$form_state) {
         )
       );
 
+      // Update existing entry.
       if (!empty($result)) {
         foreach ($cols as &$col) {
           $col .= " = '%s'";
         }
 
         db_query(
-          "UPDATE {filefield_paths} SET ". implode(', ', $cols) ." WHERE type = '%s' AND field = '%s'",
+          "UPDATE {filefield_paths} SET " . implode(', ', $cols) . " WHERE type = '%s' AND field = '%s'",
           array_merge($data, array($field_data['type'], $field_name))
         );
       }
 
+      // Create new entry.
       else {
         db_query(
-          "INSERT INTO {filefield_paths} (type, field, ". implode(', ', $cols) .") VALUES ('%s', '%s', ". implode(', ', $vals) .")",
+          "INSERT INTO {filefield_paths} (type, field, " . implode(', ', $cols) . ") VALUES ('%s', '%s', " . implode(', ', $vals) . ")",
           array_merge(array($field_data['type'], $field_name), $data)
         );
       }
 
-      if ($form_state['values']['ffp_'. $field_name]['retroactive_update']) {
+      if ($form_state['values']['ffp_' . $field_name]['retroactive_update']) {
         $retroactive_update = TRUE;
-        filefield_paths_batch_update(arg(5), $field_name, arg(3));
+        $module = isset($form['#field']) ? $form['#field']['module'] : $field_name;
+        filefield_paths_batch_update($module, $field_name, arg(3));
       }
+
+      variable_set("ffp_{$field_data['type']}_{$field_name}", $form_state['values']['ffp_' . $field_name]['active_updating']);
     }
 
     if ($retroactive_update) {
@@ -291,26 +312,35 @@ function filefield_paths_form_submit($form, &$form_state) {
   }
 }
 
-function filefield_paths_batch_update($field_name = NULL, $field_module, $type_name) {
+/**
+ * Set batch process to update FileField Paths.
+ *
+ * @param $module
+ *   The upload widgets module ('filefield', 'upload', etc).
+ * @param $field
+ *   The CCK field name - set as NULL if not applicable.
+ * @param $type
+ *   The Node type ('page', 'story', etc).
+ */
+function filefield_paths_batch_update($module, $field, $type) {
   $objects = array();
-  $module = (!empty($field_name)) ? 'filefield' : $field_module;
 
-  // Invoke hook_filefield_paths_update().
-  if (function_exists($function = $module .'_filefield_paths_batch_update')) {
-    $function($field_name, str_replace('-', '_', $type_name), $objects);
+  // Invoke hook_filefield_paths_batch_update().
+  if (function_exists($function = $module . '_filefield_paths_batch_update')) {
+    $function($field, str_replace('-', '_', $type), $objects);
   }
 
   // Create batch.
   $batch = array(
     'title' => t('Updating FileField Paths'),
     'operations' => array(
-      array('_filefield_paths_batch_update_process', array($objects, $field_name))
+      array('_filefield_paths_batch_update_process', array(array_unique($objects), $module, $field))
     ),
   );
   batch_set($batch);
 }
 
-function _filefield_paths_batch_update_process($objects, $field_name, &$context) {
+function _filefield_paths_batch_update_process($objects, $module, $field, &$context) {
   if (!isset($context['sandbox']['progress'])) {
     $context['sandbox']['progress'] = 0;
     $context['sandbox']['max'] = count($objects);
@@ -323,9 +353,9 @@ function _filefield_paths_batch_update_process($objects, $field_name, &$context)
     // For each oid, load the object, update the files and save it.
     $oid = array_shift($context['sandbox']['objects']);
 
-    foreach (module_implements('filefield_paths_update') as $module) {
-      $function = $module .'_filefield_paths_update';
-      $function($oid, $field_name);
+    // Invoke hook_filefield_paths_update().
+    if (function_exists($function = $module . '_filefield_paths_update')) {
+      $function($oid, $field);
     }
 
     // Update our progress information.
@@ -340,93 +370,112 @@ function _filefield_paths_batch_update_process($objects, $field_name, &$context)
 }
 
 /**
- * Implementation of hook_nodeapi().
+ * Implements hook_nodeapi().
  */
 function filefield_paths_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
+  $function = 'filefield_paths_node_'. $op;
+  if (function_exists($function)) {
+    $function($node);
+  }
+}
 
+/**
+ * Implements hook_node_presave().
+ */
+function filefield_paths_node_presave(&$node) {
+  if (module_exists('content')) {
+    $content_type = content_types($node->type);
+
+    foreach ($content_type['fields'] as $field) {
+      if ($field['type'] == 'filefield' && is_array($node->$field['field_name'])) {
+
+        foreach ($node->$field['field_name'] as $count => &$file) {
+          if (!is_array($file) || empty($file['filepath'])) {
+            continue;
+          }
+
+          // If file is newly uploaded, flag to be processed
+          if ($file['status'] == 0) {
+            $file['data']['process'] = TRUE;
+          }
+        }
+
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function filefield_paths_node_insert(&$node) {
+  filefield_paths_node_update($node);
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function filefield_paths_node_update(&$node) {
+  if (($ffp = filefield_paths_get_fields($node)) !== FALSE) {
+    $update = new stdClass;
+    $update->node = FALSE;
+
+    // Process files.
+    foreach ($ffp['#files'] as &$file) {
+      // Invoke hook_filefield_paths_process_file().
+      foreach (module_implements('filefield_paths_process_file') as $module) {
+        $function = $module . '_filefield_paths_process_file';
+        $function(($file['new'] || variable_get("ffp_{$node->type}_{$file['name']}", 0)), $file, $ffp['#settings'][$file['name']], $node, $update);
+      }
+    }
+
+    // Re-write node entry if required.
+    if ($update->node == TRUE) {
+      global $user;
+
+      drupal_write_record('node', $node, 'nid');
+      _node_save_revision($node, $user->uid, 'vid');
+    }
+
+    // Re-write cck fields.
+    if (module_exists('content')) {
+      _content_field_invoke_default('update', $node);
+      cache_clear_all('content:'. $node->nid . ':' . $node->vid, content_cache_tablename());
+    }
+
+    // Cleanup temporary paths.
+    if ($ffp['#settings']) {
+      foreach ($ffp['#settings'] as $name => $field) {
+        $paths = explode('/', $field['filepath']['value']);
+        filefield_paths_cleanup_temp($paths);
+
+        // Invoke hook_filefield_paths_cleanup().
+        foreach (module_implements('filefield_paths_cleanup') as $module) {
+          $function = $module . '_filefield_paths_cleanup';
+          $function($ffp, $paths, $name);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_content_fieldapi().
+ */
+function filefield_paths_content_fieldapi($op, $field) {
   switch ($op) {
-    case 'presave':
-      if (module_exists('content')) {
-        $content_type = content_types($node->type);
-
-        foreach ($content_type['fields'] as $field) {
-          if ($field['type'] == 'filefield' && is_array($node->$field['field_name'])) {
-
-            foreach ($node->$field['field_name'] as $count => &$file) {
-              if (empty($file['filepath'])) {
-                continue;
-              }
-
-              // If file is newly uploaded, flag to be processed
-              if ($file['status'] == 0) {
-                $file['data']['process'] = TRUE;
-              }
-            }
-
-          }
-        }
-      }
-      break;
-
-    case 'insert':
-    case 'update':
-      $update = new stdClass;
-      $update->node = FALSE;
-
-      if (($ffp = filefield_paths_get_fields($node)) == FALSE) {
-        break;
-      }
-
-      // Process files.
-      foreach ($ffp['#files'] as &$file) {
-        // Invoke hook_filefield_paths_process_file().
-        foreach (module_implements('filefield_paths_process_file') as $module) {
-          $function = $module .'_filefield_paths_process_file';
-          $function($file['new'], $file, $ffp['#settings'][$file['name']], $node, $update);
-        }
-      }
-
-      // Re-write node entry if required.
-      if ($update->node == TRUE) {
-        global $user;
-
-        drupal_write_record('node', $node, 'nid');
-        if (!empty($node->revision)) {
-          _node_save_revision($node, $user->uid);
-          db_query('UPDATE {node} SET vid = %d WHERE nid = %d', $node->vid, $node->nid);
-        }
-        else {
-          _node_save_revision($node, $user->uid, 'vid');
-        }
-      }
-
-      // Re-write cck fields.
-      if (module_exists('content')) {
-        _content_field_invoke_default('update', $node);
-        cache_clear_all('content:'. $node->nid .':'. $node->vid, content_cache_tablename());
-      }
-
-      // Cleanup temporary paths.
-      if ($ffp['#settings']) {
-        foreach ($ffp['#settings'] as $name => $field) {
-          $paths = explode('/', $field['filepath']['value']);
-          filefield_paths_cleanup_temp($paths);
-
-          // Invoke hook_filefield_paths_cleanup().
-          foreach (module_implements('filefield_paths_cleanup') as $module) {
-            $function = $module .'_filefield_paths_cleanup';
-            $function($ffp, $paths, $name);
-          }
-        }
-      }
-
+    case 'delete instance':
+      db_query(
+        "DELETE FROM {filefield_paths} WHERE type = '%s' AND field = '%s'",
+        $field['type_name'], $field['field_name']
+      );
       break;
   }
 }
 
 function filefield_paths_cleanup_temp($paths) {
   while ($paths) {
-    if (@rmdir(file_directory_path() .'/'. implode('/', $paths)) === TRUE) {
+    if (@rmdir(file_directory_path() . '/' . implode('/', $paths)) === TRUE) {
       array_pop($paths);
       continue;
     }
@@ -439,7 +488,7 @@ function filefield_paths_get_fields(&$node, $op = NULL) {
 
   // Invoke hook_filefield_paths_get_fields().
   foreach (module_implements('filefield_paths_get_fields') as $module) {
-    $function = $module .'_filefield_paths_get_fields';
+    $function = $module . '_filefield_paths_get_fields';
     $function($node, $ffp);
   }
 
@@ -466,15 +515,10 @@ function filefield_paths_get_fields(&$node, $op = NULL) {
 }
 
 /**
- * Implementation of hook_filefield_paths_process_file().
+ * Implements hook_filefield_paths_process_file().
  */
 function filefield_paths_filefield_paths_process_file($new, &$file, $settings, &$node, &$update) {
   if ($new) {
-    // Process filepath
-    $file['filepath']['old'] = $file['field']['filepath'];
-    $file['filepath']['new'] = filefield_paths_process_string(file_directory_path() .'/'. $settings['filepath']['value'] .'/'. $file['field']['filename'], 'node', $node, $settings['filepath']);
-    $file['filepath']['new'] = filefield_paths_process_string($file['filepath']['new'], 'field', array(0 => $file['field']), $settings['filepath']);
-
     // Process filename
     $file['filename']['old'] = $file['field']['filename'];
     if (($file['filename']['new'] = $settings['filename']['value']) != '') {
@@ -484,29 +528,30 @@ function filefield_paths_filefield_paths_process_file($new, &$file, $settings, &
     else {
       $file['filename']['new'] = $file['field']['filename'];
     }
+  
+    // Process filepath
+    $file['filepath']['old'] = $file['field']['filepath'];
+    $file['filepath']['new'] = filefield_paths_process_string(file_directory_path() . '/' . $settings['filepath']['value'] . '/' . $file['filename']['new'], 'node', $node, $settings['filepath']);
+    $file['filepath']['new'] = filefield_paths_process_string($file['filepath']['new'], 'field', array(0 => $file['field']), $settings['filepath']);
 
     // Finalize files if necessary
     if (dirname($file['filepath']['new']) != dirname($file['field']['filepath']) || $file['filename']['new'] != $file['field']['filename']) {
       if (filefield_paths_file_move($file)) {
 
-        // Fix reference to old paths in Body and Teaser
-        // TODO: allow for CCK fields
-        // TODO: preg_reaplce to better support FileField Insert.
-        if (isset($node->body)) {
+        // Fix reference to old paths.
+        if (isset($node->body) || module_exists('content')) {
           $file['filepath']['new'] = str_replace($file['filename']['old'], $file['filename']['new'], $file['filepath']['new']);
+          $file_directory_path = variable_get('file_downloads', FILE_DOWNLOADS_PUBLIC) == FILE_DOWNLOADS_PUBLIC ? file_directory_path() : 'system/files';
 
-          $body = str_replace($file['filepath']['old'], $file['filepath']['new'], $node->body);
-          $body = str_replace(drupal_urlencode($file['filepath']['old']), $file['filepath']['new'], $body);
+          // Regular expression to replace old file reference.
+          $pattern = array(
+            'regex' => str_replace('/', '\/', $file_directory_path) . '([^"]*?)' . str_replace('/', '\/', str_replace(file_directory_path(), '', $file['filepath']['old'])),
+            'regex_enc' => str_replace('/', '\/', drupal_urlencode($file_directory_path)) . '([^"]*?)' . str_replace('/', '\/', str_replace(drupal_urlencode(file_directory_path()), '', drupal_urlencode($file['filepath']['old']))),
+            'replace' => $file_directory_path . '$1' . str_replace(file_directory_path(), '', $file['filepath']['new']),
+          );
 
-          $teaser = str_replace($file['filepath']['old'], $file['filepath']['new'], $node->teaser);
-          $teaser = str_replace(drupal_urlencode($file['filepath']['old']), $file['filepath']['new'], $teaser);
-
-          if ($body != $node->body || $teaser != $node->teaser) {
-            $node->body = $body;
-            $node->teaser = $teaser;
-
-            $update->node = TRUE;
-          }
+          // Process regular expression.
+          _filefield_paths_replace_pattern($pattern, $node, $update);
         }
 
         // Store new filename in file Array
@@ -517,7 +562,58 @@ function filefield_paths_filefield_paths_process_file($new, &$file, $settings, &
 }
 
 /**
- * Implementation of hook_token_list().
+ * Run regular expression over all available text-based fields.
+ */
+function _filefield_paths_replace_pattern($pattern, &$node, &$update) {
+  $fields = _filefield_paths_text_fields($node);
+  // Loop through all fields and process filter.
+  foreach ($fields as $field => &$data) {
+    ${$field} = (preg_match('/' . $pattern['regex'] . '/s', $data))
+      ? preg_replace('/' . $pattern['regex'] . '/s', $pattern['replace'], $data)
+      : preg_replace('/' . $pattern['regex_enc'] . '/s', $pattern['replace'], $data);
+
+    if (${$field} != $data) {
+      $data = ${$field};
+      // Mark node for update.
+      if ($field == 'body' || $field == 'teaser') {
+        $update->node = TRUE;
+      }
+    }
+  }
+}
+
+/**
+ * Get all text-based fields attached to node.
+ */
+function _filefield_paths_text_fields($node) {
+  $fields = array();
+  // Get Node fields.
+  if (isset($node->body)) {
+    $fields += array(
+      'body' => &$node->body,
+      'teaser' => &$node->teaser,
+    );
+  }
+
+  // Get CCK fields.
+  if (module_exists('content')) {
+    $content_type = content_types($node->type);
+    foreach ($content_type['fields'] as $name => $field) {
+      if ($field['type'] == 'text' && is_array($node->{$name})) {
+        foreach ($node->{$name} as $key => $value) {
+          if (isset($node->{$name}[$key]['value'])) {
+            $fields["{$name}_{$key}"] = &$node->{$name}[$key]['value'];
+          }
+        }
+      }
+    }
+  }
+
+  return $fields;
+}
+
+/**
+ * Implements hook_token_list().
  */
 function filefield_paths_token_list($type = 'all') {
   if ($type == 'field' || $type == 'all') {
@@ -537,27 +633,39 @@ function filefield_paths_token_list($type = 'all') {
 }
 
 /**
- * Implementation of hook_token_values().
+ * Implements hook_token_values().
  */
 function filefield_paths_token_values($type, $object = NULL) {
   if ($type == 'field') {
     $item = pathinfo($object[0]['filename']);
     $tokens = array();
     if (!module_exists('filefield')) {
-      $tokens['filefield-onlyname'] = $item['filename'];
+      // PHP < 5.2: pathinfo() doesn't return 'filename' variable.
+      $tokens['filefield-onlyname'] = isset($item['filename'])
+        ? $item['filename']
+        : basename($object[0]['filename'], '.' . $item['extension']);
       $tokens['filefield-extension'] = $item['extension'];
     }
-    // Original filename
+    // Original filename.
     $orig = $item;
+    $filename = $object[0]['filename'];
+    $result = db_fetch_object(db_query("SELECT origname FROM {files} WHERE fid = %d", $object[0]['fid']));
+    if (!empty($result->origname)) {
+      $object[0]['origname'] = $result->origname;
+    }
     if (!empty($object[0]['origname'])) {
       $orig = pathinfo($object[0]['origname']);
+      $filename = $object[0]['origname'];
     }
-    $tokens['filefield-onlyname-original'] = $orig['filename'];
+    // PHP < 5.2: pathinfo() doesn't return 'filename' variable.
+    $tokens['filefield-onlyname-original'] = isset($orig['filename'])
+      ? $orig['filename']
+      : basename($filename, '.' . $orig['extension']);
     $tokens['filefield-extension-original'] = $orig['extension'];
     // Tokens for Image module integration.
     if (module_exists('image')) {
       $tokens['image-derivative'] = (isset($object[0]['type']) && $object[0]['type'] !== '_original')
-        ? '.'. $object[0]['type']
+        ? '.' . $object[0]['type']
         : '';
     }
     return $tokens;
@@ -574,7 +682,7 @@ function filefield_paths_process_string($value, $type, $object, $settings = arra
   $value = str_replace($placeholders['tokens'], $placeholders['values'], $value);
 
   // Transliterate string.
-  if (module_exists('transliteration') && isset($settings['transliterate']) && $$settings['transliterate']) {
+  if (module_exists('transliteration') && isset($settings['transliterate']) && $settings['transliterate']) {
     $value = transliteration_get($value);
     if ($type == 'field') {
       $paths = explode('/', $value);
@@ -591,6 +699,9 @@ function filefield_paths_process_string($value, $type, $object, $settings = arra
     // Convert string to lower case
     $value = drupal_strtolower($value);
   }
+
+  // Ensure that there are no double-slash sequences due to empty token values.
+  $value = preg_replace('/\/+/', '/', $value);
 
   return $value;
 }
@@ -622,13 +733,10 @@ function _filefield_paths_get_values($type, $object, $pathauto = FALSE) {
       $token = trim($token, "[]");
     }
 
+    if (!function_exists('pathauto_clean_token_values')) {
+      _pathauto_include();
+    }
     $full->values = pathauto_clean_token_values($temp);
-  }
-
-  // Temporary fix: Remove double slashes from token values.
-  // TODO: Remove when #420856 is committed to Pathauto.
-  foreach ($full->values as &$value) {
-    $value = str_replace('//', '/', $value);
   }
 
   return array('tokens' => $full->tokens, 'values' => $full->values);
@@ -649,7 +757,7 @@ function filefield_paths_file_move(&$file, $replace = FILE_EXISTS_RENAME) {
     }
   }
 
-  if (!file_move($file['field']['filepath'], $dest .'/'. $file['filename']['new'], $replace)) {
+  if (!file_move($file['field']['filepath'], $dest . '/' . $file['filename']['new'], $replace)) {
     watchdog('filefield_paths', 'FileField Paths failed to move file (%o) to (%n).', array('%o' => $file['filepath']['old'], '%n' => $dest .'/'. $file['filename']['new']), WATCHDOG_ERROR);
     return FALSE;
   }
@@ -678,7 +786,7 @@ function filefield_paths_file_move(&$file, $replace = FILE_EXISTS_RENAME) {
 function _filefield_paths_strip_path($path) {
   $dirpath = file_directory_path();
   $dirlen = drupal_strlen($dirpath);
-  if (drupal_substr($path, 0, $dirlen + 1) == $dirpath .'/') {
+  if (drupal_substr($path, 0, $dirlen + 1) == $dirpath . '/') {
     $path = drupal_substr($path, $dirlen + 1);
   }
   return $path;
@@ -712,7 +820,7 @@ function _filefield_paths_check_directory(&$directory, $mode = 0, $form_item = N
     $htaccess_lines = "SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006\nOptions None\nOptions +FollowSymLinks";
     if (($fp = fopen("$directory/.htaccess", 'w')) && fputs($fp, $htaccess_lines)) {
       fclose($fp);
-      chmod($directory .'/.htaccess', 0664);
+      chmod($directory . '/.htaccess', 0664);
     }
     else {
       $repl = array('%directory' => $directory, '!htaccess' => nl2br(check_plain($htaccess_lines)));

@@ -1,5 +1,5 @@
 <?php
-// $Id: imagefilter.inc 828 2009-06-16 17:56:46Z jhedstrom $
+// $Id: imagefilter.inc,v 1.3.4.1 2009/03/18 08:35:59 drewish Exp $
 
 //Made by Chao Xu(Mgccl) 3/1/07
 //www.webdevlogs.com

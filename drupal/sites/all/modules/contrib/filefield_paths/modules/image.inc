@@ -1,16 +1,15 @@
 <?php
-// $Id: image.inc 843 2009-07-08 01:03:08Z jhedstrom $
-
+// $Id: image.inc,v 1.1.2.8 2010/01/11 06:07:16 deciphered Exp $
 /**
  * @file
  * Provides FileField Paths integration with the Image module.
  */
 
 /**
- * Implementation of hook_filefield_paths_form_alter().
+ * Implements hook_filefield_paths_form_alter().
  */
 function image_filefield_paths_form_alter(&$form, &$ffp) {
-  if ($form['#id'] == 'image-admin-settings') {
+  if (isset($form['#id']) && $form['#id'] == 'image-admin-settings') {
     $ffp['image'] = array(
       'type' => 'image',
       'form_path' => &$form['files']['ffp_image'],
@@ -33,42 +32,46 @@ function image_filefield_paths_form_alter(&$form, &$ffp) {
 }
 
 /**
- * Implementation of hook_filefield_paths_form_submit().
+ * Implements hook_filefield_paths_form_submit().
  */
 function image_filefield_paths_form_submit(&$form_state, &$ffp) {
-  $ffp['image'] = array(
-    'type' => 'image',
-  );
+  if (isset($form_state['values']['ffp_image'])) {
+    $ffp['image'] = array(
+      'type' => 'image',
+    );
+  }
 }
 
 /**
- * Implementation of hook_filefield_paths_get_fields().
+ * Implements hook_filefield_paths_get_fields().
  */
 function image_filefield_paths_get_fields(&$node, &$ffp) {
   if ($node->type == 'image') {
-    $info = array();
+    $info = $origname = array();
 
-    $result = db_query('SELECT * FROM {image} WHERE nid = %d', $node->nid);
+    $result = db_query('SELECT i.*, f.origname FROM {image} i JOIN {files} f ON i.fid = f.fid  WHERE i.nid = %d', $node->nid);
     while ($data = db_fetch_object($result)) {
       $info[$data->image_size] = $data->fid;
+      $origname[$data->image_size] = $data->origname;
     }
 
     foreach ($node->images as $name => &$file) {
       if (isset($info[$name])) {
         $file_info = pathinfo($file);
-  
+
         $ffp['#files'][] = array(
           'field' => array(
             'filepath' => &$file,
             'filename' => $file_info['basename'],
             'fid' => $info[$name],
-            'type' => $name
+            'type' => $name,
+            'origname' => $origname[$name],
           ),
           'module' => 'image',
           'name' => 'image',
-          'new' => $node->new_file
+          'new' => $node->new_file || $node->rebuild_images,
         );
-  
+
         $ffp['#types']['image'] = TRUE;
       }
     }
@@ -76,26 +79,24 @@ function image_filefield_paths_get_fields(&$node, &$ffp) {
 }
 
 /**
- * Implementation of hook_filefield_paths_batch_update().
+ * Implements hook_filefield_paths_batch_update().
  */
-function image_filefield_paths_batch_update($field_name, $type_name, &$objects) {
-  if (empty($field_name) && empty($field_name)) {
-    $result = db_query("SELECT nid FROM {node} WHERE type = '%s'", 'image');
+function image_filefield_paths_batch_update($field, $type, &$objects) {
+  $result = db_query("SELECT nid FROM {node} WHERE type = '%s'", 'image');
 
-    // Build array of Node IDs.
-    while ($node = db_fetch_object($result)) {
-      $objects[] = $node->nid;
-    }
+  // Build array of Node IDs.
+  while ($node = db_fetch_object($result)) {
+    $objects[] = $node->nid;
   }
 }
 
 /**
- * Implementation of hook_filefield_paths_update().
+ * Implements hook_filefield_paths_update().
  */
-function image_filefield_paths_update($oid, $field_name) {
-  if (empty($field_name)) {
-    $node = node_load($oid);
+function image_filefield_paths_update($oid, $field) {
+  $node = node_load($oid);
 
+  if (isset($node->images)) {
     // Flag files for update.
     $node->new_file = TRUE;
 

@@ -1,12 +1,12 @@
-; $Id: imageapi_gd.info 828 2009-06-16 17:56:46Z jhedstrom $
+; $Id: imageapi_gd.info,v 1.4 2008/08/01 18:52:22 dopry Exp $
 name = ImageAPI GD2
 description = Uses PHP's built-in GD2 image processing support.
 package = ImageCache
 core = 6.x
 
-; Information added by drupal.org packaging script on 2009-04-17
-version = "6.x-1.6"
+; Information added by drupal.org packaging script on 2010-05-01
+version = "6.x-1.8"
 core = "6.x"
 project = "imageapi"
-datestamp = "1239992203"
+datestamp = "1272675611"
 

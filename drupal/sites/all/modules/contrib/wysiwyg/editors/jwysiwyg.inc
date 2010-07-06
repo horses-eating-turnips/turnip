@@ -1,5 +1,5 @@
 <?php
-// $Id: jwysiwyg.inc 827 2009-06-16 17:13:25Z jhedstrom $
+// $Id: jwysiwyg.inc,v 1.4 2009/06/09 00:18:11 sun Exp $
 
 /**
  * @file

@@ -1,5 +1,5 @@
 <?php 
-// $Id: imagerotate.inc 828 2009-06-16 17:56:46Z jhedstrom $
+// $Id: imagerotate.inc,v 1.3.4.3 2009/03/18 08:35:59 drewish Exp $
 
 /** 
  * @file

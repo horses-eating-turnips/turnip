@@ -1,13 +1,12 @@
 <?php
-// $Id: upload.inc 843 2009-07-08 01:03:08Z jhedstrom $
-
+// $Id: upload.inc,v 1.1.2.6 2010/01/11 06:07:16 deciphered Exp $
 /**
  * @file
  * Provides FileField Paths integration with the Upload module.
  */
 
 /**
- * Implementation of hook_filefield_paths_form_alter().
+ * Implements hook_filefield_paths_form_alter().
  */
 function upload_filefield_paths_form_alter(&$form, &$ffp) {
   if (isset($form['#id']) && $form['#id'] == 'node-type-form') {
@@ -23,7 +22,7 @@ function upload_filefield_paths_form_alter(&$form, &$ffp) {
       '#title' => t('Upload Path settings'),
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
-      '#weight' => $form['workflow']['upload']['#weight'] + 1,
+      '#weight' => isset($form['workflow']['upload']['#weight']) ? $form['workflow']['upload']['#weight'] + 1 : 1,
     );
 
     $ffp['upload']['form_path']['file_path'] = array(
@@ -36,10 +35,10 @@ function upload_filefield_paths_form_alter(&$form, &$ffp) {
 }
 
 /**
- * Implementation of hook_filefield_paths_form_submit().
+ * Implements hook_filefield_paths_form_submit().
  */
 function upload_filefield_paths_form_submit(&$form_state, &$ffp) {
-  if ($form_state['values']['form_id'] == 'node_type_form') {
+  if (isset($form_state['values']['form_id']) && $form_state['values']['form_id'] == 'node_type_form') {
     $ffp['upload'] = array(
       'type' => $form_state['values']['type'],
     );
@@ -47,10 +46,10 @@ function upload_filefield_paths_form_submit(&$form_state, &$ffp) {
 }
 
 /**
- * Implementation of hook_filefield_paths_get_fields().
+ * Implements hook_filefield_paths_get_fields().
  */
 function upload_filefield_paths_get_fields(&$node, &$ffp) {
-  if (is_object($node) && $node->form_id == $node->type .'_node_form') {
+  if (is_object($node) && !isset($node->cid)) {
     if (isset($node->files)) {
       foreach ($node->files as &$file) {
         $file = (array) $file;
@@ -59,7 +58,7 @@ function upload_filefield_paths_get_fields(&$node, &$ffp) {
           'field' => &$file,
           'module' => 'upload',
           'name' => 'upload',
-          'new' => $file['new']
+          'new' => isset($file['new']) ? $file['new'] : FALSE
         );
 
         $ffp['#types']['upload'] = TRUE;
@@ -69,39 +68,35 @@ function upload_filefield_paths_get_fields(&$node, &$ffp) {
 }
 
 /**
- * Implementation of hook_filefield_paths_batch_update().
+ * Implements hook_filefield_paths_batch_update().
  */
-function upload_filefield_paths_batch_update($field_name, $type_name, &$objects) {
-  if (empty($field_name)) {
-    $result = db_query(
-      "SELECT u.nid FROM {upload} u LEFT JOIN {node} n ON u.nid = n.nid WHERE n.type = '%s'", $type_name
-    );
+function upload_filefield_paths_batch_update($field, $type, &$objects) {
+  $result = db_query(
+    "SELECT u.nid FROM {upload} u LEFT JOIN {node} n ON u.nid = n.nid WHERE n.type = '%s'", $type
+  );
 
-    // Build array of Node IDs.
-    while ($node = db_fetch_object($result)) {
-      $objects[] = $node->nid;
-    }
+  // Build array of Node IDs.
+  while ($node = db_fetch_object($result)) {
+    $objects[] = $node->nid;
   }
 }
 
 /**
- * Implementation of hook_filefield_paths_update().
+ * Implements hook_filefield_paths_update().
  */
-function upload_filefield_paths_update($oid, $field_name) {
-  if (empty($field_name)) {
-    $node = node_load($oid);
+function upload_filefield_paths_update($oid, $field) {
+  $node = node_load($oid);
 
-    // Flag files for update.
-    if (isset($node->files)) {
-      foreach ($node->files as &$file) {
-        $file->new = TRUE;
-      }
+  // Flag files for update.
+  if (isset($node->files)) {
+    foreach ($node->files as &$file) {
+      $file->new = TRUE;
     }
-
-    // Set Form ID.
-    $node->form_id = $node->type .'_node_form';
-
-    // Process Node.
-    filefield_paths_nodeapi($node, 'update', NULL, NULL);
   }
+
+  // Set Form ID.
+  $node->form_id = $node->type . '_node_form';
+
+  // Process Node.
+  filefield_paths_nodeapi($node, 'update', NULL, NULL);
 }

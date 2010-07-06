@@ -1,5 +1,5 @@
 <?php
-// $Id: filefield_field.inc,v 1.34 2009/10/20 19:18:10 quicksketch Exp $
+// $Id: filefield_field.inc,v 1.41 2010/06/30 23:52:45 quicksketch Exp $
 
 /**
  * @file
@@ -76,6 +76,7 @@ function filefield_field_settings_views_data($field) {
     'handler' => 'content_handler_relationship',
     'label' => t($field['widget']['label']),
     'content_field_name' => $field['field_name'],
+    'skip base' => array('files'),
   );
 
   // Use the Views boolean handler for filtering the list value.
@@ -97,6 +98,25 @@ function filefield_field_settings_views_data($field) {
   unset($data[$table_alias][$field['field_name'] .'_data']['filter']);
   unset($data[$table_alias][$field['field_name'] .'_data']['argument']);
   unset($data[$table_alias][$field['field_name'] .'_list']['argument']);
+
+  // Set up relationship with file views.
+  $data[$table_alias]['table']['join']['files'] = array(
+    'table' => $db_info['table'],
+    'left_field' => 'fid',
+    'field' => $db_info['columns']['fid']['column'],
+  );
+  $data[$table_alias]['vid'] = array(
+    'title' => t($field['widget']['label']),
+    'help' => t('The node the uploaded file is attached to'),
+    'relationship' => array(
+      'label' => t($field['widget']['label']),
+      'base' => 'node',
+      'base field' => 'vid',
+      // This allows us to not show this relationship if the base is already
+      // node so users won't create circular relationships.
+      'skip base' => array('node', 'node_revisions'),
+    ),
+  );
 
   return $data;
 }
@@ -122,9 +142,14 @@ function filefield_field_load($node, $field, &$items, $teaser, $page) {
       while (!empty($item['data']) && is_string($item['data'])) {
         $item['data'] = unserialize($item['data']);
       }
+      // Merge any data added by modules in hook_file_load().
+      if (isset($file['data']) && isset($item['data'])) {
+        $file['data'] = array_merge((array) $item['data'], (array) $file['data']);
+      }
       $items[$delta] = array_merge($item, $file);
     }
   }
+
   return array($field['field_name'] => $items);
 }
 
@@ -156,7 +181,7 @@ function filefield_field_update($node, $field, &$items, $teaser, $page) {
 
   // If this is a new node there are no old items to worry about.
   // On new revisions, old files are always maintained in the previous revision.
-  if ($node->is_new || !empty($node->revision)) {
+  if ($node->is_new || !empty($node->revision) || !empty($node->skip_filefield_delete)) {
     return;
   } 
 
@@ -168,6 +193,7 @@ function filefield_field_update($node, $field, &$items, $teaser, $page) {
       if (isset($oitem['fid']) && !in_array($oitem['fid'], $curfids)) {
         // For hook_file_references, remember that this is being deleted.
         $oitem['field_name'] = $field['field_name'];
+        $oitem['delete_vid'] = $orig->vid;
         filefield_field_delete_file($oitem, $field); 
       }
     }
@@ -181,6 +207,7 @@ function filefield_field_delete_revision($node, $field, &$items, $teaser, $page)
   foreach ($items as $delta => $item) {
     // For hook_file_references, remember that this is being deleted.
     $item['field_name'] = $field['field_name'];
+    $item['delete_vid'] = $node->vid;
     if (filefield_field_delete_file($item, $field)) {
       $items[$delta] = NULL;
     }
@@ -236,7 +263,7 @@ function filefield_field_sanitize($node, $field, &$items, $teaser, $page) {
     if (empty($item['fid']) || !empty($item['delete'])) {
       // Check for default images at the widget level.
       // TODO: Provide an API to ImageField to do this itself?
-      if (!empty($field['widget']['use_default_image']) && !empty($field['widget']['default_image']['filepath'])) {
+      if (!empty($field['widget']['use_default_image']) && !empty($field['widget']['default_image']['filepath']) && $delta == 0) {
         $items[$delta] = $field['widget']['default_image'];
         $items[$delta]['default'] = TRUE;
       }
@@ -245,23 +272,26 @@ function filefield_field_sanitize($node, $field, &$items, $teaser, $page) {
         continue;
       }
     }
-    // Load the complete file if a filepath is not available.
-    if (!empty($item['fid']) && empty($item['filepath'])) {
-      $items[$delta] = array_merge($item, field_file_load($item['fid']));
-    }
+
     // Add nid so formatters can create a link to the node.
     $items[$delta]['nid'] = $node->nid;
 
-    // TODO: This is only necessary for Views, which doesn't call the "load"
-    // $op. It might be preferable to move this to Views integration somehow.
-    if (!empty($items['data']) && is_string($items[$delta]['data'])) {
-      $item['data'] = unserialize($item['data']);
-    }
-    // Temporary fix to unserialize data serialized multiple times.
+    // Get the 'data' column stored by CCK into an array. This is necessary
+    // for Views, which doesn't call the "load" $op and to fix an issue with
+    // CCK double-serializing data.
     // See the FileField issue http://drupal.org/node/402860.
     // And the CCK issue http://drupal.org/node/407446.
     while (!empty($items[$delta]['data']) && is_string($items[$delta]['data'])) {
       $items[$delta]['data'] = unserialize($items[$delta]['data']);
+    }
+
+    // Load the complete file if a filepath is not available.
+    if (!empty($item['fid']) && empty($item['filepath'])) {
+      $file = (array) field_file_load($item['fid']);
+      if (isset($file['data'])) {
+        $file['data'] = array_merge($items[$delta]['data'], $file['data']);
+      }
+      $items[$delta] = array_merge($items[$delta], $file);
     }
 
     // Verify the file exists on the server.
