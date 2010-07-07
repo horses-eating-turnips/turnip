@@ -1,4 +1,4 @@
-// $Id: README.txt 843 2009-07-08 01:03:08Z jhedstrom $
+// $Id: README.txt,v 1.1.2.7 2009/07/09 22:50:46 deciphered Exp $
 
 The FileField Paths module extends the default functionality of Drupals core
 Upload module, the FileField module and many other File Upload modules by adding
@@ -24,6 +24,7 @@ Features
   * ImageField Crop module.
   * Image module.
   * Comment Upload module.
+  * Audio module.
 * File path and filename cleanup options:
   * Filter out words and punctuation by taking advantage of the Pathauto module.
   * Convert unicode characters into US-ASCII with the Transliteration module.
@@ -79,6 +80,13 @@ wish to use.
   Settings can be found on the content types configuration page in 'Comment
   settings > Comment Upload Path settings'.
   http://[www.yoursite.com/path/to/drupal]/admin/content/node-type/[node-type]
+
+
+* Audio module
+
+  Settings can be found on the content types configuration page in 'Audio Path
+  settings'.
+  http://[www.yoursite.com/path/to/drupal]/admin/content/node-type/audio
 
 
 Frequently Asked Questions

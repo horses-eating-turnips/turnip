@@ -1,13 +1,12 @@
 <?php
-// $Id: imagefield_crop.inc 843 2009-07-08 01:03:08Z jhedstrom $
-
+// $Id: imagefield_crop.inc,v 1.1.2.2 2010/01/11 06:07:16 deciphered Exp $
 /**
  * @file
  * Provides ImageField Crop module specific functions for FileField Paths.
  */
 
 /**
- * Implementation of hook_filefield_paths_process_file().
+ * Implements hook_filefield_paths_process_file().
  */
 function imagefield_crop_filefield_paths_process_file($new, $file, $settings, $node, $update) {
   if ($new) {

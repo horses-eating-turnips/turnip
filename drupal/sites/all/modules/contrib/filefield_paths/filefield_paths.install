@@ -1,12 +1,12 @@
 <?php
-// $Id: filefield_paths.install 843 2009-07-08 01:03:08Z jhedstrom $
-
+// $Id: filefield_paths.install,v 1.6.2.6 2010/01/11 06:07:16 deciphered Exp $
 /**
  * @file
+ * Install, update and uninstall functions for the FileField Paths module.
  */
 
 /**
- * Implementation of hook_schema().
+ * Implements hook_schema().
  */
 function filefield_paths_schema() {
   $schema['filefield_paths'] = array(
@@ -25,7 +25,7 @@ function filefield_paths_schema() {
 }
 
 /**
- * Implementation of hook_schema_alter().
+ * Implements hook_schema_alter().
  *
  * @param $schema
  *   The system-wide schema
@@ -41,7 +41,7 @@ function filefield_paths_schema_alter(&$schema) {
 }
 
 /**
- * Implementation of hook_install().
+ * Implements hook_install().
  */
 function filefield_paths_install() {
   drupal_install_schema('filefield_paths');
@@ -56,7 +56,7 @@ function filefield_paths_install() {
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function filefield_paths_uninstall() {
   drupal_uninstall_schema('filefield_paths');
@@ -66,7 +66,7 @@ function filefield_paths_uninstall() {
 }
 
 /**
- * Implementation of hook_update_N().
+ * Implements hook_update_N().
  */
 function filefield_paths_update_6100() {
   $ret = array();
@@ -112,7 +112,7 @@ function filefield_paths_update_6100() {
   $result = db_query("SELECT * FROM {variable} WHERE name LIKE 'filefield_paths_%'");
 
   while ($variable = db_fetch_object($result)) {
-    $pattern = '/filefield_paths_('. $types .')_('. $fields .')_(file_name|file_path)_?(.*)/';
+    $pattern = '/filefield_paths_(' . $types . ')_(' . $fields . ')_(file_name|file_path)_?(.*)/';
 
     if (preg_match($pattern, $variable->name, $results)) {
       if (empty($results[4])) {

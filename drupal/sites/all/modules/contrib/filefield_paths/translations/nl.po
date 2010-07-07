@@ -1,0 +1,191 @@
+# $Id: nl.po,v 1.1.2.3 2009/06/16 01:52:35 deciphered Exp $
+#
+# Dutch translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  filefield_paths.module,v 1.19.2.23 2009/06/11 23:02:51 deciphered
+#  filefield_paths.info,v 1.3 2008/11/03 09:29:16 deciphered
+#  comment_upload.inc,v 1.1.2.2 2009/05/26 10:24:34 deciphered
+#  upload.inc,v 1.1.2.2 2009/05/26 10:24:34 deciphered
+#  filefield.inc,v 1.1.2.3 2009/06/09 23:03:12 deciphered
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2009-06-16 01:39+0000\n"
+"PO-Revision-Date: 2009-06-16 01:50+0000\n"
+"Last-Translator: L.B. Cohn <libeco@libeco.nl>\n"
+"Language-Team: Dutch <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: filefield_paths.module:26
+msgid "File name"
+msgstr "Bestandsnaam"
+
+#: filefield_paths.module:53
+msgid "Token"
+msgstr "Patroon voor vervanging"
+
+#: filefield_paths.module:53
+msgid "Replacement value"
+msgstr "Vervangende waarde"
+
+#: filefield_paths.module:56
+msgid "tokens"
+msgstr "patronen voor vervanging"
+
+#: filefield_paths.module:137
+msgid "!title cleanup settings"
+msgstr "!title schoonmaakinstellingen"
+
+#: filefield_paths.module:149
+msgid "Cleanup using Pathauto"
+msgstr "Maak schoon met Pathauto"
+
+#: filefield_paths.module:154
+msgid "Cleanup !title using !url"
+msgstr "Maak !title schoon met !url"
+
+#: filefield_paths.module:154
+msgid "Pathauto settings"
+msgstr "Pathautoinstellingen"
+
+#: filefield_paths.module:164
+msgid "Convert to lower case"
+msgstr "Converteer naar kleine letters"
+
+#: filefield_paths.module:169
+msgid "Convert !title to lower case"
+msgstr "Converteer !title naar kleine letters"
+
+#: filefield_paths.module:175
+msgid "Transliterate"
+msgstr "Vertaal"
+
+#: filefield_paths.module:180
+msgid "Transliterate !title"
+msgstr "Vertaal !title"
+
+#: filefield_paths.module:190
+msgid "!title replacement patterns"
+msgstr "!title patronen voor vervanging"
+
+#: filefield_paths.module:204
+msgid "Retroactive update"
+msgstr "Retroactieve update"
+
+#: filefield_paths.module:205
+msgid "Move and rename previously uploaded files"
+msgstr "Verplaats en hernoem eerder geuploade bestanden"
+
+#: filefield_paths.module:206
+msgid "Warning"
+msgstr "Waarschuwing"
+
+#: filefield_paths.module:207
+msgid "This feature should only be used on developmental servers or with extreme caution"
+msgstr "Deze mogelijkheid moet alleen worden gebruikt op testservers of met extreme voorzichtigheid."
+
+#: filefield_paths.module:304
+msgid "Updating FileField Paths"
+msgstr "Bestandsveldpaden worden vernieuwd"
+
+#: filefield_paths.module:523
+msgid "File name without extension"
+msgstr "Bestandsnaam zonder extensie"
+
+#: filefield_paths.module:524
+msgid "File extension"
+msgstr "Bestandsextensie"
+
+#: filefield_paths.module:526
+msgid "File name without extension - original"
+msgstr "Bestandsnaam zonder extensie - origineel"
+
+#: filefield_paths.module:527
+msgid "File extension - original"
+msgstr "Bestandsextensie - origineel"
+
+#: filefield_paths.module:680
+msgid "The directory %directory is a file!"
+msgstr "De map %directory is een bestand!"
+
+#: filefield_paths.module:687;686
+msgid "The directory %directory does not exist."
+msgstr "De map %directory bestaat niet."
+
+#: filefield_paths.module:694
+msgid "The directory %directory is not writable"
+msgstr "De map %directory is niet schrijfbaar"
+
+#: filefield_paths.module:706
+msgid "Security warning: Couldn't write .htaccess file. Please create a .htaccess file in your %directory directory which contains the following lines:<br /><code>!htaccess</code>"
+msgstr "Beveiligingswaarschuwing: kan geen .htaccess-bestand maken. Maak een .htaccess-bestand in de map %directory die de volgende regels bevat: <br /><code>!htaccess</code>"
+
+#: filefield_paths.module:634;640
+msgid "filefield_paths"
+msgstr "bestandveld_paden"
+
+#: filefield_paths.module:634
+msgid "FileField Paths failed to create directory (%d)."
+msgstr "Bestandveldpaden kon de map (%d) niet maken."
+
+#: filefield_paths.module:640
+msgid "FileField Paths failed to move file (%o) to (%n)."
+msgstr "Bestandsveldpaden kon het bestand (%o) niet verplaatsen naar (%n)."
+
+#: filefield_paths.module:679;686;693
+msgid "file system"
+msgstr "bestandssysteem"
+
+#: filefield_paths.module:679
+msgid "check_directory: The path  %directory is a file."
+msgstr "check_directory: Het pad  %directory is a bestand."
+
+#: filefield_paths.module:693
+msgid "The directory %directory is not writable, because it does not have the correct permissions set."
+msgstr "De map %directory is niet schrijfbaar omdat de juiste toegangsrechten anders zijn ingesteld."
+
+#: filefield_paths.module:707
+msgid "security"
+msgstr "veiligheid"
+
+#: filefield_paths.module:707
+msgid "Security warning: Couldn't write .htaccess file.  Please create a .htaccess file in your %directory directory which contains the following lines:<br /><code>!htaccess</code>"
+msgstr "Veiligheidswaarschuwing: kan geen .htaccess-bestand schrijven. Maak een .htacces-bestand in je %directory-map die de volgende regels bevat:<br /><code>!htaccess</code>"
+
+#: filefield_paths.info:0
+msgid "FileField Paths"
+msgstr "Bestandsveldpaden"
+
+#: filefield_paths.info:0
+msgid "Adds extra functionality to FileFields Path settings."
+msgstr "Voegt extra functionaliteit toe aan Bestandveldpadeninstellingen."
+
+#: filefield_paths.info:0
+msgid "CCK"
+msgstr "CCK"
+
+#: modules/comment_upload.inc:23
+msgid "Comment Upload Path settings"
+msgstr "Reactie Upload padinstellingen"
+
+#: modules/comment_upload.inc:31 modules/upload.inc:31
+msgid "File path"
+msgstr "Bestandspad"
+
+#: modules/comment_upload.inc:32 modules/upload.inc:32
+msgid "Optional subdirectory within the \"%dir\" directory where files will be stored. Do not include trailing slash."
+msgstr "Optionele submap binnen de \"%dir\"-map waar bestanden worden opgeslagen. Gebruik geen / na het pad."
+
+#: modules/filefield.inc:24
+msgid "FileField Path settings"
+msgstr "Bestdsveldpadinstellingen"
+
+#: modules/upload.inc:23
+msgid "Upload Path settings"
+msgstr "Uploadpadinstellingen"
+

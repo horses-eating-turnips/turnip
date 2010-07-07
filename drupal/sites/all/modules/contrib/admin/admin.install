@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.install,v 1.1.2.7.2.1 2009/11/20 02:44:31 yhahn Exp $
+// $Id: admin.install,v 1.1.2.7.2.2 2010/06/23 16:21:09 jmiccolis Exp $
 
 /**
  * Implementation of hook_install().
@@ -94,4 +94,37 @@ function admin_update_6201() {
   }
 
   return $return;
+}
+
+/**
+ * Update 6202: Update the format of the admin_toolbar variable.
+ */
+function admin_update_6202() {
+  $ret = array();
+  $settings = variable_get('admin_toolbar', array());
+  if (isset($settings['blocks'])) {
+    $needs_update = FALSE;
+    // First pass, determine if we need to update these.
+    foreach ($settings['blocks'] as $bid => $status) {
+      if (!is_numeric($status)) {
+        $needs_update = TRUE;
+        break;
+      }
+    }
+    if ($needs_update) {
+      $defaults = admin_get_default_blocks(TRUE);
+      // Second pass, do the update!
+      foreach ($settings['blocks'] as $bid => $status) {
+        if ($status) {
+          $settings['blocks'][$bid] = isset($defaults[$bid]) ? $defaults[$bid] : BLOCK_NO_CACHE;
+        }
+        else {
+          unset($settings['blocks'][$bid]);
+        }
+      }
+      variable_set('admin_toolbar', $settings);
+      $ret[] = array('success' => TRUE, 'query' => 'Updated admin settings.');
+    }
+  }
+  return $ret;
 }

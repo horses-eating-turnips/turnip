@@ -1,0 +1,204 @@
+# Dansk translation of filefield_paths (6.x-1.2)
+# Copyright (c) 2009 by the Dansk translation team
+# Generated from files:
+# filefield_paths.module,v 1.19.2.17 2009/05/01 03:53:58 deciphered
+# filefield_paths.info,v 1.3 2008/11/03 09:29:16 deciphered
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: filefield_paths (6.x-1.2)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-06-11 00:59-0700\n"
+"PO-Revision-Date: 2009-06-11 10:01+0200\n"
+"Last-Translator: Morten Wulff <wulff@ratatosk.net>\n"
+"Language-Team: Dansk <dansk@klid.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);"
+
+#: filefield_paths.module:774,773
+msgid "The directory %directory does not exist."
+msgstr "Mappen %directory eksisterer ikke."
+
+#: filefield_paths.module:781
+msgid "The directory %directory is not writable"
+msgstr "Der kan ikke skrives til mappen %directory."
+
+#: filefield_paths.module:766,773,780
+msgid "file system"
+msgstr "filsystem"
+
+#: filefield_paths.module:780
+msgid ""
+"The directory %directory is not writable, because it does not have the "
+"correct permissions set."
+msgstr ""
+"Der kan ikke skrives til mappen %directory fordi tilladelserne er "
+"forkerte."
+
+#: filefield_paths.module:794
+msgid "security"
+msgstr "sikkerhed"
+
+#: filefield_paths.info:0
+msgid "CCK"
+msgstr "CCK"
+
+#: filefield_paths.module:53
+msgid "Token"
+msgstr "Symbol"
+
+#: filefield_paths.module:53
+msgid "Replacement value"
+msgstr "Erstatningsværdi"
+
+#: filefield_paths.module:56
+msgid "tokens"
+msgstr "symboler"
+
+#: filefield_paths.module:26
+msgid "File name"
+msgstr "Filnavn"
+
+#: filefield_paths.module:225
+msgid "Warning"
+msgstr "Advarsel"
+
+#: filefield_paths.module:109
+msgid "File path"
+msgstr "Filsti"
+
+#: filefield_paths.module:110
+msgid ""
+"Optional subdirectory within the \"%dir\" directory where files will "
+"be stored. Do not include trailing slash."
+msgstr ""
+"Valgfri undermappe i \"%dir\"-mappen hvor filer gemmes. Medtag ikke "
+"den afsluttende skråstreg."
+
+#: filefield_paths.module:767
+msgid "The directory %directory is a file!"
+msgstr "Mappen %directory er en fil!"
+
+#: filefield_paths.module:766
+msgid "check_directory: The path  %directory is a file."
+msgstr "check_directory: Stien %directory er en fil."
+
+#: filefield_paths.module:101
+msgid "Path settings"
+msgstr "Indstillinger for sti"
+
+#: filefield_paths.module:793
+msgid ""
+"Security warning: Couldn't write .htaccess file. Please create a "
+".htaccess file in your %directory directory which contains the "
+"following lines:<br /><code>!htaccess</code>"
+msgstr ""
+"Sikkerhedsadvarsel: Kan ikke skrive .htaccess-fil. Opret venligst en "
+".htaccess-fil i mappen %directory med følgende indhold:<br "
+"/><code>!htaccess</code>"
+
+#: filefield_paths.module:794
+msgid ""
+"Security warning: Couldn't write .htaccess file.  Please create a "
+".htaccess file in your %directory directory which contains the "
+"following lines:<br /><code>!htaccess</code>"
+msgstr ""
+"Sikkerhedsadvarsel: Kan ikke skrive .htaccess-fil. Opret venligst en "
+".htaccess-fil i mappen %directory med følgende indhold:<br "
+"/><code>!htaccess</code>"
+
+#: filefield_paths.module:157
+msgid "!title cleanup settings"
+msgstr "Oprydningsindstillinger for !title"
+
+#: filefield_paths.module:169
+msgid "Cleanup using Pathauto"
+msgstr "Rens med Pathauto"
+
+#: filefield_paths.module:174
+msgid "Cleanup !title using !url"
+msgstr "Rens !title med !url"
+
+#: filefield_paths.module:174
+msgid "Pathauto settings"
+msgstr "Indstillinger for Pathauto"
+
+#: filefield_paths.module:184
+msgid "Convert to lower case"
+msgstr "Konvertér til små bogstaver"
+
+#: filefield_paths.module:189
+msgid "Convert !title to lower case"
+msgstr "Konvertér !title til små bogstaver"
+
+#: filefield_paths.module:195
+msgid "Transliterate"
+msgstr "Translitterér"
+
+#: filefield_paths.module:200
+msgid "Transliterate !title"
+msgstr "Translitterér !title"
+
+#: filefield_paths.module:210
+msgid "!title replacement patterns"
+msgstr "!title erstatningsmønstre"
+
+#: filefield_paths.module:224
+msgid "Move and rename previously uploaded files"
+msgstr "Flyt og omdøb tidligere overførte filer"
+
+#: filefield_paths.module:624
+msgid "File extension"
+msgstr "Filendelse"
+
+#: filefield_paths.module:721,727,0
+msgid "filefield_paths"
+msgstr "filefield_paths"
+
+#: filefield_paths.module:721
+msgid "FileField Paths failed to create directory (%d)."
+msgstr "FileField Paths kunne ikke oprette mappen (%d)."
+
+#: filefield_paths.module:727
+msgid "FileField Paths failed to move file (%o) to (%n)."
+msgstr "FileField Paths kunne ikke flytte filen (%o) til (%n)."
+
+#: filefield_paths.info:0
+msgid "FileField Paths"
+msgstr "FileField Paths"
+
+#: filefield_paths.info:0
+msgid "Adds extra functionality to FileFields Path settings."
+msgstr "Tilføjer ekstra funktionalitet til FileFields stiindstillinger."
+
+#: filefield_paths.module:623
+msgid "File name without extension"
+msgstr "Filnavn uden udvidelse"
+
+#: filefield_paths.module:223
+msgid "Retroactive update"
+msgstr "Tilbagevirkende opdatering"
+
+#: filefield_paths.module:226
+msgid ""
+"This feature should only be used on developmental servers or with "
+"extreme caution"
+msgstr ""
+"Denne funktion skal kun bruges på udviklingsservere eller med stor "
+"forsigtighed."
+
+#: filefield_paths.module:329
+msgid "Updating FileField Paths"
+msgstr "Opdaterer FileField-stier"
+
+#: filefield_paths.module:626
+msgid "File name without extension - original"
+msgstr "Filnavn uden udvidelse - original"
+
+#: filefield_paths.module:627
+msgid "File extension - original"
+msgstr "Filudvidelse - original"
+
