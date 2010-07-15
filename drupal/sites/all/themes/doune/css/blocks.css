@@ -95,3 +95,13 @@
   float: left;
   padding: 5px;
 }
+
+/* Box editing */
+.boxes-box-editing {
+  position: absolute;
+  background-color: #fff;
+  border: solid 2px black;
+  padding: 10px;
+  z-index: 99;
+  float: left;
+}
