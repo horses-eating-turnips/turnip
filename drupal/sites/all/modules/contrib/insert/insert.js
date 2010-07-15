@@ -1,4 +1,4 @@
-// $Id: insert.js 900 2010-01-18 23:01:52Z jhedstrom $
+// $Id: insert.js,v 1.6 2010/03/13 22:20:19 quicksketch Exp $
 
 /**
  * Behavior to add "Insert" buttons.
@@ -61,9 +61,23 @@ Drupal.behaviors.insert = function(context) {
       }
     }
 
+    // Insert the text.
+    Drupal.insert.insertIntoActiveEditor(content);
+  }
+};
+
+// General Insert API functions.
+Drupal.insert = {
+  /**
+   * Insert content into the current (or last active) editor on the page. This
+   * should work with most WYSIWYGs as well as plain textareas.
+   *
+   * @param content
+   */
+  insertIntoActiveEditor: function(content) {
     // Always work in normal text areas that currently have focus.
     if (insertTextarea && insertTextarea.insertHasFocus) {
-      insertAtCursor(insertTextarea, content);
+      Drupal.insert.insertAtCursor(insertTextarea, content);
     }
     // Direct tinyMCE support.
     else if (typeof(tinyMCE) != 'undefined' && tinyMCE.activeEditor) {
@@ -74,25 +88,44 @@ Drupal.behaviors.insert = function(context) {
       Drupal.wysiwyg.instances[Drupal.wysiwyg.activeId].insert(content)
     }
     // FCKeditor module support.
-    else if (typeof(FCKeditorAPI) != 'undefined' && fckActiveId) {
+    else if (typeof(FCKeditorAPI) != 'undefined' && typeof(fckActiveId) != 'undefined') {
       FCKeditorAPI.Instances[fckActiveId].InsertHtml(content);
     }
     // Direct FCKeditor support (only body field supported).
-    else if (typeof(FCKeditorAPI) != 'undefined' && FCKeditorAPI.Instances['edit-body']) {
-      FCKeditorAPI.Instances['edit-body'].InsertHtml(content);
+    else if (typeof(FCKeditorAPI) != 'undefined') {
+      // Try inserting into the body.
+      if (FCKeditorAPI.Instances['edit-body']) {
+        FCKeditorAPI.Instances['edit-body'].InsertHtml(content);
+      }
+      // Try inserting into the first instance we find (may occur with very
+      // old versions of FCKeditor).
+      else {
+        for (var n in FCKeditorAPI.Instances) {
+          FCKeditorAPI.Instances[n].InsertHtml(content);
+          break;
+        }
+      }
     }
     // Direct CKeditor support (only body field supported).
-    else if (typeof(CKEDITOR) != 'undefined' &&  CKEDITOR.instances['edit-body']) {
+    else if (typeof(CKEDITOR) != 'undefined' && CKEDITOR.instances['edit-body']) {
       CKEDITOR.instances['edit-body'].insertHtml(content);
     }
     else if (insertTextarea) {
-      insertAtCursor(insertTextarea, content);
+      Drupal.insert.insertAtCursor(insertTextarea, content);
     }
 
     return false;
-  }
+  },
 
-  function insertAtCursor(editor, content) {
+  /**
+   * Insert content into a textarea at the current cursor position.
+   *
+   * @param editor
+   *   The DOM object of the textarea that will receive the text.
+   * @param content
+   *   The string to be inserted.
+   */
+  insertAtCursor: function(editor, content) {
     // IE support.
     if (document.selection) {
       editor.focus();
@@ -112,4 +145,4 @@ Drupal.behaviors.insert = function(context) {
       editor.value += content;
     }
   }
-}
+};

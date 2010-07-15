@@ -1,5 +1,5 @@
 <?php
-// $Id: mollom.api.php,v 1.1.2.1 2009/12/06 18:35:16 dries Exp $
+// $Id: mollom.api.php,v 1.1.2.2 2010/03/06 21:37:59 dries Exp $
 
 /**
  * @file
@@ -14,17 +14,55 @@
  * configurable in Mollom's administration interface.
  *
  * @return
- *   An associative array containing information about forms that can be
- *   protected. Each key is a $form_id whose value is an associative array:
+ *   An associative array containing information about the forms that can be
+ *   protected, keyed by $form_id:
+ *   - title: The human-readable name of the form.
+ *   - entity: (optional) The internal name of the entity type the form is for,
+ *     e.g. 'node' or 'comment'. See hook_mollom_form_info() for details.
+ *   - report access callback: (optional) A function name to invoke to check
+ *     access to Mollom's dedicated "report to Mollom" form, which should return
+ *     either TRUE or FALSE (like any other menu "access callback").
+ *   - report access: (optional) A list containing user permission strings, from
+ *     which the current user needs to have at least one. Should only be used if
+ *     no "report access callback" was defined.
+ *   - report delete callback: (optional) A function name to invoke to delete an
+ *     entity after reporting it to Mollom.
+ *
+ * @see See hook_mollom_form_info()
+ */
+function hook_mollom_form_list() {
+  // Mymodule's comment form.
+  $forms['mymodule_comment_form'] = array(
+    'title' => t('Comment form'),
+    'entity' => 'mymodule_comment',
+    'report access callback' => 'mymodule_comment_report_access',
+    'report delete callback' => 'mymodule_comment_report_delete',
+  );
+  // Mymodule's user registration form.
+  $forms['mymodule_user_register'] = array(
+    'title' => t('User registration form'),
+    'entity' => 'user',
+    'report access' => array('administer comments', 'bypass node access'),
+    // Make it private, so it's not a hook_user_delete() implementation.
+    'report delete callback' => '_mymodule_user_delete',
+  );
+  return $forms;
+}
+
+/**
+ * Return information about a form that can be protected by Mollom.
+ *
+ * @param $form_id
+ *   The form id to return information for.
+ *
+ * @return
+ *   An associative array describing the form identified by $form_id:
  *   - title: The human-readable name of the form.
  *   - mode: (optional) The default protection mode for the form, which can be
  *     one of:
- *     - MOLLOM_MODE_DISABLED: No protection.
- *     - MOLLOM_MODE_CAPTCHA: CAPTCHA-only protection.
  *     - MOLLOM_MODE_ANALYSIS: Text analysis of submitted form values with
  *       fallback to CAPTCHA.
- *     If omitted, the form will not be configured upon installation of Mollom
- *     module.
+ *     - MOLLOM_MODE_CAPTCHA: CAPTCHA-only protection.
  *   - bypass access: (optional) A list of user permissions to check for the
  *     current user to determine whether to protect the form with Mollom or do
  *     not validate submitted form values. If the current user has at least one
@@ -72,50 +110,59 @@
  *     - author_ip: Mollom automatically assigns the user's IP address if no
  *       explicit form element value mapping was specified.
  */
-function hook_mollom_form_info() {
-  // Mymodule's comment form.
-  $forms['mymodule_comment_form'] = array(
-    'title' => t('Comment form'),
-    'mode' => MOLLOM_MODE_ANALYSIS,
-    'bypass access' => array('administer comments'),
-    'entity' => 'comment',
-    'elements' => array(
-      'subject' => t('Subject'),
-      'body' => t('Body'),
-    ),
-    'mapping' => array(
-      'post_id' => 'cid',
-      'post_title' => 'subject',
-      'author_name' => 'name',
-      'author_mail' => 'mail',
-      'author_url' => 'homepage',
-    ),
-  );
-  // Mymodule's user registration form.
-  $forms['mymodule_user_register'] = array(
-    'title' => t('User registration form'),
-    'mode' => MOLLOM_MODE_CAPTCHA,
-    'entity' => 'user',
-    'mapping' => array(
-      'post_id' => 'uid',
-      'author_name' => 'name',
-      'author_mail' => 'mail',
-    ),
-  );
+function hook_mollom_form_info($form_id) {
+  switch ($form_id) {
+    // Mymodule's comment form.
+    case 'mymodule_comment_form':
+      $form_info = array(
+        'title' => t('Comment form'),
+        'mode' => MOLLOM_MODE_ANALYSIS,
+        'bypass access' => array('administer comments'),
+        'entity' => 'comment',
+        'elements' => array(
+          'subject' => t('Subject'),
+          'body' => t('Body'),
+        ),
+        'mapping' => array(
+          'post_id' => 'cid',
+          'post_title' => 'subject',
+          'author_name' => 'name',
+          'author_mail' => 'mail',
+          'author_url' => 'homepage',
+        ),
+      );
+      return $form_info;
+
+    // Mymodule's user registration form.
+    case 'mymodule_user_register':
+      $form_info = array(
+        'title' => t('User registration form'),
+        'mode' => MOLLOM_MODE_CAPTCHA,
+        'entity' => 'user',
+        'mapping' => array(
+          'post_id' => 'uid',
+          'author_name' => 'name',
+          'author_mail' => 'mail',
+        ),
+      );
+      return $form_info;
+  }
 
   return $forms;
 }
 
 /**
- * Alter registered information about forms that can be protected by Mollom.
+ * Alter registered information about a form that can be protected by Mollom.
  *
  * @param &$form_info
- *   An associative array containing protectable forms. See
+ *   An associative array describing the protectable form. See
  *   hook_mollom_form_info() for details.
+ * @param $form_id
+ *   The $form_id of the form.
  */
-function hook_mollom_form_info_alter(&$form_info) {
-  if (isset($form_info['comment_form'])) {
-    $form_info['comment_form']['elements']['mymodule_field'] = t('My additional field');
+function hook_mollom_form_info_alter(&$form_info, $form_id) {
+  if ($form_id == 'comment_form') {
+    $form_info['elements']['mymodule_field'] = t('My additional field');
   }
 }
 

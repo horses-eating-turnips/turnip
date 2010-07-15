@@ -1,5 +1,5 @@
 <?php
-// $Id: insert.inc,v 1.1 2009/10/21 06:23:43 quicksketch Exp $
+// $Id: insert.inc,v 1.2 2010/01/08 18:58:23 quicksketch Exp $
 
 /**
  * @file
@@ -42,7 +42,7 @@ function insert_insert_content($item, $style, $widget) {
  * Preprocess variables for the insert-image.tpl.php file.
  */
 function template_preprocess_insert_image(&$vars) {
-  $vars['url'] = file_create_url($vars['item']['filepath']);
+  $vars['url'] = insert_create_url($vars['item']['filepath']);
   $vars['class'] = !empty($vars['widget']['insert_class']) ? $vars['widget']['insert_class'] : '';
   $image_info = @image_get_info($vars['item']['filepath']);
   $vars['width'] = isset($image_info['width']) ? $image_info['width'] : '';
@@ -53,7 +53,7 @@ function template_preprocess_insert_image(&$vars) {
  * Preprocess variables for the insert-link.tpl.php file.
  */
 function template_preprocess_insert_link(&$vars) {
-  $vars['url'] = file_create_url($vars['item']['filepath']);
+  $vars['url'] = insert_create_url($vars['item']['filepath']);
   $vars['class'] = !empty($vars['widget']['insert_class']) ? $vars['widget']['insert_class'] : '';
   $vars['name'] = $vars['item']['filename'];
 }

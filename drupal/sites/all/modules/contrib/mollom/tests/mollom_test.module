@@ -1,5 +1,5 @@
 <?php
-// $Id: mollom_test.module,v 1.1.2.6 2010/02/02 17:22:26 dries Exp $
+// $Id: mollom_test.module,v 1.1.2.7 2010/03/06 21:37:59 dries Exp $
 
 /**
  * @file
@@ -149,10 +149,20 @@ function mollom_test_menu() {
 }
 
 /**
+ * Implements hook_mollom_form_list().
+ */
+function mollom_test_mollom_form_list() {
+  $forms['mollom_test_form'] = array(
+    'title' => 'Mollom test form',
+  );
+  return $forms;
+}
+
+/**
  * Implements hook_mollom_form_info().
  */
-function mollom_test_mollom_form_info() {
-  $forms['mollom_test_form'] = array(
+function mollom_test_mollom_form_info($form_id) {
+  $form_info = array(
     'title' => 'Mollom test form',
     'bypass access' => array('administer mollom'),
     'entity' => 'mollom_test',
@@ -169,7 +179,7 @@ function mollom_test_mollom_form_info() {
       'author_name' => 'name',
     ),
   );
-  return $forms;
+  return $form_info;
 }
 
 /**

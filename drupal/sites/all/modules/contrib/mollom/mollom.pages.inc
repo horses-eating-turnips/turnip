@@ -1,5 +1,5 @@
 <?php
-// $Id: mollom.pages.inc,v 1.1.2.12 2010/02/19 05:50:39 dries Exp $
+// $Id: mollom.pages.inc,v 1.1.2.13 2010/03/06 21:37:59 dries Exp $
 
 /**
  * @file
@@ -151,7 +151,7 @@ function mollom_report_form_submit($form, &$form_state) {
 
     // Delete the content. The callback should take care of proper deletion and
     // cache clearing on its own.
-    foreach (mollom_get_form_info() as $form_id => $info) {
+    foreach (mollom_form_list() as $form_id => $info) {
       if (!isset($info['entity']) || $info['entity'] != $entity) {
         continue;
       }

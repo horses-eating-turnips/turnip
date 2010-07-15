@@ -1,5 +1,5 @@
 <?php
-// $Id: mollom.install,v 1.2.2.23 2010/02/18 22:20:15 dries Exp $
+// $Id: mollom.install,v 1.2.2.28 2010/03/30 14:53:03 davereid Exp $
 
 /**
  * @file
@@ -68,6 +68,12 @@ function mollom_schema() {
         'length' => 255,
         'not null' => TRUE,
         'default' => '',
+      ),
+      'changed' => array(
+        'description' => 'The Unix timestamp when the data was changed.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
       ),
       'quality' => array(
         'description' => "A quality rating assigned to the content to tell whether or not it's spam. Experimental; Mollom might return inconsistent values.",
@@ -139,27 +145,6 @@ function mollom_schema() {
  */
 function mollom_install() {
   drupal_install_schema('mollom');
-
-  // Install default form configuration for enabled, supported modules.
-  foreach (module_list(FALSE, FALSE) as $module) {
-    drupal_load('module', $module);
-  }
-  drupal_load('module', 'mollom');
-
-  $form_info = mollom_get_form_info();
-  foreach ($form_info as $form_id => $info) {
-    if (!empty($info['mode'])) {
-      $info['enabled_fields'] = array_keys($info['elements']);
-      // Upon installation, our own schema is not available yet, so we cannot
-      // use mollom_form_save(), resp. drupal_write_record().
-      db_query("INSERT INTO {mollom_form} (form_id, mode, enabled_fields, module) VALUES ('%s', %d, '%s', '%s')", array(
-        $info['form_id'],
-        $info['mode'],
-        serialize($info['enabled_fields']),
-        $info['module'],
-      ));
-    }
-  }
 }
 
 /**
@@ -193,18 +178,17 @@ function mollom_update_2() {
  * Upgrade form protection storage.
  */
 function mollom_update_3() {
-  // Load mollom_get_form_info() and hook_mollom_form_info() implementations.
+  // Load hook_mollom_form_info() implementations for mollom_form_list().
   foreach (module_list(FALSE, FALSE) as $module) {
     drupal_load('module', $module);
   }
   drupal_load('module', 'mollom');
 
-  foreach (mollom_get_form_info() as $form_id => $info) {
+  foreach (mollom_form_list() as $form_id => $info) {
     $name = 'mollom_' . $form_id;
     $mode = variable_get($name, NULL);
-    // $mode was stored as 1; default to MOLLOM_MODE_ANALYSIS if the form
-    // supports it.
-    if (isset($mode) && $info['mode'] == MOLLOM_MODE_ANALYSIS) {
+    // $mode was stored as 1; convert to MOLLOM_MODE_ANALYSIS.
+    if (isset($mode)) {
       variable_set($name, MOLLOM_MODE_ANALYSIS);
     }
   }
@@ -261,20 +245,17 @@ function mollom_update_6105() {
   }
   drupal_load('module', 'mollom');
 
-  // Ensure that we don't get stale form or schema information.
-  mollom_get_form_info(NULL, TRUE);
-  drupal_get_schema('mollom_form', TRUE);
 
-  $form_info = mollom_get_form_info();
+  $form_list = mollom_form_list();
   $result = db_query("SELECT name, value FROM {variable} WHERE name LIKE 'mollom_%%' AND name NOT IN ('mollom_servers', 'mollom_fallback', 'mollom_public_key', 'mollom_private_key')");
   while ($row = db_fetch_object($result)) {
     $form_id = substr($row->name, 7);
     $mode = unserialize($row->value);
-    if (!empty($mode) && isset($form_info[$form_id])) {
-      $info = $form_info[$form_id];
-      $info['mode'] = $mode;
-      $info['enabled_fields'] = array_keys($info['elements']);
-      mollom_form_save($info);
+    if (!empty($mode) && isset($form_list[$form_id])) {
+      $info = $form_list[$form_id];
+      $info += mollom_form_info($form_id, $info['module']);
+      $info['enabled_fields'] = ($mode == MOLLOM_MODE_ANALYSIS ? array_keys($info['elements']) : array());
+      db_query("INSERT INTO {mollom_form} (form_id, mode, enabled_fields, module) VALUES ('%s', %d, '%s', '%s')", array($form_id, $mode, serialize($info['enabled_fields']), $info['module']));
     }
     variable_del($row->name);
   }
@@ -358,3 +339,46 @@ function mollom_update_6109() {
   return $ret;
 }
 
+/**
+ * Automatically update the new 'mollom_status' variable.
+ *
+ * _mollom_status() was introduced in 6.x-1.11 to prevent Mollom from
+ * interfering with forms when it is incorrectly configured. Sites updating from
+ * previous versions should be correctly configured, so we just invoke it here.
+ */
+function mollom_update_6110() {
+  $ret = array();
+  _mollom_status(TRUE);
+  return $ret;
+}
+
+/**
+ * Fix enabled_fields array for CAPTCHA-only protected forms.
+ *
+ * mollom_update_6105() incorrectly stored enabled_fields values for forms
+ * protected by CAPTCHAs only.
+ */
+function mollom_update_6111() {
+  $ret = array();
+  // @see update_sql()
+  $sql = "UPDATE {mollom_form} SET enabled_fields = '%s' WHERE mode = %d";
+  $result = db_query($sql, array(serialize(array()), MOLLOM_MODE_CAPTCHA));
+  $ret[] = array('success' => $result !== FALSE, 'query' => check_plain($sql));
+  return $ret;
+}
+
+/**
+ * Add {mollom}.changed column to auto-flush expired entries.
+ */
+function mollom_update_6112() {
+  $ret = array();
+  if (!db_column_exists('mollom', 'changed')) {
+    db_add_field($ret, 'mollom', 'changed', array(
+      'type' => 'int',
+      'not null' => TRUE,
+      'default' => 0,
+    ));
+    db_query("UPDATE {mollom} SET changed = %d", array(time()));
+  }
+  return $ret;
+}

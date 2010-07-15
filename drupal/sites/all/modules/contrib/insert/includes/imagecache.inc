@@ -1,5 +1,5 @@
 <?php
-// $Id: imagecache.inc,v 1.1 2009/10/21 06:23:43 quicksketch Exp $
+// $Id: imagecache.inc,v 1.2 2010/01/08 18:58:23 quicksketch Exp $
 
 /**
  * @file
@@ -32,7 +32,7 @@ function imagecache_insert_content($item, $style, $widget) {
  * Theme the content that will be inserted for ImageCache presets.
  */
 function template_preprocess_imagecache_insert_image(&$vars) {
-  $vars['filepath'] = $vars['item']['filepath'];
-  $vars['url'] = imagecache_create_url($vars['preset_name'], $vars['item']['filepath']);
+  $vars['filepath'] = imagecache_create_path($vars['preset_name'], $vars['item']['filepath']);
+  $vars['url'] = insert_create_url($vars['filepath']);
   $vars['class'] = !empty($vars['widget']['insert_class']) ? $vars['widget']['insert_class'] : '';
 }
