@@ -16,4 +16,4 @@ else
 fi
 
 drush --root=../drupal cc all
-drush --root=../drupal --config=drushrc.php sql-dump --structure-tables-key=opensourcery | gzip > $output
+drush --root=../drupal --config=drushrc.php --database=${2:-default} sql-dump --structure-tables-key=opensourcery | gzip > $output

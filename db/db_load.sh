@@ -7,7 +7,7 @@ fi
 # Must set this option, else script will not expand "drush" alias.
 shopt -s expand_aliases
 
-options="--root=../drupal"
+options="--root=../drupal --database=${2:-default}"
 
 dbname=`drush $options sql-connect | awk '{print $NF}'`
 
