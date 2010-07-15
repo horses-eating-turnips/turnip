@@ -90,3 +90,8 @@
 
 #block-user-3 /* "Who's online" block for a list of the online users */ {
 }
+
+#postscript .block {
+  float: left;
+  padding: 5px;
+}

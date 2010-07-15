@@ -97,6 +97,7 @@
  * - $sidebar_first: Items for the first sidebar.
  * - $sidebar_second: Items for the second sidebar.
  * - $header: Items for the header region.
+ * - $postscript: Items for the postscript region.
  * - $footer: Items for the footer region.
  * - $page_closure: Items to appear below the footer.
  *
@@ -220,6 +221,11 @@
 
     </div></div> <!-- /#main, /#main-wrapper -->
 
+    <?php if ($postscript): ?>
+    <div id="postscript"><div class="section">
+      <?php print $postscript; ?>
+    </div></div> <!-- /.section, #postscript -->
+    <?php endif; ?>
     <?php if ($footer || $footer_message || $secondary_links): ?>
       <div id="footer"><div class="section">
 

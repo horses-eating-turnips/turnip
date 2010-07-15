@@ -73,6 +73,7 @@ regions[highlight]      = Highlighted content
 regions[content_top]    = Content top
 regions[content_bottom] = Content bottom
 regions[header]         = Header
+regions[postscript]     = Postscript
 regions[footer]         = Footer
 regions[page_closure]   = Page closure
 
