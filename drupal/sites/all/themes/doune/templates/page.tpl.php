@@ -222,12 +222,12 @@
     </div></div> <!-- /#main, /#main-wrapper -->
 
     <?php if ($postscript): ?>
-    <div id="postscript"><div class="section">
+    <div id="postscript"><div class="section clearfix">
       <?php print $postscript; ?>
     </div></div> <!-- /.section, #postscript -->
     <?php endif; ?>
     <?php if ($footer || $footer_message || $secondary_links): ?>
-      <div id="footer"><div class="section">
+      <div id="footer"><div class="section clearfix">
 
         <?php print theme(array('links__system_secondary_menu', 'links'), $secondary_links,
           array(
