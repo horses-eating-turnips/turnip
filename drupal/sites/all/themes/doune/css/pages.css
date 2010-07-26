@@ -176,6 +176,8 @@ div.tabs /* See also the tabs.css file. */ {
 #content-area /* Wrapper for the actual page content */ {
 }
 
+.region-header ul.menu,
+.region-page-closure ul.menu,
 ul.links /* List of links */ {
   margin: 1em 0;
   padding: 0;
@@ -186,6 +188,8 @@ ul.links.inline {
   display: inline;
 }
 
+.region-header ul.menu li,
+.region-page-closure ul.menu li,
 ul.links li {
   display: inline;
   list-style-type: none;
