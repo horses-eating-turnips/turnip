@@ -229,39 +229,33 @@ function zen_blocks($region, $show_blocks = NULL) {
   }
 
   // Is the Context module enabled? If so make sure that the blocks Context wants to display get displayed 
-  if (module_exists("context")) {
-	$output = '';
-
-	// Get the Context plugin needed to get the blocks that needs to be displayed for this region 
-    $plugin = context_get_plugin('reaction', 'block');
-
-    // Let's get the blocks that should be displayed from Context.
-    $output .= $plugin->execute($region);
-
-    // Add any other content assigned to this region through drupal_set_content() calls.
-    $output .= drupal_get_content($region);
-
-    $elements['#children'] = $output;
-    $elements['#region'] = $region;
-
-    return $output ? theme('region', $elements) : '';
-  }
-  // If zen_blocks was called with a NULL region, its likely we were just
-  // setting the $render_sidebars static variable.
-  else if ($region) {
+  if ($region) {
     $output = '';
 
-    // If $renders_sidebars is FALSE, don't render any region whose name begins
-    // with "sidebar_".
-    if (($render_sidebars || (strpos($region, 'sidebar_') !== 0)) && ($list = block_list($region))) {
-      foreach ($list as $key => $block) {
-        // $key == module_delta
-        $output .= theme('block', $block);
+    if (module_exists("context")) {
+      // Get the Context plugin needed to get the blocks that needs to be displayed for this region 
+      $plugin = context_get_plugin('reaction', 'block');
+
+      // Let's get the blocks that should be displayed from Context.
+      if (is_object($plugin)) {
+        $output .= $plugin->execute($region);
       }
     }
+    // If zen_blocks was called with a NULL region, its likely we were just
+    // setting the $render_sidebars static variable.
+    else {
+      // If $renders_sidebars is FALSE, don't render any region whose name begins
+      // with "sidebar_".
+      if (($render_sidebars || (strpos($region, 'sidebar_') !== 0)) && ($list = block_list($region))) {
+        foreach ($list as $key => $block) {
+          // $key == module_delta
+          $output .= theme('block', $block);
+        }
+      }
 
-    // Add any content assigned to this region through drupal_set_content() calls.
-    $output .= drupal_get_content($region);
+      // Add any content assigned to this region through drupal_set_content() calls.
+      $output .= drupal_get_content($region);
+    }
 
     $elements['#children'] = $output;
     $elements['#region'] = $region;
