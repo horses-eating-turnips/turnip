@@ -138,7 +138,7 @@ function opensourcery_install_profile_tasks(&$task, $url) {
 
     // Default page to not be promoted, and have comments disabled, and create new revisions.
     variable_set('node_options_page', array('status', 'revision'));
-    variable_set('comment_page', COMMENT_NODE_DISABLED);
+    variable_set('comment_page', 0); /* COMMENT_NODE_DISABLED isn't available */
 
     // Don't display date and author information for page nodes by default.
     $theme_settings = variable_get('theme_settings', array());
