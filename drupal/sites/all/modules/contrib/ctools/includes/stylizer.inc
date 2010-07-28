@@ -1,5 +1,5 @@
 <?php
-// $Id: stylizer.inc,v 1.1.2.4 2010/05/17 17:23:25 sdboyer Exp $
+// $Id: stylizer.inc,v 1.1.2.10 2010/07/26 17:24:29 merlinofchaos Exp $
 /**
  * @file
  * Create customized CSS and images from palettes created by user input.
@@ -28,6 +28,18 @@ function ctools_get_style_base($style_base) {
 function ctools_get_style_bases() {
   ctools_include('plugins');
   return ctools_get_plugins('ctools', 'style_bases');
+}
+
+/**
+ * Fetch metadata about all of the style base types that are available.
+ */
+function ctools_get_style_base_types() {
+  $types = array();
+  foreach (module_implements('ctools_style_base_types') as $module) {
+    $types[$module] = module_invoke($module, 'ctools_style_base_types');
+  }
+
+  return $types;
 }
 
 /**
@@ -175,6 +187,21 @@ function ctools_stylizer_recursive_delete($path) {
 }
 
 /**
+ * Get a safe name for the settings.
+ *
+ * This uses an md5 of the palette if the name is temporary so
+ * that multiple temporary styles on the same page can coexist
+ * safely.
+ */
+function ctools_stylizer_get_settings_name($settings) {
+  if ($settings['name'] != '_temporary') {
+    return $settings['name'];
+  }
+
+  return $settings['name'] . '-' . md5(serialize($settings['palette']));
+}
+
+/**
  * Get the path where images will be stored for a given style plugin and settings.
  *
  * This function will make sure the path exists.
@@ -210,7 +237,7 @@ function ctools_stylizer_get_css_id($plugin, $settings) {
  */
 function ctools_stylizer_get_css_class($plugin, $settings) {
   ctools_include('cleanstring');
-  return ctools_cleanstring($plugin['name'] . '-' . $settings['name']);
+  return ctools_cleanstring($plugin['name'] . '-' . ctools_stylizer_get_settings_name($settings));
 }
 
 class ctools_stylizer_image_processor {
@@ -679,7 +706,13 @@ function ctools_stylizer_edit_style(&$info, $js, $step = NULL) {
     if ($step != 'choose') {
       $cache = ctools_stylizer_get_settings_cache($name);
       if (!$cache) {
-        return t('Missing settings cache.');
+        $output = t('Missing settings cache.');
+        if ($js) {
+          return ctools_modal_form_render($form_state, $output);
+        }
+        else {
+          return $output;
+        }
       }
 
       if (!empty($cache['owner settings'])) {
@@ -695,7 +728,7 @@ function ctools_stylizer_edit_style(&$info, $js, $step = NULL) {
       );
       ctools_stylizer_clear_settings_cache($name);
     }
-    $form_type = 'add';
+    $op = 'add';
   }
   else {
     $cache = ctools_stylizer_get_settings_cache($info['settings']['name']);
@@ -709,45 +742,25 @@ function ctools_stylizer_edit_style(&$info, $js, $step = NULL) {
     else {
       $settings = $info['settings'];
     }
-    $form_type = 'edit';
+    $op = 'edit';
+  }
+
+  if (!empty($info['op'])) {
+    // Allow this to override. Necessary to allow cloning properly.
+    $op = $info['op'];
   }
 
   $plugin = NULL;
   if (!empty($settings['style_base'])) {
     $plugin = ctools_get_style_base($settings['style_base']);
-    // Add in forms specific to the plugin. The plugin can store forms
-    // either as a simple 'edit form' => 'form callback' or if it needs
-    // the more complicated wizard functionality, it can set 'forms'
-    // and 'order' with values suitable for the wizard $form_info
-    // array.
-
     $info['type'] = $plugin['type'];
-    if (empty($plugin['forms'])) {
-      if ($form_type == 'add' && isset($plugin['add form'])) {
-        $id = $plugin['add form'];
-      }
-      else if (isset($plugin['edit form'])) {
-        $id = $plugin['edit form'];
-      }
-      else {
-        $id = 'ctools_stylizer_edit_style_form_default';
-      }
-
-      $form_info['forms']['settings'] = array(
-        'form id' => $id,
-      );
-      $form_info['order']['settings'] = t('Settings');
-    }
-    else {
-      $form_info['forms'] += $plugin['forms'];
-      $form_info['order'] += $plugin['order'];
-    }
+    ctools_stylizer_add_plugin_forms($form_info, $plugin, $op);
   }
   else {
-    // This is here so the 'finish' button does not show up, but because
+    // This is here so the 'finish' button does not show up, and because
     // we don't have the selected style we don't know what the next form(s)
     // will be.
-    $form_info['order']['next'] = t('A meaningless second page');
+    $form_info['order']['next'] = t('Configure style');
   }
 
   if (count($form_info['order']) < 2 || $step == 'choose') {
@@ -763,7 +776,7 @@ function ctools_stylizer_edit_style(&$info, $js, $step = NULL) {
     'step' => $step,
     'settings' => $settings,
     'ajax' => $js,
-    'form_type' => $form_type,
+    'op' => $op,
   );
 
   if (!empty($info['modal'])) {
@@ -787,7 +800,50 @@ function ctools_stylizer_edit_style(&$info, $js, $step = NULL) {
     return ctools_stylizer_edit_style($info, $js, $form_state['clicked_button']['#next']);
   }
 
-  return $output;
+  if ($js) {
+    return ctools_modal_form_render($form_state, $output);
+  }
+  else {
+    return $output;
+  }
+}
+
+/**
+ * Add wizard forms specific to a style base plugin.
+ *
+ * The plugin can store forms either as a simple 'edit form'
+ * => 'form callback' or if it needs the more complicated wizard
+ * functionality, it can set 'forms' and 'order' with values suitable
+ * for the wizard $form_info array.
+ *
+ * @param &$form_info
+ *   The form info to modify.
+ * @param $plugin
+ *   The plugin to use.
+ * @param $op
+ *   Either 'add' or 'edit' so we can get the right forms.
+ */
+function ctools_stylizer_add_plugin_forms(&$form_info, $plugin, $op) {
+  if (empty($plugin['forms'])) {
+    if ($op == 'add' && isset($plugin['add form'])) {
+      $id = $plugin['add form'];
+    }
+    else if (isset($plugin['edit form'])) {
+      $id = $plugin['edit form'];
+    }
+    else {
+      $id = 'ctools_stylizer_edit_style_form_default';
+    }
+
+    $form_info['forms']['settings'] = array(
+      'form id' => $id,
+    );
+    $form_info['order']['settings'] = t('Settings');
+  }
+  else {
+    $form_info['forms'] += $plugin['forms'];
+    $form_info['order'] += $plugin['order'];
+  }
 }
 
 /**
@@ -963,7 +1019,6 @@ function ctools_stylizer_edit_style_form_default(&$form, &$form_state) {
   if (!empty($form_state['owner info']['owner form']) && function_exists($form_state['owner info']['owner form'])) {
     $form_state['owner info']['owner form']($form, $form_state);
   }
-
 }
 
 /**
@@ -1000,10 +1055,20 @@ function theme_ctools_stylizer_preview_form($form) {
   if (!empty($form['#form_state']['settings']['old_settings'])) {
     ctools_stylizer_cleanup_style($plugin, $form['#form_state']['settings']['old_settings']);
   }
+  $preview = '';
+  if (!empty($plugin['preview'])) {
+    $preview = $plugin['preview'];
+  }
+  else {
+    $base_types = ctools_get_style_base_types();
+    if (!empty($base_types[$plugin['module']][$plugin['type']]['preview'])) {
+      $preview = $base_types[$plugin['module']][$plugin['type']]['preview'];
+    }
+  }
 
-  if (!empty($plugin['preview']) && function_exists($plugin['preview'])) {
+  if (!empty($preview) && function_exists($preview)) {
     $output = '<fieldset id="preview"><legend>' . t('Preview') . '</legend>';
-    $output .= $plugin['preview']($plugin, $settings);
+    $output .= $preview($plugin, $settings);
     $output .= drupal_render($form);
     $output .= '</fieldset>';
 
@@ -1037,11 +1102,13 @@ function ctools_stylizer_edit_style_form_default_submit($form, &$form_state) {
   if ($form_state['clicked_button']['#value'] == t('Preview')) {
     $form_state['rerender'] = TRUE;
     // Update the cache with changes.
-    $cache = array('settings' => $form_state['settings']);
-    if (!empty($form_state['owner info']['owner settings'])) {
-      $cache['owner settings'] = $form_state['owner info']['owner settings'];
+    if (!empty($form_state['name'])) {
+      $cache = array('settings' => $form_state['settings']);
+      if (!empty($form_state['owner info']['owner settings'])) {
+        $cache['owner settings'] = $form_state['owner info']['owner settings'];
+      }
+      ctools_stylizer_set_settings_cache($form_state['name'], $cache);
     }
-    ctools_stylizer_set_settings_cache($form_state['name'], $cache);
   }
 }
 

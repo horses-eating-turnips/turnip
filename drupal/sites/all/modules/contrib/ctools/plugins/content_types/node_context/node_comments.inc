@@ -1,5 +1,5 @@
 <?php
-// $Id: node_comments.inc,v 1.2.2.3 2010/04/14 20:46:53 merlinofchaos Exp $
+// $Id: node_comments.inc,v 1.2.2.5 2010/07/23 17:47:12 merlinofchaos Exp $
 
 if (module_exists('comment')) {
   /**
@@ -31,7 +31,7 @@ function ctools_node_comments_content_type_render($subtype, $conf, $panel_args, 
   if (empty($node)) {
     $block->content = t('Node comments go here.');
   }
-  else {
+  else if ($node->comment) {
     $block->content = ctools_comment_render($node, $conf);
     // Update the history table, stating that this user viewed this node.
     node_tag_new($node->nid);
@@ -95,7 +95,15 @@ function ctools_comment_render($node, $conf) {
 
   // Multiple comment view
   $query_count = 'SELECT COUNT(*) FROM {comments} c WHERE nid = %d';
-  $query = 'SELECT c.cid AS cid, c.pid, c.nid, c.subject, c.comment, c.format, c.timestamp, c.name, c.mail, c.homepage, u.uid, u.name AS registered_name, u.picture, u.data, c.thread, c.status, parent_user.uid as parent_uid, parent_user.data as parent_data, parent_user.name as parent_name, parent_user.picture as parent_picture FROM {comments} c INNER JOIN {users} u ON c.uid = u.uid LEFT OUTER JOIN {comments} parent ON c.pid = parent.cid LEFT OUTER JOIN {users} parent_user ON parent.uid = parent_user.uid WHERE c.nid = %d';
+
+  if (db_column_exists('users', 'signature_format')) {
+    //We run drupal version > 6.13, users table has signature_format column
+    $query = 'SELECT c.cid AS cid, c.pid, c.nid, c.subject, c.comment, c.format, c.timestamp, c.name, c.mail, c.homepage, u.uid, u.name AS registered_name, u.picture, u.signature, u.signature_format, u.data, c.thread, c.status, parent_user.uid as parent_uid, parent_user.data as parent_data, parent_user.name as parent_name, parent_user.picture as parent_picture FROM {comments} c INNER JOIN {users} u ON c.uid = u.uid LEFT OUTER JOIN {comments} parent ON c.pid = parent.cid LEFT OUTER JOIN {users} parent_user ON parent.uid = parent_user.uid WHERE c.nid = %d';
+  }
+  else {
+    //We run outdated drupal version <= 6.13, users table doesn't have signature_format column
+    $query = 'SELECT c.cid AS cid, c.pid, c.nid, c.subject, c.comment, c.format, c.timestamp, c.name, c.mail, c.homepage, u.uid, u.name AS registered_name, u.picture, u.signature, u.data, c.thread, c.status, parent_user.uid as parent_uid, parent_user.data as parent_data, parent_user.name as parent_name, parent_user.picture as parent_picture FROM {comments} c INNER JOIN {users} u ON c.uid = u.uid LEFT OUTER JOIN {comments} parent ON c.pid = parent.cid LEFT OUTER JOIN {users} parent_user ON parent.uid = parent_user.uid WHERE c.nid = %d';
+  }
 
   $query_args = array($node->nid);
   if (!user_access('administer comments')) {
@@ -122,7 +130,7 @@ function ctools_comment_render($node, $conf) {
   }
   $query = db_rewrite_sql($query, 'c', 'cid');
   $query_count = db_rewrite_sql($query_count, 'c', 'cid');
-  
+
   // Start a form, for use with comment control.
   $result = pager_query($query, $comments_per_page, 0, $query_count, $query_args);
 

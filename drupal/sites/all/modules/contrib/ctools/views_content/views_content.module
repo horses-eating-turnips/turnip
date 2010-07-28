@@ -1,5 +1,5 @@
 <?php
-// $Id: views_content.module,v 1.4 2009/08/07 19:58:33 merlinofchaos Exp $
+// $Id: views_content.module,v 1.4.2.2 2010/07/20 00:17:08 merlinofchaos Exp $
 
 /**
  * @file views_content.module
@@ -31,11 +31,11 @@ function views_content_menu() {
 
 /**
  * Implementation of hook_ctools_plugin_dierctory() to let the system know
- * we implement task and task_handler plugins.
+ * where our content_type plugins are.
  */
-function views_content_ctools_plugin_directory($module, $plugin) {
-  if ($module == 'ctools' && $plugin == 'content_types') {
-    return 'plugins/' . $plugin;
+function views_content_ctools_plugin_directory($owner, $plugin_type) {
+  if ($owner == 'ctools') {
+    return 'plugins/' . $plugin_type;
   }
 }
 
@@ -93,4 +93,30 @@ function views_content_admin_form(&$form) {
     '#description' => t("If checked, all views will be made available as content panes to be added to content types. If not checked, only Views that have a 'Content pane' display will be available as content panes. Uncheck this if you want to be able to more carefully control what view content is available to users using the panels layout UI."),
     '#default_value' => variable_get('ctools_content_all_views', TRUE),
   );
+}
+
+/**
+ * API function to get the view.
+ */
+function views_content_context_get_view(&$context) {
+  if (empty($context->view) || get_class($context->view) == '__PHP_Incomplete_Class') {
+    $context->view = views_get_view($context->data['name']);
+    if ($context->view) {
+      $context->view->set_display($context->data['display']);
+    }
+  }
+
+  return $context->view;
+}
+
+/**
+ * API function to get the view.
+ */
+function views_content_context_get_output(&$context) {
+  if (empty($context->output)) {
+    $view = views_content_context_get_view($context);
+    $context->output = $view->execute_display($context->data['display']);
+  }
+
+  return $context->output;
 }

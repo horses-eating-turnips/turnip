@@ -1,5 +1,5 @@
 <?php
-/* $Id: css.inc,v 1.10.2.3 2010/05/18 18:09:41 sdboyer Exp $ */
+/* $Id: css.inc,v 1.10.2.4 2010/07/16 20:44:31 merlinofchaos Exp $ */
 
 /*
  * @file
@@ -499,6 +499,7 @@ function ctools_css_filter_default_allowed_properties() {
     'text-align',
     'text-decoration',
     'text-indent',
+    'text-transform',
     'unicode-bidi',
     'vertical-align',
     'voice-family',
@@ -530,6 +531,7 @@ function ctools_css_filter_default_allowed_values() {
     'both',
     'bottom',
     'brown',
+    'capitalize',
     'center',
     'collapse',
     'dashed',
@@ -538,8 +540,10 @@ function ctools_css_filter_default_allowed_values() {
     'gray',
     'green',
     'italic',
+    'inherit',
     'left',
     'lime',
+    'lowercase',
     'maroon',
     'medium',
     'navy',
@@ -556,6 +560,7 @@ function ctools_css_filter_default_allowed_values() {
     'top',
     'transparent',
     'underline',
+    'uppercase',
     'white',
     'yellow',
   );

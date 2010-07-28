@@ -1,5 +1,5 @@
 <?php
-// $Id: form.inc,v 1.11.2.1 2010/02/17 01:04:50 merlinofchaos Exp $
+// $Id: form.inc,v 1.11.2.2 2010/06/10 20:46:25 merlinofchaos Exp $
 
 /**
  * @file
@@ -301,6 +301,10 @@ function ctools_validate_form($form_id, $form, &$form_state) {
       // Setting this error will cause the form to fail validation.
       form_set_error('form_token', t('Validation error, please try again. If this error persists, please contact the site administrator.'));
     }
+  }
+
+  if (!empty($form_state['clicked_button']['#skip validation'])) {
+    return;
   }
 
   _form_validate($form, $form_state, $form_id);

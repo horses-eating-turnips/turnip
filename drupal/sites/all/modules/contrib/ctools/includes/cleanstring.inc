@@ -169,7 +169,7 @@ function ctools_cleanstring($string, $settings = array()) {
 
   // Enforce the maximum component length
   if (!empty($settings['max length'])) {
-    $output = _pathauto_truncate_chars($output, $settings['max length'], $settings['separator']);
+    $output = ctools_cleanstring_truncate($output, $settings['max length'], $settings['separator']);
   }
 
   if (!empty($settings['lower case'])) {

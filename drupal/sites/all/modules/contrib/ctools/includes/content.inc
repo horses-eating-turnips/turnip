@@ -1,5 +1,5 @@
 <?php
-// $Id: content.inc,v 1.12.2.5 2010/05/04 00:43:30 sdboyer Exp $
+// $Id: content.inc,v 1.12.2.9 2010/07/26 18:37:03 merlinofchaos Exp $
 
 /**
  * @file
@@ -18,7 +18,7 @@
 function ctools_ctools_plugin_content_types() {
   return array(
     'cache' => FALSE,
-    'defaults' => 'ctools_content_defaults',
+    'process' => 'ctools_content_process',
   );
 }
 
@@ -28,7 +28,7 @@ function ctools_ctools_plugin_content_types() {
  * Currently we check for automatically named callbacks to make life a little
  * easier on the developer.
  */
-function ctools_content_defaults($info, &$plugin) {
+function ctools_content_process(&$plugin, $info) {
   $function_base = $plugin['module'] . '_' . $plugin['name'] . '_content_type_';
 
   if (empty($plugin['render callback']) && function_exists($function_base . 'render')) {
@@ -62,9 +62,11 @@ function ctools_content_defaults($info, &$plugin) {
 
   // Another ease of use check:
   if (!isset($plugin['content types'])) {
-    // If a content type is set to SINGLE and *no* subtypes are defined, this rewrites
-    // things so that the syntax is nicer.
-    if (!empty($plugin['single'])) {
+    // If a subtype plugin exists, try to use it. Otherwise assume single.
+    if (function_exists($function_base . 'content_types')) {
+      $plugin['content types'] = $function_base . 'content_types';
+    }
+    else {
       $type = array(
         'title' => $plugin['title'],
         'description' => $plugin['description'],
@@ -79,10 +81,6 @@ function ctools_content_defaults($info, &$plugin) {
         $type['top level'] = $plugin['top level'];
       }
       $plugin['content types'] = array($plugin['name'] => $type);
-    }
-    // Otherwise, auto discover the function based upon pattern naming.
-    else if (function_exists($function_base . 'content_types')) {
-      $plugin['content types'] = $function_base . 'content_types';
     }
   }
 }
@@ -341,7 +339,10 @@ function ctools_content_admin_title($type, $subtype, $conf, $context = NULL) {
   if ($function = ctools_plugin_get_function($plugin, 'admin title')) {
     $pane_context = ctools_content_select_context($plugin, $subtype, $conf, $context);
     if ($pane_context === FALSE) {
-      return t('@type:@subtype will not display due to missing context', array('@type' => $plugin['name'], '@subtype' => '@subtype'));
+      if ($plugin['name'] == $subtype) {
+        return t('@type will not display due to missing context', array('@type' => $plugin['name']));
+      }
+      return t('@type:@subtype will not display due to missing context', array('@type' => $plugin['name'], '@subtype' => $subtype));
     }
 
     return $function($subtype, $conf, $pane_context);
@@ -528,12 +529,23 @@ function ctools_content_form($op, $form_info, &$form_state, $plugin, $subtype_na
   );
 
   // Turn the forms defined in the plugin into the format the wizard needs.
-  if ($op == 'add' && isset($plugin['add form'])) {
-    _ctools_content_create_form_info($form_info, $plugin['add form'], $plugin, $subtype, $op);
+  if ($op == 'add') {
+    if (!empty($subtype['add form'])) {
+      _ctools_content_create_form_info($form_info, $subtype['add form'], $subtype, $subtype, $op);
+    }
+    else if (!empty($plugin['add form'])) {
+      _ctools_content_create_form_info($form_info, $plugin['add form'], $plugin, $subtype, $op);
+    }
   }
-  // Use the edit form for the add form if add form was completely left off.
-  else if (isset($plugin['edit form'])) {
-    _ctools_content_create_form_info($form_info, $plugin['edit form'], $plugin, $subtype, $op);
+
+  if (empty($form_info['order'])) {
+    // Use the edit form for the add form if add form was completely left off.
+    if (!empty($subtype['edit form'])) {
+      _ctools_content_create_form_info($form_info, $subtype['edit form'], $subtype, $subtype, $op);
+    }
+    if (!empty($plugin['edit form'])) {
+      _ctools_content_create_form_info($form_info, $plugin['edit form'], $plugin, $subtype, $op);
+    }
   }
 
   if (empty($form_info['order'])) {

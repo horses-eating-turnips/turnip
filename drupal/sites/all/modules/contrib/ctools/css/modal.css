@@ -1,4 +1,4 @@
-/* $Id: modal.css,v 1.6.2.1 2009/10/02 21:57:57 merlinofchaos Exp $ */
+/* $Id: modal.css,v 1.6.2.2 2010/07/09 01:02:24 merlinofchaos Exp $ */
 div.ctools-modal-content {
   background: #fff;
   color: #000;
@@ -101,4 +101,7 @@ div.ctools-modal-content .container-inline .form-item {
   margin-right: 2em;
 }
 
-
+#views-exposed-pane-wrapper .form-item {
+  margin-top: 0;
+  margin-bottom: 0;
+}

@@ -1,4 +1,4 @@
-// $Id: modal.js,v 1.17.2.10 2010/05/26 16:42:44 merlinofchaos Exp $
+// $Id: modal.js,v 1.17.2.14 2010/07/22 22:26:04 merlinofchaos Exp $
 /**
  * @file
  *
@@ -151,7 +151,7 @@
       var ajaxOptions = {
         type: 'POST',
         url: url,
-        data: { 'js': 1, 'ctools_ajax': 1, 'page_id': Drupal.CTools.AJAX.getPageId() },
+        data: { 'js': 1, 'ctools_ajax': 1},
         global: true,
         success: Drupal.CTools.AJAX.respond,
         error: function(xhr) {
@@ -197,7 +197,7 @@
   /**
    * Bind links that will open modals to the appropriate function.
    */
-  Drupal.behaviors.CToolsModal = function(context) {
+  Drupal.behaviors.ZZCToolsModal = function(context) {
     // Bind links
     // Note that doing so in this order means that the two classes can be
     // used together safely.
@@ -217,29 +217,27 @@
       .addClass('ctools-use-modal-processed')
       .click(Drupal.CTools.Modal.clickAjaxButton);
 
-    if ($(context).attr('id') == 'modal-content') {
-      // Bind submit links in the modal form.
-      $('form:not(.ctools-use-modal-processed)', context)
-        .addClass('ctools-use-modal-processed')
-        .submit(Drupal.CTools.Modal.submitAjaxForm);
-      // add click handlers so that we can tell which button was clicked,
-      // because the AJAX submit does not set the values properly.
+    // Bind submit links in the modal form.
+    $('#modal-content form:not(.ctools-use-modal-processed)', context)
+      .addClass('ctools-use-modal-processed')
+      .submit(Drupal.CTools.Modal.submitAjaxForm);
+    // add click handlers so that we can tell which button was clicked,
+    // because the AJAX submit does not set the values properly.
 
-      $('input[type="submit"]:not(.ctools-use-modal-processed), button:not(.ctools-use-modal-processed)', context)
-        .addClass('ctools-use-modal-processed')
-        .click(function() {
-          if (Drupal.autocompleteSubmit && !Drupal.autocompleteSubmit()) {
-            return false;
-          }
+    $('#modal-content input[type="submit"]:not(.ctools-use-modal-processed), button:not(.ctools-use-modal-processed)', context)
+      .addClass('ctools-use-modal-processed')
+      .click(function() {
+        if (Drupal.autocompleteSubmit && !Drupal.autocompleteSubmit()) {
+          return false;
+        }
 
-          // Make sure it knows our button.
-          if (!$(this.form).hasClass('ctools-ajaxing')) {
-            this.form.clk = this;
-            $(this).after('<div class="ctools-ajaxing ctools-ajaxing-temporary"> &nbsp; </div>');
-          }
-        });
+        // Make sure it knows our button.
+        if (!$(this.form).hasClass('ctools-ajaxing')) {
+          this.form.clk = this;
+          $(this).after('<div class="ctools-ajaxing ctools-ajaxing-temporary"> &nbsp; </div>');
+        }
+      });
 
-    }
   };
 
   // The following are implementations of AJAX responder commands.
@@ -250,7 +248,7 @@
   Drupal.CTools.AJAX.commands.modal_display = function(command) {
     $('#modal-title').html(command.title);
     $('#modal-content').html(command.output);
-    Drupal.attachBehaviors($('#modal-content'));
+    Drupal.attachBehaviors();
   }
 
   /**

@@ -1,5 +1,5 @@
 <?php
-// $Id: modal.inc,v 1.7.2.2 2010/05/17 23:38:38 sdboyer Exp $
+// $Id: modal.inc,v 1.7.2.3 2010/06/16 17:32:30 merlinofchaos Exp $
 
 /**
  * @file
@@ -188,7 +188,6 @@ function ctools_modal_text_button($text, $dest, $alt, $class = '') {
  */
 function ctools_modal_form_wrapper($form_id, &$form_state) {
   ctools_include('form');
-  ctools_include('modal');
   // This won't override settings already in.
   $form_state += array(
     're_render' => FALSE,
@@ -232,6 +231,7 @@ function ctools_modal_form_render($form_state, $output) {
 function ctools_modal_render($title, $output) {
   $commands = array();
   $commands[] = ctools_modal_command_display($title, $output);
+  ctools_include('ajax');
   ctools_ajax_render($commands);
 }
 

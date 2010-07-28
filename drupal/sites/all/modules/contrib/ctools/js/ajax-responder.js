@@ -1,4 +1,4 @@
-// $Id: ajax-responder.js,v 1.18.2.12 2010/05/26 16:42:44 merlinofchaos Exp $
+// $Id: ajax-responder.js,v 1.18.2.18 2010/07/22 21:18:03 merlinofchaos Exp $
 /**
  * @file
  *
@@ -12,10 +12,6 @@
   Drupal.CTools.AJAX.commandCache = Drupal.CTools.AJAX.comandCache || {} ;
   Drupal.CTools.AJAX.scripts = {};
   Drupal.CTools.AJAX.css = {};
-
-  Drupal.CTools.AJAX.getPageId = function() {
-    return Drupal.CTools.pageId;
-  }
 
   /**
    * Success callback for an ajax request.
@@ -57,7 +53,7 @@
       $.ajax({
         type: "POST",
         url: url,
-        data: { 'js': 1, 'ctools_ajax': 1, 'page_id': Drupal.CTools.AJAX.getPageId() },
+        data: { 'js': 1, 'ctools_ajax': 1},
         global: true,
         success: function (data) {
           Drupal.CTools.AJAX.commandCache[old_url] = data;
@@ -116,7 +112,7 @@
       $.ajax({
         type: "POST",
         url: url,
-        data: { 'js': 1, 'ctools_ajax': 1, 'page_id': Drupal.CTools.AJAX.getPageId() },
+        data: { 'js': 1, 'ctools_ajax': 1},
         global: true,
         success: Drupal.CTools.AJAX.respond,
         error: function(xhr) {
@@ -158,7 +154,7 @@
         $.ajax({
           type: "POST",
           url: url,
-          data: { 'js': 1, 'ctools_ajax': 1, 'page_id': Drupal.CTools.AJAX.getPageId() },
+          data: { 'js': 1, 'ctools_ajax': 1},
           global: true,
           success: Drupal.CTools.AJAX.respond,
           error: function(xhr) {
@@ -177,7 +173,7 @@
         $(form).ajaxSubmit({
           type: "POST",
           url: url,
-          data: { 'js': 1, 'ctools_ajax': 1, 'page_id': Drupal.CTools.AJAX.getPageId() },
+          data: { 'js': 1, 'ctools_ajax': 1},
           global: true,
           success: Drupal.CTools.AJAX.respond,
           error: function(xhr) {
@@ -360,8 +356,7 @@
   };
 
   Drupal.CTools.AJAX.commands.css_files = function(data) {
-    // Build a list of scripts already loaded:
-
+    // Build a list of css files already loaded:
     $('link:not(.ctools-temporary-css)').each(function () {
       if ($(this).attr('type') == 'text/css') {
         Drupal.CTools.AJAX.css[$(this).attr('href')] = $(this).attr('href');
@@ -395,9 +390,16 @@
     });
 
     var html = '';
+    var head = document.getElementsByTagName('head')[0];
     for (i in data.argument) {
       if (!Drupal.CTools.AJAX.scripts[data.argument[i]]) {
         Drupal.CTools.AJAX.scripts[data.argument[i]] = data.argument[i];
+        // Use this to actually get the script tag into the dom, which is
+        // needed for scripts that self-reference to determine paths.
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = data.argument[i];
+        head.appendChild(script);
         html += '<script type="text/javascript" src="' + data.argument[i] + '"></script>';
       }
     }
@@ -429,7 +431,14 @@
   };
 
   Drupal.CTools.AJAX.commands.redirect = function(data) {
-    location.href = data.url;
+    if (data.delay > 0) {
+      setTimeout(function () {
+        location.href = data.url;
+      }, data.delay);
+    }
+    else {
+      location.href = data.url;
+    }
   };
 
   Drupal.CTools.AJAX.commands.reload = function(data) {
@@ -471,17 +480,13 @@
        .filter('.ctools-use-ajax-onchange:not(.ctools-use-ajax-processed)')
        .addClass('ctools-use-ajax-processed')
        .change(Drupal.CTools.AJAX.changeAJAX);
-  };
 
-  /**
-   * Use the ready() method to copy the page ID out of settings, because the
-   * the settings can get overwritten and the page ID can get lost.
-   */
-  $(function () {
-    Drupal.CTools.pageId = '';
-    if (Drupal.settings.CTools && Drupal.settings.CTools.pageId) {
-      Drupal.CTools.pageId = Drupal.settings.CTools.pageId;
+    // Add information about loaded CSS and JS files.
+    if (Drupal.settings.CToolsAJAX.css) {
+      $.extend(Drupal.CTools.AJAX.css, Drupal.settings.CToolsAJAX.css);
     }
-  });
-
+    if (Drupal.settings.CToolsAJAX.scripts) {
+      $.extend(Drupal.CTools.AJAX.scripts, Drupal.settings.CToolsAJAX.scripts);
+    }
+  };
 })(jQuery);

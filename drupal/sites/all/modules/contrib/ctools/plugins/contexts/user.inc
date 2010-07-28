@@ -1,5 +1,5 @@
 <?php
-// $Id: user.inc,v 1.4.2.4 2010/01/30 00:48:40 merlinofchaos Exp $
+// $Id: user.inc,v 1.4.2.5 2010/07/16 20:09:48 merlinofchaos Exp $
 
 /**
  * @file
@@ -23,6 +23,7 @@ $plugin = array(
   'context name' => 'user',
   'convert list' => 'ctools_context_user_convert_list',
   'convert' => 'ctools_context_user_convert',
+  'convert default' => 'name',
   'js' => array('misc/autocomplete.js'),
 );
 

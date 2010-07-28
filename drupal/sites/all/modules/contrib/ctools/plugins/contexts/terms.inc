@@ -1,5 +1,5 @@
 <?php
-// $Id: terms.inc,v 1.4.2.2 2010/01/29 20:18:26 merlinofchaos Exp $
+// $Id: terms.inc,v 1.4.2.3 2010/07/15 19:37:05 merlinofchaos Exp $
 
 /**
  * @file
@@ -78,6 +78,7 @@ function ctools_context_terms_convert($context, $type) {
           $context->names = '';
         }
         else {
+          $names = array();
           $result = db_query("SELECT tid, name FROM {term_data} WHERE tid IN (" . db_placeholders($context->tids) . ")", $context->tids);
           while ($term = db_fetch_object($result)) {
             $names[$term->tid] = $term->name;
