@@ -1,4 +1,4 @@
-// $Id: features.js,v 1.1.2.8 2009/11/18 04:15:36 yhahn Exp $
+// $Id: features.js,v 1.1.2.9 2010/06/30 21:07:44 yhahn Exp $
 
 Drupal.behaviors.features = function() {
   // Features management form package tabs
@@ -13,9 +13,7 @@ Drupal.behaviors.features = function() {
   });
 
   // Features management form
-  $('table.features:not(.processed)').each(function() {
-    $(this).addClass('processed');
-
+  $('table.features:not(.processed)').addClass('processed').each(function() {
     // Check the overridden status of each feature
     Drupal.features.checkStatus();
 
@@ -72,11 +70,13 @@ Drupal.behaviors.features = function() {
 
 Drupal.features = {
   'checkStatus': function() {
-    $('table.features tbody tr').not('.processed').filter(':first').each(function() {
-      var elem = $(this);
-      $(elem).addClass('processed');
-      var uri = $(this).find('a.admin-check').attr('href');
+    if ($('table.features').is('.loading')) {
+      return;
+    }
+    $('table.features tbody tr:not(.processed):first').addClass('processed').each(function() {
+      var uri = $(this).find('a.admin-check').attr('href'), elem = $(this);
       if (uri) {
+        $('table.features').addClass('loading');
         $.get(uri, [], function(data) {
           $(elem).find('.admin-loading').hide();
           switch (data.storage) {
@@ -93,12 +93,13 @@ Drupal.features = {
               $(elem).find('.admin-default').show();
               break;
           }
+          $('table.features').removeClass('loading');
           Drupal.features.checkStatus();
         }, 'json');
       }
       else {
-          Drupal.features.checkStatus();
-        }
+        Drupal.features.checkStatus();
+      }
     });
   }
 };

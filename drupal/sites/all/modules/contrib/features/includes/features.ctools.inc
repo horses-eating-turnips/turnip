@@ -1,5 +1,5 @@
 <?php
-// $Id: features.ctools.inc,v 1.1.2.22 2010/05/25 21:51:30 yhahn Exp $
+// $Id: features.ctools.inc,v 1.1.2.26 2010/07/24 21:46:24 yhahn Exp $
 
 /**
  * This is a wild hack, but effective.
@@ -17,10 +17,10 @@ foreach (_ctools_features_get_info() as $component => $info) {
     $code .= 'function '. $component .'_features_export_options() { return ctools_component_features_export_options("'. $component .'"); }';
   }
   if (!function_exists("{$component}_features_export_render")) {
-    $code .= 'function '. $component .'_features_export_render($module = "foo", $data) { return ctools_component_features_export_render("'. $component .'", $module, $data); }';
+    $code .= 'function '. $component .'_features_export_render($module, $data) { return ctools_component_features_export_render("'. $component .'", $module, $data); }';
   }
   if (!function_exists("{$component}_features_revert")) {
-    $code .= 'function '. $component .'_features_revert($module = "foo") { return ctools_component_features_revert("'. $component .'", $module); }';
+    $code .= 'function '. $component .'_features_revert($module) { return ctools_component_features_revert("'. $component .'", $module); }';
   }
   eval($code);
 }
@@ -66,11 +66,9 @@ function ctools_features_export($data, &$export, $module_name = '') {
  * Implementation of hook_features_export_render().
  * Adds the ctools mothership hook, ctools_plugin_api().
  */
-function ctools_features_export_render($module = 'foo', $data) {
+function ctools_features_export_render($module, $data) {
   $code = array();
-  $code[] = '  $args = func_get_args();';
-  $code[] = '  $module = array_shift($args);';
-  $code[] = '  $api = array_shift($args);';
+  $code[] = '  list($module, $api) = func_get_args();';
 
   $first = TRUE;
   foreach ($data as $component) {
@@ -133,7 +131,7 @@ function ctools_component_features_export($component, $data, &$export, $module_n
   // Add the actual implementing module as a dependency
   $info = _ctools_features_get_info();
   if ($module_name !== $info[$component]['module']) {
-    $export['dependencies'][$module] = $info[$component]['module'];
+    $export['dependencies'][$info[$component]['module']] = $info[$component]['module'];
   }
 
   // Add the components
@@ -162,15 +160,11 @@ function ctools_component_features_export($component, $data, &$export, $module_n
 /**
  * Master implementation of hook_features_export_render() for all ctools components.
  */
-function ctools_component_features_export_render($component, $module = 'foo', $data) {
+function ctools_component_features_export_render($component, $module, $data) {
   ctools_include('export');
-
   $schema = ctools_export_get_schema($component);
-  if (function_exists('page_manager_page_manager_handlers_list')) {
-    page_manager_page_manager_handlers_list();
-  }
+
   if (function_exists($schema['export']['to hook code callback'])) {
-    $list = $schema['export']['list callback']();
     $export = $schema['export']['to hook code callback']($data, $module);
     $code = explode("{\n", $export);
     array_shift($code);
@@ -205,10 +199,8 @@ function ctools_component_features_export_render($component, $module = 'foo', $d
 /**
  * Master implementation of hook_features_revert() for all ctools components.
  */
-function ctools_component_features_revert($component, $module = 'foo') {
-  $info = _ctools_features_get_info();
-  $objects = module_invoke($module, $info[$component]['default_hook']);
-  if (!empty($objects)) {
+function ctools_component_features_revert($component, $module) {
+  if ($objects = features_get_default($component, $module)) {
     $schema = ctools_export_get_schema($component);
     $export = $schema['export'];
     $names = db_placeholders(array_keys($objects), $schema['fields'][$export['key']]['type']);
@@ -234,6 +226,8 @@ function _ctools_features_get_info($identifier = NULL, $reset = FALSE) {
             'name' => isset($modules[$api_module]->info['name']) ? $modules[$api_module]->info['name'] : $api_module,
             'api' => $schema['export']['api']['api'],
             'default_hook' => $schema['export']['default hook'],
+            'default_file' => FEATURES_DEFAULTS_CUSTOM,
+            'default_filename' => $schema['export']['api']['api'],
             'current_version' => $schema['export']['api']['current_version'],
             'module' => $api_module,
             'feature_source' => TRUE,
@@ -267,4 +261,13 @@ function _ctools_features_get_info($identifier = NULL, $reset = FALSE) {
   }
 
   return $components;
+}
+
+/**
+ * Implementation of hook_features_export_render() for page_manager.
+ */
+function page_manager_pages_features_export_render($module, $data) {
+  // Ensure that handlers have their code included before exporting.
+  page_manager_get_tasks();
+  return ctools_component_features_export_render('page_manager_pages', $module, $data);
 }
