@@ -67,7 +67,19 @@
  * array or add a new element.
  */
 $options['structure-tables'] = array(
-  'opensourcery' => array('cache', 'cache_block', 'cache_content', 'cache_form', 'cache_filter', 'cache_menu', 'cache_page', 'cache_update', 'history', 'sessions', 'watchdog'),
+  'opensourcery' => array(
+    'cache',
+    'cache_block',
+    'cache_content',
+    'cache_form',
+    'cache_filter',
+    'cache_menu',
+    'cache_page',
+    'cache_update',
+    'history',
+    'sessions',
+    'watchdog'
+  ),
 );
 
 /*
