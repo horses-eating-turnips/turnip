@@ -1,5 +1,5 @@
 <?php
-// $Id: features.drush.inc,v 1.1.2.33 2010/07/21 04:17:58 yhahn Exp $
+// $Id: features.drush.inc,v 1.1.2.34 2010/07/29 23:47:48 yhahn Exp $
 
 /**
  * @file
@@ -271,21 +271,33 @@ function _drush_features_export($stub, $dependencies, $module_name = NULL, $dire
  */
 function drush_features_revert() {
   if ($args = func_get_args()) {
+    module_load_include('inc', 'features', 'features.export');
+    features_include();
+
     // Determine if revert should be forced.
     $force = drush_get_option('force');
     foreach ($args as $module) {
       if (($feature = feature_load($module, TRUE)) && module_exists($module)) {
-        // Find all overridden items
-        module_load_include('inc', 'features', 'features.export');
-  
+
         $components = array();
-        $states = features_get_component_states(array($feature->name), FALSE);
-        foreach ($states[$feature->name] as $component => $state) {
-          if ($force || (in_array($state, array(FEATURES_OVERRIDDEN, FEATURES_NEEDS_REVIEW, FEATURES_DEFAULT)) && features_hook($component, 'features_revert'))) {
-            $components[] = $component;
+        // Forcefully revert all components of a feature.
+        if ($force) {
+          foreach (array_keys($feature->info['features']) as $component) {
+            if (features_hook($component, 'features_revert')) {
+              $components[] = $component;
+            }
           }
         }
-  
+        // Only revert components that are detected to be Overridden/Needs review.
+        else {
+          $states = features_get_component_states(array($feature->name), FALSE);
+          foreach ($states[$feature->name] as $component => $state) {
+            if (in_array($state, array(FEATURES_OVERRIDDEN, FEATURES_NEEDS_REVIEW)) && features_hook($component, 'features_revert')) {
+              $components[] = $component;
+            }
+          }
+        }
+
         if (empty($components)) {
           drush_log(dt('Current state already matches defaults, aborting.'), 'ok');
         }

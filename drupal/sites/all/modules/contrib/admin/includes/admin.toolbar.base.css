@@ -1,4 +1,4 @@
-/* $Id: admin.toolbar.base.css,v 1.1.2.4 2010/01/06 19:25:18 yhahn Exp $ */
+/* $Id: admin.toolbar.base.css,v 1.1.2.6 2010/08/01 03:23:49 yhahn Exp $ */
 
 /**
  * Admin toolbar CSS resets ===========================================
@@ -197,6 +197,13 @@ div#admin-toolbar div.admin-blocks {
    * Horizontal =======================================================
    */
   div#admin-toolbar.horizontal { left:0px; right:0px; }
+  body.admin-expanded div#admin-toolbar.horizontal div.admin-blocks { height:260px; }
+
+  body.admin-expanded.admin-horizontal.admin-ne,
+  body.admin-expanded.admin-horizontal.admin-nw { margin-top:260px; }
+
+  body.admin-expanded.admin-horizontal.admin-sw,
+  body.admin-expanded.admin-horizontal.admin-se { margin-bottom:260px; }
 
 /**
  * Toggler ============================================================
@@ -233,6 +240,7 @@ div#admin-toolbar span.admin-toggle {
 div#admin-toolbar.horizontal div.admin-tabs {
   height:30px;
   padding:5px 10px 0px;
+  overflow:hidden;
   }
 
 div#admin-toolbar.vertical div.admin-tabs {
@@ -293,26 +301,33 @@ div#admin-toolbar div.admin-tab-active {
 /**
  * Admin blocks =======================================================
  */
-div#admin-toolbar div.admin-blocks div.admin-block {
+div#admin-toolbar div.admin-block {
+  position:relative;
   padding:10px;
   display:none;
   }
 
-  div#admin-toolbar div.admin-blocks div.admin-active { display:block; }
+  div#admin-toolbar div.block-content {
+    overflow-x:hidden;
+    overflow-y:auto;
+    position:absolute;
+    top:10px;
+    left:10px;
+    right:10px;
+    bottom:10px;
+    }
+
+  div#admin-toolbar div.admin-active { display:block; }
 
   /**
    * Horizontal =======================================================
    */
-  div#admin-toolbar.horizontal div.block-content {
-    position:relative;
-    max-width:960px;
-    min-height:75px;
-    }
+  div#admin-toolbar.horizontal div.block-content { height:200px; }
 
   /**
    * Vertical =========================================================
    */
-  body.admin-expanded div#admin-toolbar.vertical div.admin-block { position:absolute; bottom:0px; left:0px; right:0px; }
+  div#admin-toolbar.vertical div.admin-block { position:absolute; bottom:0px; left:0px; right:0px; }
   div#admin-toolbar.vertical div.admin-blocks-1 div.admin-block { top:30px; }
   div#admin-toolbar.vertical div.admin-blocks-2 div.admin-block { top:60px; }
   div#admin-toolbar.vertical div.admin-blocks-3 div.admin-block { top:90px; }
@@ -323,12 +338,6 @@ div#admin-toolbar div.admin-blocks div.admin-block {
   div#admin-toolbar.vertical div.admin-blocks-8 div.admin-block { top:240px; }
   div#admin-toolbar.vertical div.admin-blocks-9 div.admin-block { top:270px; }
   div#admin-toolbar.vertical div.admin-blocks-10 div.admin-block { top:300px; }
-
-  div#admin-toolbar.vertical div.block-content {
-    overflow-x:hidden;
-    overflow-y:auto;
-    height:100%;
-    }
 
 /**
  * Lists ==============================================================
@@ -430,7 +439,7 @@ div#admin-toolbar div.admin-blocks div.admin-block {
  */
 #admin-toolbar.horizontal div.admin-panes {
   position:relative;
-  padding-left:25%;
+  padding-left:200px;
   }
 
 #admin-toolbar.horizontal div.admin-panes div.admin-pane {
@@ -444,7 +453,7 @@ div#admin-toolbar div.admin-blocks div.admin-block {
   z-index:500;
   position:absolute;
   left:0px;
-  width:25%;
+  width:200px;
   }
 
 #admin-toolbar.horizontal div.admin-panes div.admin-pane-tabs a { padding:5px; }

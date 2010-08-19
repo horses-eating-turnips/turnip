@@ -1,4 +1,4 @@
-<div id='admin-toolbar' class='<?php print $position ?> <?php print $layout ?>'>
+<div id='admin-toolbar' class='<?php print $position ?> <?php print $layout ?> <?php print $behavior ?>'>
   <span class='admin-toggle'><?php print t('Admin') ?></span>
 
   <div class='admin-blocks admin-blocks-<?php print count($blocks) ?>'>

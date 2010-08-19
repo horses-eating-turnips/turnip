@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.module,v 1.1.2.23.2.19 2010/04/25 17:26:45 yhahn Exp $
+// $Id: admin.module,v 1.1.2.23.2.26 2010/08/12 18:00:26 yhahn Exp $
 
 /**
  * Implementation of hook_init().
@@ -69,7 +69,7 @@ function admin_block($op = 'list', $delta = 0, $edit = array()) {
             }
             return array(
               'subject' => !empty($item['title']) ? $item['title'] : t('Create content'),
-              'content' => theme('admin_menu_tree_output', $menu),
+              'content' => theme('admin_drilldown_menu_tree_output', $menu),
             );
           }
           break;
@@ -83,7 +83,7 @@ function admin_block($op = 'list', $delta = 0, $edit = array()) {
           if ($item && $item['access']) {
             return array(
               'subject' => !empty($item['title']) ? $item['title'] : t('Administer'),
-              'content' => theme('admin_menu_tree_output', menu_tree_all_data('admin')),
+              'content' => theme('admin_drilldown_menu_tree_output', menu_tree_all_data('admin')),
             );
           }
           break;
@@ -167,6 +167,18 @@ function admin_menu_alter(&$items) {
   );
   $items['admin/settings/admin/settings']['title'] = 'Settings';
   $items['admin/settings/admin/settings']['type'] = MENU_DEFAULT_LOCAL_TASK;
+  $items['admin/settings/admin/rebuild'] = array(
+    'title' => 'Rebuild',
+    'description' => 'Wipe and rebuild the administrative menu.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('admin_settings_rebuild'),
+    'access callback' => 'user_access',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'admin.admin.inc',
+    'module' => 'admin',
+    'weight' => 10,
+  );
 
   foreach ($items as $path => $item) {
     $item['type'] = isset($item['type']) ? $item['type'] : MENU_NORMAL_ITEM;
@@ -231,23 +243,35 @@ function admin_theme($cache, $type, $theme, $path) {
     'arguments' => array(
       'blocks' => array(),
       'position' => 'ne',
-      'layout' => 'horizontal'
+      'layout' => 'horizontal',
+      'behavior' => 'df',
     ),
     'template' => 'admin-toolbar',
     'path' => $path . '/theme',
     'file' => 'theme.inc',
   );
-  $items['admin_menu_tree_output'] = array(
+  $items['admin_drilldown_menu_tree_output'] = array(
     'arguments' => array('menu' => array()),
     'path' => $path . '/theme',
     'file' => 'theme.inc',
   );
-  $items['admin_menu_tree'] = array(
+  $items['admin_drilldown_menu_tree'] = array(
     'arguments' => array('menu' => array()),
     'path' => $path . '/theme',
     'file' => 'theme.inc',
   );
-  $items['admin_menu_item_link'] = array(
+  $items['admin_drilldown_menu_item'] = array(
+    'arguments' => array(
+      'link' => NULL,
+      'has_children' => NULL,
+      'menu' => '',
+      'in_active_trail' => FALSE,
+      'extra_class' => NULL,
+    ),
+    'path' => $path . '/theme',
+    'file' => 'theme.inc',
+  );
+  $items['admin_drilldown_menu_item_link'] = array(
     'arguments' => array('item' => array()),
     'path' => $path . '/theme',
     'file' => 'theme.inc',
@@ -300,10 +324,15 @@ function admin_get_settings($key = NULL) {
     $settings = variable_get('admin_toolbar', array()) + array(
       'layout' => 'vertical',
       'position' => 'nw',
+      'behavior' => 'df',
       'blocks' => admin_get_default_blocks(),
       'expanded' => isset($cookie['expanded']) ? check_plain($cookie['expanded']) : 0,
       'active_tab' => isset($cookie['activeTab']) ? check_plain($cookie['activeTab']) : 0,
     );
+    // Ensure that if behavior is set to autohide the toolbar is collapsed.
+    if ($settings['behavior'] === 'ah') {
+      $settings['expanded'] = 0;
+    }
   }
   if (isset($key)) {
     return isset($settings[$key]) ? $settings[$key] : FALSE;
@@ -356,6 +385,7 @@ function admin_set_admin_blocks($reset = FALSE) {
           $block->module = $module;
           $block->delta = $delta;
           $block->cache = is_numeric($cache) ? $cache : BLOCK_NO_CACHE;
+          $block->region = 'admin_toolbar'; // Fake the block region.
         }
         if (!empty($block)) {
           if ($_SERVER['REQUEST_METHOD'] == 'GET' && $cid = admin_block_get_cache_id($block)) {
@@ -378,6 +408,11 @@ function admin_set_admin_blocks($reset = FALSE) {
               global $theme;
               $block->subject = db_result(db_query("SELECT title FROM {blocks} WHERE module = 'block' AND delta = '%s'", $delta));
             }
+            // This is here simpy to trigger any preprocess functions that may
+            // add javascript, etc. for this block. Note that the output is
+            // thrown away.
+            theme('block', $block);
+
             $blocks["{$module}-{$delta}"] = $block;
           }
         }
@@ -416,8 +451,9 @@ function admin_preprocess_page(&$vars) {
   if (!admin_suppress(FALSE) && $blocks = admin_get_admin_blocks()) {
     $position = admin_get_settings('position');
     $layout = admin_get_settings('layout');
+    $behavior = admin_get_settings('behavior');
     $class = admin_get_settings('expanded') ? 'admin-expanded' : '';
-    $vars['body_classes'] .= " admin-{$position} admin-{$layout} {$class}";
+    $vars['body_classes'] .= " admin-{$position} admin-{$layout} admin-{$behavior} {$class} ";
   }
 }
 
@@ -428,8 +464,9 @@ function admin_footer() {
   if (!admin_suppress(FALSE) && $blocks = admin_get_admin_blocks()) {
     $position = admin_get_settings('position');
     $layout = admin_get_settings('layout');
+    $behavior = admin_get_settings('behavior');
     $class = admin_get_settings('expanded') ? 'admin-expanded' : '';
-    return theme('admin_toolbar', $blocks, $position, $layout);
+    return theme('admin_toolbar', $blocks, $position, $layout, $behavior);
   }
 }
 

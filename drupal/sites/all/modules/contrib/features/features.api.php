@@ -237,3 +237,107 @@ function hook_features_export_alter(&$export, $module_name) {
  */
 function hook_features_pipe_component_alter(&$pipe, $data, $export, $module_name) {
 }
+
+/**
+ * @defgroup features_component_alter_hooks Feature's component alter hooks
+ * @{
+ * Hooks to modify components defined by other features. These come in the form
+ * hook_COMPONENT_alter where COMPONENT is the default_hook declared by any of
+ * components within features.
+ *
+ * CTools also has a variety of hook_FOO_alters.
+ *
+ * Note: While views is a component of features, it declares it's own alter 
+ * function which takes a similar form:
+ * hook_views_default_views_alter(&$views)
+ */
+
+/**
+ * Alter the default cck fields right before they are cached into the database.
+ *
+ * @param &$fields
+ *   By reference. The fields that have been declared by another feature.
+ */
+function hook_content_default_fields_alter(&$fields) {
+}
+
+/**
+ * Alter the default fieldgroup groups right before they are cached into the 
+ * database.
+ *
+ * @param &$groups
+ *   By reference. The fieldgroup groups that have been declared by another 
+ *   feature.
+ */
+function hook_fieldgroup_default_groups_alter(&$groups) {
+}
+
+/**
+ * Alter the default filter formats right before they are cached into the 
+ * database.
+ *
+ * @param &$formats
+ *   By reference. The formats that have been declared by another feature.
+ */
+function hook_filter_default_formats_alter(&$formats) {
+}
+
+/**
+ * Alter the default menus right before they are cached into the database.
+ *
+ * @param &$menus
+ *   By reference. The menus that have been declared by another feature.
+ */
+function hook_menu_default_menu_custom_alter(&$menus) {
+}
+
+/**
+ * Alter the default menu links right before they are cached into the database.
+ *
+ * @param &$links
+ *   By reference. The menu links that have been declared by another feature.
+ */
+function hook_menu_default_menu_links_alter(&$links) {
+}
+
+/**
+ * Alter the default menu items right before they are cached into the database.
+ *
+ * @param &$items
+ *   By reference. The menu items that have been declared by another feature.
+ */
+function hook_menu_default_items_alter(&$items) {
+}
+
+/**
+ * Alter the default vocabularies right before they are cached into the
+ * database.
+ *
+ * @param &$vocabularies
+ *   By reference. The vocabularies that have been declared by another feature.
+ */
+function hook_taxonomy_default_vocabularies_alter(&$vocabularies) {
+}
+
+/**
+ * Alter the default permissions right before they are cached into the
+ * database.
+ *
+ * @param &$permissions
+ *   By reference. The permissions that have been declared by another feature.
+ */
+function hook_user_default_permissions_alter(&$permissions) {
+}
+
+/**
+ * Alter the default roles right before they are cached into the database.
+ *
+ * @param &$roles
+ *   By reference. The roles that have been declared by another feature.
+ */
+function hook_user_default_roles_alter(&$roles) {
+}
+
+/**
+ * @}
+ */

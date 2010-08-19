@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.admin.inc,v 1.1.2.3.2.5 2010/04/25 16:39:10 yhahn Exp $
+// $Id: admin.admin.inc,v 1.1.2.3.2.7 2010/08/01 05:19:03 yhahn Exp $
 
 /**
  * System settings form for admin toolbar.
@@ -30,6 +30,16 @@ function admin_settings_form() {
       'sw' => t('Bottom left'),
     ),
     '#default_value' => admin_get_settings('position'),
+  );
+  $form['admin_toolbar']['behavior'] = array(
+    '#type' => 'select',
+    '#title' => t('State on new pages'),
+    '#description' => t('Choose toolbar behavior on new page loads.'),
+    '#options' => array(
+      'df' => t('Remember from previous page'),
+      'ah' => t('Collapsed'),
+    ),
+    '#default_value' => admin_get_settings('behavior'),
   );
 
   $block_info = array();
@@ -151,4 +161,31 @@ function theme_admin_settings_form($form) {
   $rows[] = array(drupal_render($form['custom']), drupal_render($form['add']));
   $form['blocks']['#children'] = theme('table', $header, $rows);
   return drupal_render($form);
+}
+
+/**
+ * Rebuild form.
+ */
+function admin_settings_rebuild($form_state) {
+  $form = array();
+  $form['rebuild'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Wipe and rebuild'),
+    '#description' => t('If the administrative menu is not working properly, you may need to wipe and rebuild it from scratch. <strong>This option will reset any customizations made to your administrative menu items.</strong>'),
+  );
+  $form['rebuild']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Rebuild'),
+    '#submit' => array('admin_settings_rebuild_submit'),
+  );
+  return $form;
+}
+
+/**
+ * Wipe and rebuild the admin menu.
+ */
+function admin_settings_rebuild_submit($form, &$form_state) {
+  db_query("DELETE FROM {menu_links} WHERE menu_name = 'admin'");
+  menu_rebuild();
+  cache_clear_all('admin', 'cache_block', TRUE);
 }

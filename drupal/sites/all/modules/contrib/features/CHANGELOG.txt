@@ -1,4 +1,25 @@
-// $Id: CHANGELOG.txt,v 1.1.2.11 2010/07/26 18:32:23 yhahn Exp $
+// $Id: CHANGELOG.txt,v 1.1.2.13 2010/08/09 15:44:50 yhahn Exp $
+
+features DRUPAL-6--1-0-BETA12
+-----------------------------
+- #873570: DOM-safe encode #default_value and ecsape '.' character.
+- #872052: Expose CCK field instances in UI for export.
+- Use README.txt for hook_help() page.
+- #872482: Proper failure for features_get_features().
+- #875156: Ensure roles are rebuilt before permissions.
+- #875416: Less confusing export of translatables.
+- #877178: Allow feature human-readable name/description to be changed on recreate.
+- #722952: Only write 'project' key if version or update status URL are provided.
+- #876206 by auzigog: Document hook_[component_defaults]_alter() functions.
+
+features DRUPAL-6--1-0-BETA11
+-----------------------------
+- #865454: Fix for complex menu links component handling.
+- Context: simpler check for API version
+- Blank out .features.inc when appropriate when updating existing features.
+- Fix for haphazard drush features-revert.
+- Adjust features_get_component_map() to allow for easy retrieval of a specific
+  component key.
 
 features DRUPAL-6--1-0-BETA10
 -----------------------------

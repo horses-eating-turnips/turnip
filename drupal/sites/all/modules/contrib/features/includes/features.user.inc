@@ -1,21 +1,21 @@
 <?php
-// $Id: features.user.inc,v 1.1.2.14 2010/07/23 22:31:43 yhahn Exp $
+// $Id: features.user.inc,v 1.1.2.15 2010/08/05 20:59:41 yhahn Exp $
 
 /**
  * Implementation of hook_features_api().
  */
 function user_features_api() {
   return array(
-    'user_permission' => array(
-      'name' => t('Permissions'),
-      'feature_source' => TRUE,
-      'default_hook' => 'user_default_permissions',
-      'default_file' => FEATURES_DEFAULTS_INCLUDED,
-    ),
     'user_role' => array(
       'name' => t('Roles'),
       'feature_source' => TRUE,
       'default_hook' => 'user_default_roles',
+      'default_file' => FEATURES_DEFAULTS_INCLUDED,
+    ),
+    'user_permission' => array(
+      'name' => t('Permissions'),
+      'feature_source' => TRUE,
+      'default_hook' => 'user_default_permissions',
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
     ),
     // DEPRECATED

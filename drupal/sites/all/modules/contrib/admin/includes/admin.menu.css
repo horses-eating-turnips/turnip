@@ -8,12 +8,12 @@ div#admin-toolbar div.admin-tab.admin-menu #admin-tab-admin-menu {
   position:relative;
   }
 
-div#admin-toolbar div.admin-tab.admin-menu a {
+div#admin-toolbar div.admin-tab a {
   background:url(../images/sprite.png) 100% -70px no-repeat;
   padding-right:20px;
   }
 
-  div#admin-toolbar div.admin-tab.admin-menu a:last-child {
+  div#admin-toolbar div.admin-tab a:last-child {
     background:transparent;
     padding:0px;
     }
@@ -21,17 +21,16 @@ div#admin-toolbar div.admin-tab.admin-menu a {
 /**
  * Tooltips
  */
-div#admin-toolbar.vertical div.admin-blocks div.admin-toolbar-menu {
-  overflow:hidden;
-  padding-bottom:100px;
-  }
+div#admin-toolbar.vertical div.admin-toolbar-menu-hover div.block-content { bottom:100px; }
 
-div#admin-toolbar span.menu-description {
+div#admin-toolbar span.menu-description { display:none; }
+
+div#admin-toolbar a.menu-hover span.menu-description {
   color:#ccc;
-  display:none;
+  display:block;
   }
 
-div#admin-toolbar.vertical span.menu-description {
+div#admin-toolbar.vertical a.menu-hover span.menu-description {
   position:absolute;
   overflow:hidden;
   left:0px;
@@ -41,7 +40,7 @@ div#admin-toolbar.vertical span.menu-description {
   height:90px;
   }
 
-div#admin-toolbar.horizontal span.menu-description {
+div#admin-toolbar.horizontal a.menu-hover span.menu-description {
   position:absolute;
   top:0px;
   left:60%;
@@ -49,19 +48,25 @@ div#admin-toolbar.horizontal span.menu-description {
   padding-left:20px;
   }
 
-  div#admin-toolbar ul.menu a:hover span.menu-description { display:block; }
-
 /**
  * Menu
  */
 #admin-toolbar ul.menu,
+#admin-toolbar ul.menu ul,
 #admin-toolbar ul.menu li,
 #admin-toolbar ul.menu li a {
   list-style:none;
   background:transparent;
   padding:0px;
   margin:0px;
+  border:0px;
   }
+
+/* IE7 */
+*:first-child+html #admin-toolbar ul.menu,
+*:first-child+html #admin-toolbar ul.menu ul,
+*:first-child+html #admin-toolbar ul.menu li,
+*:first-child+html #admin-toolbar ul.menu li a { overflow:hidden; }
 
 #admin-toolbar.horizontal ul.drilldown-active-menu {
   float:left;
@@ -75,11 +80,13 @@ div#admin-toolbar.horizontal span.menu-description {
 
 #admin-toolbar.horizontal ul.drilldown-active-menu li {
   float:left;
-  width:50%;
+  width:49.9%;
   }
 
   #admin-toolbar ul.drilldown-active-menu li { background:url(../images/sprite.png) 0% -85px no-repeat; }
-  #admin-toolbar ul.drilldown-active-menu li.leaf { background-position:0% -110px; }
+
+  #admin-toolbar ul.menu li.leaf,
+  #admin-toolbar ul.drilldown-active-menu li.leaf { background:url(../images/sprite.png) 0% -110px no-repeat; }
 
 #admin-toolbar ul.menu li a {
   -moz-border-radius:5px;
@@ -98,6 +105,7 @@ div#admin-toolbar.horizontal span.menu-description {
   #admin-toolbar ul.menu li a span.menu-description { white-space:normal; }
 
   /* IE7 requires height to be explicitly set. */
+  #admin-toolbar ul.menu li.leaf,
   #admin-toolbar ul.drilldown-active-menu li { height:25px; }
 
   #admin-toolbar ul.menu li a.active { background:#222; }

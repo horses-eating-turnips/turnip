@@ -1,5 +1,5 @@
 <?php
-// $Id: features.export.inc,v 1.1.2.58 2010/07/21 21:20:04 yhahn Exp $
+// $Id: features.export.inc,v 1.1.2.62 2010/08/11 19:49:05 yhahn Exp $
 
 /**
  * @param $items
@@ -124,7 +124,7 @@ function features_export_prepare($export, $module_name, $reset = FALSE) {
   $existing = features_get_modules($module_name, $reset);
 
   // Prepare info string -- if module exists, merge into its existing info file
-  $defaults = $existing ? $existing->info : array('core' => '6.x', 'package' => 'Features', 'project' => $module_name);
+  $defaults = $existing ? $existing->info : array('core' => '6.x', 'package' => 'Features');
   $export = array_merge($defaults, $export);
 
   // Cleanup info array
@@ -237,6 +237,9 @@ function features_export_render($export, $module_name, $reset = FALSE) {
     foreach (file_scan_directory(drupal_get_path('module', $module_name), '.*') as $file) {
       if (in_array($file->name, $deprecated, TRUE)) {
         features_log(t('The file @filename has been deprecated and can be removed.', array('@filename' => $file->basename)), 'status');
+      }
+      elseif ($file->name === "{$module_name}.features" && empty($code['features'])) {
+        $code['features'] = "<?php\n\n// This file is deprecated and can be removed.\n// Please remove include_once('{$module_name}.features.inc') in {$module_name}.module as well.\n";
       }
     }
   }
@@ -456,16 +459,17 @@ function features_var_export($var, $prefix = '', $init = TRUE) {
  * Useful for providing a separate array of translatables with your
  * export so that string extractors like potx can detect them.
  */
-function features_translatables_export($translatables, $prefix = '') {
-  sort($translatables);
-  $translatables = array_unique($translatables);
-
-  $output = $prefix . "// Translatables\n";
-  $output .= $prefix . "array(\n";
-  foreach ($translatables as $string) {
-    $output .= $prefix . "  t('" . strtr($string, array("'" => "\'")) . "'),\n";
+function features_translatables_export($translatables, $indent = '') {
+  $output = '';
+  $translatables = array_filter(array_unique($translatables));
+  if (!empty($translatables)) {
+    $output .= "{$indent}// Translatables\n";
+    $output .= "{$indent}// Included for use with string extractors like potx.\n";
+    sort($translatables);
+    foreach ($translatables as $string) {
+      $output .= "{$indent}t(" . features_var_export($string) . ");\n";
+    }
   }
-  $output .= $prefix . ");\n";
   return $output;
 }
 
@@ -624,8 +628,10 @@ function features_get_default($component, $module_name = NULL, $alter = TRUE, $r
   }
   // No module was specified. Retrieve all components.
   $all_defaults = array();
-  foreach (array_filter($cache[$component]) as $module_components) {
-    $all_defaults = array_merge($all_defaults, $module_components);
+  if (isset($cache[$component])) {
+    foreach (array_filter($cache[$component]) as $module_components) {
+      $all_defaults = array_merge($all_defaults, $module_components);
+    }
   }
   return $all_defaults;
 }

@@ -1,5 +1,5 @@
 <?php
-// $Id: features.menu.inc,v 1.1.2.11 2010/07/24 21:46:24 yhahn Exp $
+// $Id: features.menu.inc,v 1.1.2.13 2010/08/12 19:30:35 yhahn Exp $
 
 /**
  * Implementation of hook_features_api().
@@ -132,7 +132,7 @@ function menu_links_features_export_options() {
   $menu_links = menu_parent_options(array_reverse(menu_get_menus()), NULL);
   $options = array();
   foreach ($menu_links as $key => $name) {
-    list($menu_name, $mlid) = explode(':', $key);
+    list($menu_name, $mlid) = explode(':', $key, 2);
     if ($mlid != 0) {
       $link = menu_link_load($mlid);
       $identifier = menu_links_features_identifier($link);
@@ -226,14 +226,58 @@ function menu_links_features_revert($module) {
  */
 function menu_links_features_rebuild($module) {
   if ($menu_links = features_get_default('menu_links', $module)) {
-    foreach ($menu_links as $link) {
+    menu_links_features_rebuild_ordered($menu_links);
+  }
+}
+
+/**
+ * Generate a depth tree of all menu links.
+ */
+function menu_links_features_rebuild_ordered($menu_links, $reset = FALSE) {
+  static $ordered;
+  static $all_links;
+  if (!isset($ordered) || $reset) {
+    $ordered = array();
+    $unordered = features_get_default('menu_links');
+
+    // Order all links by depth.
+    if ($unordered) {
+      do {
+        $current = count($unordered);
+        foreach ($unordered as $key => $link) {
+          $identifier = menu_links_features_identifier($link);
+          $parent = isset($link['parent_path']) ? "{$link['menu_name']}:{$link['parent_path']}" : '';
+          if (empty($parent)) {
+            $ordered[$identifier] = 0;
+            $all_links[$identifier] = $link;
+            unset($unordered[$key]);
+          }
+          elseif (isset($ordered[$parent])) {
+            $ordered[$identifier] = $ordered[$parent] + 1;
+            $all_links[$identifier] = $link;
+            unset($unordered[$key]);
+          }
+        }
+      } while (count($unordered) < $current);
+    }
+    asort($ordered);
+  }
+
+  // Ensure any default menu items that do not exist are created.
+  foreach (array_keys($ordered) as $identifier) {
+    $link = $all_links[$identifier];
+    $existing = features_menu_link_load($identifier);
+    if (!$existing || in_array($link, $menu_links)) {
       // Retrieve the mlid if this is an existing item.
-      if ($existing = features_menu_link_load("{$link['menu_name']}:{$link['link_path']}")) {
+      if ($existing) {
         $link['mlid'] = $existing['mlid'];
       }
       // Retrieve the plid for a parent link.
-      if ($parent = features_menu_link_load("{$link['menu_name']}:{$link['parent_path']}")) {
+      if (!empty($link['parent_path']) && $parent = features_menu_link_load("{$link['menu_name']}:{$link['parent_path']}")) {
         $link['plid'] = $parent['mlid'];
+      }
+      else {
+        $link['plid'] = 0;
       }
       menu_link_save($link);
     }
@@ -244,7 +288,7 @@ function menu_links_features_rebuild($module) {
  * Load a menu link by its menu_name:link_path identifier.
  */
 function features_menu_link_load($identifier) {
-  list($menu_name, $link_path) = explode(':', $identifier);
+  list($menu_name, $link_path) = explode(':', $identifier, 2);
   $result = db_query("SELECT menu_name, mlid, plid, link_path, router_path, link_title, options, module, hidden, external, has_children, expanded, weight FROM {menu_links} WHERE menu_name = '%s' AND link_path = '%s'", $menu_name, $link_path);
   while ($link = db_fetch_array($result)) {
     $link['options'] = unserialize($link['options']);

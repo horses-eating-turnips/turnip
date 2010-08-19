@@ -7,9 +7,9 @@ dependencies[] = path_redirect
 dependencies[] = devel_generate
 tags[] = developer
 
-; Information added by drupal.org packaging script on 2009-12-02
-version = "6.x-1.0-beta6"
+; Information added by drupal.org packaging script on 2010-08-10
+version = "6.x-1.0-beta7"
 core = "6.x"
 project = "path_redirect"
-datestamp = "1259754356"
+datestamp = "1281416192"
 

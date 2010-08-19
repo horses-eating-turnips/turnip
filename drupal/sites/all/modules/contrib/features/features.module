@@ -1,5 +1,5 @@
 <?php
-// $Id: features.module,v 1.1.2.76 2010/07/26 16:59:27 yhahn Exp $
+// $Id: features.module,v 1.1.2.79 2010/08/05 20:50:03 yhahn Exp $
 
 /**
  * @file
@@ -250,9 +250,8 @@ function features_perm() {
 function features_help($path, $arg) {
   switch ($path) {
     case 'admin/help#features':
-      $output = '<p>'. t('The features module enables the capture and management of features in Drupal. A feature is a collection of Drupal entities which taken together satisfy a certain use-case.') .'</p>';
-      $output .= '<p>'. t('Features provides a UI and API for taking different site building components from modules with exportables and bundling them together in a single feature module. A feature module is like any other Drupal module except that it declares its components (e.g. views, contexts, CCK fields, etc.) in its `.info` file so that it can be checked, updated, or reverted programmatically.') .'</p>';
-      return $output;
+      $output = file_get_contents(drupal_get_path('module', 'features') .'/README.txt');
+      return module_exists('markdown') ? filter_xss_admin(module_invoke('markdown', 'filter', 'process', 0, -1, $output)) : '<pre>'. check_plain($output) .'</pre>';
     case 'admin/build/features':
       return '<p>'. t('A "Feature" is a certain type of Drupal module with contains a package of configuration that, when enabled, provides a new set of functionality for your Drupal site. Enable features by selecting the checkboxes below and clicking the Save configuration button. If the configuration of the feature has been changed its "State" will be either "overridden" or "needs review", otherwise it will be "default", indicating that the configuration has not been changed. Click on the state to see more details about the feature and its components.') .'</p>';
   }
@@ -516,7 +515,7 @@ function features_get_info($type = 'module', $name = NULL, $reset = FALSE) {
     $cache->data = $data;
   }
   if (!empty($name)) {
-    return !empty($cache->data[$type][$name]) ? $cache->data[$type][$name] : array();
+    return !empty($cache->data[$type][$name]) ? $cache->data[$type][$name] : FALSE;
   }
   return !empty($cache->data[$type]) ? $cache->data[$type] : array();
 }
@@ -574,7 +573,7 @@ function features_get_orphans($reset = FALSE) {
 function features_get_conflicts($reset = FALSE) {
   $conflicts = array();
   $component_info = features_get_components();
-  $map = features_get_component_map($reset);
+  $map = features_get_component_map(NULL, $reset);
 
   foreach ($map as $type => $components) {
     foreach ($components as $component => $modules) {
@@ -602,9 +601,8 @@ function features_get_conflicts($reset = FALSE) {
 /**
  * Provide a component to feature map.
  */
-function features_get_component_map($reset = FALSE) {
+function features_get_component_map($key = NULL, $reset = FALSE) {
   static $map;
-
   if (!isset($map) || $reset) {
     $map = array();
     $features = features_get_features(NULL, $reset);
@@ -619,7 +617,9 @@ function features_get_component_map($reset = FALSE) {
       }
     }
   }
-
+  if (isset($key)) {
+    return isset($map[$key]) ? $map[$key] : array();
+  }
   return $map;
 }
 

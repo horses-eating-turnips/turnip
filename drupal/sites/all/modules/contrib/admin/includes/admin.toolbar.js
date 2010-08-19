@@ -1,4 +1,4 @@
-// $Id: admin.toolbar.js,v 1.1.2.6 2010/04/16 19:34:39 yhahn Exp $
+// $Id: admin.toolbar.js,v 1.1.2.9 2010/07/31 21:22:44 yhahn Exp $
 
 Drupal.behaviors.adminToolbar = function(context) {
   $('#admin-toolbar:not(.processed)').each(function() {
@@ -39,9 +39,11 @@ Drupal.adminToolbar = {};
  */
 Drupal.adminToolbar.init = function (toolbar) {
   // Set expanded state.
-  var expanded = this.getState('expanded');
-  if (expanded == 1) {
-    $(document.body).addClass('admin-expanded');
+  if (!$(document.body).hasClass('admin-ah')) {
+    var expanded = this.getState('expanded');
+    if (expanded == 1) {
+      $(document.body).addClass('admin-expanded');
+    }
   }
 
   // Set default tab state.
@@ -60,6 +62,9 @@ Drupal.adminToolbar.init = function (toolbar) {
   }
   if (classes[1] === 'horizontal' || classes[1] === 'vertical') {
     $(document.body).addClass('admin-'+classes[1]);
+  }
+  if (classes[2] === 'df' || classes[2] === 'ah') {
+    $(document.body).addClass('admin-'+classes[2]);
   }
 };
 
@@ -110,7 +115,13 @@ Drupal.adminToolbar.toggle = function (toolbar) {
       }
     }
     else {
-      $('div.admin-blocks', toolbar).slideUp('fast', function() { $(document.body).toggleClass('admin-expanded'); });
+      $('div.admin-blocks', toolbar).animate({height:'0px'}, 'fast');
+      if ($(toolbar).is('.nw') || $(toolbar).is('ne')) {
+        $(document.body).animate({marginTop:'0px'}, 'fast', function() { $(this).toggleClass('admin-expanded'); });
+      }
+      else {
+        $(document.body).animate({marginBottom:'0px'}, 'fast', function() { $(this).toggleClass('admin-expanded'); });
+      }
     }
     this.setState('expanded', 0);
   }
@@ -125,9 +136,20 @@ Drupal.adminToolbar.toggle = function (toolbar) {
       }
     }
     else {
-      $('div.admin-blocks', toolbar).slideDown('fast', function() { $(document.body).toggleClass('admin-expanded'); });
+      $('div.admin-blocks', toolbar).animate({height:'260px'}, 'fast');
+      if ($(toolbar).is('.nw') || $(toolbar).is('ne')) {
+        $(document.body).animate({marginTop:'260px'}, 'fast', function() { $(this).toggleClass('admin-expanded'); });
+      }
+      else {
+        $(document.body).animate({marginBottom:'260px'}, 'fast', function() { $(this).toggleClass('admin-expanded'); });
+      }
     }
-    this.setState('expanded', 1);
+    if ($(document.body).hasClass('admin-ah')) {
+      this.setState('expanded', 0);
+    }
+    else {
+      this.setState('expanded', 1);
+    }
   }
 };
 
@@ -141,9 +163,14 @@ Drupal.adminToolbar.getState = function(key) {
     var query = cookie ? cookie.split('&') : [];
     if (query) {
       for (var i in query) {
-        var values = query[i].split('=');
-        if (values.length === 2) {
-          Drupal.adminToolbar.state[values[0]] = values[1];
+        // Extra check to avoid js errors in Chrome, IE and Safari when
+        // combined with JS like twitter's widget.js.
+        // See http://drupal.org/node/798764.
+        if (typeof(query[i]) == 'string' && query[i].indexOf('=') != -1) {
+          var values = query[i].split('=');
+          if (values.length === 2) {
+            Drupal.adminToolbar.state[values[0]] = values[1];
+          }
         }
       }
     }
