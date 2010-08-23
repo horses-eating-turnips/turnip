@@ -1,5 +1,5 @@
 <?php
-// $Id: features.views.inc,v 1.1.2.25 2010/07/26 04:51:30 yhahn Exp $
+// $Id: features.views.inc,v 1.1.2.26 2010/08/19 16:32:58 yhahn Exp $
 
 /**
  * Implementation of hook_features_export().
@@ -131,7 +131,7 @@ function views_features_export($data, &$export, $module_name = '') {
     }
   }
   if (!empty($conflicts)) {
-    $message = 'The following overridden view(s) are provided by other modules: !views. To resolve this problem either revert each view or clone each view so that modified versions can be exported withy our feature.';
+    $message = 'The following overridden view(s) are provided by other modules: !views. To resolve this problem either revert each view or clone each view so that modified versions can be exported with your feature.';
     $tokens = array('!views' => implode(', ', $conflicts));
     features_log(t($message, $tokens), 'warning');
   }

@@ -1,5 +1,5 @@
 <?php
-// $Id: features.admin.inc,v 1.1.2.67 2010/08/10 21:25:12 yhahn Exp $
+// $Id: features.admin.inc,v 1.1.2.68 2010/08/20 14:51:38 yhahn Exp $
 
 /**
  * Form callback for features export form. Acts as a router based on the form_state.
@@ -295,7 +295,8 @@ function features_export_build_form_populate() {
     $dependencies = isset($submitted['sources']['dependencies']) ? $submitted['sources']['dependencies'] : array();
 
     // Generate populated feature
-    $export = features_populate($stub, $dependencies, $submitted['module_name']);
+    $module_name = isset($form['#feature'], $form['#feature']->name) ? $form['#feature']->name : '';
+    $export = features_populate($stub, $dependencies, $module_name);
 
     // Render component display
     $components_rendered = theme('features_components', $export, $stub);

@@ -1,5 +1,5 @@
 <?php
-// $Id: features.ctools.inc,v 1.1.2.27 2010/08/09 14:56:58 yhahn Exp $
+// $Id: features.ctools.inc,v 1.1.2.28 2010/08/19 21:55:48 yhahn Exp $
 
 /**
  * This is a wild hack, but effective.
@@ -109,18 +109,14 @@ function ctools_component_features_export_options($component) {
   ctools_include('export');
   $schema = ctools_export_get_schema($component);
   if ($schema && $schema['export']['bulk export']) {
-    $export_key = $schema['export']['key'];
-    // If a list callback is available use it, otherwise fallback to generating
-    // options from ctools_export_load_object().
-    if (function_exists($schema['export']['list callback'])) {
-      $objects = $schema['export']['list callback']();
-      $options = drupal_map_assoc(array_keys($objects));
+    if (!empty($schema['export']['list callback']) && function_exists($schema['export']['list callback'])) {
+      $options = $schema['export']['list callback']();
     }
-    else if ($objects = ctools_export_load_object($component, 'all')) {
-      $options = drupal_map_assoc(array_keys($objects));
+    else {
+      $options = _ctools_features_export_default_list($component, $schema);
     }
   }
-  ksort($options);
+  asort($options);
   return $options;
 }
 
@@ -136,8 +132,7 @@ function ctools_component_features_export($component, $data, &$export, $module_n
 
   // Add the components
   foreach ($data as $object_name) {
-    if ($objects = ctools_export_load_object($component, 'names', array($object_name))) {
-      $object = array_shift($objects);
+    if ($object = _ctools_features_export_crud_load($component, $object_name)) {
       // If this object is provided as a default by a different module, don't
       // export and add that module as a dependency instead.
       if (!empty($object->export_module) && $object->export_module !== $module_name) {
@@ -174,20 +169,12 @@ function ctools_component_features_export_render($component, $module, $data) {
   }
   else {
     $code = '  $export = array();'."\n";
-    foreach ($data as $object) {
-      $identifier = $schema['export']['identifier'];
-      $objects = ctools_export_load_object($component, 'names', array($object));
-      if (!empty($objects[$object])) {
-        // Support objects that have a defined export callback, but fall back to.
-        // ctools_export_object().
-        if (function_exists($schema['export']['export callback'])) {
-          $code .= $schema['export']['export callback']($objects[$object], '  ');
-        }
-        else {
-          $code .= ctools_export_object($component, $objects[$object], '  ', $identifier);
-        }
+    foreach ($data as $object_name) {
+      if ($object = _ctools_features_export_crud_load($component, $object_name)) {
+        $identifier = $schema['export']['identifier'];
+        $code .= _ctools_features_export_crud_export($component, $object, '  ');
         $code .= "\n";
-        $code .= '  $export[\''. $object .'\'] = $'. $identifier .';'."\n";
+        $code .= "  \$export[" . ctools_var_export($object_name) . "] = \${$identifier};\n";
       }
     }
     $code .= '  return $export;';
@@ -201,16 +188,8 @@ function ctools_component_features_export_render($component, $module, $data) {
  */
 function ctools_component_features_revert($component, $module) {
   if ($objects = features_get_default($component, $module)) {
-    if (ctools_api_version('1.7')) {
-      foreach ($objects as $object) {
-        ctools_export_crud_delete($component, $object);
-      }
-    }
-    else {
-      $schema = ctools_export_get_schema($component);
-      $export = $schema['export'];
-      $names = db_placeholders(array_keys($objects), $schema['fields'][$export['key']]['type']);
-      db_query("DELETE FROM {{$component}} WHERE {$export['key']} IN ({$names})", array_keys($objects));
+    foreach ($objects as $object) {
+      _ctools_features_export_crud_delete($component, $object);
     }
   }
 }
@@ -268,6 +247,53 @@ function _ctools_features_get_info($identifier = NULL, $reset = FALSE) {
   }
 
   return $components;
+}
+
+/**
+ * Wrapper around ctools_export_crud_export() for < 1.7 compatibility.
+ */
+function _ctools_features_export_crud_export($table, $object, $indent = '') {
+  return ctools_api_version('1.7') ? ctools_export_crud_export($table, $object, $indent) : ctools_export_object($table, $object, $indent);
+}
+
+/**
+ * Wrapper around ctools_export_crud_load() for < 1.7 compatibility.
+ */
+function _ctools_features_export_crud_load($table, $name) {
+  if (ctools_api_version('1.7')) {
+    return ctools_export_crud_load($table, $name);
+  }
+  elseif ($objects = ctools_export_load_object($table, 'names', array($name))) {
+    return array_shift($objects);
+  }
+  return FALSE;
+}
+
+/**
+ * Wrapper around ctools_export_default_list() for < 1.7 compatibility.
+ */
+function _ctools_features_export_default_list($table, $schema) {
+  if (ctools_api_version('1.7')) {
+    return ctools_export_default_list($table, $schema);
+  }
+  elseif ($objects = ctools_export_load_object($table, 'all')) {
+    return drupal_map_assoc(array_keys($objects));
+  }
+  return array();
+}
+
+/**
+ * Wrapper around ctools_export_crud_delete() for < 1.7 compatibility.
+ */
+function _ctools_features_export_crud_delete($table, $object) {
+  if (ctools_api_version('1.7')) {
+    ctools_export_crud_delete($table, $object);
+  }
+  else {
+    $schema = ctools_export_get_schema($table);
+    $export = $schema['export'];
+    db_query("DELETE FROM {{$table}} WHERE {$export['key']} = '%s'", $object->{$export['key']});
+  }
 }
 
 /**

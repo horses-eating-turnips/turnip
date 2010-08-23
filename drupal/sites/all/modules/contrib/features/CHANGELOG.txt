@@ -1,4 +1,28 @@
-// $Id: CHANGELOG.txt,v 1.1.2.13 2010/08/09 15:44:50 yhahn Exp $
+// $Id: CHANGELOG.txt,v 1.1.2.15 2010/08/23 14:24:39 yhahn Exp $
+
+features DRUPAL-6--1-0
+----------------------
+- No changes from RC3.
+
+features DRUPAL-6--1-0-RC3
+--------------------------
+- Ensure feature module name is properly handled in AHAH callback.
+- #577852: Do not allow module to add itself as dependency.
+
+features DRUPAL-6--1-0-RC2
+--------------------------
+- #888066 by ptrl: Views message typo.
+- #884624: Better support for custom CTools export callbacks.
+
+features DRUPAL-6--1-0-RC1
+--------------------------
+- #878604 by Coornail: Fix for PHP notice.
+- Add < and > to the list of characters that must be DOM encoded for AHAH safe
+  handling.
+- #878068: escape component identifiers.
+- #880456: Fix for PHP notice.
+- #880186 by yhahn, loosening the iron grip on vocabulary machine names.
+- #881010: Properly refer to menu links when doing a ordered build.
 
 features DRUPAL-6--1-0-BETA12
 -----------------------------
