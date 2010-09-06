@@ -6,6 +6,9 @@ projects[filefield][version] = "3.7"
 projects[filefield_paths][subdir] = "contrib"
 projects[filefield_paths][version] = "1.4"
 
+projects[image_resize_filter][sudbir] = "contrib"
+projects[image_resize_filter][version] = "1.9"
+
 projects[imageapi][subdir] = "contrib"
 projects[imageapi][version] = "1.8"
 
@@ -17,3 +20,6 @@ projects[imagefield][version] = "3.7"
 
 projects[imagefield_tokens][subdir] = "contrib"
 projects[imagefield_tokens][version] = "1.0"
+
+projects[insert][sudbir] = "contrib"
+projects[insert][version] = "1.0-beta6"

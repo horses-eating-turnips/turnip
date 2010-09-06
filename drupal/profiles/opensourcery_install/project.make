@@ -1,4 +1,6 @@
-; This is the actual project make file that should be edited for a given project.
+; This is the actual project make file that should be edited for a
+; given project. This text should be replaced with a brief description
+; of the project.
 
 includes[core] = "opensourcery_base.make"
 
@@ -20,5 +22,9 @@ includes[core] = "opensourcery_base.make"
 ; Mollom
 ;projects[mollom][subdir] = "contrib"
 ;projects[mollom][version] = "1.13"
+
+; Google analytics
+;projects[google_analytics][subdir] = "contrib"
+;projects[google_analytics][version] = "2.2"
 
 ; Project-specific modules, and overrides.
