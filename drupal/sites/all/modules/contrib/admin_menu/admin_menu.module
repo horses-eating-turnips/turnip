@@ -1,5 +1,5 @@
 <?php
-// $Id: admin_menu.module 842 2009-07-03 00:24:40Z jhedstrom $
+// $Id: admin_menu.module,v 1.43.2.18 2009/06/21 18:58:04 sun Exp $
 
 /**
  * @file
