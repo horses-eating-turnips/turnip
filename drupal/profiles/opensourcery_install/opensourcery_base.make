@@ -35,6 +35,13 @@ projects[strongarm][version] = "2.0"
 projects[token][subdir] = "contrib"
 projects[token][version] = "1.14"
 
+; This version works with php 5.3
+projects[vertical_tabs][subdir] = "contrib"
+projects[vertical_tabs][type] = "module"
+projects[vertical_tabs][download][type] = "cvs"
+projects[vertical_tabs][download][module] = "contributions/modules/vertical_tabs"
+projects[vertical_tabs][download][revision] = "DRUPAL-6--2:2010-02-09"
+
 projects[wysiwyg][subdir] = "contrib"
 projects[wysiwyg][version] = "2.1"
 
@@ -57,3 +64,9 @@ libraries[ckeditor][download][type] = "get"
 libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%203.4/ckeditor_3.4.tar.gz"
 libraries[ckeditor][destination] = "libraries"
 libraries[ckeditor][directory_name] = "ckeditor"
+
+; Themes
+
+projects[zen][version] = "2.0"
+; http://drupal.org/node/634552#comment-3244662
+projects[zen][patch][] = "http://drupal.org/files/issues/zen-634552_0.patch"
