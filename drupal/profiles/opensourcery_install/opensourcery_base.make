@@ -58,6 +58,12 @@ projects[coder][version] = "2.0-beta1"
 projects[simpletest][subdir] = "development"
 projects[simpletest][version] = "2.10"
 
+; Profiles
+libraries[profiler][type] = "module"
+libraries[profiler][download][type] = cvs
+libraries[profiler][download][module] = contributions/modules/profiler
+libraries[profiler][download][revision] = "DRUPAL-6--2-0-BETA1"
+
 ; Libraries
 
 libraries[ckeditor][download][type] = "get"

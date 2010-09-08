@@ -1,0 +1,8 @@
+; $Id$
+
+; Project-specific installation profile
+
+base = opensourcery_install
+
+name = Project
+description = Changeme

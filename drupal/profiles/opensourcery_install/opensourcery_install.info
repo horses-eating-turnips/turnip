@@ -1,0 +1,73 @@
+; $Id$
+
+; OpenSourcery base installation profile.
+name = OpenSourcery
+description = Select this profile to enable an OpenSourcery base-install.
+core = 6.x
+theme = doune
+
+;Drupal core modules.
+dependencies[] = help
+dependencies[] = menu
+dependencies[] = taxonomy
+dependencies[] = dblog
+dependencies[] = path
+
+; Contributed modules.
+dependencies[] = admin
+dependencies[] = advanced_help
+dependencies[] = better_formats
+dependencies[] = pathauto
+dependencies[] = path_redirect
+dependencies[] = role_delegation
+dependencies[] = token
+dependencies[] = wysiwyg
+dependencies[] = features
+dependencies[] = ctools
+dependencies[] = strongarm
+dependencies[] = less
+
+; Features
+dependencies[] = doune_theme_settings
+dependencies[] = os_admin
+
+; Custom modules.
+dependencies[] = os_custom
+
+; Development modules.
+dependencies[] = admin_menu
+dependencies[] = devel
+
+; Core variables.
+
+; Change default anonymous to "Visitor".
+variables[anonymous] = Visitor
+
+; Increase the capacity of the Drupal watchdog. The default of 1000
+; rows overflows too quickly, sometimes losing important debug
+; information.
+variables[dblog_row_limit] = 10000
+
+; Set "Only site administrators can create new user accounts."
+; Drupal's default is open registration, which is easily overlooked.
+variables[user_register] = 0
+
+; Pathauto configuration.
+; Get rid of wonky content/foo pattern.  The rationale is that it's
+; easier to bulk-update pathauto aliases than it is to remove unwanted
+; ones.  We leave this blank because there's no one-size-fits all
+; pattern.
+variables[pathauto_node_pattern] = 0
+
+; Path redirect settings.
+variables[path_redirect_allow_bypass] = 0;
+variables[path_redirect_auto_redirect] = 1;
+variables[path_redirect_default_status] = 301;
+variables[path_redirect_purge_inactive] = '31536000'; // 1 year.
+variables[path_redirect_redirect_warning] = 0;
+
+; Page node settings
+variables[node_options_page][] = status
+variables[node_options_page][] = revision
+variables[comment_page] = 0
+
