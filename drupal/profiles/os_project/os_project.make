@@ -2,10 +2,10 @@
 ; given project. This text should be replaced with a brief description
 ; of the project.
 
-includes[core] = "opensourcery_base.make"
+includes[core] = "../opensourcery_install/opensourcery_base.make"
 
 ; Core image handling make file.
-; includes[image] = "opensourcery_image.make"
+; includes[image] = "../opensourcery_install/opensourcery_image.make"
 
 ; CCK
 ;projects[cck][subdir] = "contrib"
