@@ -13,14 +13,15 @@ profiler_v2('os_project');
 /**
  * Implementation of hook_install().
  */
+/* -- Delete this line if you want to use this function
 function os_project_install() {
-  // Until issue http://drupal.org/node/906106 is resolved, manually
-  // run opensourcery_install_install().
+  // Run base profile's hook first.
   require_once './profiles/opensourcery_install/opensourcery_install.profile';
   opensourcery_install_install();
 
   // Do any post-installation tweaks or clean-up here.
 }
+// */
 
 /**
  * Set as the default install profile, remove default and OpenSourcery.

@@ -12,6 +12,7 @@ dependencies[] = menu
 dependencies[] = taxonomy
 dependencies[] = dblog
 dependencies[] = path
+dependencies[] = update
 
 ; Contributed modules.
 dependencies[] = admin

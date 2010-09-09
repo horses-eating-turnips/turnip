@@ -27,4 +27,12 @@ includes[core] = "../opensourcery_install/opensourcery_base.make"
 ;projects[google_analytics][subdir] = "contrib"
 ;projects[google_analytics][version] = "2.2"
 
+; jQuery UI
+;projects[jquery_ui][subdir] = "contrib"
+;projects[jquery_ui][version] = "1.4"
+;libraries[jquery_ui][download][type] = "get"
+;libraries[jquery_ui][download][url] = "http://jquery-ui.googlecode.com/files/jquery.ui-1.6.zip"
+;libraries[jquery_ui][directory_name] = "jquery.ui"
+;libraries[jquery_ui][destination] = "modules/contrib/jquery_ui"
+
 ; Project-specific modules, and overrides.
