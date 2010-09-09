@@ -40,7 +40,7 @@ projects[vertical_tabs][subdir] = "contrib"
 projects[vertical_tabs][type] = "module"
 projects[vertical_tabs][download][type] = "cvs"
 projects[vertical_tabs][download][module] = "contributions/modules/vertical_tabs"
-projects[vertical_tabs][download][revision] = "DRUPAL-6--2:2010-02-09"
+projects[vertical_tabs][download][revision] = "DRUPAL-6--1:2010-02-09"
 
 projects[wysiwyg][subdir] = "contrib"
 projects[wysiwyg][version] = "2.1"

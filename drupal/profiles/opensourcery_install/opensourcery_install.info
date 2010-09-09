@@ -21,6 +21,7 @@ dependencies[] = pathauto
 dependencies[] = path_redirect
 dependencies[] = role_delegation
 dependencies[] = token
+dependencies[] = vertical_tabs
 dependencies[] = wysiwyg
 dependencies[] = features
 dependencies[] = ctools
