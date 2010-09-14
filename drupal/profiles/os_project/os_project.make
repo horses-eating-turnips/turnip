@@ -42,3 +42,10 @@ includes[core] = "../opensourcery_install/opensourcery_base.make"
 ;libraries[jquery_ui][destination] = "modules/contrib/jquery_ui"
 
 ; Project-specific modules, and overrides.
+
+
+; Base theme: Specify the Doune version needed in the github URL. Alternatively,
+; use "http://github.com/opensourcery/doune/tarball/master" for bleeding edge.
+libraries[doune][download][type] = "get"
+libraries[doune][download][url] = "http://github.com/opensourcery/doune/tarball/6.x-0.1"
+libraries[doune][destination] = "themes"
