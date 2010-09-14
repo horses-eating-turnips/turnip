@@ -15,6 +15,12 @@ includes[core] = "../opensourcery_install/opensourcery_base.make"
 ;projects[views][subdir] = "contrib"
 ;projects[views][version] = "2.11"
 
+; Semantic Views
+; projects[semanticviews][subdir] = "contrib"
+; projects[semanticviews][version] = "1.1"
+;; http://drupal.org/node/832048#comment-3441744
+;projects[semanticviews][patch][] = "http://drupal.org/files/issues/semanticviews.832048.patch"
+
 ; SSL handling
 ;projects[securepages][subdir] = "contrib"
 ;projects[securepages][version] = "1.8"
