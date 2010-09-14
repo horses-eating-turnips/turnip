@@ -9,7 +9,7 @@ projects[filefield_paths][version] = "1.4"
 projects[filefield_sources][subdir] = "contrib"
 projects[filefield_sources][version] = "1.2"
 
-projects[image_resize_filter][sudbir] = "contrib"
+projects[image_resize_filter][subdir] = "contrib"
 projects[image_resize_filter][version] = "1.9"
 
 projects[imageapi][subdir] = "contrib"
