@@ -3,7 +3,7 @@
 
 /**
  * @file
- * Rename and replace all instances of 'os_project' with 'PROJECTNAME_install'.
+ * Rename and replace all instances of 'os_project' with 'PROJECTNAME'.
  */
 if (!function_exists('profiler_v2')) {
   require 'libraries/profiler/profiler.inc';
