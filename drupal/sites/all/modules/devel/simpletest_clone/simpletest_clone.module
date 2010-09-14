@@ -1,9 +1,0 @@
-<?php
-
-// $Id: simpletest_clone.module,v 1.1 2009/06/03 00:35:49 jhedstrom Exp $
-
-/**
- * @file
- * SimpleTest Clone placeholder file, left intentionally empty, but required for
- * module initialization.
- */

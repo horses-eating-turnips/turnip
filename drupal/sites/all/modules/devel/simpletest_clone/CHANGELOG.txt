@@ -1,7 +1,0 @@
-$Id: CHANGELOG.txt 893 2009-12-02 18:12:28Z jhedstrom $
-
-DRUPAL-6--1-2, 2009-12-02
--------------------------
-
-- Adding drupalLogin() method to allow for custom text to checkfor
-  authenticated users.
