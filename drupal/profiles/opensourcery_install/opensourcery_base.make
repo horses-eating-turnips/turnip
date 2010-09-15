@@ -18,7 +18,7 @@ projects[features][subdir] = "contrib"
 projects[features][version] = "1.0"
 
 projects[less][subdir] = "contrib"
-projects[less][version] = "2.1"
+projects[less][version] = "2.2"
 
 projects[path_redirect][subdir] = "contrib"
 projects[path_redirect][version] = "1.0-beta7"
