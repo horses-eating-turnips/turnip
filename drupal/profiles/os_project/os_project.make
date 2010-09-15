@@ -44,8 +44,9 @@ includes[core] = "../opensourcery_install/opensourcery_base.make"
 ; Project-specific modules, and overrides.
 
 
-; Base theme: Specify the Doune version needed in the github URL. Alternatively,
-; use "http://github.com/opensourcery/doune/tarball/master" for bleeding edge.
-libraries[doune][download][type] = "get"
-libraries[doune][download][url] = "http://github.com/opensourcery/doune/tarball/6.x-0.1"
-libraries[doune][destination] = "themes"
+; Base theme: Create and specify a tag at the *end* of the project.
+projects[doune][type] = theme
+projects[doune][download][type] = "git"
+projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
+;projects[doune][download][tag] = "6.x-0.1"
+
