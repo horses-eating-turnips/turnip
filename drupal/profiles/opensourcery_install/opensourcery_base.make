@@ -63,6 +63,8 @@ libraries[profiler][type] = "module"
 libraries[profiler][download][type] = cvs
 libraries[profiler][download][module] = contributions/modules/profiler
 libraries[profiler][download][revision] = "DRUPAL-6--2-0-BETA1"
+; http://drupal.org/node/913938
+libraries[profiler][patch][] = "http://drupal.org/files/issues/profiler.user_access.patch"
 
 ; Libraries
 
