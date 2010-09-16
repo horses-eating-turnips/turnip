@@ -24,7 +24,7 @@ projects[imagefield][version] = "3.7"
 projects[imagefield_tokens][subdir] = "contrib"
 projects[imagefield_tokens][version] = "1.0"
 
-projects[insert][sudbir] = "contrib"
+projects[insert][subdir] = "contrib"
 projects[insert][version] = "1.0-beta6"
 
 projects[wysiwyg_imagefield][subdir] = "contrib"
