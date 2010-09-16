@@ -46,6 +46,10 @@ function opensourcery_install_install() {
   // Since content_profile adds a value for this variable during
   // install, we must delete it here.
   variable_del('content_profile_profile');
+
+  // Cleanup after pathauto.
+  variable_del('pathauto_node_page_pattern');
+  variable_del('pathauto_node_story_pattern');
 }
 
 /**

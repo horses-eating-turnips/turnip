@@ -59,7 +59,7 @@ variables[user_register] = 0
 ; easier to bulk-update pathauto aliases than it is to remove unwanted
 ; ones.  We leave this blank because there's no one-size-fits all
 ; pattern.
-variables[pathauto_node_pattern] = 0
+variables[pathauto_node_pattern] = "" 
 
 ; Path redirect settings.
 variables[path_redirect_allow_bypass] = 0;
