@@ -7,6 +7,17 @@ includes[core] = "../opensourcery_install/opensourcery_base.make"
 ; Core image handling make file.
 ; includes[image] = "../opensourcery_install/opensourcery_image.make"
 
+; OpenSourcery base feature.
+projects[os_base][subdir] = "features"
+projects[os_base][type] = "module"
+projects[os_base][download][type] = "git"
+projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
+projects[os_base][download][tag] = "DRUPAL-6--1-0-ALPHA1"
+
+; Contextual admin (required by base feature).
+projects[context_admin][subdir] = "contrib"
+projects[context_admin][version] = "1.0-beta11"
+
 ; CCK
 ;projects[cck][subdir] = "contrib"
 ;projects[cck][version] = "2.8"

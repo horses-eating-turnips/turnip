@@ -6,3 +6,8 @@ base = opensourcery_install
 
 name = Project
 description = Changeme
+
+; Modules
+
+; Features
+dependencies[] = os_base

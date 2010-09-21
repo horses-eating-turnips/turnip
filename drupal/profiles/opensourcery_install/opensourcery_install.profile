@@ -10,32 +10,10 @@ profiler_v2('opensourcery_install');
  * Implementation of hook_install().
  */
 function opensourcery_install_install() {
-  $types = array(
-    array(
-      'type' => 'page',
-      'name' => st('Page'),
-      'module' => 'node',
-      'description' => st("A <em>page</em> is a simple method for creating and displaying information that rarely changes, such as an \"About us\" section of a website. By default, a <em>page</em> entry does not allow visitor comments and is not featured on the site's initial home page."),
-      'custom' => TRUE,
-      'modified' => TRUE,
-      'locked' => FALSE,
-      'help' => '',
-      'min_word_count' => '',
-    ),
-  );
-
-  foreach ($types as $type) {
-    $type = (object) _node_type_set_defaults($type);
-    node_type_save($type);
-  }
-
   // Don't display date and author information for page nodes by default.
   $theme_settings = variable_get('theme_settings', array());
   $theme_settings['toggle_node_info_page'] = FALSE;
   variable_set('theme_settings', $theme_settings);
-
-  // Create roles.
-  _opensourcery_install_user_roles();
 
   // Assign sensible input filter defaults to roles.
   _opensourcery_install_better_formats();
@@ -50,20 +28,6 @@ function opensourcery_install_install() {
   // Cleanup after pathauto.
   variable_del('pathauto_node_page_pattern');
   variable_del('pathauto_node_story_pattern');
-}
-
-/**
- * Creates Site Editor and Administrator roles.
- */
-function _opensourcery_install_user_roles() {
-  foreach (array('site editor', 'administrator') as $role) {
-    if (!db_result(db_query("SELECT rid FROM {role} WHERE name = '%s'", array(':role_name' => $role)))) {
-      db_query("INSERT INTO {role} (name) VALUES ('%s')", $role);
-      drupal_set_message(t('The %role role has been added.', array('%role' => $role)));
-      $dummy = array();
-      better_formats_new_role($dummy, $dummy);
-    }
-  }
 }
 
 /**
@@ -101,9 +65,6 @@ function _opensourcery_install_set_permissions() {
     'create url aliases',
     'administer menu',
     'administer nodes',
-    'create page content',
-    'delete any page content',
-    'edit any page content',
     'revert revisions',
     'view revisions',
     'assign site editor role',
@@ -119,9 +80,6 @@ function _opensourcery_install_set_permissions() {
   $site_editor_rid = array_search('site editor', $roles);
   $site_editor_user_perms = array(
     'create url aliases',
-    'create page content',
-    'delete own page content',
-    'edit any page content',
     'revert revisions',
     'view revisions',
   );
