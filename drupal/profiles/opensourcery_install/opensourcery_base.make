@@ -1,70 +1,51 @@
 ; OpenSourcery base make file
-core = "6.x"
+core = "7.x"
 
 ; Contrib modules
 projects[admin][subdir] = "contrib"
-projects[admin][version] = "2.0"
+projects[admin][version] = "2.0-beta1"
 
 projects[advanced_help][subdir] = "contrib"
-projects[advanced_help][version] = "1.2"
-
-projects[better_formats][subdir] = "contrib"
-projects[better_formats][version] = "1.2"
+projects[advanced_help][version] = "1.x-dev"
 
 projects[ctools][subdir] = "contrib"
-projects[ctools][version] = "1.7"
+projects[ctools][type] = "module"
+projects[ctools][download][type] = "git"
+projects[ctools][download][url] = "git://github.com/sdboyer/ctools.git"
 
 projects[features][subdir] = "contrib"
-projects[features][version] = "1.0"
+projects[features][version] = "1.0-alpha1"
 
 projects[less][subdir] = "contrib"
-projects[less][version] = "2.2"
+projects[less][version] = "2.x-dev"
 
 projects[path_redirect][subdir] = "contrib"
-projects[path_redirect][version] = "1.0-beta7"
+projects[path_redirect][version] = "1.x-dev"
 
 projects[pathauto][subdir] = "contrib"
-projects[pathauto][version] = "1.4"
+projects[pathauto][version] = "1.0-alpha2"
 
 projects[role_delegation][subdir] = "contrib"
-projects[role_delegation][version] = "1.3"
+projects[role_delegation][version] = "1.x-dev"
 
 projects[strongarm][subdir] = "contrib"
-projects[strongarm][version] = "2.0"
+projects[strongarm][version] = "2.0-beta1"
 
 projects[token][subdir] = "contrib"
-projects[token][version] = "1.14"
-
-; This version works with php 5.3
-projects[vertical_tabs][subdir] = "contrib"
-projects[vertical_tabs][type] = "module"
-projects[vertical_tabs][download][type] = "cvs"
-projects[vertical_tabs][download][module] = "contributions/modules/vertical_tabs"
-projects[vertical_tabs][download][revision] = "DRUPAL-6--1:2010-02-09"
+projects[token][version] = "1.0-alpha2"
 
 projects[wysiwyg][subdir] = "contrib"
-projects[wysiwyg][version] = "2.1"
+projects[wysiwyg][version] = "2.x-dev"
 
 ; Development modules
 projects[admin_menu][subdir] = "development"
-projects[admin_menu][version] = "1.6"
+projects[admin_menu][version] = "3.x-dev"
 
 projects[devel][subdir] = "development"
-projects[devel][version] = "1.22"
+projects[devel][version] = "1.0-beta2"
 
 projects[coder][subdir] = "development"
-projects[coder][version] = "2.0-beta1"
-
-projects[simpletest][subdir] = "development"
-projects[simpletest][version] = "2.10"
-
-; Profiles
-libraries[profiler][type] = "module"
-libraries[profiler][download][type] = cvs
-libraries[profiler][download][module] = contributions/modules/profiler
-libraries[profiler][download][revision] = "DRUPAL-6--2-0-BETA1"
-; http://drupal.org/node/913938
-libraries[profiler][patch][] = "http://drupal.org/files/issues/profiler.user_access.patch"
+projects[coder][version] = "1.0-beta4"
 
 ; Libraries
 
@@ -75,13 +56,14 @@ libraries[ckeditor][directory_name] = "ckeditor"
 
 ; Themes
 
-projects[zen][version] = "2.0"
-; http://drupal.org/node/634552#comment-3244662
-projects[zen][patch][] = "http://drupal.org/files/issues/zen-634552_0.patch"
+projects[zen][version] = "3.x-dev"
 
-projects[tao][location] = "http://code.developmentseed.org/fserver"
-projects[tao][version] = "3.1"
+projects[tao][type] = theme
+projects[tao][download][type] = "git"
+projects[tao][download][url] = "git://github.com/developmentseed/tao.git"
+projects[tao][download][branch] = "drupal-7--3"
 
-projects[rubik][location] = "http://code.developmentseed.org/fserver"
-projects[rubik][version] = "3.0-beta1"
-
+projects[rubik][type] = theme
+projects[rubik][download][type] = "git"
+projects[rubik][download][url] = "git://github.com/developmentseed/rubik.git"
+projects[rubik][download][branch] = "drupal-7--3"
