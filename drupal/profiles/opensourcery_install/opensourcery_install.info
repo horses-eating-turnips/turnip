@@ -3,7 +3,7 @@
 ; OpenSourcery base installation profile.
 name = OpenSourcery
 description = Select this profile to enable an OpenSourcery base-install.
-core = 6.x
+core = 7.x
 theme = doune
 
 ;Drupal core modules.
