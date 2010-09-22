@@ -7,11 +7,16 @@ core = 7.x
 theme = doune
 
 ;Drupal core modules.
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = dblog
+dependencies[] = field_ui
 dependencies[] = help
 dependencies[] = menu
-dependencies[] = taxonomy
-dependencies[] = dblog
+dependencies[] = overlay
 dependencies[] = path
+dependencies[] = rdf
+dependencies[] = taxonomy
 dependencies[] = update
 
 ; Contributed modules.
