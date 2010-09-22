@@ -10,11 +10,8 @@ function opensourcery_install_install() {
   $theme_settings['toggle_node_info_page'] = FALSE;
   variable_set('theme_settings', $theme_settings);
 
-  // Assign sensible input filter defaults to roles.
-  _opensourcery_install_better_formats();
-
   // Initial permissions.
-  _opensourcery_install_set_permissions();
+  // @TODO _opensourcery_install_set_permissions();
 
   // Since content_profile adds a value for this variable during
   // install, we must delete it here.
@@ -43,8 +40,14 @@ function _opensourcery_install_set_permissions() {
     'administer users',
     'access administration pages',
   );
-  if (!db_result(db_query("SELECT rid FROM {permission} LEFT JOIN {role} USING (rid) WHERE name = '%s'", array(':role_name' => 'administrator')))) {
-    db_query("INSERT INTO {permission} (rid, perm) VALUES (%d, '%s')", array(':rid' => $admin_rid, implode(', ', $admin_user_perms)));
+  if (!db_query("SELECT rid FROM {permission} LEFT JOIN {role} USING (rid) WHERE name = :role_name", array(':role_name' => 'administrator'))->fetchField()) {
+    $fields = array(
+      'rid' => $admin_rid,
+      'perm' => implode(', ', $admin_user_perms),
+    );
+    db_insert('permission')
+      ->fields($fields)
+      ->execute();
     drupal_set_message(t("Set sensible defaults for %role role.", array('%role' => 'administrator')));
   }
 
@@ -54,8 +57,14 @@ function _opensourcery_install_set_permissions() {
     'revert revisions',
     'view revisions',
   );
-  if (!db_result(db_query("SELECT rid FROM {permission} LEFT JOIN {role} USING (rid) WHERE name = '%s'", array(':role_name' => 'site editor')))) {
-    db_query("INSERT INTO {permission} (rid, perm) VALUES (%d, '%s')", array(':rid' => $site_editor_rid, implode(', ', $site_editor_user_perms)));
+  if (!db_query("SELECT rid FROM {permission} LEFT JOIN {role} USING (rid) WHERE name = '%s'", array(':role_name' => 'site editor'))->fetchField()) {
+    $fields = array(
+      'rid' => $site_editor_rid,
+      'perm' => $site_editor_user_perms,
+    );
+    db_insert('permission')
+      ->fields($fields)
+      ->execute();
     drupal_set_message(t("Set sensible defaults for %role role.", array('%role' => 'site editor')));
   }
 }
