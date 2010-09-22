@@ -12,19 +12,15 @@ projects[os_base][subdir] = "features"
 projects[os_base][type] = "module"
 projects[os_base][download][type] = "git"
 projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
-projects[os_base][download][tag] = "DRUPAL-6--1-0-ALPHA1"
+projects[os_base][download][branch] = "DRUPAL-7"
 
 ; Contextual admin (required by base feature).
-projects[context_admin][subdir] = "contrib"
-projects[context_admin][version] = "1.0-beta11"
-
-; CCK
-;projects[cck][subdir] = "contrib"
-;projects[cck][version] = "2.8"
+;projects[context_admin][subdir] = "contrib"
+;projects[context_admin][version] = "1.0-beta11"
 
 ; Views
 ;projects[views][subdir] = "contrib"
-;projects[views][version] = "2.11"
+;projects[views][version] = "3.x-dev"
 
 ; Semantic Views
 ; projects[semanticviews][subdir] = "contrib"
@@ -32,25 +28,13 @@ projects[context_admin][version] = "1.0-beta11"
 ;; http://drupal.org/node/832048#comment-3441744
 ;projects[semanticviews][patch][] = "http://drupal.org/files/issues/semanticviews.832048.patch"
 
-; SSL handling
-;projects[securepages][subdir] = "contrib"
-;projects[securepages][version] = "1.8"
-
 ; Mollom
 ;projects[mollom][subdir] = "contrib"
-;projects[mollom][version] = "1.13"
+;projects[mollom][version] = "1.0-alpha2"
 
 ; Google analytics
 ;projects[google_analytics][subdir] = "contrib"
-;projects[google_analytics][version] = "2.2"
-
-; jQuery UI
-;projects[jquery_ui][subdir] = "contrib"
-;projects[jquery_ui][version] = "1.4"
-;libraries[jquery_ui][download][type] = "get"
-;libraries[jquery_ui][download][url] = "http://jquery-ui.googlecode.com/files/jquery.ui-1.6.zip"
-;libraries[jquery_ui][directory_name] = "jquery.ui"
-;libraries[jquery_ui][destination] = "modules/contrib/jquery_ui"
+;projects[google_analytics][version] = "1.x-dev"
 
 ; Project-specific modules, and overrides.
 
@@ -59,5 +43,5 @@ projects[context_admin][version] = "1.0-beta11"
 projects[doune][type] = theme
 projects[doune][download][type] = "git"
 projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
-;projects[doune][download][tag] = "6.x-0.1"
+projects[doune][download][branch] = "DRUPAL-7--1"
 
