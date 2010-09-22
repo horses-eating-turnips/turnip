@@ -1,11 +1,6 @@
 <?php
 // $Id: opensourcery_install.profile 880 2009-09-04 00:10:54Z jhedstrom $
 
-if (!function_exists('profiler_v2')) {
-  require 'libraries/profiler/profiler.inc';
-}
-profiler_v2('opensourcery_install');
-
 /**
  * Implementation of hook_install().
  */
@@ -28,30 +23,6 @@ function opensourcery_install_install() {
   // Cleanup after pathauto.
   variable_del('pathauto_node_page_pattern');
   variable_del('pathauto_node_story_pattern');
-}
-
-/**
- * Set site editor and administrator default input format to full HTML.
- */
-function _opensourcery_install_better_formats() {
-  $roles = array();
-  foreach (user_roles() as $rid => $name) {
-    if (in_array($name, array('site editor', 'administrator'))) {
-      $roles[] = $rid;
-      // Float admin to top, site editor 2nd highest.
-      $weight = -2 * $rid;
-      db_query("UPDATE {better_formats_defaults} SET format = %d, weight = %d WHERE rid = %d AND type = '%s'", array(':format' => 2, ':weight' => $weight, ':rid' => $rid, ':type' => 'node'));
-      db_query("UPDATE {better_formats_defaults} SET format = %d, weight = %d WHERE rid = %d AND type = '%s'", array(':format' => 2, ':weight' => $weight, ':rid' => $rid, ':type' => 'comment'));
-    }
-  }
-  $current = db_result(db_query("SELECT roles FROM {filter_formats} WHERE format = 2"));
-  if ($current) {
-    $current = explode(',', $roles);
-    $roles = array_merge($current, $roles);
-  }
-  $roles = ','. implode(',', $roles) .',';
-  // Allow site editors and administrators to use HTML;
-  db_query("UPDATE {filter_formats} SET roles = '%s' WHERE format = 2", array(':roles' => $roles));
 }
 
 /**
