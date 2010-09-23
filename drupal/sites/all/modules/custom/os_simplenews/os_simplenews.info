@@ -1,6 +1,0 @@
-; $Id: os_simplenews.info 5 2009-06-10 01:11:31Z jhedstrom $
-name = OpenSourcery Simplenews
-description = OpenSourcery Simplenews customizations.
-core = 6.x
-dependencies[] = simplenews
-package = Mail

@@ -1,9 +1,0 @@
-; $Id: os_custom.info 833 2009-06-16 22:51:45Z jhedstrom $
-name = OpenSourcery Customization
-description = "Customization code. Includes OpenSourcery testing suite"
-package ="OpenSourcery"
-core = 6.x
-dependencies[] = better_formats
-dependencies[] = pathauto
-dependencies[] = role_delegation
-dependencies[] = wysiwyg

@@ -33,9 +33,6 @@ dependencies[] = less
 dependencies[] = doune_theme_settings
 dependencies[] = os_admin
 
-; Custom modules.
-dependencies[] = os_custom
-
 ; Development modules.
 dependencies[] = admin_menu
 dependencies[] = devel
