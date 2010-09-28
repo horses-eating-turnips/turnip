@@ -16,6 +16,8 @@ projects[ctools][version] = "1.7"
 
 projects[features][subdir] = "contrib"
 projects[features][version] = "1.0"
+; http://drupal.org/node/860974#comment-3505484
+projects[features][patch][] = "http://drupal.org/files/issues/features.860974.patch"
 
 projects[less][subdir] = "contrib"
 projects[less][version] = "2.2"
