@@ -4,10 +4,98 @@
 
 base = opensourcery_install
 
-name = Project
-description = Changeme
+name = OpenSourcery demo server
+description = Installation for demonstrating OpenSourcery features.
+theme = doune
 
 ; Modules
+dependencies[] = webform
 
 ; Features
 dependencies[] = os_base
+dependencies[] = os_blog
+dependencies[] = os_event
+dependencies[] = os_slideshow
+
+; Create a super user
+users[super][uid] = 1
+users[super][name] = OpenSourcery Administrator
+users[super][mail] = jhedstrom@opensourcery.com
+users[super][roles] = administrator
+users[super][status] = 1
+
+; Create an admin account
+users[admin][uid] = 2
+users[admin][name] = Administrator
+users[admin][mail] = alex@opensourcery.com
+users[admin][roles] = administrator
+users[admin][status] = 1
+
+; Create a site editor
+users[site][uid] = 3
+users[site][name] = Editor
+users[site][mail] = editor@example.com
+users[site][roles] = site editor
+users[site][status] = 1
+
+; Variables
+variables[site_name] = OpenSourcery Demo Server
+variables[site_mail] = support@opensourcery.com
+variables[date_default_timezone_name] = America/Los_Angeles
+variables[date_default_timezone] = -25200
+variables[configurable_timezones] = 1
+variables[site_footer] = "&copy;@year OpenSourcery"
+variables[site_frontpage] = welcome
+
+; Add a front page
+nodes[home][type] = page
+nodes[home][title] = "Welcome"
+nodes[home][body] = "This is the OpenSourcery default Drupal installation demo server. Have a look around."
+nodes[home][uid] = 1
+nodes[home][path] = welcome
+nodes[home][menu][link_title] = Home
+nodes[home][menu][menu_name] = primary-links
+nodes[home][menu][weight] = -42
+
+; About page.
+nodes[about][type] = page
+nodes[about][title] = About OpenSourcery
+nodes[about][body] = Placeholder (Edit me!)
+nodes[about][uid] = 1
+nodes[about][menu][link_title] = About
+nodes[about][menu][menu_name] = primary-links
+nodes[about][path] = about
+
+; Contact form.
+nodes[contact][type] = webform
+nodes[contact][title] = Contact Us
+nodes[contact][uid] = 1
+nodes[contact][webform][roles][] = 1
+nodes[contact][webform][submit_limit] = -1
+nodes[contact][webform][roles][] = 2
+nodes[contact][webform][confirmation] = Thank you for contacting OpenSourcery.
+nodes[contact][webform][confirmation_format] = 1
+nodes[contact][menu][link_title] = Contact
+nodes[contact][menu][menu_name] = secondary-links
+nodes[contact][path] = contact
+nodes[contact][webform][components][1][type] = email
+nodes[contact][webform][components][1][form_key] = email
+nodes[contact][webform][components][1][name] = E-mail
+nodes[contact][webform][components][1][mandatory] = 1
+nodes[contact][webform][components][1][weight] = 1
+nodes[contact][webform][components][2][type] = textfield
+nodes[contact][webform][components][2][form_key] = name
+nodes[contact][webform][components][2][name] = Name
+nodes[contact][webform][components][2][mandatory] = 1
+nodes[contact][webform][components][2][weight] = 2
+nodes[contact][webform][components][3][type] = textarea
+nodes[contact][webform][components][3][form_key] = message
+nodes[contact][webform][components][3][name] = Message
+nodes[contact][webform][components][3][mandatory] = 1
+nodes[contact][webform][components][3][weight] = 3
+nodes[contact][webform][emails][1][email] = support@opensourcery.com
+nodes[contact][webform][emails][1][subject] = default
+nodes[contact][webform][emails][1][from_name] = default
+nodes[contact][webform][emails][1][from_address] = default
+nodes[contact][webform][emails][1][template] = default
+nodes[contact][webform][emails][1][excluded_components][] = 0
