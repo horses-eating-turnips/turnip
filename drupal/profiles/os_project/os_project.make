@@ -1,6 +1,7 @@
 ; This is the actual project make file that should be edited for a
 ; given project. This text should be replaced with a brief description
 ; of the project.
+api = 2
 
 includes[core] = "../opensourcery_install/opensourcery_base.make"
 
