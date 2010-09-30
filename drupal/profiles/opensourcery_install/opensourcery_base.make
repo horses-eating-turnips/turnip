@@ -1,5 +1,6 @@
 ; OpenSourcery base make file
 core = "6.x"
+api = 2
 
 ; Contrib modules
 projects[admin][subdir] = "contrib"
