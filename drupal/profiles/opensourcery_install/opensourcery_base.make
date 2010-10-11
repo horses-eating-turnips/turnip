@@ -17,17 +17,17 @@ projects[ctools][version] = "1.7"
 
 projects[features][subdir] = "contrib"
 projects[features][version] = "1.0"
-; http://drupal.org/node/860974#comment-3505484
-projects[features][patch][] = "http://drupal.org/files/issues/features.860974.patch"
+; http://drupal.org/node/910604#comment-3513512
+projects[features][patch][] = "http://drupal.org/files/issues/features.910604.patch"
 
 projects[less][subdir] = "contrib"
 projects[less][version] = "2.2"
 
 projects[path_redirect][subdir] = "contrib"
-projects[path_redirect][version] = "1.0-beta7"
+projects[path_redirect][version] = "1.0-rc1"
 
 projects[pathauto][subdir] = "contrib"
-projects[pathauto][version] = "1.4"
+projects[pathauto][version] = "1.5"
 
 projects[role_delegation][subdir] = "contrib"
 projects[role_delegation][version] = "1.3"
@@ -36,7 +36,7 @@ projects[strongarm][subdir] = "contrib"
 projects[strongarm][version] = "2.0"
 
 projects[token][subdir] = "contrib"
-projects[token][version] = "1.14"
+projects[token][version] = "1.15"
 
 ; This version works with php 5.3
 projects[vertical_tabs][subdir] = "contrib"
