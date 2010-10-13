@@ -2,10 +2,13 @@
 ; given project. This text should be replaced with a brief description
 ; of the project.
 
-includes[core] = "../opensourcery_install/opensourcery_base.make"
+; Base installation profile
+projects[opensourcery_install][type] = "profile"
+projects[opensourcery_install][download][type] = "git"
+projects[opensourcery_install][download][url] = "git@github.com:opensourcery/opensourcery_install.git"
+projects[opensourcery_install][download][branch] = "DRUPAL-7"
+;projects[opensourcery_install][download][tag] = "DRUPAL-7--1.0"
 
-; Core image handling make file.
-; includes[image] = "../opensourcery_install/opensourcery_image.make"
 
 ; OpenSourcery base feature.
 projects[os_base][subdir] = "stock"
