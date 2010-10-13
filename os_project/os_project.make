@@ -3,21 +3,19 @@
 ; of the project.
 api = 2
 
-includes[core] = "../opensourcery_install/opensourcery_base.make"
-
-; Core image handling make file.
-; includes[image] = "../opensourcery_install/opensourcery_image.make"
+; Base installation profile
+projects[opensourcery_install][type] = "profile"
+projects[opensourcery_install][download][type] = "git"
+projects[opensourcery_install][download][url] = "git@github.com:opensourcery/opensourcery_install.git"
+projects[opensourcery_install][download][branch] = "DRUPAL-6"
+;projects[opensourcery_install][download][tag] = "DRUPAL-6--1.0"
 
 ; OpenSourcery base feature.
-projects[os_base][subdir] = "features"
+projects[os_base][subdir] = "stock"
 projects[os_base][type] = "module"
 projects[os_base][download][type] = "git"
 projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
 projects[os_base][download][tag] = "DRUPAL-6--1-0-ALPHA1"
-
-; Contextual admin (required by base feature).
-projects[context_admin][subdir] = "contrib"
-projects[context_admin][version] = "1.0-beta11"
 
 ; CCK
 ;projects[cck][subdir] = "contrib"
@@ -57,7 +55,8 @@ projects[context_admin][version] = "1.0-beta11"
 
 
 ; Base theme: Create and specify a tag at the *end* of the project.
-projects[doune][type] = theme
+projects[doune][type] = "theme"
+projects[doune][subdir] = "stock"
 projects[doune][download][type] = "git"
 projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
 ;projects[doune][download][tag] = "6.x-0.1"
