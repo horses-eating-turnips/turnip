@@ -24,15 +24,24 @@ rm -rf drupal
 rm -rf $PROFILE/modules/contrib
 rm -rf $PROFILE/modules/stock
 rm -rf $PROFILE/themes/stock
+rm -rf $PROFILE/libraries
+
+# Link profiler into the custom profile library.
+mkdir $PROFILE/libraries
+cd $PROFILE/libraries
+ln -s ../../drupal/profiles/opensourcery_install/libraries/profiler profiler
+cd -
+
+# Build the drupal directory from the make file.
 echo -e "$MAKE" | drush make --yes --contrib-destination=profiles/$PROFILE - drupal
 
-# settings and files
+# Link settings.php and files into sites/default
 cd drupal/sites/default
 ln -s ../../../shared/settings.php settings.php
 ln -s ../../../shared/files files
-cd -ls 
+cd - 
 
-# os_project directory
+# Clean-up the profile directory, and sym-link it into the drupal directory.
 rsync -az drupal/profiles/$PROFILE/ $PROFILE/
 rm -rf drupal/profiles/$PROFILE
 cd drupal/profiles
