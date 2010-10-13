@@ -8,7 +8,7 @@ includes[core] = "../opensourcery_install/opensourcery_base.make"
 ; includes[image] = "../opensourcery_install/opensourcery_image.make"
 
 ; OpenSourcery base feature.
-projects[os_base][subdir] = "features"
+projects[os_base][subdir] = "stock"
 projects[os_base][type] = "module"
 projects[os_base][download][type] = "git"
 projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
@@ -40,6 +40,7 @@ projects[os_base][download][branch] = "DRUPAL-7"
 
 
 ; Base theme: Create and specify a tag at the *end* of the project.
+projects[doune][subdir] = "stock"
 projects[doune][type] = theme
 projects[doune][download][type] = "git"
 projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
