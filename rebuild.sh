@@ -45,5 +45,5 @@ cd -
 # Modules must be in the profile being installed, so move them over
 # from opensourcery_install.
 rsync -az drupal/profiles/opensourcery_install/modules/ drupal/profiles/$PROFILE/modules/
-rsync -az drupal/profiles/opensourcery_install/libraries/ drupal/profiles/$PROFILES/libraries/
-rsync -az drupal/profiles/opensourcery_install/themes/ drupal/profiles/$PROFILES/themes/
+rsync -az drupal/profiles/opensourcery_install/libraries/ drupal/profiles/$PROFILE/libraries/
+rsync -az drupal/profiles/opensourcery_install/themes/ drupal/profiles/$PROFILE/themes/
