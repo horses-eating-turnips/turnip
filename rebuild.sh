@@ -26,12 +26,6 @@ rm -rf $PROFILE/modules/stock
 rm -rf $PROFILE/themes/stock
 rm -rf $PROFILE/libraries
 
-# Link profiler into the custom profile library.
-mkdir $PROFILE/libraries
-cd $PROFILE/libraries
-ln -s ../../drupal/profiles/opensourcery_install/libraries/profiler profiler
-cd -
-
 # Build the drupal directory from the make file.
 echo -e "$MAKE" | drush make --yes --contrib-destination=profiles/$PROFILE - drupal
 
@@ -47,3 +41,9 @@ rm -rf drupal/profiles/$PROFILE
 cd drupal/profiles
 ln -s ../../$PROFILE $PROFILE
 cd -
+
+# Modules must be in the profile being installed, so move them over
+# from opensourcery_install.
+rsync -az drupal/profiles/opensourcery_install/modules/ drupal/profiles/$PROFILE/modules/
+rsync -az drupal/profiles/opensourcery_install/libraries/ drupal/profiles/$PROFILES/libraries/
+rsync -az drupal/profiles/opensourcery_install/themes/ drupal/profiles/$PROFILES/themes/
