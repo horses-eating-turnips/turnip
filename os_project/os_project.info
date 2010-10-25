@@ -10,4 +10,5 @@ description = Changeme
 ; Modules
 
 ; Features
+dependencies[] = os_admin
 dependencies[] = os_base
