@@ -10,6 +10,13 @@ projects[opensourcery_install][download][url] = "git@github.com:opensourcery/ope
 projects[opensourcery_install][download][branch] = "DRUPAL-6"
 ;projects[opensourcery_install][download][tag] = "DRUPAL-6--1.0"
 
+; OpenSourcery administration feature
+projects[os_admin][subdir] = "stock"
+projects[os_admin][type] = "module"
+projects[os_admin][download][type] = "git"
+projects[os_admin][download][url] = "git://github.com/opensourcery/os_admin.git"
+projects[os_admin][download][tag] = "DRUPAL-6--1-0-ALPHA2"
+
 ; OpenSourcery base feature.
 projects[os_base][subdir] = "stock"
 projects[os_base][type] = "module"
