@@ -7,7 +7,6 @@ $PASS_GPG = "../../conf/pass.yml.gpg";
 
 $Y = PasswordParser::parseEncrypted($PASS_GPG);
 
-$user = $$Y{'test server'}{'webhost'}{'user'};
 $host = $$Y{'test server'}{'webhost'}{'hostname'};
 $dbuser = $$Y{'test server'}{'dbhost'}{'user'};
 $dbpass = $$Y{'test server'}{'dbhost'}{'pass'};
@@ -16,5 +15,5 @@ $dbname = $$Y{'test server'}{'dbhost'}{'dbname'};
 
 print "Downloading $dbname from $dbhost....\n\n";
 
-`ssh $user\@$host "mysqldump -u $dbuser -p'$dbpass' -h $dbhost $dbname | gzip" > test_current.sql.gz`;
+`ssh \$USER\@$host "mysqldump -u $dbuser -p$dbpass -h $dbhost $dbname | gzip" > test_current.sql.gz`;
 
