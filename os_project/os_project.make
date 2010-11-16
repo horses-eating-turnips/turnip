@@ -22,7 +22,8 @@ projects[os_base][subdir] = "stock"
 projects[os_base][type] = "module"
 projects[os_base][download][type] = "git"
 projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
-projects[os_base][download][tag] = "DRUPAL-6--1-0-ALPHA1"
+; Tag new relase at end of project
+; projects[os_base][download][tag] = "DRUPAL-6--1-0-ALPHA1"
 
 ; CCK
 ;projects[cck][subdir] = "contrib"
