@@ -59,6 +59,15 @@ projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
 ;libraries[jquery_ui][directory_name] = "jquery.ui"
 ;libraries[jquery_ui][destination] = "modules/contrib/jquery_ui"
 
+; Apache Solr Search
+;projects[apachesolr][subdir] = "contrib"
+;projects[apachesolr][version] = "1.2"
+;libraries[SolrPHPClient][download][type] = "svn"
+;libraries[SolrPHPClient][download][url] = "http://solr-php-client.googlecode.com/svn/trunk/"
+;libraries[SolrPHPClient][download][revision] = "22"
+;libraries[SolrPHPClient][destination] = "modules/contrib/apachesolr/"
+;libraries[SolrPHPClient][directory_name] = "SolrPhpClient"
+
 ; Project-specific modules, and overrides.
 
 
