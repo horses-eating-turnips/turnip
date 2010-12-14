@@ -15,14 +15,15 @@ projects[os_admin][subdir] = "stock"
 projects[os_admin][type] = "module"
 projects[os_admin][download][type] = "git"
 projects[os_admin][download][url] = "git://github.com/opensourcery/os_admin.git"
-projects[os_admin][download][tag] = "DRUPAL-6--1-0-ALPHA2"
+; Tag new release at end of project
+; projects[os_admin][download][tag] = "DRUPAL-6--1-0-ALPHA2"
 
 ; OpenSourcery base feature.
 projects[os_base][subdir] = "stock"
 projects[os_base][type] = "module"
 projects[os_base][download][type] = "git"
 projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
-; Tag new relase at end of project
+; Tag new release at end of project
 ; projects[os_base][download][tag] = "DRUPAL-6--1-0-ALPHA1"
 
 ; CCK
