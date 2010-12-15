@@ -30,10 +30,10 @@ rm -rf $PROFILE/libraries
 echo -e "$MAKE" | drush make --yes --contrib-destination=profiles/$PROFILE - drupal
 
 # Link settings.php and files into sites/default
-cd drupal/sites/default
+cd drupal/sites/default || { echo "Aborting $0"; exit 1; }
 ln -s ../../../shared/settings.php settings.php
 ln -s ../../../shared/files files
-cd - 
+cd -
 
 # Clean-up the profile directory, and sym-link it into the drupal directory.
 rsync -az drupal/profiles/$PROFILE/ $PROFILE/
