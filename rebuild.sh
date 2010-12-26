@@ -15,7 +15,7 @@ echo "Building PROJECT..."
 MAKE=$(cat $PROFILE/$PROFILE.make - <<EOF
 api = "2"\n
 core = "6.x"\n
-projects[drupal][version] = "6.19"\n
+projects[drupal][version] = "6.20"\n
 EOF
 )
 
