@@ -32,7 +32,7 @@ projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
 
 ; Views
 ;projects[views][subdir] = "contrib"
-;projects[views][version] = "2.11"
+;projects[views][version] = "2.12"
 
 ; Semantic Views
 ; projects[semanticviews][subdir] = "contrib"
