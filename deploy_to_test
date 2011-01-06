@@ -36,7 +36,7 @@ TESTINGLEVEL=6
 TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
 
 # Values below here shouldn't need to be modified for standard OS Drupal deployments
-rsync -avzC --exclude=sites/default/files --exclude=sites/default/settings.php $BRANCH/drupal/ /tmp/$TIMESTAMP/
+rsync -avzC --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup $BRANCH/drupal/ /tmp/$TIMESTAMP/
 
 # Create links to settings and files.
 # NOTE: This is done locally, prior to upload, even though locally
