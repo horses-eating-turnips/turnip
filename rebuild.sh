@@ -16,7 +16,7 @@ MAKE=$(cat $PROFILE/$PROFILE.make - <<EOF
 api = "2"\n
 core = "7.x"\n
 projects[drupal][type] = "core"
-projects[drupal][version] = "7.0-beta1"\n
+projects[drupal][version] = "7.0"\n
 EOF
 )
 
