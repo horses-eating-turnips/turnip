@@ -8,8 +8,14 @@ fi
 shopt -s expand_aliases
 
 options="--root=../drupal --database=${2:-default}"
-
-dbname=`drush $options sql-connect | awk '{print $NF}'`
+sqlconnect=`drush $options sql-connect`
+if (echo "$sqlconnect" | grep "database" >/dev/null); then
+  # New form (drush 4.x) returns a verbose connect command
+  dbname=`echo -n $sqlconnect | sed -e 's/.*--database=\([^ ]*\)[ ]\?.*/\1/'`
+else
+  # Old form returns minimalist connect string with database name as last parameter
+  dbname=`drush $options sql-connect | awk '{print $NF}'`
+fi
 
 echo "dropping database $dbname..."
 drush $options sql-query "drop database $dbname; create database $dbname"
