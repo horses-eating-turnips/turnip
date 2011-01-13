@@ -27,7 +27,7 @@ rm -rf $PROFILE/themes/stock
 rm -rf $PROFILE/libraries
 
 # Build the drupal directory from the make file.
-echo -e "$MAKE" | drush make --yes --contrib-destination=profiles/$PROFILE - drupal
+echo -e "$MAKE" | drush make $1 --yes --contrib-destination=profiles/$PROFILE - drupal
 
 # Link settings.php and files into sites/default
 cd drupal/sites/default || { echo "Aborting $0"; exit 1; }
