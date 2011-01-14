@@ -8,15 +8,16 @@ projects[opensourcery_install][type] = "profile"
 projects[opensourcery_install][download][type] = "git"
 projects[opensourcery_install][download][url] = "git@github.com:opensourcery/opensourcery_install.git"
 projects[opensourcery_install][download][branch] = "DRUPAL-7"
-;projects[opensourcery_install][download][tag] = "DRUPAL-7--1.0"
+;projects[opensourcery_install][download][tag] = "DRUPAL-7--1-0"
 
 ; OpenSourcery administration feature
 projects[os_admin][subdir] = "stock"
 projects[os_admin][type] = "module"
 projects[os_admin][download][type] = "git"
 projects[os_admin][download][url] = "git://github.com/opensourcery/os_admin.git"
+projects[os_admin][download][branch] = "DRUPAL-7--1"
 ; Tag new release at end of project
-; projects[os_admin][download][tag] = "DRUPAL-6--1-0-ALPHA2"
+; projects[os_admin][download][tag] = "DRUPAL-7--1-0-ALPHA2"
 
 ; OpenSourcery base feature.
 projects[os_base][subdir] = "stock"
@@ -25,7 +26,7 @@ projects[os_base][download][type] = "git"
 projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
 projects[os_base][download][branch] = "DRUPAL-7--1"
 ; Tag new release at end of project
-; projects[os_base][download][tag] = "DRUPAL-7--xxxxx"
+; projects[os_base][download][tag] = "DRUPAL-7--1-0-ALPHA1"
 
 ; CCK
 ;projects[cck][subdir] = "contrib"
@@ -33,7 +34,7 @@ projects[os_base][download][branch] = "DRUPAL-7--1"
 
 ; Views
 ;projects[views][subdir] = "contrib"
-;projects[views][version] = "2.12"
+;projects[views][version] = "3.0-alpha1"
 
 ; Semantic Views
 ; projects[semanticviews][subdir] = "contrib"
@@ -67,4 +68,6 @@ projects[doune][subdir] = "stock"
 projects[doune][download][type] = "git"
 projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
 projects[doune][download][branch] = "DRUPAL-7--1"
+; Tag new release at end of project
+; projects[doune][download][tag] = "DRUPAL-7--1-0"
 
