@@ -23,7 +23,7 @@ function os_project_install() {
  * Set as the default install profile, remove default and OpenSourcery.
  */
 function system_form_install_select_profile_form_alter(&$form, $form_state) {
-  unset($form['profile']['Drupal'], $form['profile']['OpenSourcery']);
+  unset($form['profile']['Minimal'], $form['profile']['Standard'], $form['profile']['OpenSourcery']);
   foreach($form['profile'] as $key => $element) {
     $form['profile'][$key]['#value'] = 'os_project';
   }
