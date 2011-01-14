@@ -83,6 +83,7 @@ function os_project_install() {
       'modified' => 1,
       'locked' => 0,
     ),
+  );
 
   foreach ($types as $type) {
     $type = node_type_set_defaults($type);
