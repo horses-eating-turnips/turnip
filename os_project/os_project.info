@@ -4,10 +4,45 @@
 
 base = opensourcery_install
 
-name = Project
+name = PROJECTNAME
+distribution_name = PROJECTNAME
 description = Changeme
+files[] = os_project.profile
+core = 7.x
 
-; Modules
+; Core
+dependencies[] = block
+dependencies[] = color
+dependencies[] = comment
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = taxonomy
+dependencies[] = dblog
+dependencies[] = search
+dependencies[] = shortcut
+dependencies[] = toolbar
+dependencies[] = overlay
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = rdf
+
+; Contrib
+dependencies[] = advanced_help
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = pathauto
+dependencies[] = path_redirect
+dependencies[] = role_delegation
+dependencies[] = token
+dependencies[] = strongarm
+dependencies[] = wysiwyg
 
 ; Features
 dependencies[] = os_admin
