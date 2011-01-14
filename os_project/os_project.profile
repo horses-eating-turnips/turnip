@@ -7,20 +7,7 @@
  */
 
 /**
- * Implementation of hook_install().
- */
-/* -- Delete this line if you want to use this function
-function os_project_install() {
-  // Run base profile's hook first.
-  require_once './profiles/opensourcery_install/opensourcery_install.profile';
-  opensourcery_install_install();
-
-  // Do any post-installation tweaks or clean-up here.
-}
-// */
-
-/**
- * Set as the default install profile, remove default and OpenSourcery.
+ * Set us as the default install profile, remove defaults and OpenSourcery.
  */
 function system_form_install_select_profile_form_alter(&$form, $form_state) {
   unset($form['profile']['Minimal'], $form['profile']['Standard'], $form['profile']['OpenSourcery']);
