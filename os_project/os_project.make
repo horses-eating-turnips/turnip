@@ -74,7 +74,6 @@ projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
 
 ; Base theme: Create and specify a tag at the *end* of the project.
 projects[doune][type] = "theme"
-projects[doune][subdir] = "stock"
 projects[doune][download][type] = "git"
 projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
 ;projects[doune][download][tag] = "6.x-0.1"
