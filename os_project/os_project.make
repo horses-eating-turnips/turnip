@@ -50,7 +50,7 @@ projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
 
 ; Google analytics
 ;projects[google_analytics][subdir] = "contrib"
-;projects[google_analytics][version] = "2.2"
+;projects[google_analytics][version] = "3.1"
 
 ; jQuery UI
 ;projects[jquery_ui][subdir] = "contrib"
