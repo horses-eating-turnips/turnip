@@ -48,7 +48,7 @@ projects[os_base][download][branch] = "DRUPAL-7--1"
 
 ; Google analytics
 ;projects[google_analytics][subdir] = "contrib"
-;projects[google_analytics][version] = "1.x-dev"
+;projects[google_analytics][version] = "1.0"
 
 ; Apache Solr Search
 ;projects[apachesolr][subdir] = "contrib"
