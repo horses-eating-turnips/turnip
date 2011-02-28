@@ -10,44 +10,47 @@
 # host. Several things still need to be done manually the first time
 # around.
 
-# Change @HOST accordingly, e.g. project_name.test.opensourcery.com
+# Deploy to Canvas Dreams
 USER=
 HOST=
-DOCUMENTROOT=/home/$USER
-
-# Branch to deploy from--CURRENTLY UNUSED
-BRANCH=.
+INSTALLROOT=/home/$USER/os_app
+DOCUMENTROOT=/home/$USER/public_html
 
 ##### Things below here generally won't need to be changed #####
+
+# Initial run? Set up some stuff.
+if [[ "$1" = "--init" ]]; then
+  ssh $USER@$HOST mkdir -p $INSTALLROOT/shared/files
+  scp ./drupal/sites/default/default.settings.php $USER@$HOST:$INSTALLROOT/shared/settings.php
+  ssh $USER@HOST chmod 400 $INSTALLROOT/shared/settings.php
+  # @todo: Archive existing "public_html" and create initial dummy symlink
+fi
 
 TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
 
 # Values below here shouldn't need to be modified for standard OS Drupal deployments
 
-# grab everything from git into /tmp/$TIMESTAMP
 mkdir /tmp/$TIMESTAMP
-mkdir /tmp/"$TIMESTAMP"_tmp
-git archive --format=tar HEAD ./drupal/ | (cd /tmp/"$TIMESTAMP"_tmp && tar xf -)
-rsync -azC /tmp/"$TIMESTAMP"_tmp/drupal/ /tmp/$TIMESTAMP/
-rm -rf /tmp/"$TIMESTAMP"_tmp
 
-# This script only does re-deployment, so remove files directory
+# Add -L to copy symlinks' referent files, so that we'll bring along our install profile
+rsync -LavzC --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup ./drupal/ /tmp/$TIMESTAMP/
+
+# We don't automate deploying files.
 rm -Rf /tmp/$TIMESTAMP/sites/default/files
 
-# Create links to settings and files.
-# NOTE: This is done locally, prior to upload, even though locally
-# they are broken links.
-ln -s $DOCUMENTROOT/shared/files /tmp/$TIMESTAMP/sites/default/files
-ln -s $DOCUMENTROOT/shared/settings.php /tmp/$TIMESTAMP/sites/default/settings.php
+# Create links to settings and files. This is done locally, prior to upload,
+# even though locally they are broken links.
+ln -s $INSTALLROOT/shared/files /tmp/$TIMESTAMP/sites/default/files
+ln -s $INSTALLROOT/shared/settings.php /tmp/$TIMESTAMP/sites/default/settings.php
 
-ssh $USER@$HOST cp -Rp $DOCUMENTROOT/public_html/ $DOCUMENTROOT/releases/$TIMESTAMP
-rsync -avzC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$DOCUMENTROOT/releases/$TIMESTAMP/
+ssh $USER@$HOST cp -Rp $DOCUMENTROOT/ $INSTALLROOT/releases/$TIMESTAMP
+rsync -avzC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAMP/
 
-# Change group to www-data
-#ssh $USER@$HOST chgrp -R www-data $DOCUMENTROOT
+# Change group to PHP's user
+#ssh $USER@$HOST chgrp -R www-data $INSTALLROOT
 
-# remove old release link and link the new version
-ssh $USER@$HOST "rm $DOCUMENTROOT/public_html; ln -s $DOCUMENTROOT/releases/$TIMESTAMP $DOCUMENTROOT/public_html"
+# Remove old release link and link the new version
+ssh $USER@$HOST "rm $DOCUMENTROOT; ln -s $INSTALLROOT/releases/$TIMESTAMP $DOCUMENTROOT"
 
-# Cleanup local machine
+# Clean up local machine
 rm -Rf /tmp/$TIMESTAMP
