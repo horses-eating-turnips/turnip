@@ -64,7 +64,6 @@ projects[os_base][download][branch] = "DRUPAL-7--1"
 
 ; Base theme: Create and specify a tag at the *end* of the project.
 projects[doune][type] = "theme"
-projects[doune][subdir] = "stock"
 projects[doune][download][type] = "git"
 projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
 projects[doune][download][branch] = "DRUPAL-7--2"
