@@ -47,6 +47,7 @@ projects[os_base][download][branch] = "DRUPAL-7--1"
 ;projects[google_analytics][version] = "1.0"
 
 ; Apache Solr Search
+; TODO potentially switch from this module to search_api module.
 ;projects[apachesolr][subdir] = "contrib"
 ;projects[apachesolr][version] = "1.2"
 ;libraries[SolrPHPClient][download][type] = "svn"
