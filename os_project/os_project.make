@@ -28,10 +28,6 @@ projects[os_base][download][branch] = "DRUPAL-7--1"
 ; Tag new release at end of project
 ; projects[os_base][download][tag] = "DRUPAL-7--1-0-ALPHA1"
 
-; CCK
-;projects[cck][subdir] = "contrib"
-;projects[cck][version] = "2.8"
-
 ; Views
 ;projects[views][subdir] = "contrib"
 ;projects[views][version] = "3.0-alpha1"
