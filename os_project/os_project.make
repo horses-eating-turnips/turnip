@@ -7,8 +7,8 @@ api = 2
 projects[opensourcery_install][type] = "profile"
 projects[opensourcery_install][download][type] = "git"
 projects[opensourcery_install][download][url] = "git@github.com:opensourcery/opensourcery_install.git"
-projects[opensourcery_install][download][branch] = "DRUPAL-7"
-;projects[opensourcery_install][download][tag] = "DRUPAL-7--1-0"
+projects[opensourcery_install][download][branch] = "7.x"
+;projects[opensourcery_install][download][tag] = "7.x-1.0"
 
 ; OpenSourcery administration feature
 projects[os_admin][subdir] = "stock"
