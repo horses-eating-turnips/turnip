@@ -45,7 +45,7 @@ ssh $USER@$HOST sudo chown -R $USER.$USER $DOCUMENTROOT
 # Values below here shouldn't need to be modified for standard OS Drupal deployments
 
 # Add -L to copy symlinks' referent files, so that we'll bring along our install profile
-rsync -LavzC --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup $BRANCH/drupal/ /tmp/$TIMESTAMP/
+rsync -LavzC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup $BRANCH/drupal/ /tmp/$TIMESTAMP/
 
 # Create links to settings and files.
 # NOTE: This is done locally, prior to upload, even though locally
