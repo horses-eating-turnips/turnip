@@ -39,8 +39,7 @@ TESTINGLEVEL=6
 
 TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
 
-# Okay, we can't execute chmod under sudo yet, but we can do chown, so... heh heh heh...
-# This hack lets us rsync everything up by *temporarily* changing the owner of everything.
+# A bit hacky: rsync everything up by *temporarily* making us the owner of everything.
 ssh $USER@$HOST sudo chown -R $USER.$USER $DOCUMENTROOT
 
 # Values below here shouldn't need to be modified for standard OS Drupal deployments
