@@ -5,7 +5,6 @@ base = opensourcery_install
 name = PROJECTNAME
 distribution_name = PROJECTNAME
 description = Changeme
-files[] = os_project.profile
 core = 7.x
 
 ; Core
