@@ -1,5 +1,3 @@
-; $Id$
-
 ; Project-specific installation profile
 
 base = opensourcery_install
