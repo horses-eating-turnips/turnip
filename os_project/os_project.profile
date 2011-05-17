@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Rename and replace all instances of 'os_project' with 'PROJECTNAME'.
+ * Main installation logic for PROJECTNAME.
  */
 if (!function_exists('profiler_v2')) {
   require 'libraries/profiler/profiler.inc';

@@ -1,9 +1,9 @@
-; Project-specific installation profile
+; PROJECTNAME installation profile
 
 base = opensourcery_install
 
-name = Project
-description = Changeme
+name = PROJECTNAME
+description = DESCRIPTION
 
 ; Modules
 

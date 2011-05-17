@@ -1,0 +1,27 @@
+#!/bin/bash
+if [ -z "$1" -o -z "$2" -o -z "$3" ]; then
+  echo "Usage: $0 <machine_name> <Project Name> <Project Description>"
+  echo "Ex: $0 client_xyz \"Web app ABC\" \"Client XYZ's ABC app enables users to browse a database of records.\""
+  exit 1
+fi
+
+if [ ! -d os_project ]; then
+  echo "Error: Cannot find os_project directory"
+  exit 2
+fi
+
+NEW="$1"
+PROJECTNAME="$2"
+DESCRIPTION="$3"
+FILES="os_project.info os_project.make os_project.profile"
+
+mkdir $NEW
+cp os_project/os_project.* $NEW/
+cd $NEW
+sed -i -e "s/os_project/$NEW/" $FILES
+sed -i -e "s/PROJECTNAME/$PROJECTNAME/" $FILES
+sed -i -e "s/DESCRIPTION/$DESCRIPTION/" $FILES
+mv os_project.info    $NEW.info
+mv os_project.make    $NEW.make
+mv os_project.profile $NEW.profile
+cd ..
