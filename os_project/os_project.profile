@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Rename and replace all instances of 'os_project' with 'PROJECTNAME'.
+ * Supporting functions for PROJECTNAME installer.
  */
 
 /**

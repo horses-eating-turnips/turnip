@@ -4,7 +4,7 @@ base = opensourcery_install
 
 name = PROJECTNAME
 distribution_name = PROJECTNAME
-description = Changeme
+description = DESCRIPTION
 core = 7.x
 
 ; Core
