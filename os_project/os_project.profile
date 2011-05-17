@@ -1,6 +1,4 @@
 <?php
-// $Id$
-
 /**
  * @file
  * Rename and replace all instances of 'os_project' with 'PROJECTNAME'.

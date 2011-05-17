@@ -1,5 +1,4 @@
 <?php
-// $Id: standard.install,v 1.30 2011/01/04 18:24:24 webchick Exp $
 /**
  * @file
  * Rename and replace all instances of 'os_project' with 'PROJECTNAME'.
