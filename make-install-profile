@@ -15,6 +15,9 @@ PROJECTNAME="$2"
 DESCRIPTION="$3"
 FILES="os_project.info os_project.install os_project.make os_project.profile"
 
+# rebuild script
+sed -i -e "s/PROFILE=\"os_project\"/PROFILE=\"$NEW\"/" rebuild.sh
+
 mkdir $NEW
 cp os_project/os_project.* $NEW/
 cd $NEW
