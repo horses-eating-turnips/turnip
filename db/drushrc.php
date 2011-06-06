@@ -79,7 +79,6 @@ $options['structure-tables'] = array(
     'cache_page',
     'cache_path',
     'cache_token',
-    'cache_token',
     'history',
     'sessions',
     'watchdog'
