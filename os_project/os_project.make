@@ -63,7 +63,6 @@ projects[os_base][download][branch] = "DRUPAL-7--1"
 projects[doune][type] = "theme"
 projects[doune][download][type] = "git"
 projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
-projects[doune][download][branch] = "DRUPAL-7--2"
+projects[doune][download][branch] = "7.x-2.x"
 ; Tag new release at end of project
-; projects[doune][download][tag] = "DRUPAL-7--2-0"
-
+; projects[doune][download][tag] = "7.x-2.0-alpha1"
