@@ -58,6 +58,14 @@ projects[os_base][download][branch] = "DRUPAL-7--1"
 
 ; Project-specific modules, and overrides.
 
+; Modules required by the Doune theme.
+projects[elements][subdir] = "contrib"
+projects[elements][version] = "1.2"
+
+projects[html5_tools][subdir] = "contrib"
+projects[html5_tools][type] = "module"
+projects[html5_tools][download][type] = "git"
+projects[html5_tools][download][revision] = "6fab84596aad3045126070f812b2dc3e6ce8803c"
 
 ; Base theme: Create and specify a tag at the *end* of the project.
 projects[doune][type] = "theme"
