@@ -44,6 +44,11 @@ if [ -z "$SUBDOMAIN" ]; then
   exit
 fi
 
+if [ ! -d ./drupal ]; then
+  echo "ERROR: ./drupal directory does not exist; nothing to deploy."
+  exit
+fi
+
 TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
 
 # A bit hacky: rsync everything up by *temporarily* making us the owner of everything.
