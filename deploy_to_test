@@ -37,6 +37,13 @@ TESTINGLEVEL=6
 
 ##### Things below here generally won't need to be changed #####
 
+# If SUBDOMAIN isn't set, DOCUMENTROOT would become /var/www// and we'd blow
+# away the permissions of every test host on the test server.
+if [ -z "$SUBDOMAIN" ]; then
+  echo "ERROR: You must set SUBDOMAIN (within $0) before running this script."
+  exit
+fi
+
 TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
 
 # A bit hacky: rsync everything up by *temporarily* making us the owner of everything.
