@@ -50,6 +50,12 @@ projects[os_base][download][branch] = "7.x-1.x"
 ;libraries[SolrPHPClient][destination] = "modules/contrib/apachesolr/"
 ;libraries[SolrPHPClient][directory_name] = "SolrPhpClient"
 
+; swfobject, JS library for embedding Flash content
+;libraries[swfobject][download][type] = "get"
+;libraries[swfobject][download][url] = "http://swfobject.googlecode.com/files/swfobject_2_2.zip"
+;libraries[swfobject][destination] = "libraries"
+;libraries[swfobject][directory_name] = "swfobject"
+
 ; Project-specific modules, and overrides.
 
 ; Modules required by the Doune theme.
