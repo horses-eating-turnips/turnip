@@ -21,7 +21,7 @@ projects[] = drupal
 ; If you want to use Pressflow Drupal, uncomment out the following three lines
 ; projects[pressflow][type] = "core"
 ; projects[pressflow][download][type] = "file"
-; projects[pressflow][download][url] = "http://launchpad.net/pressflow/6.x/6.20.97/+download/pressflow-6.20.97.tar.gz"
+; projects[pressflow][download][url] = "http://launchpad.net/pressflow/6.x/6.22.104/+download/pressflow-6.22.104.tar.gz"
 
 EOF
 )
