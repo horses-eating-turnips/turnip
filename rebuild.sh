@@ -15,7 +15,14 @@ echo "Building PROJECT..."
 MAKE=$(cat $PROFILE/$PROFILE.make - <<EOF
 api = "2"\n
 core = "6.x"\n
-projects[drupal][version] = "6.22"\n
+
+projects[] = drupal
+
+; If you want to use Pressflow Drupal, uncomment out the following three lines
+; projects[pressflow][type] = "core"
+; projects[pressflow][download][type] = "file"
+; projects[pressflow][download][url] = "http://launchpad.net/pressflow/6.x/6.20.97/+download/pressflow-6.20.97.tar.gz"
+
 EOF
 )
 
