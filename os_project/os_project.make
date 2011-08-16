@@ -67,10 +67,5 @@ projects[html5_tools][type] = "module"
 projects[html5_tools][download][type] = "git"
 projects[html5_tools][download][revision] = "6fab84596aad3045126070f812b2dc3e6ce8803c"
 
-; Base theme: Create and specify a tag at the *end* of the project.
-projects[doune][type] = "theme"
-projects[doune][download][type] = "git"
-projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
-projects[doune][download][branch] = "7.x-2.x"
-; Tag new release at end of project
-; projects[doune][download][tag] = "7.x-2.0-alpha1"
+; Base theme.
+projects[doune][version] = "2.0-alpha3"
