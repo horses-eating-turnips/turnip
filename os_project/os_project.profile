@@ -29,7 +29,4 @@ function os_project_form_install_configure_form_alter(&$form, $form_state) {
   $form['site_information']['site_mail']['#default_value']    = 'webmaster@'. $server_name;
   $form['admin_account']['account']['name']['#default_value'] = 'admin';
   $form['admin_account']['account']['mail']['#default_value'] = 'webmaster@'. $server_name;
-
-  // Don't enable update module
-  $form['update_notifications']['update_status_module']['#default_value'] = array();
 }
