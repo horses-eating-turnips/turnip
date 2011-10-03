@@ -45,3 +45,47 @@ dependencies[] = wysiwyg
 ; Features
 dependencies[] = os_admin
 dependencies[] = os_base
+
+;
+; Users
+;
+users[root][uid] = 1
+users[root][name] = superuser
+users[root][mail] = superuser@os_project.dev
+users[root][roles] = administrator
+users[root][status] = 1
+
+users[admin][uid] = 2
+users[admin][name] = admin
+users[admin][mail] = admin@os_project.dev
+users[admin][roles] = site editor
+users[admin][status] = 1
+
+;
+; Variables
+;
+variables[site_front] = node/1
+variables[site_mail] = admin@os_project.dev
+variables[site_name] = PROJECTNAME
+variables[admin_theme] = rubik
+
+; If needed, override opensourcery_install's default user_register setting
+; (which is 0). Possible values:
+; 0: Only administrators can create user accounts.
+; 1: Visitors can create their own accounts.
+; 2: Visitors can create accounts, but they don't become active without
+;    administrative approval.
+;variables[user_register] = 1
+
+;
+; Nodes
+;
+;; About page.
+;nodes[about][type] = page
+;nodes[about][title] = About
+;nodes[about][body][und][0][value] = PLACEHOLDER
+;nodes[about][body][und][0][format] = full_html
+;nodes[about][uid] = 2
+;nodes[about][menu][link_title] = About
+;nodes[about][menu][menu_name] = header-menu
+;nodes[about][menu][weight] = 0

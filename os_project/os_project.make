@@ -56,6 +56,12 @@ projects[os_base][download][branch] = "7.x-1.x"
 ;libraries[swfobject][destination] = "libraries"
 ;libraries[swfobject][directory_name] = "swfobject"
 
+; Profiler
+libraries[profiler][download][type] = "get"
+libraries[profiler][download][url] = "http://ftp.drupal.org/files/projects/profiler-7.x-2.0-beta1.tar.gz"
+; http://drupal.org/node/1165672#comment-4696748: Don't disable blocks
+libraries[profiler][patch][] = "http://drupal.org/files/issues/0001-Issue-1165672-don-t-disable-blocks.patch"
+
 ; Project-specific modules, and overrides.
 
 ; Modules required by the Doune theme.
