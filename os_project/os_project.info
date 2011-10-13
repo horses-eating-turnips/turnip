@@ -23,6 +23,8 @@ dependencies[] = taxonomy
 dependencies[] = dblog
 dependencies[] = search
 dependencies[] = shortcut
+; The admin_menu module should only be used for development purposes.
+dependencies[] = toolbar
 dependencies[] = overlay
 dependencies[] = field_ui
 dependencies[] = file
@@ -40,7 +42,6 @@ dependencies[] = strongarm
 dependencies[] = wysiwyg
 
 ; Features
-dependencies[] = os_admin
 dependencies[] = os_base
 
 ;

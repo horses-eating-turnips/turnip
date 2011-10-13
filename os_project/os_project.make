@@ -10,15 +10,6 @@ projects[opensourcery_install][download][url] = "git@github.com:opensourcery/ope
 projects[opensourcery_install][download][branch] = "7.x"
 ;projects[opensourcery_install][download][tag] = "7.x-1.0"
 
-; OpenSourcery administration feature
-projects[os_admin][subdir] = "stock"
-projects[os_admin][type] = "module"
-projects[os_admin][download][type] = "git"
-projects[os_admin][download][url] = "git://github.com/opensourcery/os_admin.git"
-projects[os_admin][download][branch] = "7.x-1.x"
-; Tag new release at end of project
-; projects[os_admin][download][tag] = "7.x-1.0-alpha1"
-
 ; OpenSourcery base feature.
 projects[os_base][subdir] = "stock"
 projects[os_base][type] = "module"
