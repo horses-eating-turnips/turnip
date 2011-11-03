@@ -10,6 +10,9 @@ projects[opensourcery_install][download][url] = "git@github.com:opensourcery/ope
 projects[opensourcery_install][download][branch] = "7.x"
 ;projects[opensourcery_install][download][tag] = "7.x-1.0"
 
+; Image handling. Comment this out if you don't need any image handling.
+includes[] = images.make
+
 ; OpenSourcery base feature.
 projects[os_base][subdir] = "stock"
 projects[os_base][type] = "module"
