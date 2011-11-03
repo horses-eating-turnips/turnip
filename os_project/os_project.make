@@ -55,14 +55,7 @@ libraries[profiler][patch][] = "http://drupal.org/files/issues/0001-Issue-116567
 
 ; Project-specific modules, and overrides.
 
-; Modules required by the Doune theme.
-projects[elements][subdir] = "contrib"
-projects[elements][version] = "1.2"
-
-projects[html5_tools][subdir] = "contrib"
-projects[html5_tools][type] = "module"
-projects[html5_tools][download][type] = "git"
-projects[html5_tools][download][revision] = "6fab84596aad3045126070f812b2dc3e6ce8803c"
-
-; Base theme.
-projects[doune][version] = "2.0-alpha3"
+; Omega base theme
+projects[delta][subdir] = "contrib"
+projects[delta][version] = "3.0-beta8"
+projects[omega][version] = "3.0"
