@@ -11,7 +11,7 @@ projects[opensourcery_install][download][branch] = "7.x"
 ;projects[opensourcery_install][download][tag] = "7.x-1.0"
 
 ; Image handling. Comment this out if you don't need any image handling.
-includes[] = images.make
+includes[images] = "https://raw.github.com/opensourcery/opensourcery_install/7.x/opensourcery_image.make"
 
 ; OpenSourcery base feature.
 projects[os_base][subdir] = "stock"
