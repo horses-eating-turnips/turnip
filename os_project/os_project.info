@@ -62,7 +62,7 @@ users[admin][status] = 1
 ;
 ; Variables
 ;
-variables[site_front] = node/1
+variables[site_frontpage] = node/1
 variables[site_mail] = admin@os_project.dev
 variables[site_name] = PROJECTNAME
 variables[admin_theme] = rubik
