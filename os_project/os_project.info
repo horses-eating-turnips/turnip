@@ -11,6 +11,7 @@ core = 7.x
 dependencies[] = block
 dependencies[] = contextual
 dependencies[] = dashboard
+dependencies[] = entitycache
 dependencies[] = help
 dependencies[] = image
 dependencies[] = list
