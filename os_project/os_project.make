@@ -24,11 +24,11 @@ projects[os_base][download][branch] = "7.x-1.x"
 
 ; Views
 ;projects[views][subdir] = "contrib"
-;projects[views][version] = "3.0-rc1"
+;projects[views][version] = "3.0-rc3"
 
 ; Mollom
 ;projects[mollom][subdir] = "contrib"
-;projects[mollom][version] = "1.0"
+;projects[mollom][version] = "1.1"
 
 ; Google analytics
 ;projects[google_analytics][subdir] = "contrib"
