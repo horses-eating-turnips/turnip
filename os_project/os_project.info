@@ -90,6 +90,6 @@ variables[site_default_country] = US
 ;nodes[about][language] = und
 ;nodes[about][menu][enabled] = 1
 ;nodes[about][menu][link_title] = About
-;nodes[about][menu][menu_name] = header-menu
+;nodes[about][menu][menu_name] = main-menu
 ;nodes[about][menu][weight] = 0
 ;nodes[about][path][alias] = about
