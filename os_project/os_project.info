@@ -31,12 +31,10 @@ dependencies[] = file
 dependencies[] = rdf
 
 ; Contrib
-dependencies[] = advanced_help
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = pathauto
 dependencies[] = redirect
-dependencies[] = role_delegation
 dependencies[] = token
 dependencies[] = strongarm
 dependencies[] = wysiwyg
