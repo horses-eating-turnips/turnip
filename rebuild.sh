@@ -20,6 +20,8 @@ projects[drupal][version] = "7.9"
 EOF
 )
 
+# D7 has odd permissions on sites/default folder
+chmod 777 drupal/sites/default
 # remove old directories
 rm -rf drupal
 rm -rf $PROFILE/modules/contrib
