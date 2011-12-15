@@ -8,6 +8,13 @@
 profiler_v2('os_project');
 
 /**
+ * Implements hook_install_tasks_alter().
+ */
+function os_project_install_tasks_alter(&$tasks) {
+  $tasks['os_project_install_profile_complete'] = array();
+}
+
+/**
  * Implements hook_install().
  *
  * Perform actions to set up the site for this profile.
@@ -19,4 +26,10 @@ function os_project_install() {
     ->condition('type', 'theme')
     ->condition('name', 'seven')
     ->execute();
+}
+
+/**
+ * Tasks to run at the end of the installation process.
+ */
+function os_project_install_profile_complete() {
 }
