@@ -68,6 +68,9 @@ variables[admin_theme] = rubik
 variables[node_admin_theme] = 1
 variables[site_default_country] = US
 
+; Disable core image styles
+variables[os_base_remove_core_image_styles] = 1
+
 ; If needed, override opensourcery_install's default user_register setting
 ; (which is 0). Possible values:
 ; 0: Only administrators can create user accounts.
