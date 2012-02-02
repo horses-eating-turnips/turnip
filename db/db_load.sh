@@ -21,7 +21,14 @@ echo "dropping database $dbname..."
 drush $options sql-query "drop database $dbname; create database $dbname"
 
 echo "loading from $1..."
-gzip -d -c $1 | drush $options sql-cli
+if which pv >/dev/null; then
+  # pv is installed; we can display a progress meter!
+  uncompressed_size=`gzip -l $1 | awk 'NR==2 {print $2}'`
+  gzip -d -c $1 | pv -i 0.5 -s $uncompressed_size | drush $options sql-cli
+else
+  gzip -d -c $1 | drush $options sql-cli
+fi
+
 
 # Uncomment these two lines if CiviCRM is used
 # drush sql query "UPDATE civicrm_domain SET config_backend = NULL"
