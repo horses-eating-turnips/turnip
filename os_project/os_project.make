@@ -24,7 +24,7 @@ projects[os_base][download][branch] = "7.x-1.x"
 
 ; Views
 ;projects[views][subdir] = "contrib"
-;projects[views][version] = "3.0-rc3"
+;projects[views][version] = "3.1"
 
 ; Mollom
 ;projects[mollom][subdir] = "contrib"
