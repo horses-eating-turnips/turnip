@@ -52,10 +52,10 @@ projects[coder][subdir] = "development"
 projects[coder][version] = "1.0"
 
 ; Libraries
-libraries[ckeditor][download][type] = "get"
-libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%203.6.2/ckeditor_3.6.2.tar.gz"
-libraries[ckeditor][destination] = "libraries"
-libraries[ckeditor][directory_name] = "ckeditor"
+libraries[tinymce][download][type] = "get"
+libraries[tinymce][download][url] = "https://github.com/downloads/tinymce/tinymce/tinymce_3.4.8.zip"
+libraries[tinymce][destination] = "libraries"
+libraries[tinymce][directory_name] = "tinymce"
 
 ; Themes
 projects[tao][version] = "3.0-beta4"
