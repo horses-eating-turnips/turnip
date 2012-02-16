@@ -61,16 +61,17 @@ ssh $USER@$HOST "sudo chown -R $USER.$USER $DOCUMENTROOT" || {
 # Values below here shouldn't need to be modified for standard OS Drupal deployments
 
 # Add -L to copy symlinks' referent files, so that we'll bring along our install profile
-rsync -LavzC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup $BRANCH/drupal/ /tmp/$TIMESTAMP/
+rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup $BRANCH/drupal/ /tmp/$TIMESTAMP/
 
 # Create links to settings and files.
 # NOTE: This is done locally, prior to upload, even though locally
 # they are broken links.
+chmod 777 /tmp/$TIMESTAMP/sites/default
 ln -s $DOCUMENTROOT/shared/files /tmp/$TIMESTAMP/sites/default/files
 ln -s $DOCUMENTROOT/shared/settings.php /tmp/$TIMESTAMP/sites/default/settings.php
 
 ssh $USER@$HOST cp -Rp $DOCUMENTROOT/current/ $DOCUMENTROOT/releases/$TIMESTAMP
-rsync -avzC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$DOCUMENTROOT/releases/$TIMESTAMP/
+rsync -azC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$DOCUMENTROOT/releases/$TIMESTAMP/
 
 ssh -t $USER@$HOST "find $DOCUMENTROOT -type d -exec chmod 750 {} +"
 ssh -t $USER@$HOST "find $DOCUMENTROOT -type f -exec chmod 640 {} +"
