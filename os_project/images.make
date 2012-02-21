@@ -21,7 +21,10 @@ projects[media][patch][] = "http://drupal.org/files/check_if_media_the_type_tabl
 ; http://drupal.org/node/1278180#comment-5085370
 projects[media][patch][] = "http://drupal.org/files/media-embed-library-resize.patch"
 
+projects[plupload][subdir] = "contrib"
+projects[plupload][version] = "1.0-beta4"
+
 libraries[plupload][download][type] = "get"
-libraries[plupload][download][url] = "http://cloud.github.com/downloads/moxiecode/plupload/plupload_1_4_3_2.zip"
+libraries[plupload][download][url] = "http://cloud.github.com/downloads/moxiecode/plupload/plupload_1_5_1_1.zip"
 libraries[plupload][download][destination] = "libraries"
 libraries[plupload][download][directory_name] = "plupload"
