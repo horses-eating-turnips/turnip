@@ -9,13 +9,13 @@
  */
 function system_form_install_select_profile_form_alter(&$form, $form_state) {
   unset($form['profile']['Minimal'], $form['profile']['Standard'], $form['profile']['OpenSourcery']);
-  foreach($form['profile'] as $key => $element) {
+  foreach ($form['profile'] as $key => $element) {
     $form['profile'][$key]['#value'] = 'os_project';
   }
 }
 
 /**
- * Implementation of hook_form_FORM_ID_alter().
+ * Implements of hook_form_FORM_ID_alter().
  *
  * Set defaults on "Configure site" form during installation.
  */
