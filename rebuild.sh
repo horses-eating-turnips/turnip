@@ -12,22 +12,21 @@ PROFILE="os_project"
 # Generate a complete Drupal build.
 echo "Building PROJECT..."
 
-# remove old directories
-if [ -d drupal ]; then
-  rm -rf drupal
-fi
-if [ -d $PROFILE/modules/contrib ]; then
-  rm -rf $PROFILE/modules/contrib
-fi
-if [ -d $PROFILE/modules/stock ]; then
-  rm -rf $PROFILE/modules/stock
-fi
-if [ -d $PROFILE/themes/stock ]; then
-  rm -rf $PROFILE/themes/stock
-fi
-if [ -d $PROFILE/libraries ]; then
-  rm -rf $PROFILE/libraries
-fi
+# Remove contrib directories
+DIRECTORIES="drupal
+$PROFILE/modules/contrib
+$PROFILE/modules/development
+$PROFILE/modules/stock
+$PROFILE/themes/tao
+$PROFILE/themes/rubik
+$PROFILE/themes/omega
+$PROFILE/libraries"
+
+for dir in $DIRECTORIES; do
+  if [ -d "$dir" ]; then
+    rm -rf $dir
+  fi
+done
 
 if [[ $1 = "--clean" ]]; then
   exit
