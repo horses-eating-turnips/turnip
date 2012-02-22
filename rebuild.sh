@@ -12,14 +12,6 @@ PROFILE="os_project"
 # Generate a complete Drupal build.
 echo "Building PROJECT..."
 
-MAKE=$(cat $PROFILE/$PROFILE.make - <<EOF
-api = "2"
-core = "7.x"
-projects[drupal][type] = "core"
-projects[drupal][version] = "7.10"
-EOF
-)
-
 # D7 has odd permissions on sites/default folder
 chmod 777 drupal/sites/default
 # remove old directories
@@ -30,7 +22,7 @@ rm -rf $PROFILE/themes/stock
 rm -rf $PROFILE/libraries
 
 # Build the drupal directory from the make file.
-echo -e "$MAKE" | drush make $1 --yes --contrib-destination=profiles/$PROFILE - drupal
+drush make $1 --yes --contrib-destination=profiles/$PROFILE $PROFILE/$PROFILE.make drupal
 
 # Link settings.php and files into sites/default
 cd drupal/sites/default || { echo "Aborting $0"; exit 1; }
@@ -44,9 +36,3 @@ rm -rf drupal/profiles/$PROFILE
 cd drupal/profiles
 ln -s ../../$PROFILE $PROFILE
 cd -
-
-# Modules must be in the profile being installed, so move them over
-# from opensourcery_install.
-rsync -az drupal/profiles/opensourcery_install/modules/ drupal/profiles/$PROFILE/modules/
-rsync -az drupal/profiles/opensourcery_install/libraries/ drupal/profiles/$PROFILE/libraries/
-rsync -az drupal/profiles/opensourcery_install/themes/ drupal/profiles/$PROFILE/themes/

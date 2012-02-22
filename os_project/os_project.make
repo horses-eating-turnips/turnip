@@ -3,15 +3,17 @@
 ; of the project.
 api = 2
 
+core = "7.x"
+projects[drupal][type] = "core"
+projects[drupal][version] = "7.12"
+; Make taxonomy permissions use vocabulary machine name instead of vid
+projects[drupal][patch][] = "http://drupal.org/files/issues/995156-5_portable_taxonomy_permissions.patch"
+
 ; Base installation profile
-projects[opensourcery_install][type] = "profile"
-projects[opensourcery_install][download][type] = "git"
-projects[opensourcery_install][download][url] = "git@github.com:opensourcery/opensourcery_install.git"
-projects[opensourcery_install][download][branch] = "7.x"
-;projects[opensourcery_install][download][tag] = "7.x-1.0"
+includes[base] = "base.make"
 
 ; Image handling. Comment this out if you don't need any image handling.
-includes[images] = "https://raw.github.com/opensourcery/opensourcery_install/7.x/opensourcery_image.make"
+includes[images] = "images.make"
 
 ; OpenSourcery base feature.
 projects[os_base][subdir] = "stock"
@@ -24,7 +26,7 @@ projects[os_base][download][branch] = "7.x-1.x"
 
 ; Views
 ;projects[views][subdir] = "contrib"
-;projects[views][version] = "3.0-rc3"
+;projects[views][version] = "3.1"
 
 ; Mollom
 ;projects[mollom][subdir] = "contrib"
