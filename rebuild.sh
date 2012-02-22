@@ -29,6 +29,10 @@ if [ -d $PROFILE/libraries ]; then
   rm -rf $PROFILE/libraries
 fi
 
+if [[ $1 = "--clean" ]]; then
+  exit
+fi
+
 # Build the drupal directory from the make file.
 drush make $1 --yes --contrib-destination=profiles/$PROFILE $PROFILE/$PROFILE.make drupal
 
