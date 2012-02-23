@@ -12,7 +12,7 @@ projects[entitycache][subdir] = "contrib"
 projects[entitycache][version] = "1.1"
 
 projects[features][subdir] = "contrib"
-projects[features][version] = "1.0-beta6"
+projects[features][download][revision] = "83e0a6c"
 ; http://drupal.org/node/1265168#comment-5413624
 projects[features][patch][] = "http://drupal.org/files/features-1265168-19-roles.patch"
 
