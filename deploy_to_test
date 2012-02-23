@@ -20,6 +20,15 @@ if [ "$SUBDOMAIN" = "" ]; then
   exit 1
 fi
 
+# Test that this drush alias exists.
+ALIAS=`drush sa @$SUBDOMAIN`
+if [ "$ALIAS" = "" ]; then
+  echo "Didn't find a drush alias for $SUBDOMAIN"
+  exit 1
+fi
+
+exit
+
 # Branch to deploy from
 BRANCH=.
 
