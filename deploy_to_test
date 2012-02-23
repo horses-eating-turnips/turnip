@@ -15,20 +15,6 @@ SUBDOMAIN=
 HOST=gargravarr
 DOCUMENTROOT=/var/www/$SUBDOMAIN
 
-if [ "$SUBDOMAIN" = "" ]; then
-  echo "You must set a subdomain to deploy to."
-  exit 1
-fi
-
-# Test that this drush alias exists.
-ALIAS=`drush sa @$SUBDOMAIN`
-if [ "$ALIAS" = "" ]; then
-  echo "Didn't find a drush alias for $SUBDOMAIN"
-  exit 1
-fi
-
-exit
-
 # Branch to deploy from
 BRANCH=.
 
@@ -38,13 +24,22 @@ BRANCH=.
 # away the permissions of every test host on the test server.
 if [ -z "$SUBDOMAIN" ]; then
   echo "ERROR: You must set SUBDOMAIN (within $0) before running this script."
-  exit
+  exit 1
 fi
 
 if [ ! -d ./drupal ]; then
   echo "ERROR: ./drupal directory does not exist; nothing to deploy."
-  exit
+  exit 1
 fi
+
+# Test that this drush alias exists.
+ALIAS=`drush sa @$SUBDOMAIN`
+if [ -z "$ALIAS" ]; then
+  echo "Didn't find a drush alias for $SUBDOMAIN"
+  exit 1
+fi
+
+exit
 
 TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
 
