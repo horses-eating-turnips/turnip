@@ -15,6 +15,11 @@ SUBDOMAIN=
 HOST=gargravarr
 DOCUMENTROOT=/var/www/$SUBDOMAIN
 
+if [ "$SUBDOMAIN" = "" ]; then
+  echo "You must set a subdomain to deploy to."
+  exit 1
+fi
+
 # Branch to deploy from
 BRANCH=.
 
