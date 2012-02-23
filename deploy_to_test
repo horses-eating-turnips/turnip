@@ -23,23 +23,6 @@ fi
 # Branch to deploy from
 BRANCH=.
 
-# Set FRONTPAGE if you want to turn on recursive response testing.
-#
-# This setting is used for testing the success of the deployment, and
-# should be of the form:
-#
-#   http://example.org
-#
-# Note, if the site forces either www. or removes it, then the
-# non-redirect version should be used. For example, if all requests
-# are redirected from http://example.org to http://www.example.org,
-# then this variable should be set to http://www.example.org
-
-# FRONTPAGE=http://$SUBDOMAIN.opensourcery.com
-
-# How deep to follow links.
-TESTINGLEVEL=6
-
 ##### Things below here generally won't need to be changed #####
 
 # If SUBDOMAIN isn't set, DOCUMENTROOT would become /var/www// and we'd blow
@@ -93,50 +76,3 @@ ssh $USER@$HOST sudo chown -R www-data.www-data $DOCUMENTROOT
 echo "Deployment complete"
 rm -Rf /tmp/$TIMESTAMP
 echo "Cleaned up local machine's /tmp/$TIMESTAMP"
-
-# Perform recursive tests, saving log to a file. The downloaded files are immediately deleted.
-if [[ ! -z "$FRONTPAGE" ]]; then
-  RESPONSE_LOG=$TIMESTAMP.wget.tests.txt
-  RESPONSE_OUTPUT=$TIMESTAMP.wget.output.html
-
-  echo "Starting response testing"
-  cd /tmp
-  wget --verbose --recursive --level=$TESTINGLEVEL -nd --delete-after -o /tmp/$RESPONSE_LOG -O /tmp/$RESPONSE_OUTPUT $FRONTPAGE
-  cd -
-
-  # Test for 404 errors
-  echo "404 errors:"
-  grep HTTP -B3 /tmp/$RESPONSE_LOG | egrep "HTTP|--[0-9]{2}" | egrep "HTTP.*404" -B1
-  # Test for 403 errors
-  echo "403 errors:"
-  grep HTTP -B3 /tmp/$RESPONSE_LOG | egrep "HTTP|--[0-9]{2}" | egrep "HTTP.*403" -B1
-  # Test for non-standard responses
-  echo "Other responses (other than 200, 404 and 403:"
-  grep HTTP /tmp/$RESPONSE_LOG | grep -v 200 | grep -v 404 | grep -v 403
-  echo "To review, see /tmp/$RESPONSE_LOG"
-  # End of response testing
-
-  # Find parse errors
-  echo "Checking for Parse Errors:"
-  parse_errors=`egrep '<b>Parse error</b>:.*</b> on line <b>[0-9]+</b>' /tmp/$RESPONSE_OUTPUT | wc -l`
-  if [ $parse_errors -gt 0 ];
-  then
-    echo "Found $parse_errors parse errors! See /tmp/$RESPONSE_OUTPUT for details."
-    exit
-  else
-    echo "No parse errors found."
-  fi
-
-  # Find fatal errors
-  echo "Checking for Fatal Errors:"
-  fatal_errors=`egrep '<b>Fatal error</b>:.*</b> on line <b>[0-9]+</b>' /tmp/$RESPONSE_OUTPUT | wc -l`
-  if [ $fatal_errors -gt 0 ];
-  then
-    echo "Found $fatal_errors fatal errors! See /tmp/$RESPONSE_OUTPUT for details."
-    exit
-  else
-    echo "No fatal errors found."
-  fi
-fi
-
-
