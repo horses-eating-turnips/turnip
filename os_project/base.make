@@ -2,7 +2,9 @@
 core = "7.x"
 api = 2
 
-; Contrib modules
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;; CONTRIB ;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;; (alphabetical order) ;;;;;;;;;;;;;;;
 projects[ctools][subdir] = "contrib"
 projects[ctools][download][revision] = "575b14b"
 ; http://drupal.org/node/1120028#comment-5269384
@@ -38,7 +40,9 @@ projects[wysiwyg][patch][] = "http://drupal.org/files/0001-feature.inc-from-6240
 ; Select theme css patch: http://drupal.org/node/1309040#comment-5512318
 projects[wysiwyg][patch[] = "http://drupal.org/files/1309040-7-select_theme_css.patch"
 
-; Development modules
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;; DEVELOPMENT MODULES ;;;;;;;;;;;;;
+;;;;;;;; (may be disabled for production) ;;;;;;;;
 projects[admin_menu][type] = "module"
 projects[admin_menu][subdir] = "development"
 projects[admin_menu][version] = "3.0-rc1"
@@ -57,6 +61,8 @@ libraries[tinymce][download][url] = "https://github.com/downloads/tinymce/tinymc
 libraries[tinymce][destination] = "libraries"
 libraries[tinymce][directory_name] = "tinymce"
 
-; Themes
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;; THEME ;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 projects[tao][version] = "3.0-beta4"
 projects[rubik][version] = "4.0-beta7"
