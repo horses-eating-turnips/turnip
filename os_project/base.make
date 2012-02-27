@@ -4,6 +4,7 @@ api = 2
 
 ; Contrib modules
 projects[ctools][subdir] = "contrib"
+projects[ctools][download][type] = "git"
 projects[ctools][download][revision] = "575b14b"
 ; http://drupal.org/node/1120028#comment-5269384
 projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths_3.patch"
