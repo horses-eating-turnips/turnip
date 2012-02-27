@@ -14,6 +14,10 @@
 SUBDOMAIN=
 HOST=gargravarr
 DOCUMENTROOT=/var/www/$SUBDOMAIN
+INSTALLPROFILE=os_project
+
+# Flag to disable running of `drush site-install`.
+#NOSITEINSTALL=1
 
 # Branch to deploy from
 BRANCH=.
@@ -59,5 +63,19 @@ if [ -h $DOCUMENTROOT/current ]; then
   rm $DOCUMENTROOT/current
 fi
 ln -s $DOCUMENTROOT/releases/$TIMESTAMP $DOCUMENTROOT/current
+
+# Run site install unless disabled.
+if [ -z $NOSITEINSTALL ]; then
+  drush @$SUBDOMAIN site-install -y $INSTALLPROFILE
+fi
+
+# Run any update hooks.
+drush @$SUBDOMAIN updatedb -y
+
+# Features revert.
+drush @$SUBDOMAIN fra -y
+
+# Clear caches.
+drush @$SUBDOMAIN cc all
 
 echo "Deployment complete"
