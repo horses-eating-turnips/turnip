@@ -33,50 +33,31 @@ if [ ! -d ./drupal ]; then
 fi
 
 # Test that this drush alias exists.
-ALIAS=`drush sa @$SUBDOMAIN`
+ALIAS=`drush sa @$SUBDOMAIN --component=root`
 if [ -z "$ALIAS" ]; then
   echo "Didn't find a drush alias for $SUBDOMAIN"
   exit 1
 fi
 
-exit
-
+# Deploy into the releases directory.
 TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
 
-# A bit hacky: rsync everything up by *temporarily* making us the owner of everything.
-
-ssh $USER@$HOST "sudo chown -R $USER.$USER $DOCUMENTROOT" || {
-  echo "ERROR: Check your test host username versus your local username. If they're different, run as 'USER=mytesthostusername $0'";
-  exit;
-}
-
-# Values below here shouldn't need to be modified for standard OS Drupal deployments
-
 # Add -L to copy symlinks' referent files, so that we'll bring along our install profile
-rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup $BRANCH/drupal/ /tmp/$TIMESTAMP/
+cp -Rp $DOCUMENTROOT/current/ $DOCUMENTROOT/releases/$TIMESTAMP
+rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup $BRANCH/drupal/ $DOCUMENTROOT/releases/$TIMESTAMP/
 
 # Create links to settings and files.
-# NOTE: This is done locally, prior to upload, even though locally
-# they are broken links.
-chmod 777 /tmp/$TIMESTAMP/sites/default
-ln -s $DOCUMENTROOT/shared/files /tmp/$TIMESTAMP/sites/default/files
-ln -s $DOCUMENTROOT/shared/settings.php /tmp/$TIMESTAMP/sites/default/settings.php
+if [ ! -h $DOCUMENTROOT/releases/$TIMESTAMP/sites/default/files ]; then
+  ln -s $DOCUMENTROOT/shared/files $DOCUMENTROOT/releases/$TIMESTAMP/sites/default/files
+fi
+if [ ! -h $DOCUMENTROOT/releases/$TIMESTAMP/sites/default/settings.php ]; then
+  ln -s $DOCUMENTROOT/shared/settings.php $DOCUMENTROOT/releases/$TIMESTAMP/sites/default/settings.php
+fi
 
-ssh $USER@$HOST cp -Rp $DOCUMENTROOT/current/ $DOCUMENTROOT/releases/$TIMESTAMP
-rsync -azC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$DOCUMENTROOT/releases/$TIMESTAMP/
-
-ssh -t $USER@$HOST "find $DOCUMENTROOT -type d -exec chmod 750 {} +"
-ssh -t $USER@$HOST "find $DOCUMENTROOT -type f -exec chmod 640 {} +"
-ssh -t $USER@$HOST "find $DOCUMENTROOT/shared/files -type d -exec chmod 770 {} +"
-ssh -t $USER@$HOST "find $DOCUMENTROOT/shared/files -type f -exec chmod 660 {} +"
-
-# remove old release link and link the new version
-ssh $USER@$HOST rm $DOCUMENTROOT/current
-ssh $USER@$HOST ln -s $DOCUMENTROOT/releases/$TIMESTAMP $DOCUMENTROOT/current
-
-# Change owner and group back to Apache
-ssh $USER@$HOST sudo chown -R www-data.www-data $DOCUMENTROOT
+# Remove old release link and link the new version.
+if [ -h $DOCUMENTROOT/current ]; then
+  rm $DOCUMENTROOT/current
+fi
+ln -s $DOCUMENTROOT/releases/$TIMESTAMP $DOCUMENTROOT/current
 
 echo "Deployment complete"
-rm -Rf /tmp/$TIMESTAMP
-echo "Cleaned up local machine's /tmp/$TIMESTAMP"
