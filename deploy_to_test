@@ -13,7 +13,7 @@
 # Rather than set $USER, use the user we were run as.
 SUBDOMAIN=
 HOST=gargravarr
-DOCUMENTROOT=/var/www/$SUBDOMAIN
+INSTALLROOT=/var/www/$SUBDOMAIN
 INSTALLPROFILE=os_project
 
 # Flag to disable running of `drush site-install`.
@@ -24,7 +24,7 @@ BRANCH=.
 
 ##### Things below here generally won't need to be changed #####
 
-# If SUBDOMAIN isn't set, DOCUMENTROOT would become /var/www// and we'd blow
+# If SUBDOMAIN isn't set, INSTALLROOT would become /var/www// and we'd blow
 # away the permissions of every test host on the test server.
 if [ -z "$SUBDOMAIN" ]; then
   echo "ERROR: You must set SUBDOMAIN (within $0) before running this script."
@@ -47,22 +47,22 @@ fi
 TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
 
 # Add -L to copy symlinks' referent files, so that we'll bring along our install profile
-cp -Rp $DOCUMENTROOT/current/ $DOCUMENTROOT/releases/$TIMESTAMP
-rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup $BRANCH/drupal/ $DOCUMENTROOT/releases/$TIMESTAMP/
+cp -Rp $INSTALLROOT/current/ $INSTALLROOT/releases/$TIMESTAMP
+rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup $BRANCH/drupal/ $INSTALLROOT/releases/$TIMESTAMP/
 
 # Create links to settings and files.
-if [ ! -h $DOCUMENTROOT/releases/$TIMESTAMP/sites/default/files ]; then
-  ln -s $DOCUMENTROOT/shared/files $DOCUMENTROOT/releases/$TIMESTAMP/sites/default/files
+if [ ! -h $INSTALLROOT/releases/$TIMESTAMP/sites/default/files ]; then
+  ln -s $INSTALLROOT/shared/files $INSTALLROOT/releases/$TIMESTAMP/sites/default/files
 fi
-if [ ! -h $DOCUMENTROOT/releases/$TIMESTAMP/sites/default/settings.php ]; then
-  ln -s $DOCUMENTROOT/shared/settings.php $DOCUMENTROOT/releases/$TIMESTAMP/sites/default/settings.php
+if [ ! -h $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.php ]; then
+  ln -s $INSTALLROOT/shared/settings.php $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.php
 fi
 
 # Remove old release link and link the new version.
-if [ -h $DOCUMENTROOT/current ]; then
-  rm $DOCUMENTROOT/current
+if [ -h $INSTALLROOT/current ]; then
+  rm $INSTALLROOT/current
 fi
-ln -s $DOCUMENTROOT/releases/$TIMESTAMP $DOCUMENTROOT/current
+ln -s $INSTALLROOT/releases/$TIMESTAMP $INSTALLROOT/current
 
 # Run site install unless disabled.
 if [ -z $NOSITEINSTALL ]; then
