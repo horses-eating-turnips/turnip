@@ -11,7 +11,7 @@
 
 # Change $SUBDOMAIN accordingly, e.g. <mountain name>
 # Rather than set $USER, use the user we were run as.
-SUBDOMAIN=
+SUBDOMAIN=demo
 HOST=gargravarr
 INSTALLROOT=/var/www/$SUBDOMAIN
 INSTALLPROFILE=os_project

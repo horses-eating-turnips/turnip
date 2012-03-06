@@ -25,8 +25,8 @@ projects[os_base][download][branch] = "7.x-1.x"
 ; projects[os_base][download][tag] = "7.x-1.0-alpha1"
 
 ; Views
-;projects[views][subdir] = "contrib"
-;projects[views][version] = "3.1"
+projects[views][subdir] = "contrib"
+projects[views][version] = "3.1"
 
 ; Mollom
 ;projects[mollom][subdir] = "contrib"
@@ -81,6 +81,15 @@ projects[os_event][type] = "module"
 projects[os_event][download][type] = "git"
 projects[os_event][download][url] = "git://github.com/opensourcery/os_event.git"
 projects[os_event][download][branch] = "7.x-1.x"
+
+projects[date][subdir] = "contrib"
+projects[date][version] = "2.2"
+
+projects[fullcalendar][subdir] = "contrib"
+projects[fullcalendar][version] = "2.0-beta3"
+
+libraries[fullcalendar][download][type] = "get"
+libraries[fullcalendar][download][url] = "http://arshaw.com/fullcalendar/downloads/fullcalendar-1.5.1.zip"
 
 ; Omega base theme
 projects[delta][subdir] = "contrib"
