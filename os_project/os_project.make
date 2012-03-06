@@ -88,6 +88,15 @@ projects[date][version] = "2.2"
 projects[fullcalendar][subdir] = "contrib"
 projects[fullcalendar][version] = "2.0-beta3"
 
+projects[context][subdir] = "contrib"
+projects[context][version] = "3.0-beta2"
+
+projects[context_admin][subdir] = "contrib"
+projects[context_admin][version] = "1.1"
+
+projects[views_bulk_operations][subdir] = "contrib"
+projects[views_bulk_operations][version] = "3.0-rc1"
+
 libraries[fullcalendar][download][type] = "get"
 libraries[fullcalendar][download][url] = "http://arshaw.com/fullcalendar/downloads/fullcalendar-1.5.1.zip"
 
