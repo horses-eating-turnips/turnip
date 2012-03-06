@@ -75,6 +75,11 @@ drush @$SUBDOMAIN cc all
 # Run any update hooks.
 drush @$SUBDOMAIN updatedb -y
 
+# TODO this is a bug in drush: need to manually remove command cache,
+# or the features command isn't found until after the bash script
+# completes.
+rm -rf ~/.drush/cache/default/*
+
 # Features revert.
 drush @$SUBDOMAIN fra -y
 
