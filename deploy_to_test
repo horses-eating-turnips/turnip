@@ -69,6 +69,10 @@ if [ -z $NOSITEINSTALL ]; then
   drush @$SUBDOMAIN site-install -y $INSTALLPROFILE
 fi
 
+# Clear caches.
+drush @$SUBDOMAIN cc all
+drush @$SUBDOMAIN cc drush
+
 # Run any update hooks.
 drush @$SUBDOMAIN updatedb -y
 
