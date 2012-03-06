@@ -70,7 +70,6 @@ if [ -z $NOSITEINSTALL ]; then
 fi
 
 # Clear caches.
-drush cc drush
 drush @$SUBDOMAIN cc all
 
 # Run any update hooks.
