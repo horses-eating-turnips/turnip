@@ -59,6 +59,28 @@ libraries[profiler][download][url] = "http://ftp.drupal.org/files/projects/profi
 libraries[profiler][patch][] = "http://drupal.org/files/issues/0001-Issue-1165672-don-t-disable-blocks.patch"
 
 ; Project-specific modules, and overrides.
+projects[bean][subdir] = "contrib"
+projects[bean][version] = "1.0-rc1"
+
+projects[beanslide][type] = "module"
+projects[beanslide][subdir] = "contrib"
+projects[beanslide][download][type] = "git"
+projects[beanslide][download][branch] = "7.x-1.x"
+
+libraries[jquery.vegas][download][type] = "get"
+libraries[jquery.vegas][download][url] = "https://github.com/jaysalvat/vegas/zipball/v1.2"
+
+projects[os_blog][subdir] = "stock"
+projects[os_blog][type] = "module"
+projects[os_blog][download][type] = "git"
+projects[os_blog][download][url] = "git://github.com/opensourcery/os_blog.git"
+projects[os_blog][download][branch] = "7.x-1.x"
+
+projects[os_event][subdir] = "stock"
+projects[os_event][type] = "module"
+projects[os_event][download][type] = "git"
+projects[os_event][download][url] = "git://github.com/opensourcery/os_event.git"
+projects[os_event][download][branch] = "7.x-1.x"
 
 ; Omega base theme
 projects[delta][subdir] = "contrib"
