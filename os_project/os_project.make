@@ -107,3 +107,8 @@ libraries[fullcalendar][download][url] = "http://arshaw.com/fullcalendar/downloa
 projects[delta][subdir] = "contrib"
 projects[delta][version] = "3.0-beta8"
 projects[omega][version] = "3.0"
+
+; Lovejoy theme for initial development.
+projects[lovejoy][type] = "theme"
+projects[lovejoy][download][type] = "git"
+projects[lovejoy][download][url] = "git://github.com/opensourcery/lovejoy.git"

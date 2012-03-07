@@ -20,6 +20,7 @@ $PROFILE/modules/stock
 $PROFILE/themes/tao
 $PROFILE/themes/rubik
 $PROFILE/themes/omega
+$PROFILE/themes/lovejoy
 $PROFILE/libraries"
 
 # D7 will automatically set permissions on sites/default folder,
