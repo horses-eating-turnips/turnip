@@ -67,6 +67,9 @@ ln -s $INSTALLROOT/releases/$TIMESTAMP $INSTALLROOT/current
 # Run site install unless disabled.
 if [ -z $NOSITEINSTALL ]; then
   drush @$SUBDOMAIN site-install -y $INSTALLPROFILE
+  if [ $? -gt 0 ]; then
+    exit 1
+  fi
 fi
 
 # Run any update hooks.
