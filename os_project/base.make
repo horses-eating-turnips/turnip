@@ -50,9 +50,6 @@ projects[admin_menu][patch][] = "http://drupal.org/files/issues/admin_menu.10258
 projects[devel][subdir] = "development"
 projects[devel][version] = "1.2"
 
-projects[coder][subdir] = "development"
-projects[coder][version] = "1.0"
-
 ; Libraries
 libraries[tinymce][download][type] = "get"
 libraries[tinymce][download][url] = "https://github.com/downloads/tinymce/tinymce/tinymce_3.4.8.zip"
