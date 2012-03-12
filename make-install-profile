@@ -24,6 +24,7 @@ sed -i -e "s/INSTALLPROFILE=os_project/INSTALLPROFILE=$NEW/" deploy_to_test
 
 mkdir $NEW
 cp os_project/os_project.* $NEW/
+cp os_project/*make $NEW/
 cd $NEW
 sed -i -e "s/os_project/$NEW/" $FILES
 sed -i -e "s/PROJECTNAME/$PROJECTNAME/" $FILES
