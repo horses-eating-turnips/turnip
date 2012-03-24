@@ -1,0 +1,31 @@
+#!/usr/bin/php
+<?php
+/**
+ * First time setup:
+ * - install libyaml
+ * - pecl install yaml
+ * - echo extension=yaml.so >> $PHP_INI
+ */
+
+$content = '';
+$error = 0;
+$filename = '../../conf/pass.yml.gpg';
+
+exec("gpg --decrypt $filename", $content, $error);
+if ($error) {
+  echo "Error decrypting $filename.";
+  exit(1);
+}
+
+$config = yaml_parse(implode("\n", $content));
+
+$user = $config['production server']['webhost']['user'];
+$host = $config['production server']['webhost']['hostname'];
+$db_user = $config['production server']['dbhost']['user'];
+$db_pass = $config['production server']['dbhost']['pass'];
+$db_host = $config['production server']['dbhost']['hostname'];
+$db_name = $config['production server']['dbhost']['dbname'];
+
+echo "Downloading $db_name from $db_host...\n";
+
+`ssh $user@$host "mysqldump -u $db_user -p$db_pass -h $db_host $db_name | gzip" > production_current.sql.gz`;
