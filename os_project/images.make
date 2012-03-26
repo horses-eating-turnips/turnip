@@ -11,9 +11,6 @@ projects[file_entity][version] = "2.0-unstable3"
 projects[image_resize_filter][subdir] = "contrib"
 projects[image_resize_filter][version] = "1.13"
 
-projects[insert][subdir] = "contrib"
-projects[insert][version] = "1.1"
-
 projects[media][subdir] = "contrib"
 projects[media][version] = "2.0-unstable3"
 ; Crash during install profile installation - http://drupal.org/node/1311828

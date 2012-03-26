@@ -50,8 +50,8 @@ projects[admin_menu][patch][] = "http://drupal.org/files/issues/admin_menu.10258
 projects[devel][subdir] = "development"
 projects[devel][version] = "1.2"
 
-projects[coder][subdir] = "development"
-projects[coder][version] = "1.0"
+projects[stage_file_proxy][subdir] = "development"
+projects[stage_file_proxy][revision] = "0c619c7"
 
 ; Libraries
 libraries[tinymce][download][type] = "get"

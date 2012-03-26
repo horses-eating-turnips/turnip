@@ -22,7 +22,7 @@ DOCUMENTROOT=/home/$USER/public_html
 if [[ "$1" = "--init" ]]; then
   ssh $USER@$HOST mkdir -p $INSTALLROOT/shared/files
   scp ./drupal/sites/default/default.settings.php $USER@$HOST:$INSTALLROOT/shared/settings.php
-  ssh $USER@HOST chmod 400 $INSTALLROOT/shared/settings.php
+  ssh $USER@$HOST chmod 400 $INSTALLROOT/shared/settings.php
   # @todo: Archive existing "public_html" and create initial dummy symlink
 fi
 
