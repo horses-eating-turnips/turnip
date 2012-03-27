@@ -4,17 +4,15 @@ api = 2
 
 ; Contrib modules
 projects[ctools][subdir] = "contrib"
-projects[ctools][download][type] = "git"
-projects[ctools][download][revision] = "575b14b"
-; http://drupal.org/node/1120028#comment-5269384
-projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths_3.patch"
+projects[ctools][version] = "1.0-rc2"
+; http://drupal.org/node/1120028#comment-5792282
+projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths-1120028-08.patch"
 
 projects[entitycache][subdir] = "contrib"
 projects[entitycache][version] = "1.1"
 
 projects[features][subdir] = "contrib"
-projects[features][download][type] = "git"
-projects[features][download][revision] = "83e0a6c"
+projects[features][version] = "1.0-rc1"
 ; http://drupal.org/node/1265168#comment-5413624
 projects[features][patch][] = "http://drupal.org/files/features-1265168-19-roles.patch"
 
