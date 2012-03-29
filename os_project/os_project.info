@@ -46,16 +46,9 @@ dependencies[] = os_base
 ;
 ; Users
 ;
-users[root][uid] = 1
-users[root][name] = superuser
-users[root][mail] = superuser@os_project.dev
-users[root][roles] = administrator
-users[root][status] = 1
-
-users[admin][uid] = 2
+users[admin][uid] = 1 
 users[admin][name] = admin
 users[admin][mail] = admin@os_project.dev
-users[admin][roles] = site editor
 users[admin][status] = 1
 
 ;
