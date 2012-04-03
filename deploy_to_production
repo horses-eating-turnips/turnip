@@ -50,7 +50,7 @@ rsync -azC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAM
 #ssh $USER@$HOST chgrp -R www-data $INSTALLROOT
 
 # Remove old release link and link the new version
-ssh $USER@$HOST "rm $DOCUMENTROOT; ln -s $INSTALLROOT/releases/$TIMESTAMP $DOCUMENTROOT"
+ssh $USER@$HOST "rm -f $INSTALLROOT/current_tmp 2>/dev/null; ln -s $INSTALLROOT/releases/$TIMESTAMP $INSTALLROOT/current_tmp && mv -Tf $INSTALLROOT/current_tmp $DOCUMENTROOT"
 
 # Clean up local machine
 rm -Rf /tmp/$TIMESTAMP
