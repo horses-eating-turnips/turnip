@@ -33,7 +33,7 @@ TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
 mkdir /tmp/$TIMESTAMP
 
 # Add -L to copy symlinks' referent files, so that we'll bring along our install profile
-rsync -LavzC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup ./drupal/ /tmp/$TIMESTAMP/
+rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup ./drupal/ /tmp/$TIMESTAMP/
 
 # We don't automate deploying files.
 rm -Rf /tmp/$TIMESTAMP/sites/default/files
@@ -44,13 +44,13 @@ ln -s $INSTALLROOT/shared/files /tmp/$TIMESTAMP/sites/default/files
 ln -s $INSTALLROOT/shared/settings.php /tmp/$TIMESTAMP/sites/default/settings.php
 
 ssh $USER@$HOST cp -Rp $DOCUMENTROOT/ $INSTALLROOT/releases/$TIMESTAMP
-rsync -avzC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAMP/
+rsync -azC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAMP/
 
 # Change group to PHP's user
 #ssh $USER@$HOST chgrp -R www-data $INSTALLROOT
 
 # Remove old release link and link the new version
-ssh $USER@$HOST "rm $DOCUMENTROOT; ln -s $INSTALLROOT/releases/$TIMESTAMP $DOCUMENTROOT"
+ssh $USER@$HOST "rm -f $INSTALLROOT/current_tmp 2>/dev/null; ln -s $INSTALLROOT/releases/$TIMESTAMP $INSTALLROOT/current_tmp && mv -Tf $INSTALLROOT/current_tmp $DOCUMENTROOT"
 
 # Clean up local machine
 rm -Rf /tmp/$TIMESTAMP
