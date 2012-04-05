@@ -91,7 +91,7 @@ drush @$SUBDOMAIN cc all
 
 # Remove all but the last 4 builds in the releases directory.
 cd $INSTALLROOT/releases
-rm -rf `ls -1r | tail -n +5`
+sudo rm -rf `ls -1r | tail -n +5`
 cd -
 
 echo "Deployment complete"
