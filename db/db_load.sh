@@ -11,7 +11,7 @@ options="--root=../drupal --database=${2:-default}"
 sqlconnect=`drush $options sql-connect`
 if (echo "$sqlconnect" | grep "database" >/dev/null); then
   # New form (drush 4.x) returns a verbose connect command
-  dbname=`echo -n $sqlconnect | sed -e 's/.*--database=\([^ ]*\)[ ]\?.*/\1/'`
+  dbname=`echo -n $sqlconnect | sed -e 's/.*--database=\([^ ]*\) .*/\1/'`
 else
   # Old form returns minimalist connect string with database name as last parameter
   dbname=`drush $options sql-connect | awk '{print $NF}'`
