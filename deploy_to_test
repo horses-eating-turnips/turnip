@@ -91,7 +91,9 @@ drush @$SUBDOMAIN cc all
 
 # Remove all but the last 4 builds in the releases directory.
 cd $INSTALLROOT/releases
-sudo rm -rf `ls -1r | tail -n +5`
+# Fix 7.x perms to sites/default directory.
+chmod u+w */sites/default
+rm -rf `ls -1r | tail -n +5`
 cd -
 
 echo "Deployment complete"
