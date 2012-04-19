@@ -43,8 +43,8 @@ if [ -z "$ALIAS" ]; then
   exit 1
 fi
 
-# Deploy into the releases directory.
-TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
+# Deploy into a meaningfully named directory inside of the releases directory.
+TIMESTAMP=`date +%Y-%m-%d.%H-%M-%S`.`git log -n 1 --format=%h`
 
 # Add -L to copy symlinks' referent files, so that we'll bring along our install profile
 cp -Rp $INSTALLROOT/current/ $INSTALLROOT/releases/$TIMESTAMP

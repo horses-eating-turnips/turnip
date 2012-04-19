@@ -26,7 +26,8 @@ if [[ "$1" = "--init" ]]; then
   # @todo: Archive existing "public_html" and create initial dummy symlink
 fi
 
-TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
+# Deploy into a meaningfully named directory inside of the releases directory.
+TIMESTAMP=`date +%Y-%m-%d.%H-%M-%S`.`git log -n 1 --format=%h`
 
 # Values below here shouldn't need to be modified for standard OS Drupal deployments
 
