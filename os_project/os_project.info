@@ -71,13 +71,13 @@ variables[dblog_row_limit] = 1000000
 ; Disable core image styles
 variables[os_base_remove_core_image_styles] = 1
 
-; If needed, override opensourcery_install's default user_register setting
-; (which is 0). Possible values:
+; If needed, override default user_register setting
+; (which is 2). Possible values:
 ; 0: Only administrators can create user accounts.
 ; 1: Visitors can create their own accounts.
 ; 2: Visitors can create accounts, but they don't become active without
 ;    administrative approval.
-;variables[user_register] = 1
+variables[user_register] = 0
 
 ;
 ; Nodes
