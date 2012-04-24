@@ -43,12 +43,12 @@ if [ -z "$ALIAS" ]; then
   exit 1
 fi
 
-# Deploy into the releases directory.
-TIMESTAMP=`date +%Y_%m_%d__%H_%M_%S`
+# Deploy into a meaningfully named directory inside of the releases directory.
+TIMESTAMP=`date +%Y-%m-%d.%H-%M-%S`.`git log -n 1 --format=%h`
 
 # Add -L to copy symlinks' referent files, so that we'll bring along our install profile
 cp -Rp $INSTALLROOT/current/ $INSTALLROOT/releases/$TIMESTAMP
-rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup $BRANCH/drupal/ $INSTALLROOT/releases/$TIMESTAMP/
+rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup --delete $BRANCH/drupal/ $INSTALLROOT/releases/$TIMESTAMP/
 
 # Create links to settings and files.
 if [ ! -h $INSTALLROOT/releases/$TIMESTAMP/sites/default/files ]; then
