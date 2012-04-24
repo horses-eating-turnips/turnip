@@ -62,6 +62,9 @@ variables[admin_theme] = rubik
 variables[node_admin_theme] = 1
 variables[site_default_country] = US
 
+; Up default log limit.
+variables[dblog_row_limit] = 1000000
+
 ; Disable core image styles
 variables[os_base_remove_core_image_styles] = 1
 
