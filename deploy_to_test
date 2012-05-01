@@ -86,6 +86,9 @@ drush @$SUBDOMAIN fra -y
 # Clear caches.
 drush @$SUBDOMAIN cc all
 
+# Enable the environment indicator module.
+drush @$SUBDOMAIN en -y environment_indicator
+
 # Remove all but the last 4 builds in the releases directory.
 cd $INSTALLROOT/releases
 # Fix 7.x perms to sites/default directory.
