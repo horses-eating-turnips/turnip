@@ -27,6 +27,8 @@ projects[os_base][download][branch] = "7.x-1.x"
 ; Views
 ;projects[views][subdir] = "contrib"
 ;projects[views][version] = "3.3"
+;; http://drupal.org/node/1507536#comment-5797740
+;projects[views][patch][] = "http://drupal.org/files/3-Issue-1507536-by-ericduran-Added-Make-the-exported-o.patch"
 
 ; Mollom
 ;projects[mollom][subdir] = "contrib"
