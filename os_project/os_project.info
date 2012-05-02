@@ -76,6 +76,9 @@ variables[os_base_remove_core_image_styles] = 1
 ;    administrative approval.
 variables[user_register] = 0
 
+; No goofy 'content/title' default alias.
+variables[pathauto_node_pattern] = ''
+
 ;
 ; Nodes
 ;
@@ -91,3 +94,4 @@ variables[user_register] = 0
 ;nodes[about][menu][menu_name] = main-menu
 ;nodes[about][menu][weight] = 0
 ;nodes[about][path][alias] = about
+;nodes[about][path][pathauto] = 0
