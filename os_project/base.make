@@ -6,29 +6,26 @@ api = 2
 ;;;;;;;;;;;;;;;;;;; CONTRIB ;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;; (alphabetical order) ;;;;;;;;;;;;;;;
 projects[ctools][subdir] = "contrib"
-projects[ctools][download][revision] = "575b14b"
-; http://drupal.org/node/1120028#comment-5269384
-projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths_3.patch"
+projects[ctools][version] = "1.0"
+; http://drupal.org/node/1120028#comment-5792282
+projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths-1120028-08.patch"
 
 projects[entitycache][subdir] = "contrib"
 projects[entitycache][version] = "1.1"
 
 projects[features][subdir] = "contrib"
-projects[features][download][revision] = "83e0a6c"
+projects[features][revision] = "a110769"
 ; http://drupal.org/node/1265168#comment-5413624
 projects[features][patch][] = "http://drupal.org/files/features-1265168-19-roles.patch"
 
 projects[redirect][subdir] = "contrib"
-projects[redirect][type] = "module"
-projects[redirect][download][type] = "git"
-; http://drupal.org/node/1174594
-projects[redirect][download][revision] = "5de9fd440f1c5b8955b08ea3722a0ee09c6e051e"
+projects[redirect][version] = "1.0-beta4"
 
 projects[pathauto][subdir] = "contrib"
 projects[pathauto][version] = "1.0"
 
 projects[strongarm][subdir] = "contrib"
-projects[strongarm][version] = "2.0-beta5"
+projects[strongarm][version] = "2.0-rc1"
 
 projects[token][subdir] = "contrib"
 projects[token][version] = "1.0-rc1"
@@ -52,8 +49,11 @@ projects[admin_menu][patch][] = "http://drupal.org/files/issues/admin_menu.10258
 projects[devel][subdir] = "development"
 projects[devel][version] = "1.2"
 
-projects[coder][subdir] = "development"
-projects[coder][version] = "1.0"
+projects[environment_indicator][subdir] = "development"
+projects[environment_indicator][version] = "1.1"
+
+projects[stage_file_proxy][subdir] = "development"
+projects[stage_file_proxy][revision] = "0c619c7"
 
 ; Libraries
 libraries[tinymce][download][type] = "get"

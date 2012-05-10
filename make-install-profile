@@ -19,8 +19,12 @@ FILES="os_project.info os_project.install os_project.make os_project.profile"
 sed -i -e "s/PROFILE=\"os_project\"/PROFILE=\"$NEW\"/" rebuild.sh
 sed -i -e "s/PROJECT/$PROJECTNAME/" rebuild.sh
 
+# deploy script
+sed -i -e "s/INSTALLPROFILE=os_project/INSTALLPROFILE=$NEW/" deploy_to_test
+
 mkdir $NEW
 cp os_project/os_project.* $NEW/
+cp os_project/*make $NEW/
 cd $NEW
 sed -i -e "s/os_project/$NEW/" $FILES
 sed -i -e "s/PROJECTNAME/$PROJECTNAME/" $FILES

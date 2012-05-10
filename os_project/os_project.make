@@ -5,7 +5,7 @@ api = 2
 
 core = "7.x"
 projects[drupal][type] = "core"
-projects[drupal][version] = "7.12"
+projects[drupal][version] = "7.14"
 ; Make taxonomy permissions use vocabulary machine name instead of vid
 projects[drupal][patch][] = "http://drupal.org/files/issues/995156-5_portable_taxonomy_permissions.patch"
 
@@ -26,7 +26,9 @@ projects[os_base][download][branch] = "7.x-1.x"
 
 ; Views
 ;projects[views][subdir] = "contrib"
-;projects[views][version] = "3.1"
+;projects[views][version] = "3.3"
+;; http://drupal.org/node/1507536#comment-5797740
+;projects[views][patch][] = "http://drupal.org/files/3-Issue-1507536-by-ericduran-Added-Make-the-exported-o.patch"
 
 ; Mollom
 ;projects[mollom][subdir] = "contrib"
@@ -64,3 +66,8 @@ libraries[profiler][patch][] = "http://drupal.org/files/issues/0001-Issue-116567
 projects[delta][subdir] = "contrib"
 projects[delta][version] = "3.0-beta8"
 projects[omega][version] = "3.0"
+
+; Lovejoy theme for initial development.
+projects[lovejoy][type] = "theme"
+projects[lovejoy][download][type] = "git"
+projects[lovejoy][download][url] = "git://github.com/opensourcery/lovejoy.git"

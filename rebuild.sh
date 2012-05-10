@@ -20,11 +20,14 @@ $PROFILE/modules/stock
 $PROFILE/themes/tao
 $PROFILE/themes/rubik
 $PROFILE/themes/omega
+$PROFILE/themes/lovejoy
 $PROFILE/libraries"
 
 # D7 will automatically set permissions on sites/default folder,
 # making it difficult to remove here.
-chmod 777 drupal/sites/default
+if [ -d drupal/sites/default ]; then
+  chmod 777 drupal/sites/default
+fi
 
 for dir in $DIRECTORIES; do
   if [ -d "$dir" ]; then
