@@ -55,7 +55,9 @@ projects[environment_indicator][version] = "1.1"
 projects[stage_file_proxy][subdir] = "development"
 projects[stage_file_proxy][revision] = "0c619c7"
 
-; Libraries
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;; LIBRARIES ;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 libraries[tinymce][download][type] = "get"
 libraries[tinymce][download][url] = "https://github.com/downloads/tinymce/tinymce/tinymce_3.4.8.zip"
 libraries[tinymce][destination] = "libraries"
