@@ -12,32 +12,32 @@ theme = lovejoy
 dependencies[] = block
 dependencies[] = contextual
 dependencies[] = dashboard
+dependencies[] = dblog
 dependencies[] = entitycache
+dependencies[] = field_ui
+dependencies[] = file
 dependencies[] = help
 dependencies[] = image
 dependencies[] = list
 dependencies[] = menu
 dependencies[] = number
 dependencies[] = options
+dependencies[] = overlay
 dependencies[] = path
-dependencies[] = taxonomy
-dependencies[] = dblog
+dependencies[] = rdf
 dependencies[] = search
 dependencies[] = shortcut
+dependencies[] = taxonomy
 ; The admin_menu module should only be used for development purposes.
 dependencies[] = toolbar
-dependencies[] = overlay
-dependencies[] = field_ui
-dependencies[] = file
-dependencies[] = rdf
 
 ; Contrib
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = pathauto
 dependencies[] = redirect
-dependencies[] = token
 dependencies[] = strongarm
+dependencies[] = token
 dependencies[] = wysiwyg
 
 ; Features
@@ -46,7 +46,7 @@ dependencies[] = os_base
 ;
 ; Users
 ;
-users[admin][uid] = 1 
+users[admin][uid] = 1
 users[admin][name] = admin
 users[admin][mail] = admin@os_project.dev
 users[admin][status] = 1
