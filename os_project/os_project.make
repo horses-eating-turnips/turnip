@@ -41,7 +41,7 @@ projects[os_base][download][branch] = "7.x-1.x"
 ; Apache Solr Search
 ; TODO potentially switch from this module to search_api module.
 ;projects[apachesolr][subdir] = "contrib"
-;projects[apachesolr][version] = "1.0-beta8"
+;projects[apachesolr][version] = "3.0-beta19"
 ;libraries[SolrPHPClient][download][type] = "svn"
 ;libraries[SolrPHPClient][download][url] = "http://solr-php-client.googlecode.com/svn/trunk/"
 ;libraries[SolrPHPClient][download][revision] = "22"
@@ -64,8 +64,8 @@ libraries[profiler][patch][] = "http://drupal.org/files/issues/0001-Issue-116567
 
 ; Omega base theme
 projects[delta][subdir] = "contrib"
-projects[delta][version] = "3.0-beta8"
-projects[omega][version] = "3.0"
+projects[delta][version] = "3.0-beta9"
+projects[omega][version] = "3.1"
 
 ; Lovejoy theme for initial development.
 projects[lovejoy][type] = "theme"

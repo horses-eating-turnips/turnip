@@ -22,13 +22,13 @@ projects[redirect][subdir] = "contrib"
 projects[redirect][version] = "1.0-beta4"
 
 projects[pathauto][subdir] = "contrib"
-projects[pathauto][version] = "1.0"
+projects[pathauto][version] = "1.1"
 
 projects[strongarm][subdir] = "contrib"
 projects[strongarm][version] = "2.0-rc1"
 
 projects[token][subdir] = "contrib"
-projects[token][version] = "1.0-rc1"
+projects[token][version] = "1.1"
 
 projects[wysiwyg][subdir] = "contrib"
 projects[wysiwyg][version] = "2.1"
@@ -53,7 +53,7 @@ projects[environment_indicator][subdir] = "development"
 projects[environment_indicator][version] = "1.1"
 
 projects[stage_file_proxy][subdir] = "development"
-projects[stage_file_proxy][revision] = "0c619c7"
+projects[stage_file_proxy][version] = "1.0"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; LIBRARIES ;;;;;;;;;;;;;;;;;;;;
