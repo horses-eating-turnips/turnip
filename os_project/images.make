@@ -5,6 +5,9 @@ api = 2
 projects[adaptive_image][subdir] = "contrib"
 projects[adaptive_image][version] = "1.4"
 
+projects[caption_filter][subdir] = "contrib"
+projects[caption_filter][version] = "1.2"
+
 projects[file_entity][subdir] = "contrib"
 projects[file_entity][version] = "2.0-unstable4"
 
