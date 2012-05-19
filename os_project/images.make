@@ -6,7 +6,9 @@ projects[adaptive_image][subdir] = "contrib"
 projects[adaptive_image][version] = "1.4"
 
 projects[caption_filter][subdir] = "contrib"
-projects[caption_filter][version] = "1.2"
+projects[caption_filter][download][type] = "git"
+projects[caption_filter][download][revision] = "c9794cfdc1fc4bde14db6260ccf394d77fe43f60"
+projects[caption_filter][patch][] = "http://drupal.org/files/caption-button-1432092-4.patch"
 
 projects[file_entity][subdir] = "contrib"
 projects[file_entity][version] = "2.0-unstable4"
