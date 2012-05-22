@@ -25,18 +25,18 @@ projects[os_base][download][branch] = "7.x-1.x"
 ; projects[os_base][download][tag] = "7.x-1.0-alpha1"
 
 ; Views
-;projects[views][subdir] = "contrib"
-;projects[views][version] = "3.3"
-;; http://drupal.org/node/1507536#comment-5797740
-;projects[views][patch][] = "http://drupal.org/files/3-Issue-1507536-by-ericduran-Added-Make-the-exported-o.patch"
+projects[views][subdir] = "contrib"
+projects[views][version] = "3.3"
+; http://drupal.org/node/1507536#comment-5797740
+projects[views][patch][] = "http://drupal.org/files/3-Issue-1507536-by-ericduran-Added-Make-the-exported-o.patch"
 
 ; Mollom
-;projects[mollom][subdir] = "contrib"
-;projects[mollom][version] = "2.0"
+projects[mollom][subdir] = "contrib"
+projects[mollom][version] = "2.0"
 
 ; Google analytics
-;projects[google_analytics][subdir] = "contrib"
-;projects[google_analytics][version] = "1.2"
+projects[google_analytics][subdir] = "contrib"
+projects[google_analytics][version] = "1.2"
 
 ; Apache Solr Search
 ; TODO potentially switch from this module to search_api module.
