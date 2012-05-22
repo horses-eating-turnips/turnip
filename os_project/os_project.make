@@ -32,7 +32,7 @@ projects[os_base][download][branch] = "7.x-1.x"
 
 ; Mollom
 ;projects[mollom][subdir] = "contrib"
-;projects[mollom][version] = "1.1"
+;projects[mollom][version] = "2.0"
 
 ; Google analytics
 ;projects[google_analytics][subdir] = "contrib"

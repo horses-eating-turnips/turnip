@@ -14,7 +14,7 @@ projects[entitycache][subdir] = "contrib"
 projects[entitycache][version] = "1.1"
 
 projects[features][subdir] = "contrib"
-projects[features][revision] = "a110769"
+projects[features][version] = "1.0-rc2"
 ; http://drupal.org/node/1265168#comment-5413624
 projects[features][patch][] = "http://drupal.org/files/features-1265168-19-roles.patch"
 
@@ -42,7 +42,7 @@ projects[wysiwyg][patch[] = "http://drupal.org/files/1309040-7-select_theme_css.
 ;;;;;;;; (may be disabled for production) ;;;;;;;;
 projects[admin_menu][type] = "module"
 projects[admin_menu][subdir] = "development"
-projects[admin_menu][version] = "3.0-rc1"
+projects[admin_menu][version] = "3.0-rc3"
 ; Duplicate dropdown - http://drupal.org/node/1025846#comment-4111862
 projects[admin_menu][patch][] = "http://drupal.org/files/issues/admin_menu.1025846-4.patch"
 
