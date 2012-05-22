@@ -25,6 +25,8 @@ projects[media][patch][] = "http://drupal.org/files/media-embed-library-resize.p
 
 projects[plupload][subdir] = "contrib"
 projects[plupload][version] = "1.0-beta4"
+; http://drupal.org/node/1476830#comment-6026232
+projects[plupload][patch][] = "http://drupal.org/files/media-upload-widget--1476830-2.patch"
 
 libraries[plupload][download][type] = "get"
 libraries[plupload][download][url] = "http://cloud.github.com/downloads/moxiecode/plupload/plupload_1_5_1_1.zip"
