@@ -17,6 +17,8 @@ projects[features][subdir] = "contrib"
 projects[features][version] = "1.0-rc2"
 ; http://drupal.org/node/1265168#comment-5413624
 projects[features][patch][] = "http://drupal.org/files/features-1265168-19-roles.patch"
+; http://drupal.org/node/1530386#comment-6003440
+projects[features][patch][] = "http://drupal.org/files/features-1530386-10-improve_installation_performance.patch"
 
 projects[redirect][subdir] = "contrib"
 projects[redirect][version] = "1.0-beta4"
