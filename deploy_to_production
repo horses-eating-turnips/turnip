@@ -4,13 +4,10 @@
 
 ##
 # @file
-# OpenSourcery Drupal Deployment Script
+# OpenSourcery Drupal Deployment Script.
 #
-# @todo This currently won't work for initial deployment to a Drupal
-# host. Several things still need to be done manually the first time
-# around.
 
-# Deploy to Canvas Dreams
+# Deploy to typical shared hosting.
 USER=
 HOST=
 INSTALLROOT=/home/$USER/os_app
@@ -18,12 +15,34 @@ DOCUMENTROOT=/home/$USER/public_html
 
 ##### Things below here generally won't need to be changed #####
 
+if [[ -z "$HOST" || -z "$USER" ]]; then
+  echo "This script must be configured before use."
+  exit 1
+fi
+
 # Initial run? Set up some stuff.
-if [[ "$1" = "--init" ]]; then
-  ssh $USER@$HOST mkdir -p $INSTALLROOT/shared/files
-  scp ./drupal/sites/default/default.settings.php $USER@$HOST:$INSTALLROOT/shared/settings.php
-  ssh $USER@$HOST chmod 400 $INSTALLROOT/shared/settings.php
-  # @todo: Archive existing "public_html" and create initial dummy symlink
+if ssh $USER@$HOST "[ ! -d $INSTALLROOT/releases ]"; then
+  echo -n "It appears this is the first deployment. Perform initial setup? (y/n): "
+  read CONFIRM
+  if [ "$CONFIRM" != "y" ]; then
+    echo "Aborted."
+    exit 2
+  fi
+
+  scp -q ./drupal/sites/default/default.settings.php $USER@$HOST:default.settings.php
+
+  # Create our directories, place the settings.php file, archive existing
+  # "public_html" directory and create initial documentroot symlink.
+  REMOTE_HOME=$(dirname $DOCUMENTROOT)
+  ARCHIVED_DOCUMENTROOT=$REMOTE_HOME/old_public_html
+  ssh $USER@$HOST "mkdir -p $INSTALLROOT/{releases,shared/files};
+    mv \$HOME/default.settings.php $INSTALLROOT/shared/settings.php;
+    chmod 700 $INSTALLROOT $INSTALLROOT/{releases,shared};
+    chmod 400 $INSTALLROOT/shared/settings.php;
+    mv $DOCUMENTROOT $ARCHIVED_DOCUMENTROOT;
+    ln -s $ARCHIVED_DOCUMENTROOT $DOCUMENTROOT"
+  echo "Setup complete. Run again to deploy."
+  exit 0
 fi
 
 # Deploy into a meaningfully named directory inside of the releases directory.
