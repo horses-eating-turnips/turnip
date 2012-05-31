@@ -87,7 +87,12 @@ drush @$SUBDOMAIN fra -y
 drush @$SUBDOMAIN cc all
 
 # Enable the environment indicator module.
+echo "Enabling environment indicator module."
 drush @$SUBDOMAIN en -y environment_indicator
+drush @$SUBDOMAIN role-add-perm "anonymous user" "access environment indicator"
+drush @$SUBDOMAIN role-add-perm "authenticated user" "access environment indicator"
+
+
 
 # Remove all but the last 4 builds in the releases directory.
 cd $INSTALLROOT/releases
