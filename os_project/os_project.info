@@ -60,6 +60,8 @@ variables[site_mail] = admin@os_project.dev
 variables[site_name] = PROJECTNAME
 variables[node_admin_theme] = 1
 variables[site_default_country] = US
+; Set to 1 to automatically give the "administrator" role all permissions.
+variables[user_admin_role] = 0
 
 ; Up default log limit.
 variables[dblog_row_limit] = 1000000
