@@ -38,6 +38,10 @@ projects[os_base][download][branch] = "7.x-1.x"
 projects[google_analytics][subdir] = "contrib"
 projects[google_analytics][version] = "1.2"
 
+; Menu Block
+projects[menu_block][subdir] = "contrib"
+projects[menu_block][version] = "2.3"
+
 ; Mollom
 projects[mollom][subdir] = "contrib"
 projects[mollom][version] = "2.0"
