@@ -24,20 +24,6 @@ projects[os_base][download][branch] = "7.x-1.x"
 ; Tag new release at end of project
 ; projects[os_base][download][tag] = "7.x-1.0-alpha1"
 
-; Views
-projects[views][subdir] = "contrib"
-projects[views][version] = "3.3"
-; http://drupal.org/node/1507536#comment-5797740
-projects[views][patch][] = "http://drupal.org/files/3-Issue-1507536-by-ericduran-Added-Make-the-exported-o.patch"
-
-; Mollom
-projects[mollom][subdir] = "contrib"
-projects[mollom][version] = "2.0"
-
-; Google analytics
-projects[google_analytics][subdir] = "contrib"
-projects[google_analytics][version] = "1.2"
-
 ; Apache Solr Search
 ; TODO potentially switch from this module to search_api module.
 ;projects[apachesolr][subdir] = "contrib"
@@ -48,17 +34,33 @@ projects[google_analytics][version] = "1.2"
 ;libraries[SolrPHPClient][destination] = "modules/contrib/apachesolr/"
 ;libraries[SolrPHPClient][directory_name] = "SolrPhpClient"
 
-; swfobject, JS library for embedding Flash content
-;libraries[swfobject][download][type] = "get"
-;libraries[swfobject][download][url] = "http://swfobject.googlecode.com/files/swfobject_2_2.zip"
-;libraries[swfobject][destination] = "libraries"
-;libraries[swfobject][directory_name] = "swfobject"
+; Google analytics
+projects[google_analytics][subdir] = "contrib"
+projects[google_analytics][version] = "1.2"
+
+; Mollom
+projects[mollom][subdir] = "contrib"
+projects[mollom][version] = "2.0"
+
+; Views
+projects[views][subdir] = "contrib"
+projects[views][version] = "3.3"
+; http://drupal.org/node/1507536#comment-5797740
+projects[views][patch][] = "http://drupal.org/files/3-Issue-1507536-by-ericduran-Added-Make-the-exported-o.patch"
+
+; Libraries
 
 ; Profiler
 libraries[profiler][download][type] = "get"
 libraries[profiler][download][url] = "http://ftp.drupal.org/files/projects/profiler-7.x-2.0-beta1.tar.gz"
 ; http://drupal.org/node/1165672#comment-4696748: Don't disable blocks
 libraries[profiler][patch][] = "http://drupal.org/files/issues/0001-Issue-1165672-don-t-disable-blocks.patch"
+
+; swfobject, JS library for embedding Flash content
+;libraries[swfobject][download][type] = "get"
+;libraries[swfobject][download][url] = "http://swfobject.googlecode.com/files/swfobject_2_2.zip"
+;libraries[swfobject][destination] = "libraries"
+;libraries[swfobject][directory_name] = "swfobject"
 
 ; Project-specific modules, and overrides.
 
