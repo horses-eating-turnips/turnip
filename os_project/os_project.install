@@ -26,6 +26,35 @@ function os_project_install() {
     ->condition('type', 'theme')
     ->condition('name', 'seven')
     ->execute();
+
+  // Place the content block.
+  $blocks = array(
+    array(
+      'module' => 'system',
+      'delta' => 'main',
+      'theme' => variable_get('theme_default', 'lovejoy'),
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'content',
+      'pages' => '',
+      'cache' => -1,
+    ),
+  );
+  $fields = array(
+    'module',
+    'delta',
+    'theme',
+    'status',
+    'weight',
+    'region',
+    'pages',
+    'cache',
+  );
+  $query = db_insert('block')->fields($fields);
+  foreach ($blocks as $block) {
+    $query->values($block);
+  }
+  $query->execute();
 }
 
 /**
