@@ -33,7 +33,7 @@ projects[wysiwyg][version] = "2.1"
 ; http://drupal.org/node/624018#comment-5098162
 projects[wysiwyg][patch][] = "http://drupal.org/files/0001-feature.inc-from-624018-211.patch"
 ; Select theme css patch: http://drupal.org/node/1309040#comment-5512318
-projects[wysiwyg][patch[] = "http://drupal.org/files/1309040-7-select_theme_css.patch"
+projects[wysiwyg][patch][] = "http://drupal.org/files/1309040-7-select_theme_css.patch"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; DEVELOPMENT MODULES ;;;;;;;;;;;;;
