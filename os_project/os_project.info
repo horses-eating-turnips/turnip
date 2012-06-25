@@ -58,6 +58,7 @@ variables[site_frontpage] = node/1
 ;variables[site_404] =
 variables[site_mail] = admin@os_project.dev
 variables[site_name] = PROJECTNAME
+variables[admin_theme] = seven
 variables[node_admin_theme] = 1
 variables[site_default_country] = US
 
