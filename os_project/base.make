@@ -23,7 +23,7 @@ projects[pathauto][subdir] = "contrib"
 projects[pathauto][version] = "1.1"
 
 projects[strongarm][subdir] = "contrib"
-projects[strongarm][version] = "2.0-rc1"
+projects[strongarm][version] = "2.0"
 
 projects[token][subdir] = "contrib"
 projects[token][version] = "1.1"
@@ -44,7 +44,7 @@ projects[admin_menu][subdir] = "development"
 projects[admin_menu][version] = "3.0-rc3"
 
 projects[devel][subdir] = "development"
-projects[devel][version] = "1.2"
+projects[devel][version] = "1.3"
 
 projects[environment_indicator][subdir] = "development"
 projects[environment_indicator][version] = "1.1"
