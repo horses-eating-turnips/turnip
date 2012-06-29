@@ -13,8 +13,17 @@ projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths-11
 projects[entitycache][subdir] = "contrib"
 projects[entitycache][version] = "1.1"
 
+projects[elements][subdir] = "contrib"
+projects[elements][version] = "1.2"
+
 projects[features][subdir] = "contrib"
 projects[features][version] = "1.0-rc3"
+
+projects[fences][subdir] = "contrib"
+projects[fences][version] = "1.0"
+
+projects[html5_tools][subdir] = "contrib"
+projects[html5_tools][version] = "1.2"
 
 projects[redirect][subdir] = "contrib"
 projects[redirect][version] = "1.0-beta4"

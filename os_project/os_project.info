@@ -34,6 +34,9 @@ dependencies[] = toolbar
 ; Contrib
 dependencies[] = ctools
 dependencies[] = features
+dependencies[] = elements
+dependencies[] = fences
+dependencies[] = html5_tools
 dependencies[] = pathauto
 dependencies[] = redirect
 dependencies[] = strongarm
