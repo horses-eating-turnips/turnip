@@ -1,7 +1,5 @@
 ; Project-specific installation profile
 
-base = opensourcery_install
-
 name = PROJECTNAME
 distribution_name = PROJECTNAME
 description = DESCRIPTION
