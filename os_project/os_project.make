@@ -18,6 +18,9 @@ includes[images] = "images.make"
 ; Uncomment this to enable demo content. Do not use on production.
 ;includes[demo] = "demo.make"
 
+; Uncomment to use Panels.
+;includes[panels] = "panels.make"
+
 ; OpenSourcery base feature.
 projects[os_base][subdir] = "stock"
 projects[os_base][type] = "module"
