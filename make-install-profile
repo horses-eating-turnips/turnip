@@ -14,6 +14,7 @@ NEW="$1"
 PROJECTNAME="$2"
 DESCRIPTION="$3"
 FILES="os_project.info os_project.install os_project.make os_project.profile"
+DEMOEXTS="deploy_plans.inc features.inc features.uuid_entities.inc info module"
 SEDFLAGS="-i.orig"
 
 # rebuild script
@@ -26,6 +27,7 @@ sed -e "s/INSTALLPROFILE=os_project/INSTALLPROFILE=$NEW/" $SEDFLAGS deploy_to_te
 mkdir $NEW
 cp os_project/os_project.* $NEW/
 cp os_project/*make $NEW/
+cp -r os_project/modules/ $NEW/
 cd $NEW
 sed -e "s/os_project/$NEW/" $SEDFLAGS $FILES
 sed -e "s/PROJECTNAME/$PROJECTNAME/" $SEDFLAGS $FILES
@@ -34,5 +36,14 @@ mv os_project.info    $NEW.info
 mv os_project.install $NEW.install
 mv os_project.make    $NEW.make
 mv os_project.profile $NEW.profile
+# demo content feature
+for ext in $DEMOEXTS; do
+  sed -e "s/os_project_demo_content/$NEW\_demo_content/" $SEDFLAGS modules/features/os_project_demo_content/os_project_demo_content.$ext
+  sed -e "s/PROJECT/$PROJECTNAME/" $SEDFLAGS modules/features/os_project_demo_content/os_project_demo_content.$ext
+  mv modules/features/os_project_demo_content/os_project_demo_content.$ext modules/features/os_project_demo_content/$NEW\_demo_content.$ext
+done
+mv modules/features/os_project_demo_content modules/features/$NEW\_demo_content
+rm modules/features/$NEW\_demo_content/*.orig
 rm *.orig
 cd ..
+rm *.orig

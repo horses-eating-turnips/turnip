@@ -1,0 +1,11 @@
+name = PROJECT Demo Content
+core = 7.x
+package = Features
+dependencies[] = ctools
+dependencies[] = deploy
+dependencies[] = entity
+dependencies[] = uuid
+features[ctools][] = deploy:deploy_plans:1
+features[deploy_plans][] = demo_content
+features[features_api][] = api:1
+features[uuid_entities][] = demo_content

@@ -15,6 +15,9 @@ includes[base] = "base.make"
 ; Image handling. Comment this out if you don't need any image handling.
 includes[images] = "images.make"
 
+; Uncomment this to enable demo content. Do not use on production.
+;includes[demo] = "demo.make"
+
 ; OpenSourcery base feature.
 projects[os_base][subdir] = "stock"
 projects[os_base][type] = "module"
