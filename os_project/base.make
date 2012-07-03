@@ -66,6 +66,9 @@ projects[os_devel][download][url] = "git://github.com/opensourcery/os_devel.git"
 projects[stage_file_proxy][subdir] = "development"
 projects[stage_file_proxy][version] = "1.0"
 
+projects[styleguide][subdir] = "development"
+projects[styleguide][version] = "1.0"
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; LIBRARIES ;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
