@@ -8,6 +8,7 @@ projects[adaptive_image][version] = "1.4"
 projects[caption_filter][subdir] = "contrib"
 projects[caption_filter][download][type] = "git"
 projects[caption_filter][download][revision] = "c9794cfdc1fc4bde14db6260ccf394d77fe43f60"
+; http://drupal.org/node/1432092#comment-6014324
 projects[caption_filter][patch][] = "http://drupal.org/files/caption-button-1432092-4.patch"
 
 projects[file_entity][subdir] = "contrib"
@@ -22,6 +23,10 @@ projects[media][version] = "2.0-unstable6"
 projects[media][patch][] = "http://drupal.org/files/check_if_media_the_type_table_exists-1311828-13.patch"
 ; http://drupal.org/node/1278180#comment-5085370
 projects[media][patch][] = "http://drupal.org/files/media-embed-library-resize.patch"
+
+; Required for multiple file uploads via plupload at `file/add`.
+projects[multiform][subdir] = "contrib"
+projects[multiform][version] = "1.0"
 
 projects[plupload][subdir] = "contrib"
 projects[plupload][version] = "1.0"
