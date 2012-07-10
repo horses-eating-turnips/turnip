@@ -1,5 +1,7 @@
 <?php
 
+use Behat\Symfony2Extension\Context\KernelAwareInterface;
+use Behat\MinkExtension\Context\MinkContext;
 use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Context\TranslatedContextInterface,
     Behat\Behat\Context\BehatContext,
@@ -8,19 +10,16 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 use Symfony\Component\Process\Process;
 
-require 'vendor/autoload.php';
+use Behat\Behat\Context\Step\Given;
+use Behat\Behat\Context\Step\When;
+use Behat\Behat\Context\Step\Then;
 
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
+require 'vendor/autoload.php';
 
 /**
  * Features context.
  */
-class FeatureContext extends BehatContext {
+class FeatureContext extends MinkContext {
 
   /**
    * Current authenticated user.
@@ -28,6 +27,11 @@ class FeatureContext extends BehatContext {
    * A value of FALSE denotes an anonymous user.
    */
   public $user = FALSE;
+
+  /**
+   * Keep track of all users that are created so they can easily be removed.
+   */
+  private $users = array();
 
   /**
    * Initializes context.
@@ -38,61 +42,58 @@ class FeatureContext extends BehatContext {
    *   Context parameters (set them up through behat.yml).
    */
   public function __construct(array $parameters) {
-    $this->base_url = $parameters['base_url'];
-    // TODO: There should be a better way to do this.
     if (isset($parameters['basic_auth'])) {
       $this->basic_auth = $parameters['basic_auth'];
-      if ($parameters['default_browser'] == 'firefox') {
-        $this->base_url = str_replace('://', '://' . $parameters['basic_auth']['user'] . ':' . $parameters['basic_auth']['pass'] . '@', $this->base_url);
-      }
     }
     $this->default_browser = $parameters['default_browser'];
     $this->drushAlias = $parameters['drush_alias'];
   }
 
   /**
+   * Run before every scenario.
+   *
    * @BeforeScenario
    */
   public function beforeScenario($event) {
-    $driver = new \Behat\Mink\Driver\SahiDriver('firefox');
-    $sahi_firefox = new \Behat\Mink\Session($driver);  
-    $driver = new \Behat\Mink\Driver\Selenium2Driver('firefox', array());
-    $selenium_firefox = new \Behat\Mink\Session($driver);
-    $driver = new \Behat\Mink\Driver\GoutteDriver();
-    $goutte = new \Behat\Mink\Session($driver);
     if (isset($this->basic_auth)) {
-      $goutte->setBasicAuth($this->basic_auth['user'], $this->basic_auth['pass']);
+      // Setup basic auth.
+      $this->getSession()->setBasicAuth($this->basic_auth['username'], $this->basic_auth['password']);
     }
-   $this->mink = new \Behat\Mink\Mink(array('sahi_firefox' => $sahi_firefox,'selenium_firefox' => $selenium_firefox, 'goutte' => $goutte));
-    $this->mink->setDefaultSessionName($this->default_browser);
   }
 
   /**
+   * Run after every scenario.
+   *
    * @AfterScenario
    */
   public function afterScenario($event) {
-    $this->mink->stopSessions();
-    unset($this->mink);
-
-    // Remove a user if one was created.
-    if ($this->user) {
-      $process = new Process("drush @{$this->drushAlias} user-cancel --yes {$this->user->name} --delete-content");
-      $process->setTimeout(3600);
-      $process->run();
-      if (!$process->isSuccessful()) {
-        throw new RuntimeException($process->getErrorOutput());
+    // Remove any users that were created.
+    if (!empty($this->users)) {
+      foreach ($this->users as $user) {
+        $process = new Process("drush @{$this->drushAlias} user-cancel --yes {$user->name} --delete-content");
+        $process->setTimeout(3600);
+        $process->run();
+        if (!$process->isSuccessful()) {
+          throw new RuntimeException($process->getErrorOutput());
+        }
       }
     }
   }
+
+  /**
+   * @defgroup helper functions
+   * @{
+   */
 
   /**
    * Helper function to generate a random string of arbitrary length.
    *
    * Copied from drush_generate_password().
    *
-   * @param $length
+   * @param int $length
    *   Number of characters the generated string should contain.
-   * @return
+   *
+   * @return string
    *   The generated string.
    */
   public function randomString($length = 10) {
@@ -132,14 +133,13 @@ class FeatureContext extends BehatContext {
       throw new Exception('Tried to login without a user.');
     }
 
-    $session = $this->mink->getSession();
-    $session->visit($this->base_url . '/user');
-    $element = $session->getPage();
+    $this->getSession()->visit($this->locatePath('/user'));
+    $element = $this->getSession()->getPage();
     $element->fillField('Username', $this->user->name);
     $element->fillField('Password', $this->user->pass);
     $submit = $element->findButton('Log in');
     if (empty($submit)) {
-      throw new Exception('No submit button at '. $session->getCurrentUrl());
+      throw new Exception('No submit button at ' . $this->getSession()->getCurrentUrl());
     }
 
     // Log in.
@@ -154,16 +154,15 @@ class FeatureContext extends BehatContext {
    * Helper function to logout.
    */
   public function logout() {
-    $session = $this->mink->getSession();
-    $session->visit($this->base_url . '/user/logout');
+    $this->getSession()->visit($this->locatePath('/user/logout'));
   }
 
   /**
    * Determine if the a user is already logged in.
    */
   public function loggedIn() {
-    $session = $this->mink->getSession();
-    $session->visit($this->base_url . '/');
+    $session = $this->getSession();
+    $session->visit($this->locatePath('/'));
 
     // If a logout link is found, we are logged in. While not perfect, this is
     // how Drupal SimpleTests currently work as well.
@@ -172,29 +171,46 @@ class FeatureContext extends BehatContext {
   }
 
   /**
-   * @Given /^(that I|I) am at "([^"]*)"$/
+   * Private function for the whoami step.
    */
-  public function iAmAt($syn, $path) {
-    $session = $this->mink->getSession();
-    $session->visit($this->base_url . $path);
-    return;
-    $status = $session->getStatusCode();
-    if ($status != 200) {
-      throw new Exception("Status $status when retriving ". $session->getCurrentUrl());
+  private function whoami() {
+    $element = $this->getSession()->getPage();
+    // Go to the user page.
+    $session->visit($this->locatePath('/user'));
+    if ($find = $element->find('css', '#page-title')) {
+      $page_title = $find->getText();
+      if ($page_title) {
+        return $page_title;
+      }
     }
+    return FALSE;
+  }
+
+  /**
+   * @} End of defgroup "helper functions".
+   */
+
+  /**
+   * @defgroup mink extensions
+   * @{
+   * Wrapper step definitions to the Mink extensions in order to implement
+   * alternate wording for tests.
+   */
+
+  /**
+   * @Given /^(?:that I|I) am at "([^"]*)"$/
+   */
+  public function iAmAt($path) {
+    // Use the Mink Extenstion step definition.
+    return new Given("I am on \"$path\"");
   }
 
   /**
    * @When /^I visit "([^"]*)"$/
    */
   public function iVisit($path) {
-    $session = $this->mink->getSession();
-    $session->visit($this->base_url . $path);
-    return;
-    $status = $session->getStatusCode();
-    if ($status != 200) {
-      throw new Exception("Status $status when retriving ". $session->getCurrentUrl());
-    }
+    // Use the Mink Extenstion step definition.
+    return new Given("I am on \"$path\"");
   }
 
 
@@ -202,64 +218,35 @@ class FeatureContext extends BehatContext {
    * @When /^I click "([^"]*)"$/
    */
   public function iClick($linkname) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    $result = $element->findLink($linkname);
-    if (empty($result)) {
-      throw new Exception("No link to ". $linkname ." on ". $session->getCurrentUrl());
-    }
-    $result->click();
-  }
-
-  /**
-   * @When /^I search for "([^"]*)"$/
-   */
-  public function iSearchFor($searchterm) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    $element->fillField('edit-text', $searchterm);
-    $submit = $element->findById('edit-submit');
-    if (empty($submit)) {
-      throw new Exception('No submit button at '. $session->getCurrentUrl());
-    }
-    $submit->click();
+    // Use the Mink Extenstion step definition.
+    return new Given("I follow \"$linkname\"");
   }
 
   /**
    * @Given /^for "([^"]*)" I enter "([^"]*)"$/
+   * @Given /^I enter "([^"]*)" for "([^"]*)"$/
    */
   public function forIenter($fieldname, $formvalue) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    $result = $element->hasField($fieldname);
-    if ($result === False) {
-      throw new Exception("No field ". $fieldname ." found.");
-    }
-    $element->fillField($fieldname, $formvalue);
+    // Use the Mink Extenstion step definition.
+    return new Given("I fill in \"$fieldname\" with \"$formvalue\"");
   }
 
   /**
-   * @When /^I press "([^"]*)"$/
+   * @When /^I press the "([^"]*)" button$/
    */
-  public function iPress($submitbutton) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    $submit = $element->findButton($submitbutton);
-    if (empty($submit)) {
-      throw new Exception('No submit button at '. $session->getCurrentUrl());
-    }
-      $submit->click();
+  public function iPressTheButton($button) {
+    // Use the Mink Extenstion step definition.
+    return new Given("I press \"$button\"");
   }
 
   /**
    * @Then /^I should see the link "([^"]*)"$/
    */
   public function iShouldSeeTheLink($linkname) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
+    $element = $this->getSession()->getPage();
     $result = $element->findLink($linkname);
     if (empty($result)) {
-      throw new Exception("No link to ". $linkname ."  on ". $session->getCurrentUrl());
+      throw new Exception("No link to " . $linkname . " on " . $this->getSession()->getCurrentUrl());
     }
   }
 
@@ -267,11 +254,10 @@ class FeatureContext extends BehatContext {
    * @Then /^I should not see the link "([^"]*)"$/
    */
   public function iShouldNotSeeTheLink($linkname) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
+    $element = $this->getSession()->getPage();
     $result = $element->findLink($linkname);
     if ($result) {
-      throw new Exception("The link ". $linkname ." was present on ". $session->getCurrentUrl() ." and was not supposed to be.");
+      throw new Exception("The link " . $linkname . " was present on " . $session->getCurrentUrl() . " and was not supposed to be.");
     }
   }
 
@@ -279,8 +265,7 @@ class FeatureContext extends BehatContext {
    * @Then /^I should see the heading "([^"]*)"$/
    */
   public function iShouldSeeTheHeading($headingname) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
+    $element = $this->getSession()->getPage();
     foreach (array('h1', 'h2', 'h3', 'h4', 'h5', 'h6') as $heading) {
       $results = $element->findAll('css', $heading);
       foreach ($results as $result) {
@@ -289,56 +274,95 @@ class FeatureContext extends BehatContext {
         }
       }
     }
-    throw new Exception("The text ". $headingname ." was not found in any heading ". $session->getCurrentUrl());
+    throw new Exception("The text " . $headingname . " was not found in any heading " . $session->getCurrentUrl());
   }
 
   /**
-   * @Then /^(I|I should) see the text "([^"]*)"$/
+   * @Then /^(?:I|I should) see the text "([^"]*)"$/
    */
-  public function iShouldSeeTheText($syn, $text) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    $result = $element->hasContent($text);
-    if ($result === False) {
-      throw new Exception("The text ". $text ." was not found ". $session->getCurrentUrl());
-    }
+  public function iShouldSeeTheText($text) {
+    // Use the Mink Extension step definition.
+    return new Given("I should see text matching \"$text\"");
   }
 
   /**
    * @Then /^I should not see the text "([^"]*)"$/
    */
   public function iShouldNotSeeTheText($text) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    $result = $element->hasContent($text);
-    if ($result === True) {
-      throw new Exception("The text ". $text ." was found on ". $session->getCurrentUrl() ." and should not have been");
-    }
+    // Use the Mink Extension step definition.
+    return new Given("I should not see text matching \"$text\"");
   }
 
   /**
    * @Then /^I should get a "([^"]*)" HTTP response$/
    */
   public function iShouldGetAHttpResponse($status_code) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    $status = $session->getStatusCode();
-    if ($status != $status_code) {
-      throw new Exception("Found HTTP response $status instead of $status_code");
-    }
+    // Use the Mink Extension step definition.
+    return new Given("the response status code should be $status_code");
   }
 
+  /**
+   * @Then /^I should not get a "([^"]*)" HTTP response$/
+   */
+  public function iShouldNotGetAHttpResponse($status_code) {
+    // Use the Mink Extension step definition.
+    return new Given("the response status code should not be $status_code");
+  }
+
+  /**
+   * @Given /^I check the box "([^"]*)"$/
+   */
+  public function iCheckTheBox($checkbox) {
+    // Use the Mink Extension step definition.
+    return new Given("I check \"$checkbox\"");
+  }
+
+  /**
+   * @Given /^I uncheck the box "([^"]*)"$/
+   */
+  public function iUncheckTheBox($checkbox) {
+    // Use the Mink Extension step definition.
+    return new Given("I uncheck \"$checkbox\"");
+  }
+
+  /**
+   * @When /^I select the radio button "([^"]*)" with the id "([^"]*)"$/
+   * @TODO convert to mink extension.
+   */
+  public function iSelectTheRadioButtonWithTheId($label, $id) {
+    $element = $this->getSession()->getPage();
+    $radiobutton = $element->findById($id);
+    if ($radiobutton === NULL) {
+      throw new Exception('Neither label nor id was found');
+    }
+    $value = $radiobutton->getAttribute('value');
+    $labelonpage = $radiobutton->getParent()->getText();
+    if ($label != $labelonpage) {
+      throw new Exception("Button with $id has label $labelonpage instead of $label.");
+    }
+    $radiobutton->selectOption($value, FALSE);
+  }
+
+  /**
+   * @} End of defgroup "mink extensions"
+   */
+
+  /**
+   * @defgroup drupal.org
+   * @{
+   * Drupal.org-specific step definitions.
+   */
 
   /**
    * @When /^I clone the repo$/
    */
   public function iCloneTheRepo() {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    $result =  $element->find('css', '#content div.codeblock code');
+    //mypath stores the last path visited in another iAmAt  step.
+    $element = $this->getSession()->getPage($this->mypath);
+    $result = $element->find('css', '#content div.codeblock code');
     if (!empty($result)) {
-       $this->repo = $result->getText();
-     }
+      $this->repo = $result->getText();
+    }
     $process = new Process($this->repo);
     $process->setTimeout(3600);
     $process->run();
@@ -354,15 +378,15 @@ class FeatureContext extends BehatContext {
     if (!is_dir($repo)) {
       throw new Exception('The repo could not be found.');
     }
-    $oldDirectory = getcwd();
+    $old_directory = getcwd();
     chdir($repo);
     $process = new Process('git log');
     $process->run();
     if (!$process->isSuccessful()) {
       throw new RuntimeException('The history for the repository could  not be found.' . $process->getErrorOutput());
     }
-    chdir($oldDirectory);
-    $process = new Process('rm -rf '. $repo);
+    chdir($old_directory);
+    $process = new Process('rm -rf ' . $repo);
     $process->run();
     if (!$process->isSuccessful()) {
       throw new Exception('ouch.' . $process->getErrorOutput());
@@ -370,21 +394,51 @@ class FeatureContext extends BehatContext {
   }
 
   /**
-   * Private function for the whoami step.
+   * @When /^I create a project$/
    */
-  private function whoami() {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    // go to the user page
-    $session->visit($this->base_url . '/user');
-    if ($find = $element->find('css', '#page-title')) {
-      $page_title = $find->getText();
-      if ($page_title) {
-        return $page_title;
-      }
+  public function iCreateAProject() {
+    $this->project = $this->user->name;
+    $element = $this->getSession()->getPage();
+    $result = $element->hasField('Project title');
+    if ($result === False) {
+      throw new Exception("No Project title field was found.");
     }
-    return False;
+    $element->fillField('Project title', $this->project);
   }
+
+  /**
+   * @Then /^I should see the project$/
+   */
+  public function iShouldSeeTheProject() {
+    $element = $this->getSession()->getPage();
+    $result = $element->hasContent($this->project);
+    if ($result === FALSE) {
+      throw new Exception("The text " . $this->project . " was not found " . $session->getCurrentUrl());
+    }
+  }
+
+  /**
+   * @When /^I search for "([^"]*)"$/
+   */
+  public function iSearchFor($searchterm) {
+    $element = $this->getSession()->getPage();
+    $element->fillField('edit-text', $searchterm);
+    $submit = $element->findById('edit-submit');
+    if (empty($submit)) {
+      throw new Exception('No submit button at ' . $session->getCurrentUrl());
+    }
+    $submit->click();
+  }
+
+  /**
+   * @} End of defgroup "drupal.org"
+   */
+
+  /**
+   * @defgroup drupal extensions
+   * @{
+   * Drupal-specific step definitions.
+   */
 
   /**
    * @Given /^I am an anonymous user$/
@@ -397,6 +451,8 @@ class FeatureContext extends BehatContext {
   }
 
   /**
+   * Creates and authenticates a user with the given role via Drush.
+   *
    * @Given /^I am logged in as a user with the "([^"]*)" role$/
    */
   public function iAmLoggedInWithRole($role) {
@@ -405,19 +461,19 @@ class FeatureContext extends BehatContext {
       return TRUE;
     }
 
-    // Create user.
+    // Create user (and project)
     $name = $this->randomString(8);
     $pass = $this->randomString(16);
 
     // Create a new user.
-    $process = new Process("drush @{$this->drushAlias} user-create --password={$pass} $name");
+    $process = new Process("drush @{$this->drushAlias} user-create --password={$pass} --mail=$name@example.com $name");
     $process->setTimeout(3600);
     $process->run();
     if (!$process->isSuccessful()) {
       throw new RuntimeException($process->getErrorOutput());
     }
 
-    $this->user = (object) array(
+    $this->users[] = $this->user = (object) array(
       'name' => $name,
       'pass' => $pass,
       'role' => $role,
@@ -443,43 +499,45 @@ class FeatureContext extends BehatContext {
   }
 
   /**
+   * Authenticates a user.
+   *
    * @Given /^I am logged in as "([^"]*)" with the password "([^"]*)"$/
    */
   public function iAmLoggedInAsWithThePassword($username, $passwd) {
     $user = $this->whoami();
-    if(strtolower($user) == strtolower($username)) {
+    if (strtolower($user) == strtolower($username)) {
       // Already logged in.
       return;
     }
 
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
+    $element = $this->getSession()->getPage();
 
     if ($user != 'User account') {
-      // Logout
-      $session->visit($this->base_url . '/user/logout');
+      // Logout.
+      $this->getSession()->visit($this->locatePath('/user/logout'));
     }
 
-    // go to the user page
-    $session->visit($this->base_url . '/user');
-    // get the page title
+    // Go to the user page.
+    $this->getSession()->visit($this->locatePath('/user'));
+    // Get the page title.
     $page_title = $element->findByID('page-title')->getText();
     if ($page_title == 'User account') {
-      // If I see this, I'm not logged in at all so log in
+      // If I see this, I'm not logged in at all so log in.
       $element->fillField('Username', $username);
       $element->fillField('Password', $passwd);
       $submit = $element->findButton('Log in');
       if (empty($submit)) {
-        throw new Exception('No submit button at '. $session->getCurrentUrl());
+        throw new Exception('No submit button at ' . $session->getCurrentUrl());
       }
-      // log in
+      // Log in.
       $submit->click();
       $user = $this->whoami();
-      if(strtolower($user) == strtolower($username)) {
+      if (strtolower($user) == strtolower($username)) {
         // Successfully logged in.
         return;
       }
-    } else {
+    }
+    else {
       throw new Exception("Failed to reach the login page.");
     }
 
@@ -487,57 +545,13 @@ class FeatureContext extends BehatContext {
   }
 
   /**
+   * @} End of defgroup "drupal extensions"
+   */
+
+  /**
    * @Given /^I execute the commands$/
    */
   public function iExecuteTheCommands() {
     throw new PendingException();
-  }
-
-  /**
-   * @Given /^I check "([^"]*)"$/
-   */
-  public function iCheck($checkbox) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    $result = $element->findField($checkbox);
-    $checked_state = $result->isChecked();
-    if ($checked_state === True) {
-      throw new Exception($checkbox .': Already checked');
-    }
-      $result->check();
-  }
-
-  /**
-   * @Given /^I uncheck "([^"]*)"$/
-   */
-  public function iUncheck($checkbox) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    $result = $element->findField($checkbox);
-    $checked_state = $result->isChecked();
-    if ($checked_state === True ) {
-    //throw new Exception (print_r($checked_state,1));
-      $result->uncheck();
-    } 
-    else { 
-      throw new Exception('"'. $checkbox .'" was not checked so it could not be unchecked');
-    }
-  }
-  /**
-   * @When /^I select the radio button "([^"]*)" with id "([^"]*)"$/
-   */
-  public function iSelectTheRadioButtonWithId($label, $id) {
-    $session = $this->mink->getSession();
-    $element = $session->getPage();
-    $radiobutton = $element->findById($id);
-    if ($radiobutton === null) {
-      throw new Exception('Neither label nor id was found');
-    }
-    $value = $radiobutton->getAttribute('value');
-    $labelonpage = $radiobutton->getParent()->getText();
-    if ($label != $labelonpage) {
-      throw new Exception("Button with $id has label $labelonpage instead of $label.");
-    }
-    $radiobutton->selectOption($value, False);
   }
 }
