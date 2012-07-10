@@ -6,17 +6,21 @@ default:
   context:
     parameters:
       default_browser: 'goutte'
-      base_url: 'http://TESTHOST.opensourcery.com'
       # Set this drush alias in your aliases.drushrc.php file to match
-      # the base_url set above.
-      drush_alias: 'TESTHOST'
+      # the base_url set above. Don't incude the '@'.
+      drush_alias: 'myalias'
+  extensions:
+    Behat\MinkExtension\Extension:
+      base_url: 'http://TESTHOST.opensourcery.com'
+      goutte: ~
+      selenium2: ~
 selenium:
   context:
     parameters:
       default_browser: 'selenium_firefox'
 progress:
     formatter:
-        name: 'progress'
+      name: 'progress'
 sahi:
   context:
     parameters:
