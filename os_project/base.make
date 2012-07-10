@@ -18,6 +18,8 @@ projects[elements][version] = "1.2"
 
 projects[features][subdir] = "contrib"
 projects[features][version] = "1.0-rc3"
+; http://drupal.org/node/1063204#comment-6217690
+projects[features][patch][] = "http://drupal.org/files/features-static-caches-1063204-27.patch"
 
 projects[fences][subdir] = "contrib"
 projects[fences][version] = "1.0"
