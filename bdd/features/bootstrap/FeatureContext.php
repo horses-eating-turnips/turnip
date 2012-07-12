@@ -224,7 +224,6 @@ class FeatureContext extends MinkContext {
 
   /**
    * @Given /^for "([^"]*)" I enter "([^"]*)"$/
-   * @Given /^I enter "([^"]*)" for "([^"]*)"$/
    */
   public function forIenter($fieldname, $formvalue) {
     // Use the Mink Extenstion step definition.
