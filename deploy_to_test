@@ -16,13 +16,24 @@ HOST=gargravarr
 INSTALLROOT=/var/www/$SUBDOMAIN
 INSTALLPROFILE=os_project
 
-# Flag to disable running of `drush site-install`.
-#NOSITEINSTALL=1
+# Default behavior: Don't touch the test host's database.
+#
+# Two other (mutually exclusive) behaviors:
+# - SITEINSTALL=1 # Run `drush site-install`.
+# - RELOADDB=1    # Reload the latest production database.
+# Uncomment one, if applicable:
+#SITEINSTALL=1
+#RELOADDB=1
 
 # Branch to deploy from
 BRANCH=.
 
 ##### Things below here generally won't need to be changed #####
+
+if [ -n "$RELOADDB" ] && [ -n "$SITEINSTALL" ]; then
+  echo "ERROR: Both RELOADDB and SITEINSTALL options specified. Specify one, the other, or neither."
+  exit 1
+fi
 
 # If SUBDOMAIN isn't set, INSTALLROOT would become /var/www// and we'd blow
 # away the permissions of every test host on the test server.
@@ -64,10 +75,21 @@ if [ -h $INSTALLROOT/current ]; then
 fi
 ln -s $INSTALLROOT/releases/$TIMESTAMP $INSTALLROOT/current
 
-# Run site install unless disabled.
-if [ -z $NOSITEINSTALL ]; then
+if [ -n "$SITEINSTALL" ]; then
+  # Re-install the site.
   drush @$SUBDOMAIN site-install -y $INSTALLPROFILE
   if [ $? -gt 0 ]; then
+    exit 1
+  fi
+fi
+
+if [ -n "$RELOADDB" ]; then
+  # Reload database from latest production dump.
+  drush @$SUBDOMAIN sql-drop -y
+  if [ -f $WORKSPACE/app/db/production_current.sql.gz ]; then
+    gunzip -c $WORKSPACE/app/db/production_current.sql.gz | drush @$SUBDOMAIN sql-cli
+  else
+    echo "ERROR: Database dump not found."
     exit 1
   fi
 fi
