@@ -92,7 +92,8 @@ drush @$SUBDOMAIN en -y environment_indicator
 drush @$SUBDOMAIN role-add-perm "anonymous user" "access environment indicator"
 drush @$SUBDOMAIN role-add-perm "authenticated user" "access environment indicator"
 
-
+# Enable the os_testing helper module.
+drush @$SUBDOMAIN en -y os_testing
 
 # Remove all but the last 4 builds in the releases directory.
 cd $INSTALLROOT/releases
