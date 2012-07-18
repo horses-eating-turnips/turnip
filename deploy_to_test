@@ -15,6 +15,7 @@ SUBDOMAIN=
 HOST=gargravarr
 INSTALLROOT=/var/www/$SUBDOMAIN
 INSTALLPROFILE=os_project
+PRODUCTIONURL=http://
 
 # Default behavior: Don't touch the test host's database.
 #
@@ -113,6 +114,11 @@ echo "Enabling environment indicator module."
 drush @$SUBDOMAIN en -y environment_indicator
 drush @$SUBDOMAIN role-add-perm "anonymous user" "access environment indicator"
 drush @$SUBDOMAIN role-add-perm "authenticated user" "access environment indicator"
+if [ "$PRODUCTIONURL" != "http://" ]; then
+  echo "Enabling Stage File Proxy and configuring origin as '$PRODUCTIONURL'."
+  drush @$SUBDOMAIN en -y stage_file_proxy
+  drush @$SUBDOMAIN vset stage_file_proxy_origin $PRODUCTIONURL
+fi
 
 # Enable the os_testing helper module.
 drush @$SUBDOMAIN en -y os_testing
