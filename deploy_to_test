@@ -78,7 +78,7 @@ ln -s $INSTALLROOT/releases/$TIMESTAMP $INSTALLROOT/current
 
 if [ -n "$SITEINSTALL" ]; then
   # Re-install the site.
-  drush @$SUBDOMAIN site-install -y $INSTALLPROFILE
+  drush @$SUBDOMAIN site-install -y --uri=default $INSTALLPROFILE
   if [ $? -gt 0 ]; then
     exit 1
   fi
