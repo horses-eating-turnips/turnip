@@ -7,7 +7,7 @@ core = "7.x"
 projects[drupal][type] = "core"
 projects[drupal][version] = "7.15"
 ; Make taxonomy permissions use vocabulary machine name instead of vid
-projects[drupal][patch][] = "http://drupal.org/files/issues/995156-5_portable_taxonomy_permissions.patch"
+projects[drupal][patch][] = "http://drupal.org/files/995156-31_portable_taxonomy_permissions-D7-15.patch"
 
 ; Base installation profile
 includes[base] = "base.make"
