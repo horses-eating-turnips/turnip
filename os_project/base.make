@@ -31,13 +31,13 @@ projects[redirect][subdir] = "contrib"
 projects[redirect][version] = "1.0-beta4"
 
 projects[pathauto][subdir] = "contrib"
-projects[pathauto][version] = "1.1"
+projects[pathauto][version] = "1.2"
 
 projects[strongarm][subdir] = "contrib"
 projects[strongarm][version] = "2.0"
 
 projects[token][subdir] = "contrib"
-projects[token][version] = "1.1"
+projects[token][version] = "1.2"
 
 projects[wysiwyg][subdir] = "contrib"
 projects[wysiwyg][revision] = "1d9968"
