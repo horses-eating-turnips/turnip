@@ -76,7 +76,7 @@ libraries[profiler][patch][] = "http://drupal.org/files/issues/0001-Issue-116567
 
 ; Omega base theme
 projects[delta][subdir] = "contrib"
-projects[delta][version] = "3.0-beta9"
+projects[delta][version] = "3.0-beta11"
 projects[omega][version] = "3.1"
 
 ; Lovejoy theme for initial development.
