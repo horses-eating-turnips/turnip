@@ -40,12 +40,12 @@ projects[token][subdir] = "contrib"
 projects[token][version] = "1.2"
 
 projects[wysiwyg][subdir] = "contrib"
-projects[wysiwyg][revision] = "1d9968"
+projects[wysiwyg][revision] = "d17bf11"
 ; Select theme css patch: http://drupal.org/node/1309040#comment-6107956
-projects[wysiwyg][patch][] = "http://drupal.org/files/1309040-12-select_theme_css.patch"
+projects[wysiwyg][patch][] = "http://drupal.org/files/1309040-22-select_theme_css.patch"
 ; Lazy-load editors: http://drupal.org/node/356480. Allows the WYSIWYG to work
 ; when editing custom content from within Panels.
-projects[wysiwyg][patch][] = "http://drupal.org/files/lazy_wysiwyg-356480-121.patch"
+projects[wysiwyg][patch][] = "http://drupal.org/files/lazy_wysiwyg-356480-150.patch"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; DEVELOPMENT MODULES ;;;;;;;;;;;;;
