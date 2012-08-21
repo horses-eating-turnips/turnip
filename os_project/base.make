@@ -82,5 +82,5 @@ libraries[tinymce][directory_name] = "tinymce"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;; THEME ;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-projects[tao][version] = "3.0-beta4"
-projects[rubik][version] = "4.0-beta7"
+;projects[tao][version] = "3.0-beta4"
+;projects[rubik][version] = "4.0-beta8"
