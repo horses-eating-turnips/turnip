@@ -32,13 +32,11 @@ projects[os_base][download][branch] = "7.x-1.x"
 
 ; Apache Solr Search
 ; TODO potentially switch from this module to search_api module.
-;projects[apachesolr][subdir] = "contrib"
-;projects[apachesolr][version] = "3.0-beta19"
-;libraries[SolrPHPClient][download][type] = "svn"
-;libraries[SolrPHPClient][download][url] = "http://solr-php-client.googlecode.com/svn/trunk/"
-;libraries[SolrPHPClient][download][revision] = "22"
-;libraries[SolrPHPClient][destination] = "modules/contrib/apachesolr/"
-;libraries[SolrPHPClient][directory_name] = "SolrPhpClient"
+; SolrPHPClient is NOT required (all code is in the module).
+; Be sure to use Solr 3.5 or higher. Also remember to copy the module's conf files.
+; http://drupalcode.org/project/apachesolr.git/blob_plain/refs/heads/7.x-1.x:/README.txt
+projects[apachesolr][subdir] = "contrib"
+projects[apachesolr][version] = "1.0-rc3"
 
 ; Google analytics
 projects[google_analytics][subdir] = "contrib"
