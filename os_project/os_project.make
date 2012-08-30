@@ -3,6 +3,9 @@
 ; of the project.
 api = 2
 
+; Set contrib directory.
+defaults[projects][subdir] = "contrib"
+
 core = "7.x"
 projects[drupal][type] = "core"
 projects[drupal][version] = "7.15"
@@ -35,23 +38,18 @@ projects[os_base][download][branch] = "7.x-1.x"
 ; SolrPHPClient is NOT required (all code is in the module).
 ; Be sure to use Solr 3.5 or higher. Also remember to copy the module's conf files.
 ; http://drupalcode.org/project/apachesolr.git/blob_plain/refs/heads/7.x-1.x:/README.txt
-projects[apachesolr][subdir] = "contrib"
 projects[apachesolr][version] = "1.0-rc3"
 
 ; Google analytics
-projects[google_analytics][subdir] = "contrib"
 projects[google_analytics][version] = "1.2"
 
 ; Menu Block
-projects[menu_block][subdir] = "contrib"
 projects[menu_block][version] = "2.3"
 
 ; Mollom
-projects[mollom][subdir] = "contrib"
 projects[mollom][version] = "2.0"
 
 ; Views
-projects[views][subdir] = "contrib"
 projects[views][version] = "3.3"
 ; http://drupal.org/node/1507536#comment-5797740
 projects[views][patch][] = "http://drupal.org/files/3-Issue-1507536-by-ericduran-Added-Make-the-exported-o.patch"
@@ -73,7 +71,6 @@ libraries[profiler][patch][] = "http://drupal.org/files/issues/0001-Issue-116567
 ; Project-specific modules, and overrides.
 
 ; Omega base theme
-projects[delta][subdir] = "contrib"
 projects[delta][version] = "3.0-beta11"
 projects[omega][version] = "3.1"
 

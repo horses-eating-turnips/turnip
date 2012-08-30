@@ -5,41 +5,30 @@ api = 2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; CONTRIB ;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;; (alphabetical order) ;;;;;;;;;;;;;;;
-projects[ctools][subdir] = "contrib"
 projects[ctools][version] = "1.0"
 ; http://drupal.org/node/1120028#comment-5792282
 projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths-1120028-08.patch"
 
-projects[entitycache][subdir] = "contrib"
 projects[entitycache][version] = "1.1"
 
-projects[elements][subdir] = "contrib"
 projects[elements][version] = "1.2"
 
-projects[features][subdir] = "contrib"
 projects[features][version] = "1.0-rc3"
 ; http://drupal.org/node/1063204#comment-6217690
 projects[features][patch][] = "http://drupal.org/files/features-static-caches-1063204-27.patch"
 
-projects[fences][subdir] = "contrib"
 projects[fences][version] = "1.0"
 
-projects[html5_tools][subdir] = "contrib"
 projects[html5_tools][version] = "1.2"
 
-projects[redirect][subdir] = "contrib"
 projects[redirect][version] = "1.0-beta4"
 
-projects[pathauto][subdir] = "contrib"
 projects[pathauto][version] = "1.2"
 
-projects[strongarm][subdir] = "contrib"
 projects[strongarm][version] = "2.0"
 
-projects[token][subdir] = "contrib"
 projects[token][version] = "1.2"
 
-projects[wysiwyg][subdir] = "contrib"
 projects[wysiwyg][revision] = "d17bf11"
 ; Select theme css patch: http://drupal.org/node/1309040#comment-6107956
 projects[wysiwyg][patch][] = "http://drupal.org/files/1309040-22-select_theme_css.patch"
