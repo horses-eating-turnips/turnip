@@ -17,10 +17,7 @@ DIRECTORIES="drupal
 $PROFILE/modules/contrib
 $PROFILE/modules/development
 $PROFILE/modules/stock
-$PROFILE/themes/tao
-$PROFILE/themes/rubik
-$PROFILE/themes/omega
-$PROFILE/themes/lovejoy
+$PROFILE/themes/contrib
 $PROFILE/libraries"
 
 # D7 will automatically set permissions on sites/default folder,
