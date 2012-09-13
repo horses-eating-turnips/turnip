@@ -28,7 +28,7 @@ projects[pathauto][version] = "1.2"
 
 projects[strongarm][version] = "2.0"
 
-projects[token][version] = "1.2"
+projects[token][version] = "1.3"
 
 projects[wysiwyg][revision] = "d17bf11"
 ; Select theme css patch: http://drupal.org/node/1309040#comment-6107956
