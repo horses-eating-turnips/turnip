@@ -14,9 +14,9 @@ projects[entitycache][version] = "1.1"
 
 projects[elements][version] = "1.2"
 
-projects[features][version] = "1.0-rc3"
-; http://drupal.org/node/1063204#comment-6217690
-projects[features][patch][] = "http://drupal.org/files/features-static-caches-1063204-27.patch"
+projects[features][version] = "1.0"
+; http://drupal.org/node/1063204#comment-6350488
+projects[features][patch][] = "http://drupal.org/files/features_static_caches-1063204-32.patch"
 
 projects[fences][version] = "1.0"
 
