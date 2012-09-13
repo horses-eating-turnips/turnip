@@ -50,9 +50,7 @@ projects[menu_block][version] = "2.3"
 projects[mollom][version] = "2.0"
 
 ; Views
-projects[views][version] = "3.3"
-; http://drupal.org/node/1507536#comment-5797740
-projects[views][patch][] = "http://drupal.org/files/3-Issue-1507536-by-ericduran-Added-Make-the-exported-o.patch"
+projects[views][version] = "3.5"
 
 ; Libraries
 
