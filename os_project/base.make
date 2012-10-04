@@ -30,7 +30,7 @@ projects[strongarm][version] = "2.0"
 
 projects[token][version] = "1.3"
 
-projects[wysiwyg][revision] = "41693f1"
+projects[wysiwyg][version] = "2.2"
 ; Select theme css patch: http://drupal.org/node/1309040#comment-6107956
 projects[wysiwyg][patch][] = "http://drupal.org/files/1309040-22-select_theme_css.patch"
 
