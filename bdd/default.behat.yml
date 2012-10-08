@@ -6,22 +6,12 @@ default:
   context:
     parameters:
       default_browser: 'goutte'
-      # Set this drush alias in your aliases.drushrc.php file to match
-      # the base_url set above. Don't incude the '@'.
-      drush_alias: 'myalias'
   extensions:
     Behat\MinkExtension\Extension:
       base_url: 'http://TESTHOST.opensourcery.com'
       goutte: ~
       selenium2: ~
-selenium:
-  context:
-    parameters:
-      default_browser: 'selenium_firefox'
-progress:
-    formatter:
-      name: 'progress'
-sahi:
-  context:
-    parameters:
-      default_browser: 'sahi_firefox'
+    Drupal\DrupalExtension\Extension:
+      blackbox: ~
+      drush:
+        alias: 'myalias'

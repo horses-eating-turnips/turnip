@@ -1,3 +1,4 @@
+@api
 Feature: Basic authenticated user functionality
   In order to prove that this site is functional for logged in users
   As a user
