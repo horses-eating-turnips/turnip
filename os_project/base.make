@@ -22,7 +22,7 @@ projects[fences][version] = "1.0"
 
 projects[html5_tools][version] = "1.2"
 
-projects[redirect][version] = "1.0-beta4"
+projects[redirect][version] = "1.0-rc1"
 
 projects[pathauto][version] = "1.2"
 
