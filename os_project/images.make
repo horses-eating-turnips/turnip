@@ -4,8 +4,8 @@ api = 2
 
 projects[adaptive_image][version] = "1.4"
 
-projects[caption_filter][download][type] = "git"
-projects[caption_filter][download][revision] = "c9794cfdc1fc4bde14db6260ccf394d77fe43f60"
+projects[caption_filter][download][branch] = "7.x-1.x"
+projects[caption_filter][download][revision] = "c9794cf"
 ; http://drupal.org/node/1432092#comment-6014324
 projects[caption_filter][patch][] = "http://drupal.org/files/caption-button-1432092-4.patch"
 

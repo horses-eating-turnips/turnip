@@ -9,9 +9,9 @@ api = 2
 ;projects[fieldable_panels_panes][revision] = "57000ec268603f43e2ea50817682b54659c33651"
 
 ; Latest: 7.x-2.0 + 19 commits.
-projects[panelizer][revision] = "daec7d23cedced68730dcfe2a869955076afd683"
+projects[panelizer][download][branch] = "7.x-2.x"
+projects[panelizer][revision] = "daec7d2"
 
-; Latest: 7.x-3.2 + 5 commits.
-projects[panels][revision] = "9c467adba1348560925a30bf52d9eb825b30988b"
+projects[panels][version] = "3.3"
 
 projects[panels_breadcrumbs][version] = "1.6"
