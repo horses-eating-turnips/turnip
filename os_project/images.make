@@ -9,13 +9,11 @@ projects[caption_filter][download][revision] = "c9794cf"
 ; http://drupal.org/node/1432092#comment-6014324
 projects[caption_filter][patch][] = "http://drupal.org/files/caption-button-1432092-4.patch"
 
-projects[file_entity][version] = "2.0-unstable6"
+projects[file_entity][version] = "2.0-unstable7"
 
 projects[image_resize_filter][version] = "1.13"
 
-projects[media][version] = "2.0-unstable6"
-; Crash during install profile installation - http://drupal.org/node/1311828
-projects[media][patch][] = "http://drupal.org/files/check_if_media_the_type_table_exists-1311828-13.patch"
+projects[media][version] = "2.0-unstable7"
 ; http://drupal.org/node/1278180#comment-5085370
 projects[media][patch][] = "http://drupal.org/files/media-embed-library-resize.patch"
 
