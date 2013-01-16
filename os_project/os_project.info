@@ -4,7 +4,7 @@ name = PROJECTNAME
 distribution_name = PROJECTNAME
 description = DESCRIPTION
 core = 7.x
-theme = lovejoy
+theme = bartik
 
 ; Core
 dependencies[] = block

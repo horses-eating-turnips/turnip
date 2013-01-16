@@ -68,11 +68,3 @@ libraries[profiler][patch][] = "http://drupal.org/files/issues/0001-Issue-116567
 
 ; Project-specific modules, and overrides.
 
-; Omega base theme
-projects[delta][version] = "3.0-beta11"
-projects[omega][version] = "3.1"
-
-; Lovejoy theme for initial development.
-projects[lovejoy][type] = "theme"
-projects[lovejoy][download][type] = "git"
-projects[lovejoy][download][url] = "git://github.com/opensourcery/lovejoy.git"
