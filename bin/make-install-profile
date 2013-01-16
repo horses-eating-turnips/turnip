@@ -18,11 +18,11 @@ DEMOEXTS="deploy_plans.inc features.inc features.uuid_entities.inc info module"
 SEDFLAGS="-i.orig"
 
 # rebuild script
-sed -e "s/PROFILE=\"os_project\"/PROFILE=\"$NEW\"/" $SEDFLAGS rebuild.sh
-sed -e "s/PROJECT/$PROJECTNAME/" $SEDFLAGS rebuild.sh
+sed -e "s/PROFILE=\"os_project\"/PROFILE=\"$NEW\"/" $SEDFLAGS bin/rebuild
+sed -e "s/PROJECT/$PROJECTNAME/" $SEDFLAGS bin/rebuild
 
 # deploy script
-sed -e "s/INSTALLPROFILE=os_project/INSTALLPROFILE=$NEW/" $SEDFLAGS deploy_to_test
+sed -e "s/INSTALLPROFILE=os_project/INSTALLPROFILE=$NEW/" $SEDFLAGS bin/deploy_to_test
 
 mkdir $NEW
 cp os_project/os_project.* $NEW/
