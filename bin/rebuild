@@ -39,6 +39,11 @@ fi
 # Build the drupal directory from the make file.
 drush make $1 --yes --contrib-destination=profiles/$PROFILE $PROFILE/$PROFILE.make drupal
 
+# Exit out if this build failed.
+if [ ! -d drupal ]; then
+  exit 1;
+fi
+
 # D7 has odd permissions on sites/default folder
 chmod 777 drupal/sites/default
 
