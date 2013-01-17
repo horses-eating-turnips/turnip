@@ -27,12 +27,18 @@ function os_project_install() {
     ->condition('name', 'seven')
     ->execute();
 
+  // Set theme.
+  $config = profiler_v2_load_config('os_project');
+  $theme_name = $config['theme'];
+  variable_set('theme_default', $theme_name);
+  theme_enable(array($theme_name));
+
   // Place the content block.
   $blocks = array(
     array(
       'module' => 'system',
       'delta' => 'main',
-      'theme' => variable_get('theme_default', 'bartik'),
+      'theme' => $theme_name,
       'status' => 1,
       'weight' => 0,
       'region' => 'content',
