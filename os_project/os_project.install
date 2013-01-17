@@ -44,6 +44,7 @@ function os_project_install() {
       'region' => 'content',
       'pages' => '',
       'cache' => -1,
+      'title' => '<none>',
     ),
   );
   $fields = array(
@@ -55,6 +56,7 @@ function os_project_install() {
     'region',
     'pages',
     'cache',
+    'title',
   );
   $query = db_insert('block')->fields($fields);
   foreach ($blocks as $block) {
