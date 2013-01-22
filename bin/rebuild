@@ -13,7 +13,7 @@ PROFILE="os_project"
 THEME="os_theme"
 
 # Generate a complete Drupal build.
-echo "Building os_project..."
+echo "Building PROJECT..."
 
 # Remove contrib directories
 DIRECTORIES="drupal
