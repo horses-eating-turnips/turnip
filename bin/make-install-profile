@@ -1,7 +1,7 @@
 #!/bin/bash
-if [ -z "$1" -o -z "$2" -o -z "$3" ]; then
-  echo "Usage: $0 <machine_name> <Project Name> <Project Description>"
-  echo "Ex: $0 client_xyz \"Web app ABC\" \"Client XYZ's ABC app enables users to browse a database of records.\""
+if [ -z "$1" -o -z "$2" -o -z "$3" -o -z "$4" ]; then
+  echo "Usage: $0 <machine_name> <theme_name> <Project Name> <Project Description>"
+  echo "Ex: $0 client_xyz xyz_foobar \"Web app ABC\" \"Client XYZ's ABC app enables users to browse a database of records.\""
   exit 1
 fi
 
@@ -11,8 +11,9 @@ if [ ! -d os_project ]; then
 fi
 
 NEW="$1"
-PROJECTNAME="$2"
-DESCRIPTION="$3"
+THEME="$2"
+PROJECTNAME="$3"
+DESCRIPTION="$4"
 FILES="os_project.info os_project.install os_project.make os_project.profile"
 DEMOEXTS="deploy_plans.inc features.inc features.uuid_entities.inc info module"
 SEDFLAGS="-i.orig"
@@ -20,6 +21,7 @@ SEDFLAGS="-i.orig"
 # rebuild script
 sed -e "s/PROFILE=\"os_project\"/PROFILE=\"$NEW\"/" $SEDFLAGS bin/rebuild
 sed -e "s/PROJECT/$PROJECTNAME/" $SEDFLAGS bin/rebuild
+sed -e "s/os_theme/$THEME/" $SEDFLAGS bin/rebuild
 
 # deploy script
 sed -e "s/INSTALLPROFILE=os_project/INSTALLPROFILE=$NEW/" $SEDFLAGS bin/deploy_to_test
