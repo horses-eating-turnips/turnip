@@ -1,18 +1,19 @@
 #!/bin/bash
 #
 # @@ Replace os_project with the actual project name, then remove this line @@
+# @@ Replace os_theme with the intended theme name, then remove this line @@
 #
 # Rebuild os_project in the drupal directory.
 #
 # To use this command you must have `drush make`, `cvs` and `git` installed.
 #
 
-PROFILE="client_xyz"
+PROFILE="os_project"
 # Use Compass to compile CSS from source scss files.
-THEME="xyz_foobar"
+THEME="os_theme"
 
 # Generate a complete Drupal build.
-echo "Building Web app ABC..."
+echo "Building os_project..."
 
 # Remove contrib directories
 DIRECTORIES="drupal
@@ -63,7 +64,5 @@ ln -s ../../$PROFILE $PROFILE
 cd -
 
 # Compile SCSS files into CSS files using Compass.
-# Note that the theme should have a "scss" directory and a "css" directory.
-cd drupal/profiles/$PROFILE/themes/$THEME
-compass compile
-cd -
+# Note that the theme should have a css and scss directory, or a config.rb file.
+compass compile drupal/profiles/$PROFILE/themes/$THEME
