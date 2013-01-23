@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # @@ Replace os_project with the actual project name, then remove this line @@
+# @@ Replace os_theme with the intended theme name, then remove this line @@
 #
 # Rebuild os_project in the drupal directory.
 #
@@ -8,6 +9,8 @@
 #
 
 PROFILE="os_project"
+# Use Compass to compile CSS from source scss files.
+THEME="os_theme"
 
 # Generate a complete Drupal build.
 echo "Building PROJECT..."
@@ -59,3 +62,7 @@ rm -rf drupal/profiles/$PROFILE
 cd drupal/profiles
 ln -s ../../$PROFILE $PROFILE
 cd -
+
+# Compile SCSS files into CSS files using Compass.
+# Note that the theme should have a css and scss directory, or a config.rb file.
+compass compile drupal/profiles/$PROFILE/themes/$THEME
