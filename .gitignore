@@ -9,16 +9,4 @@
 */modules/stock
 */themes/contrib
 */libraries
-shared/settings.php
-shared/files/.htaccess
-shared/files/less
-shared/files/imagecache
-shared/files/simpletest
-shared/files/css
-shared/files/js
-shared/files/resize
-shared/files/ctools
 drupal
-bdd/vendor
-bdd/behat.yml
-bdd/composer.lock
