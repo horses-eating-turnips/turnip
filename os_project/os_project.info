@@ -71,6 +71,9 @@ variables[dblog_row_limit] = 1000000
 ; Disable core image styles
 variables[os_base_remove_core_image_styles] = 1
 
+; Up image quality.
+variables[image_jpeg_quality] = 100
+
 ; If needed, override default user_register setting
 ; (which is 2). Possible values:
 ; 0: Only administrators can create user accounts.
