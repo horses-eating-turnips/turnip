@@ -64,7 +64,6 @@ ln -s ../../$PROFILE $PROFILE
 cd -
 
 # Compile SCSS files into CSS files using Compass.
-# Note that the theme should have a css and scss directory, or a config.rb file.
-if [ -d drupal/profiles/$PROFILE/themes/$THEME ]; then
+if [ -e drupal/profiles/$PROFILE/themes/$THEME/config.rb ]; then
   compass compile drupal/profiles/$PROFILE/themes/$THEME
 fi
