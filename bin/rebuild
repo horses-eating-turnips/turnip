@@ -51,17 +51,13 @@ fi
 chmod 777 drupal/sites/default
 
 # Link settings.php and files into sites/default
-cd drupal/sites/default || { echo "Aborting $0"; exit 1; }
-ln -s ../../../shared/settings.php settings.php
-ln -s ../../../shared/files files
-cd -
+ln -s ../../../shared/settings.php drupal/sites/default/settings.php
+ln -s ../../../shared/files drupal/sites/default/files
 
 # Clean-up the profile directory, and sym-link it into the drupal directory.
 rsync -az drupal/profiles/$PROFILE/ $PROFILE/
 rm -rf drupal/profiles/$PROFILE
-cd drupal/profiles
-ln -s ../../$PROFILE $PROFILE
-cd -
+ln -s ../../$PROFILE drupal/profiles/$PROFILE
 
 # Compile SCSS files into CSS files using Compass.
 if [ -e drupal/profiles/$PROFILE/themes/$THEME/config.rb ]; then
