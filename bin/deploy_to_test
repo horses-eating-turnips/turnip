@@ -9,12 +9,18 @@
 # around--creating directory structure: releases, shared/files,
 # modifying/uploading settings.php
 
+# Load config
+if [ ! -e bin/.config ]; then
+  echo "Error: could not find configuration file. Please run make-install-profile."
+  exit 2
+fi
+source bin/.config
+
 # Change $SUBDOMAIN accordingly, e.g. <mountain name>
 # Rather than set $USER, use the user we were run as.
 SUBDOMAIN=
 HOST=gargravarr
 INSTALLROOT=/var/www/$SUBDOMAIN
-INSTALLPROFILE=os_project
 PRODUCTIONURL=http://
 
 # Default behavior: Don't touch the test host's database.
@@ -78,7 +84,7 @@ ln -s $INSTALLROOT/releases/$TIMESTAMP $INSTALLROOT/current
 
 if [ -n "$SITEINSTALL" ]; then
   # Re-install the site.
-  drush @$SUBDOMAIN site-install -y --uri=default $INSTALLPROFILE
+  drush @$SUBDOMAIN site-install -y --uri=default $PROFILE
   if [ $? -gt 0 ]; then
     exit 1
   fi

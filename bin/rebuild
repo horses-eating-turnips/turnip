@@ -1,19 +1,19 @@
 #!/bin/bash
 #
-# @@ Replace os_project with the actual project name, then remove this line @@
-# @@ Replace os_theme with the intended theme name, then remove this line @@
-#
 # Rebuild os_project in the drupal directory.
 #
 # To use this command you must have `drush make`, `cvs` and `git` installed.
 #
 
-PROFILE="os_project"
-# Use Compass to compile CSS from source scss files.
-THEME="os_theme"
+# Load config
+if [ ! -e bin/.config ]; then
+  echo "Error: could not find configuration file. Please run make-install-profile."
+  exit 2
+fi
+source bin/.config
 
 # Generate a complete Drupal build.
-echo "Building PROJECT..."
+echo "Building $PROJECTNAME..."
 
 # Remove contrib directories
 DIRECTORIES="drupal

@@ -5,23 +5,14 @@ if [ -z "$1" -o -z "$2" -o -z "$3" -o -z "$4" ]; then
   exit 1
 fi
 
-if [ ! -d os_project ]; then
-  echo "Error: Cannot find os_project directory"
-  exit 2
-fi
+# Write out config file.
+echo "PROFILE=\"$1\"" > bin/.config
+echo "THEME=\"$2\"" >> bin/.config
+echo "PROJECTNAME=\"$3\"" >> bin/.config
+echo "DESCRIPTION=\"$4\"" >> bin/.config
 
-PROFILE="$1"
-THEME="$2"
-PROJECTNAME="$3"
-DESCRIPTION="$4"
-
-# rebuild script
-sed -i "s/PROFILE=\"os_project\"/PROFILE=\"$PROFILE\"/" bin/rebuild
-sed -i "s/PROJECT/$PROJECTNAME/" bin/rebuild
-sed -i "s/os_theme/$THEME/" bin/rebuild
-
-# deploy script
-sed -i "s/INSTALLPROFILE=os_project/INSTALLPROFILE=$PROFILE/" bin/deploy_to_test
+# Load config file.
+source bin/.config
 
 mv os_project $PROFILE
 cd $PROFILE
