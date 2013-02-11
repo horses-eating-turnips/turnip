@@ -15,18 +15,18 @@ echo "DESCRIPTION=\"$4\"" >> bin/.config
 source bin/.config
 
 mv os_project $PROFILE
-cd $PROFILE
-sed -i "s/os_project/$PROFILE/" os_project.*
-sed -i "s/PROJECTNAME/$PROJECTNAME/" os_project.*
-sed -i "s/DESCRIPTION/$DESCRIPTION/" os_project.*
-for file in os_project.*; do
-  ext="${file##*.}"
-  mv $file $PROFILE.$ext
+sed -i "s/os_project/$PROFILE/" $PROFILE/os_project.*
+sed -i "s/PROJECTNAME/$PROJECTNAME/" $PROFILE/os_project.*
+sed -i "s/DESCRIPTION/$DESCRIPTION/" $PROFILE/os_project.*
+for file in $PROFILE/os_project.*; do
+  base="${file##*/}"
+  ext="${base##*.}"
+  mv $file $PROFILE/$PROFILE.$ext
 done
 # demo content feature
 for ext in deploy_plans.inc features.inc features.uuid_entities.inc info module; do
-  sed -i "s/os_project_demo_content/$PROFILE\_demo_content/" modules/features/os_project_demo_content/os_project_demo_content.$ext
-  sed -i "s/PROJECT/$PROJECTNAME/" modules/features/os_project_demo_content/os_project_demo_content.$ext
-  mv modules/features/os_project_demo_content/os_project_demo_content.$ext modules/features/os_project_demo_content/$PROFILE\_demo_content.$ext
+  sed -i "s/os_project_demo_content/$PROFILE\_demo_content/" $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext
+  sed -i "s/PROJECT/$PROJECTNAME/" $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext
+  mv $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext $PROFILE/modules/features/os_project_demo_content/$PROFILE\_demo_content.$ext
 done
-mv modules/features/os_project_demo_content modules/features/$PROFILE\_demo_content
+mv $PROFILE/modules/features/os_project_demo_content $PROFILE/modules/features/$PROFILE\_demo_content
