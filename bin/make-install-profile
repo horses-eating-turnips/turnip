@@ -10,35 +10,35 @@ if [ ! -d os_project ]; then
   exit 2
 fi
 
-NEW="$1"
+PROFILE="$1"
 THEME="$2"
 PROJECTNAME="$3"
 DESCRIPTION="$4"
 
 # rebuild script
-sed -i "s/PROFILE=\"os_project\"/PROFILE=\"$NEW\"/" bin/rebuild
+sed -i "s/PROFILE=\"os_project\"/PROFILE=\"$PROFILE\"/" bin/rebuild
 sed -i "s/PROJECT/$PROJECTNAME/" bin/rebuild
 sed -i "s/os_theme/$THEME/" bin/rebuild
 
 # deploy script
-sed -i "s/INSTALLPROFILE=os_project/INSTALLPROFILE=$NEW/" bin/deploy_to_test
+sed -i "s/INSTALLPROFILE=os_project/INSTALLPROFILE=$PROFILE/" bin/deploy_to_test
 
-mkdir $NEW
-cp os_project/os_project.* $NEW/
-cp os_project/*make $NEW/
-cp -r os_project/modules/ $NEW/
-cd $NEW
-sed -i "s/os_project/$NEW/" os_project.*
+mkdir $PROFILE
+cp os_project/os_project.* $PROFILE/
+cp os_project/*make $PROFILE/
+cp -r os_project/modules/ $PROFILE/
+cd $PROFILE
+sed -i "s/os_project/$PROFILE/" os_project.*
 sed -i "s/PROJECTNAME/$PROJECTNAME/" os_project.*
 sed -i "s/DESCRIPTION/$DESCRIPTION/" os_project.*
-mv os_project.info    $NEW.info
-mv os_project.install $NEW.install
-mv os_project.make    $NEW.make
-mv os_project.profile $NEW.profile
+mv os_project.info    $PROFILE.info
+mv os_project.install $PROFILE.install
+mv os_project.make    $PROFILE.make
+mv os_project.profile $PROFILE.profile
 # demo content feature
 for ext in deploy_plans.inc features.inc features.uuid_entities.inc info module; do
-  sed -i "s/os_project_demo_content/$NEW\_demo_content/" modules/features/os_project_demo_content/os_project_demo_content.$ext
+  sed -i "s/os_project_demo_content/$PROFILE\_demo_content/" modules/features/os_project_demo_content/os_project_demo_content.$ext
   sed -i "s/PROJECT/$PROJECTNAME/" modules/features/os_project_demo_content/os_project_demo_content.$ext
-  mv modules/features/os_project_demo_content/os_project_demo_content.$ext modules/features/os_project_demo_content/$NEW\_demo_content.$ext
+  mv modules/features/os_project_demo_content/os_project_demo_content.$ext modules/features/os_project_demo_content/$PROFILE\_demo_content.$ext
 done
-mv modules/features/os_project_demo_content modules/features/$NEW\_demo_content
+mv modules/features/os_project_demo_content modules/features/$PROFILE\_demo_content
