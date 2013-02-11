@@ -14,7 +14,6 @@ NEW="$1"
 THEME="$2"
 PROJECTNAME="$3"
 DESCRIPTION="$4"
-DEMOEXTS="deploy_plans.inc features.inc features.uuid_entities.inc info module"
 
 # rebuild script
 sed -i "s/PROFILE=\"os_project\"/PROFILE=\"$NEW\"/" bin/rebuild
@@ -37,7 +36,7 @@ mv os_project.install $NEW.install
 mv os_project.make    $NEW.make
 mv os_project.profile $NEW.profile
 # demo content feature
-for ext in $DEMOEXTS; do
+for ext in deploy_plans.inc features.inc features.uuid_entities.inc info module; do
   sed -i "s/os_project_demo_content/$NEW\_demo_content/" modules/features/os_project_demo_content/os_project_demo_content.$ext
   sed -i "s/PROJECT/$PROJECTNAME/" modules/features/os_project_demo_content/os_project_demo_content.$ext
   mv modules/features/os_project_demo_content/os_project_demo_content.$ext modules/features/os_project_demo_content/$NEW\_demo_content.$ext
