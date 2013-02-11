@@ -2,7 +2,7 @@
 #
 # Rebuild os_project in the drupal directory.
 #
-# To use this command you must have `drush make`, `cvs` and `git` installed.
+# To use this command you must have Drush, Git and Compass installed.
 #
 
 # Load config
