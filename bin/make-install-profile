@@ -28,10 +28,10 @@ cd $PROFILE
 sed -i "s/os_project/$PROFILE/" os_project.*
 sed -i "s/PROJECTNAME/$PROJECTNAME/" os_project.*
 sed -i "s/DESCRIPTION/$DESCRIPTION/" os_project.*
-mv os_project.info    $PROFILE.info
-mv os_project.install $PROFILE.install
-mv os_project.make    $PROFILE.make
-mv os_project.profile $PROFILE.profile
+for file in os_project.*; do
+  ext="${file##*.}"
+  mv $file $PROFILE.$ext
+done
 # demo content feature
 for ext in deploy_plans.inc features.inc features.uuid_entities.inc info module; do
   sed -i "s/os_project_demo_content/$PROFILE\_demo_content/" modules/features/os_project_demo_content/os_project_demo_content.$ext
