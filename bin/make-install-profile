@@ -23,10 +23,7 @@ sed -i "s/os_theme/$THEME/" bin/rebuild
 # deploy script
 sed -i "s/INSTALLPROFILE=os_project/INSTALLPROFILE=$PROFILE/" bin/deploy_to_test
 
-mkdir $PROFILE
-cp os_project/os_project.* $PROFILE/
-cp os_project/*make $PROFILE/
-cp -r os_project/modules/ $PROFILE/
+mv os_project $PROFILE
 cd $PROFILE
 sed -i "s/os_project/$PROFILE/" os_project.*
 sed -i "s/PROJECTNAME/$PROJECTNAME/" os_project.*
