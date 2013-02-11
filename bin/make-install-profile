@@ -14,7 +14,6 @@ NEW="$1"
 THEME="$2"
 PROJECTNAME="$3"
 DESCRIPTION="$4"
-FILES="os_project.info os_project.install os_project.make os_project.profile"
 DEMOEXTS="deploy_plans.inc features.inc features.uuid_entities.inc info module"
 
 # rebuild script
@@ -30,9 +29,9 @@ cp os_project/os_project.* $NEW/
 cp os_project/*make $NEW/
 cp -r os_project/modules/ $NEW/
 cd $NEW
-sed -i "s/os_project/$NEW/" $FILES
-sed -i "s/PROJECTNAME/$PROJECTNAME/" $FILES
-sed -i "s/DESCRIPTION/$DESCRIPTION/" $FILES
+sed -i "s/os_project/$NEW/" os_project.*
+sed -i "s/PROJECTNAME/$PROJECTNAME/" os_project.*
+sed -i "s/DESCRIPTION/$DESCRIPTION/" os_project.*
 mv os_project.info    $NEW.info
 mv os_project.install $NEW.install
 mv os_project.make    $NEW.make
