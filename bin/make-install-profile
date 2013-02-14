@@ -22,6 +22,9 @@ for file in $PROFILE/os_project.*; do
   mv $file $PROFILE/$PROFILE.$ext
 done
 
+# Remove bin/.gitignore (which only contains a reference to .config).
+rm bin/.gitignore
+
 # Process tokens in project files.
 sed -i "s/os_project/$PROFILE/" $PROFILE/$PROFILE.*
 sed -i "s/PROJECTNAME/$PROJECTNAME/" $PROFILE/$PROFILE.*
