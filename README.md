@@ -1,4 +1,10 @@
-# Installation
+# Turnip
+
+Turnip is OpenSourcery's Drupal starting kit.
+
+![Turnip](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Turnip_J1.jpg/320px-Turnip_J1.jpg)
+
+## Installation
 
 1. Run `bin/make-install-profile` to instantiate an installation profile. For example
    ```
