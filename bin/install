@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Do the first bit outside vagrant.
+if [[ ! $INNER ]]
+then
+  cd $(git rev-parse --show-toplevel)
+  PATH=$PWD/bin:$PATH
+
+  # Run the rest inside vagrant
+  vagrant up
+  vagrant ssh -c 'INNER=true /vagrant/bin/install'
+else
+  cd /vagrant
+  PATH=$PWD/bin:$PATH
+
+  # Rebuild site.
+  rebuild
+
+  # Copy over settings file.
+  if [[ ! -e .state/settings_copied ]]; then
+    if [ ! -e shared/settings.php ]; then
+      cp manifests/vagrant-settings.php shared/settings.php
+    else
+      echo "Failed to copy settings.php into place as 'shared/settings.php' already exists"
+      exit 1
+    fi
+
+    date +%s > .state/settings_copied
+  fi
+
+  # Install site and prepare for tests.
+  cd db
+  ./db_load.sh production_current.sql.gz
+  cd -
+
+  date +%s > .state/install_ran
+fi

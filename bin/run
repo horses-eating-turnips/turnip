@@ -1,0 +1,13 @@
+#!/bin/bash
+cd $(git rev-parse --show-toplevel)
+PATH=$PWD/bin:$PATH
+
+# Install the site if needed
+if [[ ! -e .state/install_ran ]]
+then
+  install
+fi
+
+vagrant up
+
+date +%s > .state/run_ran
