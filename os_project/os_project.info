@@ -53,6 +53,7 @@ users[admin][uid] = 1
 users[admin][name] = admin
 users[admin][mail] = admin@os_project.example.com
 users[admin][status] = 1
+users[admin][data][overlay] = 0
 
 ;
 ; Variables
