@@ -2,6 +2,8 @@
 
 Turnip is OpenSourcery's Drupal starting kit.
 
+[![Build Status](https://travis-ci.org/opensourcery/turnip.png?branch=7.x)](https://travis-ci.org/opensourcery/turnip)
+
 ![Turnip](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Turnip_J1.jpg/320px-Turnip_J1.jpg)
 
 ## Installation
