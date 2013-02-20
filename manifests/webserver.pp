@@ -16,6 +16,9 @@ package { "php5-mysql": }
 package { "php5-gd": }
 package { "php-pear": }
 package { "mysql-server": }
+# Required for drush make
+package { "zip": }
+package { "git": }
 
 service { "apache2":
     ensure => "running",
