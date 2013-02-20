@@ -9,6 +9,7 @@ install:
   - sudo apt-get update > /dev/null
   - sudo apt-get install php5-curl virtualbox > /dev/null
   - gem install vagrant
+  - gem install vagrant-vbguest
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
