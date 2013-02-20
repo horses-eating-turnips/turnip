@@ -26,4 +26,13 @@ Vagrant::Config.run do |config|
     puppet.manifest_file  = "webserver.pp"
     puppet.module_path = "manifests/modules"
   end
+
+  # Allow symbolic links. See https://www.virtualbox.org/ticket/10085#comment:12.
+  config.vm.customize([
+    'setextradata',
+    :id,
+    'VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root',
+    '1'
+  ])
+
 end
