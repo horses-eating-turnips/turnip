@@ -24,4 +24,4 @@ Vagrant configuration that will launch a Drupal site in a box.
 1. Run `bin/install`
 1. At this point, [http://localhost:8888](http://localhost:8888) should be serving Drupal.
 1. Stop the server with `bin/stop`, and then restart with `bin/run`
-1. Customize the server in `manifests/webserver.pp`
+1. Customize the server in `manifests/webserver.pp`. An Apache Solr example is included if that is required for search.

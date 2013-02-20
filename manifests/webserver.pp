@@ -20,6 +20,9 @@ package { "mysql-server": }
 package { "zip": }
 package { "git": }
 
+# Solr and Tomcat. Un-comment to use:
+#class { 'solr::tomcat6': }
+
 service { "apache2":
     ensure => "running",
     enable => "true",
