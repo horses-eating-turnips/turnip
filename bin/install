@@ -13,13 +13,24 @@ else
   cd /vagrant
   PATH=$PWD/bin:$PATH
 
-  # Rebuild site.
-  rebuild
+  # Load config
+  if [ ! -e bin/.config ]; then
+    echo "Error: could not find configuration file. Please run make-install-profile."
+    exit 2
+  fi
+  source bin/.config
+
+  if [[ ! -e shared/files ]]; then
+    mkdir shared/files
+  fi
 
   # Copy over settings file.
   if [[ ! -e .state/settings_copied ]]; then
     if [ ! -e shared/settings.php ]; then
       cp manifests/vagrant-settings.php shared/settings.php
+
+      echo "\$conf['install_profile'] = '$PROFILE';" >> shared/settings.php
+
     else
       echo "Failed to copy settings.php into place as 'shared/settings.php' already exists"
       exit 1
@@ -28,10 +39,19 @@ else
     date +%s > .state/settings_copied
   fi
 
+  # Rebuild site.
+  rebuild
+
   # Install site and prepare for tests.
-  cd db
-  ./db_load.sh production_current.sql.gz
-  cd -
+  if [[ -e db/production_current.sql.gz ]]; then
+    cd db
+    ./db_load.sh production_current.sql.gz
+    cd -
+  else
+    cd drupal
+    drush si -y --uri=default $PROFILE
+    cd -
+  fi
 
   date +%s > .state/install_ran
 fi
