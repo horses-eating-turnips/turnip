@@ -23,9 +23,7 @@ projects[fences][version] = "1.0"
 
 ; FooTable (responsive tables).
 projects[footable][download][branch] = "7.x-1.x"
-projects[footable][download][revision] = "5c82f2b"
-; https://drupal.org/node/1908804#comment-7030732
-projects[footable][patch][] = "https://drupal.org/files/footable-option-definition-1908804-01.patch"
+projects[footable][download][revision] = "a52b6dc"
 
 projects[html5_tools][version] = "1.2"
 

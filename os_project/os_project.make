@@ -52,10 +52,6 @@ projects[mollom][version] = "2.0"
 ; Views
 projects[views][version] = "3.5"
 
-; FooTable (responsive tables).
-projects[footable][download][branch] = "7.x-1.x"
-projects[footable][download][revision] = "a52b6dc"
-
 ; Libraries.
 projects[libraries][version] = "2.0"
 
