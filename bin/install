@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Do the first bit outside vagrant.
 if [[ ! $INNER ]]
