@@ -24,6 +24,8 @@ projects[fences][version] = "1.0"
 ; FooTable (responsive tables).
 projects[footable][download][branch] = "7.x-1.x"
 projects[footable][download][revision] = "a52b6dc"
+; https://drupal.org/node/1924942#comment-7098614
+projects[footable][patch][] = "https://drupal.org/files/footable-hook-requirements-install-1924942-02.patch"
 
 projects[html5_tools][version] = "1.2"
 
