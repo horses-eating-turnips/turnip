@@ -9,7 +9,7 @@ development. Each site is built as an installation profile.
 
 [![Build Status](https://travis-ci.org/opensourcery/turnip.png?branch=7.x)](https://travis-ci.org/opensourcery/turnip)
 
-![Turnip](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Turnip_J1.jpg/320px-Turnip_J1.jpg)
+![Turnip](https://raw.github.com/opensourcery/turnip/7.x/turnip.png)
 
 ## Installation
 
