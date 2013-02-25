@@ -232,7 +232,7 @@ $update_free_access = FALSE;
  *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
  *
  */
-$drupal_hash_salt = 'OAXo55LjKmruR2L2KOCeri4ik8dEJNFH4NUWnSVVG18';
+$drupal_hash_salt = '';
 
 /**
  * Base URL (optional).
@@ -510,8 +510,6 @@ $conf['404_fast_html'] = '<html xmlns="http://www.w3.org/1999/xhtml"><head><titl
  * Remove the leading hash signs to disable.
  */
 # $conf['allow_authorize_operations'] = FALSE;
-
-$conf['install_profile'] = 'cm_base';
 
 $databases = array(
   'default' => array(

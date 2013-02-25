@@ -1,6 +1,11 @@
 # Turnip
 
-Turnip is OpenSourcery's Drupal starting kit.
+Turnip is OpenSourcery's Drupal starting kit. Using a Drush Make
+workflow, only custom modules, features and themes are committed to
+the repository, which allows for teams to quickly get up to speed and
+collaborate on the important parts of the project at hand. It includes
+a starting framework for using Behat for behavior driven
+development. Each site is built as an installation profile.
 
 [![Build Status](https://travis-ci.org/opensourcery/turnip.png?branch=7.x)](https://travis-ci.org/opensourcery/turnip)
 
@@ -14,7 +19,29 @@ Turnip is OpenSourcery's Drupal starting kit.
    ```
 1. Customize `my_profile/my_profile.make`
 1. Run `bin/rebuild`
-1. Custom modules or features should go in `my_project/modules/custom` or `my_project/modules/features`.
+1. Custom modules or features should go in `my_project/modules/custom`
+   or `my_project/modules/features`.
+
+## Drush Make
+
+There are several bundled make files:
+
+* `os_project.make` - This gets renamed to the installation profile's machine name
+* `base.make` - common modules and libraries
+* `images.make` - Media module and other image-related modules
+* `panels.make` - Panels modules related dependencies
+
+If using dev versions of modules, specific commit hashes are
+preferable in the make files, rather than the more general dev branch.
+
+## Installation profile
+
+By building the site out as an installation profile, funcitonality can
+easily be tracked in commit logs.
+
+The [Profiler](http://drupal.org/project/profiler) library is used for
+creating placeholder nodes, users and taxonomy terms, as well as
+setting variables that don't make sense to commit to feature modules.
 
 ## Using Vagrant
 
