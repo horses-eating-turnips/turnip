@@ -6,6 +6,6 @@ database to the test server.
 Where `@local` is the alias of your local db, and `@test` is the alias
 of the test server.
 
+
 Note that this assumes you have the test server setup as a drush
-alias. For gargravarr aliases, see
-https://github.com/opensourcery/opensourcery/tree/master/drush.gargravarr.
+alias. See http://drush.ws/examples/example.aliases.drushrc.php
