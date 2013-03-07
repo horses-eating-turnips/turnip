@@ -16,9 +16,11 @@ development. Each site is built as an installation profile.
 1. Either copy all files into a new repository or clone this
    repository, keeping an upstream origin named `turnip`:
    ```
-   git clone --depth=1 -o turnip git@github.com:opensourcery/turnip.git
+   git clone -o turnip git@github.com:opensourcery/turnip.git foo_project
+   cd foo_project
+   git checkout -b master
    ```
-1. Initialize git (if files were copied), and add a remote:
+1. Initialize git (if files were copied), andmar add a remote:
    ```
    git remote add origin git@github:foo/bar.git
    ```
