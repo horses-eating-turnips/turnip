@@ -13,6 +13,15 @@ development. Each site is built as an installation profile.
 
 ## Installation
 
+1. Either copy all files into a new repository or clone this
+   repository, keeping an upstream origin named `turnip`:
+   ```
+   git clone --depth=1 -o turnip git@github.com:opensourcery/turnip.git
+   ```
+1. Initialize git (if files were copied), and add a remote:
+   ```
+   git remote add origin git@github:foo/bar.git
+   ```
 1. Run `bin/make-install-profile` to instantiate an installation profile. For example
    ```
    bin/make-install-profile my_profile my_theme "Short name" "Long name"
