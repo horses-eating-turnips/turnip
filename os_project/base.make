@@ -19,6 +19,8 @@ projects[features][version] = "2.0-beta1"
 ; http://drupal.org/node/1063204#comment-6350488
 projects[features][patch][] = "http://drupal.org/files/features_static_caches-1063204-32.patch"
 
+projects[features_override][version] = "2.0-beta2"
+
 projects[fences][version] = "1.0"
 
 ; FooTable (responsive tables).
