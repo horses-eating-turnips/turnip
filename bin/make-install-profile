@@ -5,47 +5,35 @@ if [ -z "$1" -o -z "$2" -o -z "$3" -o -z "$4" ]; then
   exit 1
 fi
 
-if [ ! -d os_project ]; then
-  echo "Error: Cannot find os_project directory"
-  exit 2
-fi
+# Write out config file.
+echo "PROFILE=\"$1\"" > bin/.config
+echo "THEME=\"$2\"" >> bin/.config
+echo "PROJECTNAME=\"$3\"" >> bin/.config
+echo "DESCRIPTION=\"$4\"" >> bin/.config
 
-NEW="$1"
-THEME="$2"
-PROJECTNAME="$3"
-DESCRIPTION="$4"
-FILES="os_project.info os_project.install os_project.make os_project.profile"
-DEMOEXTS="deploy_plans.inc features.inc features.uuid_entities.inc info module"
-SEDFLAGS="-i.orig"
+# Load config file.
+source bin/.config
 
-# rebuild script
-sed -e "s/PROFILE=\"os_project\"/PROFILE=\"$NEW\"/" $SEDFLAGS bin/rebuild
-sed -e "s/PROJECT/$PROJECTNAME/" $SEDFLAGS bin/rebuild
-sed -e "s/os_theme/$THEME/" $SEDFLAGS bin/rebuild
-
-# deploy script
-sed -e "s/INSTALLPROFILE=os_project/INSTALLPROFILE=$NEW/" $SEDFLAGS bin/deploy_to_test
-
-mkdir $NEW
-cp os_project/os_project.* $NEW/
-cp os_project/*make $NEW/
-cp -r os_project/modules/ $NEW/
-cd $NEW
-sed -e "s/os_project/$NEW/" $SEDFLAGS $FILES
-sed -e "s/PROJECTNAME/$PROJECTNAME/" $SEDFLAGS $FILES
-sed -e "s/DESCRIPTION/$DESCRIPTION/" $SEDFLAGS $FILES
-mv os_project.info    $NEW.info
-mv os_project.install $NEW.install
-mv os_project.make    $NEW.make
-mv os_project.profile $NEW.profile
-# demo content feature
-for ext in $DEMOEXTS; do
-  sed -e "s/os_project_demo_content/$NEW\_demo_content/" $SEDFLAGS modules/features/os_project_demo_content/os_project_demo_content.$ext
-  sed -e "s/PROJECT/$PROJECTNAME/" $SEDFLAGS modules/features/os_project_demo_content/os_project_demo_content.$ext
-  mv modules/features/os_project_demo_content/os_project_demo_content.$ext modules/features/os_project_demo_content/$NEW\_demo_content.$ext
+# Move project.
+mv os_project $PROFILE
+for file in $PROFILE/os_project.*; do
+  base="${file##*/}"
+  ext="${base##*.}"
+  mv $file $PROFILE/$PROFILE.$ext
 done
-mv modules/features/os_project_demo_content modules/features/$NEW\_demo_content
-rm modules/features/$NEW\_demo_content/*.orig
-rm *.orig
-cd ..
-rm *.orig
+
+# Remove bin/.gitignore (which only contains a reference to .config).
+rm bin/.gitignore
+
+# Process tokens in project files.
+sed -i "s/os_project/$PROFILE/" $PROFILE/$PROFILE.*
+sed -i "s/PROJECTNAME/$PROJECTNAME/" $PROFILE/$PROFILE.*
+sed -i "s/DESCRIPTION/$DESCRIPTION/" $PROFILE/$PROFILE.*
+
+# demo content feature
+for ext in deploy_plans.inc features.inc features.uuid_entities.inc info module; do
+  sed -i "s/os_project_demo_content/$PROFILE\_demo_content/" $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext
+  sed -i "s/PROJECT/$PROJECTNAME/" $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext
+  mv $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext $PROFILE/modules/features/os_project_demo_content/$PROFILE\_demo_content.$ext
+done
+mv $PROFILE/modules/features/os_project_demo_content $PROFILE/modules/features/$PROFILE\_demo_content
