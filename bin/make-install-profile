@@ -5,6 +5,11 @@ if [ -z "$1" -o -z "$2" -o -z "$3" -o -z "$4" ]; then
   exit 1
 fi
 
+if [ ! -d os_project ]; then
+  echo "Error: Cannot find os_project directory"
+  exit 2
+fi
+
 # Write out config file.
 echo "PROFILE=\"$1\"" > bin/.config
 echo "THEME=\"$2\"" >> bin/.config
@@ -26,14 +31,16 @@ done
 rm bin/.gitignore
 
 # Process tokens in project files.
-sed -i "s/os_project/$PROFILE/" $PROFILE/$PROFILE.*
-sed -i "s/PROJECTNAME/$PROJECTNAME/" $PROFILE/$PROFILE.*
-sed -i "s/DESCRIPTION/$DESCRIPTION/" $PROFILE/$PROFILE.*
+sed -e "s/os_project/$PROFILE/" -i.orig $PROFILE/$PROFILE.*
+sed -e "s/PROJECTNAME/$PROJECTNAME/" -i.orig $PROFILE/$PROFILE.*
+sed -e "s/DESCRIPTION/$DESCRIPTION/" -i.orig $PROFILE/$PROFILE.*
+rm $PROFILE/*.orig
 
 # demo content feature
 for ext in deploy_plans.inc features.inc features.uuid_entities.inc info module; do
-  sed -i "s/os_project_demo_content/$PROFILE\_demo_content/" $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext
-  sed -i "s/PROJECT/$PROJECTNAME/" $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext
+  sed -e "s/os_project_demo_content/$PROFILE\_demo_content/" -i.orig $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext
+  sed -e "s/PROJECT/$PROJECTNAME/" -i.orig $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext
   mv $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext $PROFILE/modules/features/os_project_demo_content/$PROFILE\_demo_content.$ext
+  rm $PROFILE/modules/features/os_project_demo_content/*.orig
 done
 mv $PROFILE/modules/features/os_project_demo_content $PROFILE/modules/features/$PROFILE\_demo_content
