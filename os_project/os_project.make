@@ -8,7 +8,7 @@ defaults[projects][subdir] = "contrib"
 
 core = "7.x"
 projects[drupal][type] = "core"
-projects[drupal][version] = "7.20"
+projects[drupal][version] = "7.21"
 ; Make taxonomy permissions use vocabulary machine name instead of vid
 projects[drupal][patch][] = "http://drupal.org/files/995156-31_portable_taxonomy_permissions-D7-15.patch"
 
