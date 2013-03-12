@@ -67,6 +67,9 @@ projects[stage_file_proxy][version] = "1.1"
 projects[styleguide][subdir] = "development"
 projects[styleguide][version] = "1.0"
 
+projects[diff][subdir] = "development"
+projects[diff][version] = "3.2"
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; LIBRARIES ;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
