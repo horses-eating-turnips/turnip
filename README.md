@@ -27,9 +27,13 @@ development. Each site is built as an installation profile.
    git remote add origin git@github:foo/bar.git
    ```
 1. Run `bin/make-install-profile` to instantiate an installation profile. For example
+
    ```bash
    bin/make-install-profile my_profile my_theme "Short name" "Long name"
    ```
+
+   All changes can then quickly be added via `git add -A`.
+
 1. Customize `my_profile/my_profile.make`
 1. Run `bin/rebuild`
 1. Custom modules or features should go in `my_project/modules/custom`

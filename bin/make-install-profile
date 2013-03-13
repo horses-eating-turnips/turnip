@@ -44,3 +44,7 @@ for ext in deploy_plans.inc features.inc features.uuid_entities.inc info module;
   rm $PROFILE/modules/features/os_project_demo_content/*.orig
 done
 mv $PROFILE/modules/features/os_project_demo_content $PROFILE/modules/features/$PROFILE\_demo_content
+
+# Move Turnip README.md over to README.dist.md
+mv README.md README.dist.md
+echo -e "##$PROJECTNAME\n\n$DESCRIPTION" > README.md
