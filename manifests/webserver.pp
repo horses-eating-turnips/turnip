@@ -6,9 +6,6 @@ Package {
     require => Exec["apt-get update"],
 }
 
-package { "apache2": }
-package { "apache2.2-common": }
-package { "libapache2-mod-php5": }
 package { "php5": }
 package { "php5-cli": }
 package { "php-apc": }
@@ -23,10 +20,8 @@ package { "git": }
 # Solr and Tomcat. Un-comment to use:
 #class { 'solr::tomcat6': }
 
-service { "apache2":
-    ensure => "running",
-    enable => "true",
-    require => Package["apache2"],
+class { "apache2":
+  vhost_dir => '/vagrant/drupal'
 }
 
 service { "mysql":
@@ -35,24 +30,11 @@ service { "mysql":
     require => Package["mysql-server"],
 }
 
-file { "/etc/apache2/sites-available/default":
-    notify => Service["apache2"],
-    ensure => "present",
-    source => template("apache.default.erb"),
-    require => Package["apache2"],
-}
-
 exec { "mysql password":
     unless => "/usr/bin/mysql -uroot -ppassword",
     command => "/usr/bin/mysqladmin -u root password password",
     notify => Service["mysql"],
     require => Package["mysql-server"],
-}
-
-exec { "mod rewrite":
-    notify => Service["apache2"],
-    command => "/usr/sbin/a2enmod rewrite",
-    require => Package["apache2"],
 }
 
 exec { "create-drupal-db":

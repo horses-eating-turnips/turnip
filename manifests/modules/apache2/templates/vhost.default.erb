@@ -1,12 +1,12 @@
 <VirtualHost *:80>
 	ServerAdmin webmaster@localhost
 
-	DocumentRoot /vagrant/drupal
+	DocumentRoot <%= vhost_dir %>
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride All
 	</Directory>
-	<Directory /vagrant/drupal>
+	<Directory <%= vhost_dir %>>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride All
 		Order allow,deny
