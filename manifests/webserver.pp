@@ -38,7 +38,7 @@ service { "mysql":
 file { "/etc/apache2/sites-available/default":
     notify => Service["apache2"],
     ensure => "present",
-    source => "/vagrant/manifests/default",
+    source => template("apache.default.erb"),
     require => Package["apache2"],
 }
 
