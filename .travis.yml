@@ -7,8 +7,7 @@ install:
   - git reset --hard
   - git clean -dxf
   - sudo apt-get update > /dev/null
-  - sudo apt-get remove virtualbox
-  - sudo apt-get install php5-curl virtualbox
+  - sudo apt-get install php5-curl virtualbox > /dev/null
   - gem install vagrant
   - gem install vagrant-vbguest
 before_script:
