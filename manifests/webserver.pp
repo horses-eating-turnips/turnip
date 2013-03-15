@@ -20,6 +20,12 @@ package { "git": }
 # Solr and Tomcat. Un-comment to use:
 #class { 'solr::tomcat6': }
 
+# Varnish. Un-comment to use:
+#class { 'varnish':
+#  varnish_storage_size => '1G',
+#  varnish_storage => 'malloc'
+#}
+
 class { "apache2":
   vhost_dir => '/vagrant/drupal'
 }
