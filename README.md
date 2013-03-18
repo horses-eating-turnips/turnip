@@ -22,7 +22,7 @@ development. Each site is built as an installation profile.
     git checkout -b master
     ```
 
-1. Initialize git (if files were copied), andmar add a remote:
+1. Initialize git (if files were copied), and add a remote:
    ```bash
    git remote add origin git@github:foo/bar.git
    ```
