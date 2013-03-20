@@ -49,9 +49,6 @@ projects[menu_block][version] = "2.3"
 ; Mollom
 projects[mollom][version] = "2.0"
 
-; Views
-projects[views][version] = "3.5"
-
 ; Libraries.
 projects[libraries][version] = "2.0"
 
