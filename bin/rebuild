@@ -52,6 +52,7 @@ chmod 777 drupal/sites/default
 
 # Link settings.php and files into sites/default
 ln -s ../../../shared/settings.php drupal/sites/default/settings.php
+ln -s ../../../shared/settings.local.php drupal/sites/default/settings.local.php
 ln -s ../../../shared/files drupal/sites/default/files
 
 # Clean-up the profile directory, and sym-link it into the drupal directory.
