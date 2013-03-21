@@ -27,7 +27,7 @@ else
   # Copy over settings file.
   if [[ ! -e .state/settings_copied ]]; then
     if [ ! -e shared/settings.local.php ]; then
-      cp manifests/vagrant-settings.php shared/settings.local.php
+      cp manifests/templates/drupal.settings.php.erb shared/settings.local.php
     else
       echo "Failed to copy settings.php into place as 'shared/settings.php' already exists"
       exit 1
