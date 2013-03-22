@@ -30,6 +30,11 @@ class { "apache2":
   vhost_dir => '/vagrant/drupal'
 }
 
+class { "drupal":
+  db_user => 'drupal',
+  db_name => 'drupal'
+}
+
 service { "mysql":
     ensure => "running",
     enable => "true",
