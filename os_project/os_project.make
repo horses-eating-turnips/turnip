@@ -40,6 +40,9 @@ projects[os_base][download][branch] = "7.x-1.x"
 ; http://drupalcode.org/project/apachesolr.git/blob_plain/refs/heads/7.x-1.x:/README.txt
 projects[apachesolr][version] = "1.0-rc3"
 
+; Follow
+projects[follow][version] = "1.0-alpha1"
+
 ; Google analytics
 projects[google_analytics][version] = "1.2"
 
