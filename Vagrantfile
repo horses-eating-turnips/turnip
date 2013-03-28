@@ -35,6 +35,9 @@ Vagrant::Config.run do |config|
     '1'
   ])
 
+  # Prevent runaway VMs from taking down host machine, limit CPU cap to 90%.
+  config.vm.customize ["modifyvm", :id, "--cpuexecutioncap", "90"]
+
 end
 
 # Allow local overrides.
