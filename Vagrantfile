@@ -1,11 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# See http://kvz.io/blog/2013/01/16/vagrant-tip-keep-virtualbox-guest-additions-in-sync/
-# Vagrant's autoloading may not have kicked in
-require 'vagrant-vbguest' unless defined? VagrantVbguest::Config
-#VagrantVbguest::Config.auto_update = false
-
 Vagrant::Config.run do |config|
   config.vm.box = "precise32"
 
