@@ -6,3 +6,4 @@
 *#
 /drupal
 .vagrant
+Vagrantfile.local

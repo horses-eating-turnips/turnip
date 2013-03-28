@@ -71,3 +71,8 @@ Vagrant configuration that will launch a Drupal site in a box.
 1. At this point, [http://localhost:8888](http://localhost:8888) should be serving Drupal.
 1. Stop the server with `bin/stop`, and then restart with `bin/run`
 1. Customize the server in `manifests/webserver.pp`. An Apache Solr example is included if that is required for search.
+1. Values or settings in `Vagrantfile` can be overridden by adding a
+   `Vagrantfile.local`, should individual environments require this. A
+   common example is for forwarding port 80 to a different port than
+   the one defined.
+

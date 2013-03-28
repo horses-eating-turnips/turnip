@@ -36,3 +36,9 @@ Vagrant::Config.run do |config|
   ])
 
 end
+
+# Allow local overrides.
+if File.exist?('Vagrantfile.local')
+  local = File.read 'Vagrantfile.local'
+  eval local
+end
