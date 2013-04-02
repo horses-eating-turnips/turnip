@@ -20,6 +20,8 @@ projects[elements][version] = "1.2"
 projects[features][version] = "2.0-beta2"
 ; http://drupal.org/node/1063204#comment-6350488
 projects[features][patch][] = "http://drupal.org/files/features_static_caches-1063204-32.patch"
+; https://drupal.org/node/1245620#comment-7248612
+projects[features][patch][] = "https://drupal.org/files/features-remove-minimum-php-version-1245620-12.patch"
 
 projects[features_override][version] = "2.0-beta2"
 
