@@ -53,7 +53,7 @@ projects[menu_block][version] = "2.3"
 projects[mollom][version] = "2.0"
 
 ; Libraries.
-projects[libraries][version] = "2.0"
+projects[libraries][version] = "2.1"
 
 ; Libraries
 

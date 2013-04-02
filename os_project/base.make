@@ -15,7 +15,7 @@ projects[ctools][patch][] = "https://drupal.org/files/ctools-views-content-custo
 
 projects[entitycache][version] = "1.1"
 
-projects[elements][version] = "1.2"
+projects[elements][version] = "1.3"
 
 projects[features][version] = "2.0-beta2"
 ; http://drupal.org/node/1063204#comment-6350488
@@ -41,7 +41,7 @@ projects[pathauto][version] = "1.2"
 
 projects[strongarm][version] = "2.0"
 
-projects[token][version] = "1.4"
+projects[token][version] = "1.5"
 
 projects[views][version] = "3.6"
 
