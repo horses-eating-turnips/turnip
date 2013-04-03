@@ -44,7 +44,7 @@ projects[apachesolr][version] = "1.0-rc3"
 projects[follow][version] = "1.0-alpha1"
 
 ; Google analytics
-projects[google_analytics][version] = "1.2"
+projects[google_analytics][version] = "1.3"
 
 ; Menu Block
 projects[menu_block][version] = "2.3"
