@@ -5,9 +5,7 @@ api = 2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; CONTRIB ;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;; (alphabetical order) ;;;;;;;;;;;;;;;
-; ctools revision > 7.x-1.2
-projects[ctools][revision] = "7cd8d95"
-projects[ctools][download][branch] = "7.x-1.x"
+projects[ctools][version] = "1.3"
 ; http://drupal.org/node/1120028#comment-5792282
 projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths-1120028-08.patch"
 ; https://drupal.org/node/1417630#comment-6810906
