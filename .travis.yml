@@ -10,8 +10,6 @@ install:
   - sudo apt-get install php5-curl > /dev/null
   - sudo pear channel-discover pear.drush.org && sudo pear install drush/drush
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
   - bin/make-install-profile client_xyz xyz_foobar "Web app ABC" "Client XYZ's ABC app enables users to browse a database of records."
 
 script: bin/rebuild
