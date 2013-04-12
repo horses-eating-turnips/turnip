@@ -41,7 +41,7 @@ projects[strongarm][version] = "2.0"
 
 projects[token][version] = "1.5"
 
-projects[views][version] = "3.6"
+projects[views][version] = "3.7"
 
 projects[wysiwyg][version] = "2.2"
 ; Select theme css patch: http://drupal.org/node/1309040#comment-6107956
