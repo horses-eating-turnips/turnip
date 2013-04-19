@@ -22,6 +22,9 @@ projects[features][patch][] = "http://drupal.org/files/features_static_caches-10
 projects[features][patch][] = "https://drupal.org/files/features-remove-minimum-php-version-1245620-12.patch"
 
 projects[features_override][version] = "2.0-beta2"
+; A patch to fix coding standards issues with produced features override code
+; Original issue see: http://drupal.org/node/1974336
+projects[features_override][patch][] = "http://drupal.org/files/export_breaks_coding_standards_0.patch"
 
 projects[fences][version] = "1.0"
 
