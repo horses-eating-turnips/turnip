@@ -32,8 +32,7 @@ projects[os_base][type] = "module"
 projects[os_base][download][type] = "git"
 projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
 projects[os_base][download][branch] = "7.x-1.x"
-; Tag new release at end of project
-; projects[os_base][download][tag] = "7.x-1.0-alpha1"
+projects[os_base][download][tag] = "7.x-1.0"
 
 ; Apache Solr Search
 ; TODO potentially switch from this module to search_api module.
