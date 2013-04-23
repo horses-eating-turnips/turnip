@@ -93,8 +93,8 @@ fi
 if [ -n "$RELOADDB" ]; then
   # Reload database from latest production dump.
   drush @$SUBDOMAIN sql-drop -y
-  if [ -f $WORKSPACE/app/db/production_current.sql.gz ]; then
-    gunzip -c $WORKSPACE/app/db/production_current.sql.gz | drush @$SUBDOMAIN sql-cli
+  if [ -f $WORKSPACE/db/production_current.sql.gz ]; then
+    gunzip -c $WORKSPACE/db/production_current.sql.gz | drush @$SUBDOMAIN sql-cli
   else
     echo "ERROR: Database dump not found."
     exit 1
