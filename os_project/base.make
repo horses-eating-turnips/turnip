@@ -66,7 +66,7 @@ projects[environment_indicator][version] = "1.1"
 projects[os_devel][type] = "module"
 projects[os_devel][subdir] = "development"
 projects[os_devel][download][branch] = "7.x-1.x"
-projects[os_devel][download][url] = "git://github.com/opensourcery/os_devel.git"
+projects[os_devel][download][url] = "https://github.com/opensourcery/os_devel.git"
 
 projects[stage_file_proxy][subdir] = "development"
 projects[stage_file_proxy][version] = "1.1"
