@@ -76,6 +76,9 @@ if [ ! -h $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php ]; t
   ln -s $INSTALLROOT/shared/settings.php $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php
 fi
 
+# Fix file directory ownership to www-data.
+chown -R :www-data $INSTALLROOT/shared/files
+
 # Remove old release link and link the new version.
 if [ -h $INSTALLROOT/current ]; then
   rm $INSTALLROOT/current
