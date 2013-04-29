@@ -76,8 +76,6 @@ if [ ! -h $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php ]; t
   ln -s $INSTALLROOT/shared/settings.php $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php
 fi
 
-# Fix file directory ownership to www-data.
-chown -R :www-data $INSTALLROOT/shared/files
 
 # Remove old release link and link the new version.
 if [ -h $INSTALLROOT/current ]; then
@@ -131,6 +129,9 @@ fi
 
 # Enable the os_testing helper module.
 drush @$SUBDOMAIN en -y os_testing
+
+# Fix file directory ownership to www-data.
+chown -R :www-data $INSTALLROOT/shared/files
 
 # Remove all but the last 4 builds in the releases directory.
 cd $INSTALLROOT/releases
