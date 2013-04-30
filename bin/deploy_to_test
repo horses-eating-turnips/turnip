@@ -73,7 +73,7 @@ if [ ! -h $INSTALLROOT/releases/$TIMESTAMP/sites/default/files ]; then
   ln -s $INSTALLROOT/shared/files $INSTALLROOT/releases/$TIMESTAMP/sites/default/files
 fi
 if [ ! -h $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php ]; then
-  ln -s $INSTALLROOT/shared/settings.php $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php
+  ln -s $INSTALLROOT/shared/settings.local.php $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php
 fi
 
 
