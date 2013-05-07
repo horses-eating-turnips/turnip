@@ -26,7 +26,7 @@ if which pv >/dev/null; then
   uncompressed_size=`gzip -l $1 | awk 'NR==2 {print $2}'`
   gzip -d -c $1 | pv -i 0.5 -s $uncompressed_size | drush $options sql-cli
 else
-  gzip -d -c $1 | drush $options sql-cli
+  gzip -d -c $1 | `drush $options sql-connect`
 fi
 
 
