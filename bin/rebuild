@@ -5,6 +5,18 @@
 # To use this command you must have Drush, Git and Compass installed.
 #
 
+# Add help
+if [[ $1 == *help ]]; then 
+  echo "Rebuilds the project by downloading specified components, setting links, and compiling sass."
+  echo "rebuild should be run from the root project directory."
+  echo ""
+  echo "bin/rebuild [options]"
+  echo "--clean          Removes directories and files from a previous build."
+  echo "--drush=\"...\"    Passes arguments to drush make. e.g. --drush=\"--debug\""
+  echo "--compass=\"...\"  Passes arguments to compass. e.g. --compass=\"--no-debug-info\""
+  exit
+fi
+
 # Load config
 if [ ! -e bin/.config ]; then
   echo "Error: could not find configuration file. Please run make-install-profile."
@@ -35,12 +47,20 @@ for dir in $DIRECTORIES; do
   fi
 done
 
+# Clean flag, exit now.
 if [[ $1 = "--clean" ]]; then
   exit
 fi
 
+# Parse the arguments
+for (( i=1; i<=$#; i++)); do
+  eval arg="\$$i"
+  arg=${arg/=/=\"}\"
+  eval ${arg:2}
+done
+
 # Build the drupal directory from the make file.
-drush make $1 --yes --contrib-destination=profiles/$PROFILE $PROFILE/$PROFILE.make drupal
+drush make $drush --yes --contrib-destination=profiles/$PROFILE $PROFILE/$PROFILE.make drupal
 
 # Exit out if this build failed.
 if [ ! -d drupal ]; then
@@ -62,5 +82,5 @@ ln -s ../../$PROFILE drupal/profiles/$PROFILE
 
 # Compile SCSS files into CSS files using Compass.
 if [ -e drupal/profiles/$PROFILE/themes/$THEME/config.rb ]; then
-  compass compile drupal/profiles/$PROFILE/themes/$THEME
+  compass compile $compass drupal/profiles/$PROFILE/themes/$THEME
 fi
