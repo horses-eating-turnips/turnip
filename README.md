@@ -36,8 +36,19 @@ development. Each site is built as an installation profile.
 
 1. Customize `my_profile/my_profile.make`
 1. Run `bin/rebuild`
+1. To avoid having to redeclare your default origin each time you pull or push, run your first push as:
+   ```bash
+   git push -u origin master
+   ```
+
 1. Custom modules or features should go in `my_project/modules/custom`
    or `my_project/modules/features`.
+1. When you want to pull the most recent turnip changes, you can run:
+   ```bash
+   git fetch turnip
+   git merge --no-commit turnip/7.x
+   ```
+   This adds all the turnip changes to your local repo, but allows you to review them before committing them.
 
 ## Drush Make
 
