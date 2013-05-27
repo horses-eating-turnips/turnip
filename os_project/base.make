@@ -20,6 +20,8 @@ projects[features][version] = "2.0-beta2"
 projects[features][patch][] = "http://drupal.org/files/features_static_caches-1063204-32.patch"
 ; https://drupal.org/node/1245620#comment-7248612
 projects[features][patch][] = "https://drupal.org/files/features-remove-minimum-php-version-1245620-12.patch"
+; Expanded or hidden menu links aren't seen as customized http://drupal.org/node/927576
+projects[features][patch][] = "http://drupal.org/files/menu_links_customized-927576-8.patch"
 
 projects[features_override][version] = "2.0-beta2"
 ; A patch to fix coding standards issues with produced features override code
