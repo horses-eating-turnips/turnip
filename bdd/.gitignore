@@ -2,3 +2,4 @@ composer.phar
 bin
 vendor
 behat.yml
+composer.lock
