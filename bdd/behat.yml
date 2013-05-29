@@ -8,15 +8,12 @@ default:
       default_browser: 'goutte'
   extensions:
     Behat\MinkExtension\Extension:
-      # Replace `TESTHOST` with the proper gargravarr subdomain.
-      base_url: 'http://TESTHOST.opensourcery.com'
       goutte: ~
       selenium2: ~
     Drupal\DrupalExtension\Extension:
       api_driver: drupal
       blackbox: ~
       drupal:
-        # For the test host, the below path is the proper
-        # structure. For local testing, this is the absolute path to
-        # the Drupal root.
-        drupal_root: /var/www/TESTHOST/current
+
+imports:
+  - behat.local.yml
