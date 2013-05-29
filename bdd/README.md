@@ -24,3 +24,8 @@ RUNNING TESTS
 -------------
 
 1. Run `bin/behat`
+
+Setting up tests on test server
+-------------------------------
+
+1. Copy `behat.local.yml.sample` to `testing.behat.yml` and edit accordingly.
