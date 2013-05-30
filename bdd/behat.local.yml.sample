@@ -2,11 +2,11 @@
 default:
   extensions:
     Behat\MinkExtension\Extension:
-      # Replace `TESTHOST` with the proper gargravarr subdomain.
+      # Replace this URL with your local development URL.
       base_url: 'http://TESTHOST.opensourcery.com'
     Drupal\DrupalExtension\Extension:
       drupal:
         # For the test host, the below path is the proper
         # structure. For local testing, this is the absolute path to
-        # the Drupal root.
+        # the local Drupal root.
         drupal_root: /var/www/TESTHOST/current
