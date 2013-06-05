@@ -127,6 +127,8 @@ echo "Enabling environment indicator module."
 drush @$SUBDOMAIN en -y environment_indicator
 drush @$SUBDOMAIN role-add-perm "anonymous user" "access environment indicator"
 drush @$SUBDOMAIN role-add-perm "authenticated user" "access environment indicator"
+
+# Enable stage file proxy module.
 if [ "$PRODUCTIONURL" != "http://" ]; then
   echo "Enabling Stage File Proxy and configuring origin as '$PRODUCTIONURL'."
   drush @$SUBDOMAIN en -y stage_file_proxy
