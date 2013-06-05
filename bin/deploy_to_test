@@ -42,6 +42,12 @@ if [ -n "$RELOADDB" ] && [ -n "$SITEINSTALL" ]; then
   exit 1
 fi
 
+if [ ! -n "$RELOADDB" ] && [ ! -n "$SITEINSTALL" ]; then
+  echo "WARNING: Both RELOADDB and SITEINSTALL options are disabled!"
+  echo "If you are building a new project that has not yet been deployed, please enable SITEINSTALL."
+  echo "If you are working on an existing project that has been deployed, please update database at db/production_current.sql.gz and enable RELOADDB."
+fi
+
 # If SUBDOMAIN isn't set, INSTALLROOT would become /var/www// and we'd blow
 # away the permissions of every test host on the test server.
 if [ -z "$SUBDOMAIN" ]; then
