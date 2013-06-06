@@ -42,7 +42,7 @@ projects[os_base][download][tag] = "7.x-1.0"
 projects[apachesolr][version] = "1.0-rc3"
 
 ; Follow
-projects[follow][version] = "1.0-alpha1"
+projects[follow][version] = "2.0-alpha1"
 
 ; Google analytics
 projects[google_analytics][version] = "1.3"
