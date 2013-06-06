@@ -26,6 +26,9 @@ includes[images] = "images.make"
 ; Uncomment to use Panels.
 ;includes[panels] = "panels.make"
 
+; Uncomment to use Solr Search.
+; includes[solr] = "solr.make"
+
 ; OpenSourcery base feature.
 projects[os_base][subdir] = "stock"
 projects[os_base][type] = "module"
@@ -33,13 +36,6 @@ projects[os_base][download][type] = "git"
 projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
 projects[os_base][download][branch] = "7.x-1.x"
 projects[os_base][download][tag] = "7.x-1.0"
-
-; Apache Solr Search
-; TODO potentially switch from this module to search_api module.
-; SolrPHPClient is NOT required (all code is in the module).
-; Be sure to use Solr 3.5 or higher. Also remember to copy the module's conf files.
-; http://drupalcode.org/project/apachesolr.git/blob_plain/refs/heads/7.x-1.x:/README.txt
-projects[apachesolr][version] = "1.0-rc3"
 
 ; Follow
 projects[follow][version] = "2.0-alpha1"
