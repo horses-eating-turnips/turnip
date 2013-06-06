@@ -23,7 +23,19 @@ INSTALLATION
 RUNNING TESTS
 -------------
 
-1. Run `bin/behat`
+Run `bin/behat` to be sure your local setup is properly wired up.
+
+To run the tests locally in the same way they are run in the TEST environment,
+use the following command from within the `bdd` directory:
+
+`$ bin/behat --format=progress --tags=~wip`
+
+During development it is often handy to run a single feature test. For that, use
+
+`$ bin/behat --format=progress --tags=~wip features/my.feature`
+
+The behat doc page for the [behat command]
+(http://docs.behat.org/guides/6.cli.html) is also quite useful.
 
 Setting up tests on test server
 -------------------------------
