@@ -5,6 +5,7 @@ api = 2
 ; Facet API
 ;projects[facetapi][version] = "1.3"
 
+
 ; Search API
 projects[search_api][version] = "1.6"
 
@@ -17,3 +18,12 @@ projects[search_api][version] = "1.6"
 ; Search API Solr
 projects[search_api_solr][version] = "1.0-rc5"
 
+
+; ApacheSolr
+;projects[apachesolr][version] = "1.2"
+
+; ApacheSolr Attachments
+;projects[apachesolr_attachments][version] = "1.2"
+
+; ApacheSolr Views
+;projects[apachesolr_views][version] = "1.0-beta2"
