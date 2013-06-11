@@ -13,7 +13,7 @@ projects[ctools][patch][] = "https://drupal.org/files/ctools-views-content-custo
 
 projects[entitycache][version] = "1.1"
 
-projects[elements][version] = "1.3"
+projects[elements][version] = "1.4"
 
 projects[features][version] = "2.0-rc1"
 ; PDO exception if permissions are set in same feature as module creating them. http://drupal.org/node/1063204#comment-6350488
