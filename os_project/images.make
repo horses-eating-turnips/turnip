@@ -20,7 +20,7 @@ projects[media][patch][] = "http://drupal.org/files/media-embed-library-resize.p
 ; Required for multiple file uploads via plupload at `file/add`.
 projects[multiform][version] = "1.0"
 
-projects[plupload][version] = "1.0"
+projects[plupload][version] = "1.1"
 ; http://drupal.org/node/1476830#comment-6026232
 projects[plupload][patch][] = "http://drupal.org/files/media-upload-widget--1476830-2.patch"
 
