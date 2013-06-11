@@ -57,7 +57,7 @@ projects[wysiwyg][patch][] = "http://drupal.org/files/1309040-22-select_theme_cs
 ;;;;;;;; (may be disabled for production) ;;;;;;;;
 projects[admin_menu][type] = "module"
 projects[admin_menu][subdir] = "development"
-projects[admin_menu][version] = "3.0-rc3"
+projects[admin_menu][version] = "3.0-rc4"
 
 projects[devel][subdir] = "development"
 projects[devel][version] = "1.3"
