@@ -5,9 +5,9 @@ api = 2
 projects[adaptive_image][version] = "1.4"
 
 projects[caption_filter][download][branch] = "7.x-1.x"
-projects[caption_filter][download][revision] = "c9794cf"
-; http://drupal.org/node/1432092#comment-6014324
-projects[caption_filter][patch][] = "http://drupal.org/files/caption-button-1432092-4.patch"
+projects[caption_filter][download][revision] = "6ab247f6c"
+; https://drupal.org/node/1432092#comment-7541749
+projects[caption_filter][patch][] = "https://drupal.org/files/tinymce-button--1432092--17.patch"
 
 projects[file_entity][version] = "2.0-unstable7"
 
