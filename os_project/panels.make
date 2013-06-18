@@ -8,9 +8,7 @@ api = 2
 ; Latest: 7.x-1.0 + 7 commits.
 ;projects[fieldable_panels_panes][revision] = "57000ec268603f43e2ea50817682b54659c33651"
 
-; Latest: 7.x-2.0 + 19 commits.
-projects[panelizer][download][branch] = "7.x-2.x"
-projects[panelizer][revision] = "daec7d2"
+projects[panelizer][version] = "3.1"
 
 projects[panels][version] = "3.3"
 ; https://drupal.org/node/1632898#comment-6412840 - This was commited Nov 16, 2012 and should be removed when updating to 3.4
