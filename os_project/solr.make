@@ -16,7 +16,7 @@ projects[search_api][version] = "1.6"
 ;projects[search_api_page] = "1.0-beta2"
 
 ; Search API Solr
-projects[search_api_solr][version] = "1.0-rc5"
+projects[search_api_solr][version] = "1.0"
 
 
 ; ApacheSolr
