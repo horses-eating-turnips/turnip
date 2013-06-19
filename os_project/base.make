@@ -30,7 +30,6 @@ projects[features_override][download][revision] = "ed1df0e"
 ; A patch to fix coding standards issues with produced features override code
 ; Original issue see: http://drupal.org/node/1974336
 projects[features_override][patch][] = "http://drupal.org/files/export_breaks_coding_standards_0.patch"
-Moved to a later version of features_override for array/boolean mismatch.
 
 projects[fences][version] = "1.0"
 
