@@ -34,8 +34,8 @@ projects[os_base][subdir] = "stock"
 projects[os_base][type] = "module"
 projects[os_base][download][type] = "git"
 projects[os_base][download][url] = "git://github.com/opensourcery/os_base.git"
-projects[os_base][download][branch] = "7.x-1.x"
-projects[os_base][download][tag] = "7.x-1.0"
+projects[os_base][download][branch] = "7.x-2.x"
+projects[os_base][download][revision] = "b9ac843dac"
 
 ; Follow
 projects[follow][version] = "2.0-alpha1"
