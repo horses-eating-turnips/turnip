@@ -55,16 +55,13 @@ projects[libraries][version] = "2.1"
 ; Libraries
 
 ; Profiler
-libraries[profiler][download][type] = "get"
-libraries[profiler][download][url] = "http://ftp.drupal.org/files/projects/profiler-7.x-2.0-beta1.tar.gz"
-; http://drupal.org/node/1165672#comment-4696748: Don't disable blocks
-libraries[profiler][patch][] = "http://drupal.org/files/issues/0001-Issue-1165672-don-t-disable-blocks.patch"
+libraries[profiler][download][type] = "git"
+libraries[profiler][download][branch] = "7.x-2.x"
+libraries[profiler][download][revision] = "4c131d2"
 ; http://drupal.org/node/1853290#comment-6787544: Add support for term parents.
 libraries[profiler][patch][] = "http://drupal.org/files/1853290-support-term-parent-2.patch"
 ; http://drupal.org/node/1921880#comment-7086568: Add support for heirarchical menus on node creation.
 libraries[profiler][patch][] = "http://drupal.org/files/profiler_heirarchical_node_menu-1921880-1.patch"
-; http://drupal.org/node/1955904#comment-7233174: Add support for block creation.
-libraries[profiler][patch][] = "http://drupal.org/files/add_block_support-1955904.patch"
 
 ; swfobject, JS library for embedding Flash content
 ;libraries[swfobject][download][type] = "get"
