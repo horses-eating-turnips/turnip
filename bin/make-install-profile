@@ -22,9 +22,8 @@ source bin/.config
 # Move project.
 mv os_project $PROFILE
 for file in $PROFILE/os_project.*; do
-  base="${file##*/}"
-  ext="${base##*.}"
-  mv $file $PROFILE/$PROFILE.$ext
+  new=`echo $file | sed "s/os_project/$PROFILE/"`
+  mv $file $new
 done
 
 # Remove bin/.gitignore (which only contains a reference to .config).
@@ -51,13 +50,14 @@ done
 
 
 # demo content feature
-for ext in deploy_plans.inc features.inc features.uuid_entities.inc info module; do
-  sed -e "s/os_project_demo_content/$PROFILE\_demo_content/" -i.orig $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext
-  sed -e "s/PROJECT/$PROJECTNAME/" -i.orig $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext
-  mv $PROFILE/modules/features/os_project_demo_content/os_project_demo_content.$ext $PROFILE/modules/features/os_project_demo_content/$PROFILE\_demo_content.$ext
-  rm $PROFILE/modules/features/os_project_demo_content/*.orig
-done
 mv $PROFILE/modules/features/os_project_demo_content $PROFILE/modules/features/$PROFILE\_demo_content
+for file in $PROFILE/modules/features/$PROFILE\_demo_content/os_project_demo_content.*; do
+  new=`echo $file | sed "s/os_project/$PROFILE/"`
+  mv $file $new
+  sed -e "s/os_project/$PROFILE/" -i.orig $new
+  sed -e "s/PROJECTNAME/$PROJECTNAME/" -i.orig $new
+  rm $new.orig
+done
 
 # Move Turnip README.md over to README.dist.md
 mv README.md README.dist.md
