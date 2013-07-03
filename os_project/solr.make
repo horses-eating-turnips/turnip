@@ -20,7 +20,7 @@ projects[search_api_solr][version] = "1.0"
 
 
 ; ApacheSolr
-;projects[apachesolr][version] = "1.2"
+;projects[apachesolr][version] = "1.3"
 
 ; ApacheSolr Attachments
 ;projects[apachesolr_attachments][version] = "1.2"
