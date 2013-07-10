@@ -74,7 +74,7 @@ projects[os_devel][download][branch] = "7.x-1.x"
 projects[os_devel][download][url] = "https://github.com/opensourcery/os_devel.git"
 
 projects[stage_file_proxy][subdir] = "development"
-projects[stage_file_proxy][version] = "1.3"
+projects[stage_file_proxy][version] = "1.4"
 
 projects[styleguide][subdir] = "development"
 projects[styleguide][version] = "1.1"
