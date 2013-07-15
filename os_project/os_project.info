@@ -44,7 +44,7 @@ dependencies[] = token
 dependencies[] = wysiwyg
 
 ; Features
-dependencies[] = os_base
+dependencies[] = os_project_base
 
 ;
 ; Users
@@ -70,7 +70,7 @@ variables[site_default_country] = US
 variables[dblog_row_limit] = 1000000
 
 ; Disable core image styles
-variables[os_base_remove_core_image_styles] = 1
+variables[os_project_base_remove_core_image_styles] = 1
 
 ; Up image quality.
 variables[image_jpeg_quality] = 100
