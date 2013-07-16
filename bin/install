@@ -1,54 +1,42 @@
-#!/bin/bash -e
+#!/bin/bash
+#
+# Runs site-install from drush then enables some local modules
+#
+# To use this command you must have Drush installed.
+#
+if [ -z "$1" ]; then
+  echo "Need one argument: name of profile to install."
+  echo "Example: bin/local_site_install foo_base"
+  exit 1
+fi
 
-# Do the first bit outside vagrant.
-if [[ ! $INNER ]]
-then
-  cd $(git rev-parse --show-toplevel)
-  PATH=$PWD/bin:$PATH
+PROFILE=$1
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-  # Run the rest inside vagrant
-  vagrant up
-  vagrant ssh -c 'INNER=true /vagrant/bin/install'
-else
-  cd /vagrant
-  PATH=$PWD/bin:$PATH
+if ! ( test -e $DIR/../$PROFILE ); then
+  echo "I didn't find the profile $PROFILE. Are you sure it exists?"
+  exit 1
+fi
 
-  # Load config
-  if [ ! -e bin/.config ]; then
-    echo "Error: could not find configuration file. Please run make-install-profile."
-    exit 2
-  fi
-  source bin/.config
+#run the rebuild script
+bin/rebuild
 
-  if [[ ! -e shared/files ]]; then
-    mkdir shared/files
-  fi
+if ! ( test -e $DIR/../drupal ); then
+  echo "I didn't find a drupal directory. Are you sure it exists?"
+  exit 1
+fi
 
-  # Copy over settings file.
-  if [[ ! -e .state/settings_copied ]]; then
-    if [ ! -e shared/settings.local.php ]; then
-      cp manifests/templates/drupal.settings.php.erb shared/settings.local.php
-    else
-      echo "Failed to copy settings.php into place as 'shared/settings.php' already exists"
-      exit 1
-    fi
+cd $DIR/../drupal
 
-    date +%s > .state/settings_copied
-  fi
+# Site install
+drush site-install -y --uri=default $PROFILE
 
-  # Rebuild site.
-  rebuild
+# Enable modules I use locally every time.
+drush en diff -y
+drush en views_ui -y
+drush en styleguide -y
 
-  # Install site and prepare for tests.
-  if [[ -e db/production_current.sql.gz ]]; then
-    cd db
-    ./db_load.sh production_current.sql.gz
-    cd -
-  else
-    cd drupal
-    drush si -y --uri=default $PROFILE
-    cd -
-  fi
-
-  date +%s > .state/install_ran
+cd ../bdd
+if ( test -e bin/behat ); then
+  bin/behat
 fi
