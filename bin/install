@@ -22,9 +22,10 @@ if [[ -e db/production_current.sql.gz ]]; then
 else
   cd drupal
   drush site-install -y --uri=default $PROFILE
+  drush fra -y
+  drush cc all
   cd -
 fi
-
 
 # Enable modules I use locally every time.
 # TODO read this from local config instead of hard-coding.
