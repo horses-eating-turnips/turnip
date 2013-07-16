@@ -4,39 +4,38 @@
 #
 # To use this command you must have Drush installed.
 #
-if [ -z "$1" ]; then
-  echo "Need one argument: name of profile to install."
-  echo "Example: bin/local_site_install foo_base"
-  exit 1
-fi
-
-PROFILE=$1
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-if ! ( test -e $DIR/../$PROFILE ); then
-  echo "I didn't find the profile $PROFILE. Are you sure it exists?"
-  exit 1
-fi
+source bin/.config
 
 #run the rebuild script
 bin/rebuild
 
-if ! ( test -e $DIR/../drupal ); then
+if ! ( test -e drupal ); then
   echo "I didn't find a drupal directory. Are you sure it exists?"
   exit 1
 fi
 
-cd $DIR/../drupal
+# Site install.
+if [[ -e db/production_current.sql.gz ]]; then
+  cd db
+  ./db_load.sh production_current.sql.gz
+  cd -
+else
+  cd drupal
+  drush site-install -y --uri=default $PROFILE
+  cd -
+fi
 
-# Site install
-drush site-install -y --uri=default $PROFILE
 
 # Enable modules I use locally every time.
+# TODO read this from local config instead of hard-coding.
+# TODO use drush aliases
+cd drupal
 drush en diff -y
 drush en views_ui -y
 drush en styleguide -y
+cd -
 
-cd ../bdd
-if ( test -e bin/behat ); then
+cd bdd
+if ( test -e behat.local.yml ); then
   bin/behat
 fi
