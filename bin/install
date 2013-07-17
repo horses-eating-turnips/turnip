@@ -39,8 +39,8 @@ cd -
 # Run behat.
 cd bdd
 # Check for composer, or install
-composer=`command -v composer > /dev/null 2>&1`
-if [[ composer -eq 0 ]]; then
+`command -v composer > /dev/null 2>&1`
+if [[ $? -gt 0 ]]; then
   # Install locally.
   if [[ ! -e composer.phar ]]; then
     curl -sS https://getcomposer.org/installer | php
