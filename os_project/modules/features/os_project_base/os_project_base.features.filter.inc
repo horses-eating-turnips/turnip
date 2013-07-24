@@ -76,7 +76,7 @@ function os_project_base_filter_default_formats() {
         ),
       ),
       'media_filter' => array(
-        'weight' => 2,
+        'weight' => -1,
         'status' => 1,
         'settings' => array(),
       ),
