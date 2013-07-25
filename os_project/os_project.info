@@ -37,6 +37,7 @@ dependencies[] = elements
 dependencies[] = fences
 dependencies[] = html5_tools
 dependencies[] = libraries
+dependencies[] = linkchecker
 dependencies[] = pathauto
 dependencies[] = redirect
 dependencies[] = strongarm

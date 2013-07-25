@@ -41,6 +41,8 @@ projects[footable][patch][] = "https://drupal.org/files/footable-hook-requiremen
 
 projects[html5_tools][version] = "1.2"
 
+projects[linkchecker][version] = "1.1"
+
 projects[redirect][version] = "1.0-rc1"
 
 projects[pathauto][version] = "1.2"
