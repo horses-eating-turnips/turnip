@@ -13,6 +13,7 @@ install:
   - sudo drush
   - sudo chown -R $USER:$USER /home/$USER/.drush
   - touch shared/settings.local.php
+  - mkdir shared/files
 before_script:
   - mysql -e 'create database turnip'
   # Init the settings file
