@@ -12,12 +12,14 @@ projects[caption_filter][patch][] = "https://drupal.org/files/tinymce-button--14
 projects[file_entity][version] = "2.0-unstable7"
 
 projects[image_resize_filter][version] = "1.13"
+; Images not resizing if path has query string: https://drupal.org/node/1929710
+projects[image_resize_filter][patch][] = https://drupal.org/files/image_resize_filter-remove-query-string-1929710-8.patch
 
 projects[media][version] = "2.0-unstable7"
 ; http://drupal.org/node/1278180#comment-5085370
 projects[media][patch][] = "http://drupal.org/files/media-embed-library-resize.patch"
 ; Image resize filter fails with media https://drupal.org/node/1411340
-projects[media][patch][] = "https://drupal.org/files/media-resize_images_in_wysiwyg-1411340-58.patch"
+projects[media][patch][] = "https://drupal.org/files/media-resize_images_in_wysiwyg-1411340-62.patch"
 
 ; Required for multiple file uploads via plupload at `file/add`.
 projects[multiform][version] = "1.0"
