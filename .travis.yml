@@ -15,4 +15,4 @@ install:
 before_script:
   - bin/make-install-profile client_xyz xyz_foobar "Web app ABC" "Client XYZ's ABC app enables users to browse a database of records."
 
-script: bin/rebuild
+script: bin/install
