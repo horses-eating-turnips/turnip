@@ -41,7 +41,7 @@ projects[google_analytics][version] = "1.3"
 projects[menu_block][version] = "2.3"
 
 ; Mollom
-projects[mollom][version] = "2.6"
+projects[mollom][version] = "2.7"
 
 ; Libraries.
 projects[libraries][version] = "2.1"
