@@ -22,7 +22,7 @@ projects[media][patch][] = "https://drupal.org/files/media-resize_images_in_wysi
 ; Required for multiple file uploads via plupload at `file/add`.
 projects[multiform][version] = "1.0"
 
-projects[plupload][version] = "1.1"
+projects[plupload][version] = "1.2"
 ; http://drupal.org/node/1476830#comment-6026232
 projects[plupload][patch][] = "http://drupal.org/files/media-upload-widget--1476830-2.patch"
 
