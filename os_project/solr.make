@@ -7,7 +7,7 @@ api = 2
 
 
 ; Search API
-projects[search_api][version] = "1.6"
+projects[search_api][version] = "1.7"
 
 ; Search API Attachments
 ;projects[search_api_attachments][version] = "1.2"
