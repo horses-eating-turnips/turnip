@@ -19,6 +19,9 @@ if [[ -e db/production_current.sql.gz ]]; then
   cd db
   ./db_load.sh production_current.sql.gz
   cd -
+  cd drupal
+    drush updatedb -y
+  cd -
 else
   cd drupal
   drush site-install -y --uri=default $PROFILE
