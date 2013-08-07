@@ -25,5 +25,8 @@ projects[search_api_solr][version] = "1.1"
 ; ApacheSolr Attachments
 ;projects[apachesolr_attachments][version] = "1.2"
 
+; ApacheSolr Panels
+; projects[apachesolr_panels][version] = "1.1"
+
 ; ApacheSolr Views
 ;projects[apachesolr_views][version] = "1.0-beta2"
