@@ -9,8 +9,6 @@ defaults[projects][subdir] = "contrib"
 core = "7.x"
 projects[drupal][type] = "core"
 projects[drupal][version] = "7.22"
-; Make taxonomy permissions use vocabulary machine name instead of vid
-projects[drupal][patch][] = "http://drupal.org/files/995156-31_portable_taxonomy_permissions-D7-15.patch"
 ; Ensure plain text fields evaluate line breaks.
 projects[drupal][patch][] = "http://drupal.org/files/text-plain-1152216-24.patch"
 ; Resolve php notice thrown by the way PHP 5.4 handles array indexes vs 5.3. https://drupal.org/node/1824820#comment-6656728
