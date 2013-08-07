@@ -6,8 +6,23 @@
 #
 source bin/.config
 
-# Run the rebuild script.
-bin/rebuild
+BUILD=1
+TEST=1
+
+# Parse flags to disable portions of script.
+for i in $*; do
+  if [[ $i = "--nobuild" ]] || [[ $i = "-nb" ]]; then
+    BUILD=0
+  fi
+  if [[ $i = "--nohat" ]] || [[ $i = "-nh" ]]; then
+    TEST=0
+  fi
+done
+
+if [[ $BUILD = 1 ]]; then
+  # Run the rebuild script.
+  bin/rebuild
+fi  
 
 if ! ( test -e drupal ); then
   echo "I didn't find a drupal directory. Are you sure it exists?"
@@ -39,26 +54,28 @@ drush en views_ui -y
 drush en styleguide -y
 cd -
 
-# Run behat.
-cd bdd
-# Check for composer, or install
-`command -v composer > /dev/null 2>&1`
-if [[ $? -gt 0 ]]; then
-  # Install locally.
-  if [[ ! -e composer.phar ]]; then
-    curl -sS https://getcomposer.org/installer | php
+if [[ $TEST = 1 ]]; then
+  # Run behat.
+  cd bdd
+  # Check for composer, or install
+  `command -v composer > /dev/null 2>&1`
+  if [[ $? -gt 0 ]]; then
+    # Install locally.
+    if [[ ! -e composer.phar ]]; then
+      curl -sS https://getcomposer.org/installer | php
+    fi
+    composer_command=./composer.phar
+  else
+    composer_command=composer
   fi
-  composer_command=./composer.phar
-else
-  composer_command=composer
-fi
-
-if [[ ! -e bin/behat ]]; then
-  $composer_command install
-fi
-
-if [[ -e behat.local.yml ]]; then
-  bin/behat
-else
-  echo "Cannot run behat tests until bdd/behat.local.yml exists! Copy bdd/behat.local.yml.example into place to get started."
+  
+  if [[ ! -e bin/behat ]]; then
+    $composer_command install
+  fi
+  
+  if [[ -e behat.local.yml ]]; then
+    bin/behat
+  else
+    echo "Cannot run behat tests until bdd/behat.local.yml exists! Copy bdd/behat.local.yml.example into place to get started."
+  fi
 fi
