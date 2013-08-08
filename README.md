@@ -26,6 +26,9 @@ development. Each site is built as an installation profile.
    ```bash
    git remote add origin git@github:foo/bar.git
    ```
+
+   Make sure your remote points to a repository that is set up.
+
 1. Run `bin/make-install-profile` to instantiate an installation profile. For example
 
    ```bash
@@ -42,19 +45,13 @@ development. Each site is built as an installation profile.
    ```
 
 1. Custom modules or features should go in `my_project/modules/custom`
-   or `my_project/modules/features`.
-1. When you want to pull the most recent turnip changes, you can run:
-   ```bash
-   git fetch turnip
-   git merge --no-commit turnip/7.x
-   ```
-   This adds all the turnip changes to your local repo, but allows you to review them before committing them.
+   or `my_project/modules/features`. Any contrib modules put into the .make files will be placed into the appropriate directories automatically.
 
 ## Drush Make
 
 There are several bundled make files:
 
-* `os_project.make` - This gets renamed to the installation profile's machine name
+* `my_profile.make` - This gets renamed to the installation profile's machine name and should contain modules than relate specifically to your project.
 * `base.make` - common modules and libraries
 * `images.make` - Media module and other image-related modules
 * `panels.make` - Panels modules related dependencies
@@ -71,7 +68,19 @@ The [Profiler](http://drupal.org/project/profiler) library is used for
 creating placeholder nodes, users and taxonomy terms, as well as
 setting variables that don't make sense to commit to feature modules.
 
-## Using Vagrant
+## Advanced Usage
+
+### Pulling and Merging
+If you want to pull the most recent turnip changes, you can run:
+   ```bash
+   git fetch turnip
+   git merge --no-commit turnip/7.x
+   ```
+   This adds all the turnip changes to your local repo, but allows you to review them before committing them.
+   Be warned this is likely to cause a lot of conflicts and you will have to figure out what changes from upstream you wish to override any local changes and vice versa.
+
+
+### Using Vagrant
 
 For highly customized server requirements, or just to have a stable
 and consistent environment to develop on, Turnip ships with a default
