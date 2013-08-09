@@ -15,6 +15,7 @@ echo "PROFILE=\"$1\"" > bin/.config
 echo "THEME=\"$2\"" >> bin/.config
 echo "PROJECTNAME=\"$3\"" >> bin/.config
 echo "DESCRIPTION=\"$4\"" >> bin/.config
+echo "PRODUCTIONURL=\"http://\"" >> bin/.config
 
 # Load config file.
 source bin/.config
