@@ -37,6 +37,12 @@ cd drupal
 drush en diff -y
 drush en views_ui -y
 drush en styleguide -y
+# Enable stage file proxy module.
+if [ "$PRODUCTIONURL" != "http://" ]; then
+  echo "Enabling Stage File Proxy and configuring origin as '$PRODUCTIONURL'."
+  drush en -y stage_file_proxy
+  drush vset stage_file_proxy_origin $PRODUCTIONURL
+fi
 cd -
 
 # Run behat.

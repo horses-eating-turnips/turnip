@@ -21,7 +21,6 @@ source bin/.config
 SUBDOMAIN=
 HOST=gargravarr
 INSTALLROOT=/var/www/$SUBDOMAIN
-PRODUCTIONURL=http://
 
 # Default behavior: Don't touch the test host's database.
 #
