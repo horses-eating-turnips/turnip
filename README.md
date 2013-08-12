@@ -43,6 +43,7 @@ development. Each site is built as an installation profile.
    ```bash
    git push -u origin master
    ```
+1. If this site has a production url, you can manually add it to `bin/.config` on the line `PRODUCTIONURL="http://"`
 
 1. Custom modules or features should go in `my_project/modules/custom`
    or `my_project/modules/features`. Any contrib modules put into the .make files will be placed into the appropriate directories automatically.
