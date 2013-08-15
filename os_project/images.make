@@ -15,7 +15,7 @@ projects[image_resize_filter][version] = "1.13"
 ; Images not resizing if path has query string: https://drupal.org/node/1929710
 projects[image_resize_filter][patch][] = https://drupal.org/files/image_resize_filter-remove-query-string-1929710-8.patch
 
-projects[media][version] = "2.0-unstable7"
+projects[media][version] = "2.0-alpha1"
 ; http://drupal.org/node/1278180#comment-5085370
 projects[media][patch][] = "http://drupal.org/files/media-embed-library-resize.patch"
 ; Image resize filter fails with media https://drupal.org/node/1411340
