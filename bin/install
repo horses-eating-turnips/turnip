@@ -31,6 +31,7 @@ fi
 
 # Site install.
 if [[ -e db/production_current.sql.gz ]]; then
+  echo "Loading from production database copy."
   cd db
   ./db_load.sh production_current.sql.gz
   cd -
@@ -38,6 +39,7 @@ if [[ -e db/production_current.sql.gz ]]; then
     drush updatedb -y
   cd -
 else
+  echo "Installing Drupal using profile $PROFILE"
   cd drupal
   drush site-install -y --uri=default $PROFILE
   drush fra -y
