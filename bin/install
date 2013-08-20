@@ -22,7 +22,7 @@ done
 if [[ $BUILD = 1 ]]; then
   # Run the rebuild script.
   bin/rebuild
-fi  
+fi
 
 if ! ( test -e drupal ); then
   echo "I didn't find a drupal directory. Are you sure it exists?"
@@ -76,11 +76,11 @@ if [[ $TEST = 1 ]]; then
   else
     composer_command=composer
   fi
-  
+
   if [[ ! -e bin/behat ]]; then
     $composer_command install
   fi
-  
+
   if [[ -e behat.local.yml ]]; then
     bin/behat
   else
