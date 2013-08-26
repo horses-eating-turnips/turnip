@@ -7,5 +7,5 @@ dependencies[] = entity
 dependencies[] = uuid
 features[ctools][] = deploy:deploy_plans:1
 features[deploy_plans][] = demo_content
-features[features_api][] = api:1
+features[features_api][] = api:2
 features[uuid_entities][] = demo_content
