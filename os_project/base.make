@@ -66,7 +66,7 @@ projects[devel][subdir] = "development"
 projects[devel][version] = "1.3"
 
 projects[environment_indicator][subdir] = "development"
-projects[environment_indicator][version] = "1.1"
+projects[environment_indicator][version] = "2.0"
 
 projects[os_devel][type] = "module"
 projects[os_devel][subdir] = "development"
