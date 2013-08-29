@@ -2,7 +2,7 @@
 core = "7.x"
 api = 2
 
-projects[fieldable_panels_panes][version] = "1.4"
+projects[fieldable_panels_panes][version] = "1.5"
 
 projects[panelizer][version] = "3.1"
 
