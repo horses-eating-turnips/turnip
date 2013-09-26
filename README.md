@@ -99,5 +99,5 @@ Vagrant configuration that will launch a Drupal site in a box.
 
 ### Adding contrib modules
 
-If for some reason you need a module that's **not** part of Turnip, add the module to the my_profile.make file (e.g. `projects[bad_judgement][version] = 1.0-rc39`).
+If you need to install a module that's **not** part of Turnip, add the module to the my_profile.make file (e.g. `projects[bad_judgement][version] = 1.0-rc39`).
 For more information on drush make, please refer to [http://www.slideshare.net/rupl/drush-make-install-drupal-like-a-pro](http://www.slideshare.net/rupl/drush-make-install-drupal-like-a-pro)
