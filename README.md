@@ -38,7 +38,7 @@ development. Each site is built as an installation profile.
    All changes can then quickly be added via `git add -A`.
 
 1. Customize `my_profile/my_profile.make`
-1. Run `bin/rebuild`
+1. Run `bin/install` for local development
 1. To avoid having to redeclare your default origin each time you pull or push, run your first push as:
    ```bash
    git push -u origin master
@@ -70,6 +70,16 @@ creating placeholder nodes, users and taxonomy terms, as well as
 setting variables that don't make sense to commit to feature modules.
 
 ## Advanced Usage
+
+### Customize developer modules
+
+The `bin/install` script will enable a set of developer modules. This
+can be customzed by setting the `TURNIP_DEVELOPER_MODULES` environment
+variable. For instance, in `.bashrc` or similar:
+
+```
+export TURNIP_DEVELOPER_MODULES="devel views_ui styleguide"
+```
 
 ### Pulling and Merging
 If you want to pull the most recent turnip changes, you can run:

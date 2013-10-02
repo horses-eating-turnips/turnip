@@ -47,13 +47,12 @@ else
   cd -
 fi
 
-# Enable modules I use locally every time.
-# TODO read this from local config instead of hard-coding.
+# Enable modules developer modules.
 # TODO use drush aliases
 cd drupal
-drush en diff -y
-drush en views_ui -y
-drush en styleguide -y
+: ${TURNIP_DEVELOPER_MODULES:="devel diff styleguide views_ui"}
+drush en -y $TURNIP_DEVELOPER_MODULES
+
 # Enable stage file proxy module.
 if [ "$PRODUCTIONURL" != "http://" ]; then
   echo "Enabling Stage File Proxy and configuring origin as '$PRODUCTIONURL'."
