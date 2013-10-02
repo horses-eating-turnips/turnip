@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * @file
+ * Installation for os_base.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function os_base_install() {
+  // Ensure our filters are installed.
+  features_rebuild(array('os_base' => array('filter')));
+
+  // Enable default permissions for system roles.
+  $filtered_html_format = filter_format_load('filtered_html');
+  $filtered_html_permission = filter_permission_name($filtered_html_format);
+
+  // Trying to grant a non-existing permission (e.g. comment permission when
+  // comment isn't active) causes a database constraint violation.
+  if (module_exists('comment')) {
+    user_role_grant_permissions(
+      DRUPAL_ANONYMOUS_RID,
+      array('access content', 'access comments', $filtered_html_permission)
+    );
+    user_role_grant_permissions(
+      DRUPAL_AUTHENTICATED_RID,
+      array(
+        'access content',
+        'access comments',
+        'post comments',
+        'skip comment approval',
+        $filtered_html_permission,
+      )
+    );
+  }
+  else {
+    user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('access content', $filtered_html_permission));
+    user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('access content', $filtered_html_permission));
+  }
+
+  if (!node_type_load('page')) {
+    $t = get_t();
+
+    // Insert default pre-defined node types into the database. For a complete
+    // list of available node type attributes, refer to the node type API
+    // documentation at: http://api.drupal.org/api/HEAD/function/hook_node_info.
+    $types = array(
+      array(
+        'type' => 'page',
+        'name' => $t('Basic page'),
+        'base' => 'node_content',
+        'description' => $t("Use <em>basic pages</em> for your static content, such as an 'About us' page."),
+        'custom' => 1,
+        'modified' => 1,
+        'locked' => 0,
+      ),
+    );
+
+    foreach ($types as $type) {
+      $type = node_type_set_defaults($type);
+      node_type_save($type);
+      node_add_body_field($type);
+    }
+
+    // We don't want to force the RDF module to be installed by declaring it
+    // as a dependency -- let the install profile decide whether to enable it.
+    if (module_exists('rdf')) {
+      // Insert default pre-defined RDF mapping into the database.
+      $rdf_mappings = array(
+        array(
+          'type' => 'node',
+          'bundle' => 'page',
+          'mapping' => array(
+            'rdftype' => array('foaf:Document'),
+          ),
+        ),
+      );
+      foreach ($rdf_mappings as $rdf_mapping) {
+        rdf_mapping_save($rdf_mapping);
+      }
+    }
+  }
+
+  // Default "Basic page" to not be promoted and have comments disabled.
+  variable_set('node_options_page', array('status'));
+
+  // COMMENT_* defines aren't present if comment module isn't enabled, so use
+  // literal value.
+  variable_set('comment_page', 0 /* COMMENT_NODE_HIDDEN */);
+
+  // Don't display date and author information for "Basic page" nodes by
+  // default.
+  variable_set('node_submitted_page', FALSE);
+
+  if (!variable_get('user_admin_role', 0)) {
+    // Create a default role for site administrators, with all available
+    // permissions assigned.
+    $admin_role = new stdClass();
+    $admin_role->name = 'administrator';
+    $admin_role->weight = 2;
+    user_role_save($admin_role);
+    user_role_grant_permissions($admin_role->rid, array_keys(module_invoke_all('permission')));
+    // Set this as the administrator role.
+    variable_set('user_admin_role', $admin_role->rid);
+
+    // Assign user 1 the "administrator" role.
+    db_insert('users_roles')
+      ->fields(array('uid' => 1, 'rid' => $admin_role->rid))
+      ->execute();
+  }
+}

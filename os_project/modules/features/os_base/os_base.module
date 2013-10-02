@@ -1,0 +1,178 @@
+<?php
+/**
+ * @file
+ * OpenSourcery base feature and enhancements.
+ */
+
+include_once 'os_base.features.inc';
+
+/**
+ * Implements hook_admin_paths().
+ */
+function os_base_admin_paths() {
+  return array(
+    'node/*/add-sub-page' => TRUE,
+  );
+}
+
+/**
+ * Implements hook_menu_alter().
+ *
+ * Removes /node, as it might display the "Welcome to your new Drupal website!"
+ * message, or a messy, unstyled node listing and denies non-administrators
+ * access to field-collection view pages.
+ */
+function os_base_menu_alter(&$items) {
+  unset($items['node']);
+
+  // Turn off access to field-collection pages except for administrators.
+  foreach (field_info_fields() as $field) {
+    if ($field['type'] == 'field_collection') {
+      $path = field_collection_field_get_path($field);
+      $items[$path . '/%field_collection_item']['access callback'] = 'user_access';
+      $items[$path . '/%field_collection_item']['access arguments'] = array('administer fieldgroups');
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * - Sets the revisions as enabled for new content types.
+ */
+function os_base_form_alter(&$form, $form_state, $form_id) {
+  switch ($form_id) {
+    case 'node_type_form':
+      if (!isset($form['#node_type']->orig_type)) {
+        $options = array();
+        // Set to published by default.
+        $options[] = 'status';
+        // Enable revisions by default.
+        $options[] = 'revision';
+        $form['workflow']['node_options']['#default_value'] = $options;
+      }
+      break;
+  }
+
+  // Add a variable to display revision information on node edit.
+  if (variable_get('os_base_force_node_revisioning', TRUE)) {
+    if (isset($form['type']['#value']) && $form_id == $form['type']['#value'] . '_node_form' && isset($form['revision_information'])) {
+      // Hide the revision log input.
+      $form['revision_information']['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Implements hook_date_format_types().
+ */
+function os_base_date_format_types() {
+  return array(
+    'day' => t('Day'),
+    'time' => t('Time'),
+  );
+}
+
+/**
+ * Implements hook_date_formats().
+ */
+function os_base_date_formats() {
+  $condensed = array(
+    'day' => array(
+      'j F Y',
+      'l, M j',
+      'l, j M',
+      'n/j/Y',
+      'F jS, Y',
+    ),
+    'time' => array(
+      'g:ia',
+      'H:i',
+      'g:ia T',
+    ),
+  );
+
+  // Allow day formats to be used for core-supplied formats.
+  foreach (array('short', 'medium', 'long') as $format) {
+    $condensed[$format] = $condensed['day'];
+  }
+  $formats = array();
+  foreach ($condensed as $type => $f) {
+    foreach ($f as $format) {
+      $formats[] = array(
+        'type' => $type,
+        'format' => $format,
+        'locales' => array(),
+      );
+    }
+  }
+  return $formats;
+}
+
+/**
+ * Implements hook_image_styles_alter().
+ *
+ * Remove core's default 'medium', 'large' and 'thumbnail' styles if defined by
+ * core. Note, the media module adds a square_thumbnail of 180x180.
+ */
+function os_base_image_styles_alter(&$styles) {
+  if (variable_get('os_base_remove_core_image_styles', FALSE)) {
+    foreach (array('medium', 'large', 'thumbnail') as $remove) {
+      if (isset($styles[$remove]['module']) && $styles[$remove]['module'] == 'image' && isset($styles[$remove]['storage']) && $styles[$remove]['storage'] === IMAGE_STORAGE_DEFAULT) {
+        unset($styles[$remove]);
+      }
+    }
+  }
+}
+
+/**
+ * Preprocess page variables.
+ */
+function os_base_preprocess_page(&$vars) {
+  if (isset($vars['footer_message'])) {
+    // Replace @year with current year.
+    $vars['footer_message'] = str_replace('@year', date('Y'), $vars['footer_message']);
+  }
+}
+
+/**
+ * Preprocessor for theme('views_view').
+ */
+function os_base_preprocess_views_view(&$vars) {
+  $view = $vars['view'];
+  if ($view->base_table === 'node' && strpos($view->current_display, 'page') !== FALSE && empty($view->result) && empty($vars['empty'])) {
+    $types = node_type_get_types();
+    $output = array();
+    foreach ($view->filter as $handler) {
+      if ($handler->table === 'node' && $handler->field === 'type' && !empty($handler->options['value']) && $handler->options['operator'] === 'in') {
+        foreach (array_filter($handler->options['value']) as $type) {
+          $item = menu_get_item('node/add/' . strtr($type, array('_' => '-')));
+          if ($item && $item['access']) {
+            $output[] = t('Please <a href="!url">add your first @type</a> to get started.', array('@type' => $types[$type]->name, '!url' => url($item['path'])));
+          }
+        }
+        break;
+      }
+    }
+    $vars['empty'] = !empty($output) ? implode('<br />', $output) : t('There is currently no content to view in this section.');
+  }
+}
+
+/**
+ * Implements hook_user_default_permissions_alter().
+ */
+function os_base_user_default_permissions_alter(&$permissions) {
+  // This is a workaround that allows us to export permissions for modules
+  // without making them a hard dependency. This simply removes permissions
+  // whose modules are not currently enabled.
+  $modules_enabled = module_list();
+  foreach ($permissions as $key => $perm) {
+    if (empty($perm['module'])) {
+      continue;
+    }
+    if (!isset($modules_enabled[$perm['module']])) {
+      // Module isn't enabled; simply remove the permission.
+      unset($permissions[$key]);
+    }
+  }
+}
