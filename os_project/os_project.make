@@ -13,6 +13,9 @@ projects[drupal][version] = "7.23"
 projects[drupal][patch][] = "http://drupal.org/files/text-plain-1152216-24.patch"
 ; Resolve php notice thrown by the way PHP 5.4 handles array indexes vs 5.3. https://drupal.org/node/1824820#comment-6656728
 projects[drupal][patch][] = "https://drupal.org/files/string-offset-cast-1824820-2.patch"
+; drupal_add_js() defer and async options break when aggregation is enabled
+; (Replace with universal attributes array). https://drupal.org/node/1664602
+projects[drupal][patch][1664602] = https://drupal.org/files/js_attributes_1664602-44.patch
 
 ; Base installation profile
 includes[base] = "base.make"
@@ -24,7 +27,7 @@ includes[images] = "images.make"
 ;includes[demo] = "demo.make"
 
 ; Uncomment to use Panels.
-;includes[panels] = "panels.make"
+includes[panels] = "panels.make"
 
 ; Uncomment to use Solr Search.
 ; includes[solr] = "solr.make"
@@ -40,9 +43,6 @@ projects[menu_block][version] = "2.3"
 
 ; Mollom
 projects[mollom][version] = "2.7"
-
-; Libraries.
-projects[libraries][version] = "2.1"
 
 ; Libraries
 

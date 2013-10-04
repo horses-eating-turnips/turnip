@@ -2,8 +2,6 @@
 core = "7.x"
 api = 2
 
-projects[adaptive_image][version] = "1.4"
-
 projects[caption_filter][download][branch] = "7.x-1.x"
 projects[caption_filter][download][revision] = "6ab247f6c"
 ; https://drupal.org/node/1432092#comment-7541749
