@@ -1,3 +1,0 @@
-name = OpenSourcery Testing
-description = Overrides for various features to work on OpenSourcery testing infrastructure.
-core = 7.x

@@ -73,6 +73,11 @@ projects[os_devel][subdir] = "development"
 projects[os_devel][download][branch] = "7.x-1.x"
 projects[os_devel][download][url] = "https://github.com/opensourcery/os_devel.git"
 
+projects[os_testing][type] = "module"
+projects[os_testing][subdir] = "development"
+projects[os_testing][download][tag] = "7.x-1.0"
+projects[os_testing][download][url] = "https://github.com/opensourcery/os_testing.git"
+
 projects[stage_file_proxy][subdir] = "development"
 projects[stage_file_proxy][version] = "1.4"
 
