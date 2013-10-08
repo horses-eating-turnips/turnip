@@ -39,17 +39,6 @@ rm $PROFILE/*.orig
 # Set install profile in settings.php.
 echo -e "\n\$conf['install_profile'] = '$PROFILE';\n" >> shared/settings.php
 
-# process project_base feature
-mv $PROFILE/modules/features/os_project_base $PROFILE/modules/features/$PROFILE\_base
-for file in $PROFILE/modules/features/$PROFILE\_base/os_project_base.* ; do
-  new=`echo $file | sed "s/os_project/$PROFILE/"`
-  mv $file $new
-  sed -e "s/os_project/$PROFILE/" -i.orig $new
-  sed -e "s/PROJECTNAME/$PROJECTNAME/" -i.orig $new
-  rm $new.orig
-done
-
-
 # demo content feature
 mv $PROFILE/modules/features/os_project_demo_content $PROFILE/modules/features/$PROFILE\_demo_content
 for file in $PROFILE/modules/features/$PROFILE\_demo_content/os_project_demo_content.*; do
