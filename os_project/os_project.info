@@ -45,7 +45,7 @@ dependencies[] = token
 dependencies[] = wysiwyg
 
 ; Features
-dependencies[] = os_project_base
+dependencies[] = os_base
 
 ;
 ; Users
