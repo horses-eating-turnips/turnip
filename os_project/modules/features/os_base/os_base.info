@@ -1,7 +1,7 @@
 name = OpenSourcery base
 description = Base content types, roles and usability enhancements.
 core = 7.x
-package = PROJECTNAME
+package = OpenSourcery
 version = 7.x-2.0-alpha1
 project = os_base
 dependencies[] = contextual
