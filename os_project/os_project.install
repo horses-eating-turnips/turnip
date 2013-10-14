@@ -58,11 +58,19 @@ function os_project_install() {
     'cache',
     'title',
   );
-  $query = db_insert('block')->fields($fields);
+  // Perform merge query since block table may already be populated.
   foreach ($blocks as $block) {
-    $query->values($block);
+    $query = db_merge('block')
+      ->key(
+        array(
+          'module' => $block['module'],
+          'delta' => $block['delta'],
+          'theme' => $block['theme'],
+        )
+      )
+      ->fields(array_combine($fields, $block));
+    $query->execute();
   }
-  $query->execute();
 }
 
 /**
