@@ -15,11 +15,9 @@ projects[entitycache][version] = "1.1"
 
 projects[elements][version] = "1.4"
 
-projects[features][version] = "2.0-rc2"
+projects[features][version] = "2.0-rc5"
 ; PDO exception if permissions are set in same feature as module creating them. http://drupal.org/node/1063204#comment-6350488
 projects[features][patch][] = "http://drupal.org/files/features_static_caches-1063204-32.patch"
-; Expanded or hidden menu links aren't seen as customized http://drupal.org/node/927576
-projects[features][patch][] = "http://drupal.org/files/menu_links_customized-927576-8.patch"
 
 ; Later dev commit fixes array/boolean mismatch.
 ; @see https://drupal.org/node/1915318
