@@ -83,6 +83,6 @@ if [[ $TEST = 1 ]]; then
   if [[ -e behat.local.yml ]]; then
     bin/behat
   else
-    echo "Cannot run behat tests until bdd/behat.local.yml exists! Copy bdd/behat.local.yml.example into place to get started."
+    echo "Cannot run behat tests until bdd/behat.local.yml exists! Copy bdd/behat.local.yml.sample into place to get started."
   fi
 fi
