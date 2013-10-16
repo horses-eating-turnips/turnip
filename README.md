@@ -107,3 +107,7 @@ Vagrant configuration that will launch a Drupal site in a box.
    common example is for forwarding port 80 to a different port than
    the one defined.
 
+### Adding contrib modules
+
+If you need to install a module that's **not** part of Turnip, add the module to the my_profile.make file (e.g. `projects[bad_judgement][version] = 1.0-rc39`).
+For more information on drush make, please refer to [http://www.slideshare.net/rupl/drush-make-install-drupal-like-a-pro](http://www.slideshare.net/rupl/drush-make-install-drupal-like-a-pro)
