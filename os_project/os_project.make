@@ -58,9 +58,3 @@ libraries[profiler][patch][] = "http://drupal.org/files/1853290-support-term-par
 ; http://drupal.org/node/1921880#comment-7086568: Add support for heirarchical menus on node creation.
 libraries[profiler][patch][] = "http://drupal.org/files/profiler_heirarchical_node_menu-1921880-1.patch"
 
-; swfobject, JS library for embedding Flash content
-;libraries[swfobject][download][type] = "get"
-;libraries[swfobject][download][url] = "http://swfobject.googlecode.com/files/swfobject_2_2.zip"
-;libraries[swfobject][destination] = "libraries"
-;libraries[swfobject][directory_name] = "swfobject"
-
