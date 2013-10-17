@@ -6,6 +6,7 @@ api = 2
 ; Set contrib directory.
 defaults[projects][subdir] = "contrib"
 
+; Drupal core.
 core = "7.x"
 projects[drupal][type] = "core"
 projects[drupal][version] = "7.23"
@@ -28,6 +29,8 @@ includes[images] = "images.make"
 
 ; Uncomment to use Solr Search.
 ; includes[solr] = "solr.make"
+
+; Project-specific modules, and overrides.
 
 ; Follow
 projects[follow][version] = "2.0-alpha1"
@@ -60,6 +63,4 @@ libraries[profiler][patch][] = "http://drupal.org/files/profiler_heirarchical_no
 ;libraries[swfobject][download][url] = "http://swfobject.googlecode.com/files/swfobject_2_2.zip"
 ;libraries[swfobject][destination] = "libraries"
 ;libraries[swfobject][directory_name] = "swfobject"
-
-; Project-specific modules, and overrides.
 
