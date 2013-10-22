@@ -70,6 +70,12 @@ projects[devel][version] = "1.3"
 projects[environment_indicator][subdir] = "development"
 projects[environment_indicator][version] = "2.0"
 
+projects[maillog][download][branch] = "7.x-1.x"
+projects[maillog][download][revision] = "2591153"
+projects[maillog][subdir] = "development"
+; Behat step-definitions: https://drupal.org/node/1932698#comment-7131840
+projects[maillog][patch][] = "https://drupal.org/files/behat-subcontext-1932698-1.patch"
+
 projects[os_devel][type] = "module"
 projects[os_devel][subdir] = "development"
 projects[os_devel][download][branch] = "7.x-1.x"
