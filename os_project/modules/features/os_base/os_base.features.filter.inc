@@ -55,6 +55,11 @@ function os_base_filter_default_formats() {
     'status' => 1,
     'weight' => 0,
     'filters' => array(
+      'media_filter' => array(
+        'weight' => -1,
+        'status' => 1,
+        'settings' => array(),
+      ),
       'filter_url' => array(
         'weight' => 0,
         'status' => 1,
@@ -74,11 +79,6 @@ function os_base_filter_default_formats() {
             'remote' => 0,
           ),
         ),
-      ),
-      'media_filter' => array(
-        'weight' => -1,
-        'status' => 1,
-        'settings' => array(),
       ),
       'filter_htmlcorrector' => array(
         'weight' => 10,
