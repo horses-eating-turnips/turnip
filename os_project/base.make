@@ -59,9 +59,10 @@ projects[token][version] = "1.5"
 
 projects[views][version] = "3.7"
 
-projects[wysiwyg][version] = "2.2"
-; Select theme css patch: http://drupal.org/node/1309040#comment-6107956
-projects[wysiwyg][patch][] = "http://drupal.org/files/1309040-22-select_theme_css.patch"
+projects[wysiwyg][download][branch] = "7.x-2.x"
+projects[wysiwyg][download][revision] = "ee64524"
+; Select theme css patch: https://drupal.org/node/1309040#comment-8008765
+projects[wysiwyg][patch][] = "https://drupal.org/files/wysiwyg-1309040-32-select-theme-styles.patch"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; DEVELOPMENT MODULES ;;;;;;;;;;;;;
@@ -104,10 +105,8 @@ projects[diff][version] = "3.2"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; LIBRARIES ;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-libraries[tinymce][download][type] = "get"
-libraries[tinymce][download][url] = "https://github.com/downloads/tinymce/tinymce/tinymce_3.5.8.zip"
-libraries[tinymce][destination] = "libraries"
-libraries[tinymce][directory_name] = "tinymce"
+libraries[ckeditor][download][type] = "get"
+libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.1.3/ckeditor_4.1.3_standard.zip"
 
 libraries[footable][directory_name] = "FooTable"
 libraries[footable][download][revision] = "228b101"
