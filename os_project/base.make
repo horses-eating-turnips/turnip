@@ -35,6 +35,8 @@ projects[footable][download][revision] = "a52b6dc"
 ; https://drupal.org/node/1924942#comment-7098614
 projects[footable][patch][] = "https://drupal.org/files/footable-hook-requirements-install-1924942-02.patch"
 
+projects[google_analytics][version] = "1.3"
+
 projects[html5_tools][download][branch] = "7.x-1.x"
 projects[html5_tools][download][revision] = "11e0c28"
 
@@ -42,6 +44,10 @@ projects[jquery_update][download][branch] = "7.x-2.x"
 projects[jquery_update][download][revision] = "469fac0"
 
 projects[linkchecker][version] = "1.1"
+
+projects[menu_block][version] = "2.3"
+
+projects[menu_position][version] = "1.1"
 
 projects[redirect][version] = "1.0-rc1"
 
