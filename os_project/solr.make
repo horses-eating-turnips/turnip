@@ -9,7 +9,7 @@ api = 2
 ;projects[facetapi_pretty_paths][version] = "1.0"
 
 ; Search API
-projects[search_api][version] = "1.7"
+projects[search_api][version] = "1.9"
 
 ; Search API Attachments
 ;projects[search_api_attachments][version] = "1.2"
