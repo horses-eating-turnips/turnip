@@ -29,16 +29,16 @@ if ssh $USER@$HOST "[ ! -d $INSTALLROOT/releases ]"; then
     exit 2
   fi
 
-  scp -q ./drupal/sites/default/default.settings.php $USER@$HOST:default.settings.php
+  scp -q ./drupal/sites/default/settings.local.php $USER@$HOST:settings.local.php
 
   # Create our directories, place the settings.php file, archive existing
   # "public_html" directory and create initial documentroot symlink.
   REMOTE_HOME=$(dirname $DOCUMENTROOT)
   ARCHIVED_DOCUMENTROOT=$REMOTE_HOME/old_public_html
   ssh $USER@$HOST "mkdir -p $INSTALLROOT/{releases,shared/files};
-    mv \$HOME/default.settings.php $INSTALLROOT/shared/settings.php;
+    mv \$HOME/settings.local.php $INSTALLROOT/shared/settings.local.php;
     chmod 700 $INSTALLROOT $INSTALLROOT/{releases,shared};
-    chmod 400 $INSTALLROOT/shared/settings.php;
+    chmod 400 $INSTALLROOT/shared/settings.local.php;
     mv $DOCUMENTROOT $ARCHIVED_DOCUMENTROOT;
     ln -s $ARCHIVED_DOCUMENTROOT $DOCUMENTROOT"
   echo "Setup complete. Run again to deploy."
@@ -53,7 +53,7 @@ TIMESTAMP=`date +%Y-%m-%d.%H-%M-%S`.`git log -n 1 --format=%h`
 mkdir /tmp/$TIMESTAMP
 
 # Add -L to copy symlinks' referent files, so that we'll bring along our install profile
-rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.php --exclude=backup ./drupal/ /tmp/$TIMESTAMP/
+rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.local.php --exclude=backup ./drupal/ /tmp/$TIMESTAMP/
 
 # We don't automate deploying files.
 rm -Rf /tmp/$TIMESTAMP/sites/default/files
@@ -61,7 +61,7 @@ rm -Rf /tmp/$TIMESTAMP/sites/default/files
 # Create links to settings and files. This is done locally, prior to upload,
 # even though locally they are broken links.
 ln -s $INSTALLROOT/shared/files /tmp/$TIMESTAMP/sites/default/files
-ln -s $INSTALLROOT/shared/settings.php /tmp/$TIMESTAMP/sites/default/settings.php
+ln -s $INSTALLROOT/shared/settings.local.php /tmp/$TIMESTAMP/sites/default/settings.local.php
 
 ssh $USER@$HOST cp -Rp $DOCUMENTROOT/ $INSTALLROOT/releases/$TIMESTAMP
 rsync -azC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAMP/
