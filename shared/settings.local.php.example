@@ -1,0 +1,21 @@
+<?php
+$databases = array(
+  'default' => array(
+    'default' => array(
+      'database' => 'CHANGEME',
+      'username' => 'CHANGEME',
+      'password' => 'CHANGEME',
+      'host' => 'localhost',
+      'port' => '',
+      'driver' => 'mysql',
+      'prefix' => '',
+    ),
+  ),
+);
+
+// Disable CSS and JS aggregation for development.
+$conf['preprocess_css'] = 0;
+$conf['preprocess_js'] = 0;
+
+// Maximum error reporting.
+$conf['error_level'] = 2;
