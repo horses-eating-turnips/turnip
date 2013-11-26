@@ -44,5 +44,6 @@ projects[libraries][version] = "2.1"
 ; Libraries
 
 ; Profiler
-libraries[profiler][version] = "2.0-beta2"
+libraries[profiler][download][type] = "get"
+libraries[profiler][download][url] = "http://ftp.drupal.org/files/projects/profiler-7.x-2.0-beta2.tar.gz"
 
