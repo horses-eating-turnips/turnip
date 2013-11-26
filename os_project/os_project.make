@@ -44,11 +44,5 @@ projects[libraries][version] = "2.1"
 ; Libraries
 
 ; Profiler
-libraries[profiler][download][type] = "git"
-libraries[profiler][download][branch] = "7.x-2.x"
-libraries[profiler][download][revision] = "4c131d2"
-; http://drupal.org/node/1853290#comment-6787544: Add support for term parents.
-libraries[profiler][patch][] = "http://drupal.org/files/1853290-support-term-parent-2.patch"
-; http://drupal.org/node/1921880#comment-7086568: Add support for heirarchical menus on node creation.
-libraries[profiler][patch][] = "http://drupal.org/files/profiler_heirarchical_node_menu-1921880-1.patch"
+libraries[profiler][version] = "2.0-beta2"
 
