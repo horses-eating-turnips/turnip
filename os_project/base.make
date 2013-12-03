@@ -111,5 +111,6 @@ libraries[tinymce][directory_name] = "tinymce"
 
 libraries[footable][directory_name] = "FooTable"
 libraries[footable][download][revision] = "228b101"
+libraries[footable][download][branch] = "V2"
 libraries[footable][download][type] = "git"
 libraries[footable][download][url] = "https://github.com/bradvin/FooTable.git"
