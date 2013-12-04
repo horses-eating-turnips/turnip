@@ -176,3 +176,14 @@ function os_base_user_default_permissions_alter(&$permissions) {
     }
   }
 }
+
+/**
+ * Implements hook_entity_info_alter().
+ *
+ * Remove the `fieldable_panels_pane` bundle if it exists.
+ */
+function os_base_entity_info_alter(&$info) {
+  if (isset($info['fieldable_panels_pane'])) {
+    unset($info['fieldable_panels_pane']['bundles']['fieldable_panels_pane']);
+  }
+}
