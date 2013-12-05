@@ -30,6 +30,7 @@ dependencies[] = taxonomy
 dependencies[] = toolbar
 
 ; Contrib
+dependencies[] = context_admin
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = footable
