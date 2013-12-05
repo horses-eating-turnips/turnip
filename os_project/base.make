@@ -55,6 +55,11 @@ projects[redirect][version] = "1.0-rc1"
 
 projects[pathauto][version] = "1.2"
 
+projects[save_draft][download][branch] = "7.x-1.x"
+projects[save_draft][download][revision] = "52480b8"
+
+projects[simplified_menu_admin][version] = "1.0-beta2"
+
 projects[strongarm][version] = "2.0"
 
 projects[token][version] = "1.5"
