@@ -99,6 +99,16 @@ function os_base_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'save draft'.
+  $permissions['save draft'] = array(
+    'name' => 'save draft',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'site editor' => 'site editor',
+    ),
+    'module' => 'save_draft',
+  );
+
   // Exported permission: 'use text format filtered_html'.
   $permissions['use text format filtered_html'] = array(
     'name' => 'use text format filtered_html',
