@@ -26,10 +26,9 @@ dependencies[] = rdf
 dependencies[] = search
 dependencies[] = shortcut
 dependencies[] = taxonomy
-; The admin_menu module should only be used for development purposes.
-dependencies[] = toolbar
 
 ; Contrib
+dependencies[] = breakpoints
 dependencies[] = context_admin
 dependencies[] = ctools
 dependencies[] = features
@@ -39,6 +38,7 @@ dependencies[] = fences
 dependencies[] = html5_tools
 dependencies[] = libraries
 dependencies[] = linkchecker
+dependencies[] = navbar
 dependencies[] = pathauto
 dependencies[] = redirect
 dependencies[] = strongarm
