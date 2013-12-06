@@ -20,6 +20,16 @@ function os_base_user_default_permissions() {
     'module' => 'contextual',
   );
 
+  // Exported permission: 'access navbar'.
+  $permissions['access navbar'] = array(
+    'name' => 'access navbar',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'site editor' => 'site editor',
+    ),
+    'module' => 'navbar',
+  );
+
   // Exported permission: 'access overlay'.
   $permissions['access overlay'] = array(
     'name' => 'access overlay',

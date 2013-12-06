@@ -30,6 +30,7 @@ features[filter][] = plain_text
 features[node][] = page
 features[page_manager_pages][] = sub_page
 features[user_permission][] = access contextual links
+features[user_permission][] = access navbar
 features[user_permission][] = access overlay
 features[user_permission][] = access toolbar
 features[user_permission][] = administer filters

@@ -5,6 +5,8 @@ api = 2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; CONTRIB ;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;; (alphabetical order) ;;;;;;;;;;;;;;;
+projects[breakpoints][version] = "1.1"
+
 projects[context_admin][version] = "1.2"
 
 projects[ctools][version] = "1.3"
@@ -50,6 +52,8 @@ projects[linkchecker][version] = "1.1"
 projects[menu_block][version] = "2.3"
 
 projects[menu_position][version] = "1.1"
+
+projects[navbar][version] = 1.0-beta1
 
 projects[redirect][version] = "1.0-rc1"
 
