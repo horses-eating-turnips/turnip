@@ -18,3 +18,5 @@ projects[panels][patch][] = "https://drupal.org/files/panels_ipe_fix_ajax_161340
 projects[panels][patch][] = "https://drupal.org/files/1772834-fix-lost-context-6.patch"
 
 projects[panels_breadcrumbs][version] = "2.1"
+
+projects[pm_existing_pages][version] = "1.4"

@@ -29,21 +29,45 @@ dependencies[] = taxonomy
 
 ; Contrib
 dependencies[] = breakpoints
+dependencies[] = caption_filter
 dependencies[] = context_admin
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = footable
 dependencies[] = elements
 dependencies[] = fences
+dependencies[] = file_entity
 dependencies[] = html5_tools
 dependencies[] = libraries
+dependencies[] = link
 dependencies[] = linkchecker
+dependencies[] = media
+dependencies[] = menu_block
 dependencies[] = navbar
+dependencies[] = page_manager
 dependencies[] = pathauto
 dependencies[] = redirect
 dependencies[] = strongarm
 dependencies[] = token
 dependencies[] = wysiwyg
+dependencies[] = views
+dependencies[] = views_content
+
+; Panels and Panopoly Lite
+dependencies[] = panopoly_admin
+dependencies[] = panopoly_core
+dependencies[] = panopoly_theme
+dependencies[] = panopoly_widgets
+dependencies[] = defaultconfig
+dependencies[] = fieldable_panels_panes
+dependencies[] = media_youtube
+dependencies[] = media_vimeo
+dependencies[] = panels
+dependencies[] = panels_ipe
+dependencies[] = panelizer
+dependencies[] = simple_gmap
+dependencies[] = tablefield
+dependencies[] = views_autocomplete_filters
 
 ; Features
 dependencies[] = os_base

@@ -47,6 +47,8 @@ projects[html5_tools][download][revision] = "11e0c28"
 projects[jquery_update][download][branch] = "7.x-2.x"
 projects[jquery_update][download][revision] = "469fac0"
 
+projects[link][version] = "1.2"
+
 projects[linkchecker][version] = "1.1"
 
 projects[menu_block][version] = "2.3"

@@ -25,7 +25,8 @@ includes[images] = "images.make"
 ;includes[demo] = "demo.make"
 
 ; Uncomment to use Panels.
-;includes[panels] = "panels.make"
+includes[panels] = "panels.make"
+includes[panopoly_lite] = "panopoly_lite.make"
 
 ; Uncomment to use Solr Search.
 ; includes[solr] = "solr.make"
