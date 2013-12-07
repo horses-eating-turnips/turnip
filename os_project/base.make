@@ -109,6 +109,12 @@ projects[diff][version] = "3.2"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; LIBRARIES ;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+libraries[backbone][download][type] = "get"
+libraries[backbone][download][url] = "https://github.com/jashkenas/backbone/archive/1.0.0.tar.gz"
+
+libraries[underscore][download][type] = "get"
+libraries[underscore][download][url] = "https://github.com/jashkenas/underscore/archive/1.4.4.zip"
+
 libraries[tinymce][download][type] = "get"
 libraries[tinymce][download][url] = "https://github.com/downloads/tinymce/tinymce/tinymce_3.5.8.zip"
 libraries[tinymce][destination] = "libraries"
