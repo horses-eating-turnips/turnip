@@ -28,7 +28,6 @@ dependencies[] = shortcut
 dependencies[] = taxonomy
 
 ; Contrib
-dependencies[] = breakpoints
 dependencies[] = context_admin
 dependencies[] = ctools
 dependencies[] = features
