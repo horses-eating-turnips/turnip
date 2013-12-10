@@ -81,7 +81,7 @@ if [[ $TEST = 1 ]]; then
   fi
 
   if [[ -e behat.local.yml ]]; then
-    bin/behat
+    bin/behat -fprogress --tags=~wip
   else
     echo "Cannot run behat tests until bdd/behat.local.yml exists! Copy bdd/behat.local.yml.sample into place to get started."
   fi

@@ -9,7 +9,7 @@ api = 2
 ;projects[facetapi_pretty_paths][version] = "1.0"
 
 ; Search API
-projects[search_api][version] = "1.7"
+projects[search_api][version] = "1.9"
 
 ; Search API Attachments
 ;projects[search_api_attachments][version] = "1.2"
@@ -18,7 +18,7 @@ projects[search_api][version] = "1.7"
 ;projects[search_api_page] = "1.0-beta2"
 
 ; Search API Solr
-projects[search_api_solr][version] = "1.1"
+projects[search_api_solr][version] = "1.3"
 
 
 ; ApacheSolr

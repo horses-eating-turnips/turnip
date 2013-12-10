@@ -9,7 +9,7 @@ defaults[projects][subdir] = "contrib"
 ; Drupal core.
 core = "7.x"
 projects[drupal][type] = "core"
-projects[drupal][version] = "7.23"
+projects[drupal][version] = "7.24"
 ; Ensure plain text fields evaluate line breaks.
 projects[drupal][patch][] = "http://drupal.org/files/text-plain-1152216-24.patch"
 ; Resolve php notice thrown by the way PHP 5.4 handles array indexes vs 5.3. https://drupal.org/node/1824820#comment-6656728
@@ -44,11 +44,6 @@ projects[libraries][version] = "2.1"
 ; Libraries
 
 ; Profiler
-libraries[profiler][download][type] = "git"
-libraries[profiler][download][branch] = "7.x-2.x"
-libraries[profiler][download][revision] = "4c131d2"
-; http://drupal.org/node/1853290#comment-6787544: Add support for term parents.
-libraries[profiler][patch][] = "http://drupal.org/files/1853290-support-term-parent-2.patch"
-; http://drupal.org/node/1921880#comment-7086568: Add support for heirarchical menus on node creation.
-libraries[profiler][patch][] = "http://drupal.org/files/profiler_heirarchical_node_menu-1921880-1.patch"
+libraries[profiler][download][type] = "get"
+libraries[profiler][download][url] = "http://ftp.drupal.org/files/projects/profiler-7.x-2.0-beta2.tar.gz"
 

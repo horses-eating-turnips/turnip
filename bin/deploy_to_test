@@ -60,7 +60,7 @@ if [ ! -d ./drupal ]; then
 fi
 
 # Test that this drush alias exists.
-ALIAS=`drush sa @$SUBDOMAIN --component=root`
+ALIAS=`drush sa @$SUBDOMAIN`
 if [ -z "$ALIAS" ]; then
   echo "Didn't find a drush alias for $SUBDOMAIN"
   exit 1

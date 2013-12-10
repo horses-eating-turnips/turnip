@@ -3,6 +3,9 @@ core = "7.x"
 api = 2
 
 projects[fieldable_panels_panes][version] = "1.5"
+; Title should be displayed using view mode settings.
+; https://drupal.org/comment/7876047#comment-7876047
+projects[fieldable_panels_panes][patch][] = "https://drupal.org/files/fieldable_panels_panes-title_use_view_modes-2092477-2.patch"
 
 projects[panelizer][version] = "3.1"
 

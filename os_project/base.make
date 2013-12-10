@@ -5,17 +5,21 @@ api = 2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; CONTRIB ;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;; (alphabetical order) ;;;;;;;;;;;;;;;
+projects[breakpoints][version] = "1.1"
+
+projects[context_admin][version] = "1.2"
+
 projects[ctools][version] = "1.3"
 ; http://drupal.org/node/1120028#comment-5792282
 projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths-1120028-08.patch"
 ; https://drupal.org/node/1417630#comment-6810906
 projects[ctools][patch][] = "https://drupal.org/files/ctools-views-content-custom-url-1417630-06.patch"
 
-projects[entitycache][version] = "1.1"
+projects[entitycache][version] = "1.2"
 
 projects[elements][version] = "1.4"
 
-projects[features][version] = "2.0-rc5"
+projects[features][version] = "2.0"
 ; PDO exception if permissions are set in same feature as module creating them. http://drupal.org/node/1063204#comment-6350488
 projects[features][patch][] = "http://drupal.org/files/features_static_caches-1063204-32.patch"
 
@@ -49,6 +53,8 @@ projects[menu_block][version] = "2.3"
 
 projects[menu_position][version] = "1.1"
 
+projects[navbar][version] = 1.0-beta1
+
 projects[redirect][version] = "1.0-rc1"
 
 projects[pathauto][version] = "1.2"
@@ -67,7 +73,6 @@ projects[wysiwyg][patch][] = "https://drupal.org/files/wysiwyg-1309040-32-select
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; DEVELOPMENT MODULES ;;;;;;;;;;;;;
 ;;;;;;;; (may be disabled for production) ;;;;;;;;
-projects[admin_menu][type] = "module"
 projects[admin_menu][subdir] = "development"
 projects[admin_menu][version] = "3.0-rc4"
 
@@ -105,10 +110,17 @@ projects[diff][version] = "3.2"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; LIBRARIES ;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+libraries[backbone][download][type] = "get"
+libraries[backbone][download][url] = "https://github.com/jashkenas/backbone/archive/1.0.0.tar.gz"
+
+libraries[underscore][download][type] = "get"
+libraries[underscore][download][url] = "https://github.com/jashkenas/underscore/archive/1.4.4.zip"
+
 libraries[ckeditor][download][type] = "get"
 libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.1.3/ckeditor_4.1.3_standard.zip"
 
 libraries[footable][directory_name] = "FooTable"
 libraries[footable][download][revision] = "228b101"
+libraries[footable][download][branch] = "V2"
 libraries[footable][download][type] = "git"
 libraries[footable][download][url] = "https://github.com/bradvin/FooTable.git"

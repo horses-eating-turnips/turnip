@@ -39,6 +39,11 @@ rm $PROFILE/*.orig
 # Set install profile in settings.php.
 echo -e "\n\$conf['install_profile'] = '$PROFILE';\n" >> shared/settings.php
 
+# Move local settings file into place.
+if [ ! -f shared/settings.local.php ]; then
+  cp shared/settings.local.php.example shared/settings.local.php
+fi
+
 # demo content feature
 mv $PROFILE/modules/features/os_project_demo_content $PROFILE/modules/features/$PROFILE\_demo_content
 for file in $PROFILE/modules/features/$PROFILE\_demo_content/os_project_demo_content.*; do
