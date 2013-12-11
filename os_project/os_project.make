@@ -30,6 +30,9 @@ includes[images] = "images.make"
 ; Uncomment to use Solr Search.
 ; includes[solr] = "solr.make"
 
+; Theme and theme-related modules.
+includes[theme] = "theme.make"
+
 ; Project-specific modules, and overrides.
 
 ; Follow
