@@ -18,8 +18,8 @@ projects[drupal][patch][] = "https://drupal.org/files/string-offset-cast-1824820
 ; Base installation profile
 includes[base] = "base.make"
 
-; Image handling. Comment this out if you don't need any image handling.
-includes[images] = "images.make"
+; Image and media handling. Comment this out if you don't need it.
+includes[media] = "media.make"
 
 ; Uncomment this to enable demo content. Do not use on production.
 ;includes[demo] = "demo.make"
