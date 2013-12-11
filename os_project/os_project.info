@@ -44,6 +44,18 @@ dependencies[] = strongarm
 dependencies[] = token
 dependencies[] = wysiwyg
 
+; Scald
+dependencies[] = atom_reference
+dependencies[] = mee
+dependencies[] = scald_dnd_library
+dependencies[] = scald_file
+dependencies[] = scald_gallery
+dependencies[] = scald_galleria
+dependencies[] = scald_image
+;dependencies[] = scald_pdf
+dependencies[] = scald_youtube
+dependencies[] = scald_vimeo
+
 ; Features
 dependencies[] = os_base
 
