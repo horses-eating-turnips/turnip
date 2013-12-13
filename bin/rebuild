@@ -67,6 +67,10 @@ if [ ! -d drupal ]; then
   exit 1;
 fi
 
+# Plupload library contains example files that could constitute a security risk,
+# per PSA-2011-02: http://drupal.org/node/1189632
+rm -rf drupal/profiles/$PROFILE/libraries/plupload/examples
+
 # D7 has odd permissions on sites/default folder
 chmod 777 drupal/sites/default
 
