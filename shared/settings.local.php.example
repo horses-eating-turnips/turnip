@@ -27,4 +27,4 @@ $conf['stage_file_proxy_origin_dir'] = 'sites/default/files';
 
 // Environment indicator
 $conf['environment_indicator_text'] = 'LOCAL DEV';
-$conf['environment_indicator_color'] = 'dark-green';
+$conf['environment_indicator_color'] = 'green';
