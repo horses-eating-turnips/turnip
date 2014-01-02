@@ -19,3 +19,12 @@ $conf['preprocess_js'] = 0;
 
 // Maximum error reporting.
 $conf['error_level'] = 2;
+
+// Stage File Proxy
+$conf['stage_file_proxy_origin'] = 'http://www.example.com';
+$conf['stage_file_proxy_use_imagecache_root'] = TRUE;
+$conf['stage_file_proxy_origin_dir'] = 'sites/default/files';
+
+// Environment indicator
+$conf['environment_indicator_text'] = 'LOCAL DEV';
+$conf['environment_indicator_color'] = 'dark-green';
