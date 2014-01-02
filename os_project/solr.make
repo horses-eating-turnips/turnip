@@ -12,7 +12,7 @@ api = 2
 projects[search_api][version] = "1.9"
 
 ; Search API Attachments
-;projects[search_api_attachments][version] = "1.2"
+;projects[search_api_attachments][version] = "1.3"
 
 ; Search API Pages
 ;projects[search_api_page] = "1.0-beta2"
