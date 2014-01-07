@@ -48,6 +48,8 @@ development. Each site is built as an installation profile.
 1. Custom modules or features should go in `my_project/modules/custom`
    or `my_project/modules/features`. Any contrib modules put into the .make files will be placed into the appropriate directories automatically.
 
+1. Turnip assumes you will keep your sensitive database information in an uncommitted (gitignored) file called `settings.local.php`. Make any applicable changes to `settings.local.php.example` and save it as `settings.local.php`.
+
 ## Drush Make
 
 There are several bundled make files:
