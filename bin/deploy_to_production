@@ -64,7 +64,7 @@ ln -s $INSTALLROOT/shared/files /tmp/$TIMESTAMP/sites/default/files
 ln -s $INSTALLROOT/shared/settings.local.php /tmp/$TIMESTAMP/sites/default/settings.local.php
 
 ssh $USER@$HOST cp -Rp $DOCUMENTROOT/ $INSTALLROOT/releases/$TIMESTAMP
-rsync -azC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAMP/
+rsync -azC --delete --include=core /tmp/$TIMESTAMP/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAMP/
 
 # Change group to PHP's user
 #ssh $USER@$HOST chgrp -R www-data $INSTALLROOT
