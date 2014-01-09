@@ -27,6 +27,25 @@ source bin/.config
 # Generate a complete Drupal build.
 echo "Building $PROJECTNAME..."
 
+# Parse the arguments
+for i in "$@"; do
+  case $i in
+    --clean)
+    clean=1
+    ;;
+    --drush=*)
+    drush="${i#*=}"
+    ;;
+    --compass=*)
+    compass="${i#*=}"
+    ;;
+    *)
+    echo "Unknown option \"$1\"!"
+    exit 2
+    ;;
+  esac
+done
+
 # Remove contrib directories
 DIRECTORIES="drupal
 $PROFILE/modules/contrib
@@ -53,18 +72,11 @@ for dir in $DIRECTORIES; do
 done
 
 # Clean flag, exit now.
-if [[ $1 = "--clean" ]]; then
+if [[ $clean -eq 1 ]]; then
   # Remove backup.
   rm -rf $BACKUP_DIR
   exit
 fi
-
-# Parse the arguments
-for (( i=1; i<=$#; i++)); do
-  eval arg="\$$i"
-  arg=${arg/=/=\"}\"
-  eval ${arg:2}
-done
 
 # Build the drupal directory from the make file.
 drush make $drush --yes --contrib-destination=profiles/$PROFILE $PROFILE/$PROFILE.make drupal
