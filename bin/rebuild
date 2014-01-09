@@ -41,14 +41,21 @@ if [ -d drupal/sites/default ]; then
   chmod 777 drupal/sites/default
 fi
 
+# Create a backup location in case build fails.
+BACKUP_DIR=`mktemp -d`
+
 for dir in $DIRECTORIES; do
   if [ -d "$dir" ]; then
+    mkdir -p $BACKUP_DIR/$dir
+    rsync -az $dir/ $BACKUP_DIR/$dir/
     rm -rf $dir
   fi
 done
 
 # Clean flag, exit now.
 if [[ $1 = "--clean" ]]; then
+  # Remove backup.
+  rm -rf $BACKUP_DIR
   exit
 fi
 
@@ -64,6 +71,15 @@ drush make $drush --yes --contrib-destination=profiles/$PROFILE $PROFILE/$PROFIL
 
 # Exit out if this build failed.
 if [ ! -d drupal ]; then
+  # Restore backup.
+  for dir in $DIRECTORIES; do
+    if [ -d "$BACKUP_DIR/$dir" ]; then
+      mkdir -p $dir
+      rsync -az $BACKUP_DIR/$dir/ $dir/
+    fi
+  done
+  rm -rf $BACKUP_DIR
+  echo "###### WARNING #####\nBuild failed!\nRestored previous build\n"
   exit 1;
 fi
 
