@@ -14,6 +14,8 @@ if [[ $1 == *help ]]; then
   echo "--clean          Removes directories and files from a previous build."
   echo "--drush=\"...\"    Passes arguments to drush make. e.g. --drush=\"--debug\""
   echo "--compass=\"...\"  Passes arguments to compass. e.g. --compass=\"--no-debug-info\""
+  echo "--no-backup        Do not backup prior to build"
+  echo "--backup           Always backup and restore a failed build without prompting"
   exit
 fi
 
@@ -27,6 +29,10 @@ source bin/.config
 # Generate a complete Drupal build.
 echo "Building $PROJECTNAME..."
 
+# Set defaults.
+clean=0
+no_backup="prompt"
+
 # Parse the arguments
 for i in "$@"; do
   case $i in
@@ -38,6 +44,12 @@ for i in "$@"; do
     ;;
     --compass=*)
     compass="${i#*=}"
+    ;;
+    --no-backup)
+    no_backup=1
+    ;;
+    --backup)
+    no_backup=0
     ;;
     *)
     echo "Unknown option \"$1\"!"
@@ -61,15 +73,17 @@ if [ -d drupal/sites/default ]; then
 fi
 
 # Create a backup location in case build fails.
-BACKUP_DIR=`mktemp -d`
+if [[ $no_backup -ne 1 ]]; then
+  BACKUP_DIR=`mktemp -d`
 
-for dir in $DIRECTORIES; do
-  if [ -d "$dir" ]; then
-    mkdir -p $BACKUP_DIR/$dir
-    rsync -az $dir/ $BACKUP_DIR/$dir/
-    rm -rf $dir
-  fi
-done
+  for dir in $DIRECTORIES; do
+    if [ -d "$dir" ]; then
+      mkdir -p $BACKUP_DIR/$dir
+      rsync -az $dir/ $BACKUP_DIR/$dir/
+      rm -rf $dir
+    fi
+  done
+fi
 
 # Clean flag, exit now.
 if [[ $clean -eq 1 ]]; then
@@ -83,16 +97,35 @@ drush make $drush --yes --contrib-destination=profiles/$PROFILE $PROFILE/$PROFIL
 
 # Exit out if this build failed.
 if [ ! -d drupal ]; then
-  # Restore backup.
-  for dir in $DIRECTORIES; do
-    if [ -d "$BACKUP_DIR/$dir" ]; then
-      mkdir -p $dir
-      rsync -az $BACKUP_DIR/$dir/ $dir/
-    fi
-  done
-  rm -rf $BACKUP_DIR
-  echo "###### WARNING #####\nBuild failed!\nRestored previous build\n"
+
+  if [[ "$no_backup" == "prompt" ]]; then
+    # Prompt user for backup.
+    read -p "Build failed. Restore from backup (y/N)? " choice
+    case "$choice" in
+      y|Y|Yes)
+      no_backup=0
+      ;;
+      *)
+      echo "Not restoring backup."
+      no_backup=1
+      ;;
+    esac
+  fi
+
+  if [[ $no_backup -ne 1 ]]; then
+    for dir in $DIRECTORIES; do
+      if [ -d "$BACKUP_DIR/$dir" ]; then
+        mkdir -p $dir
+        rsync -az $BACKUP_DIR/$dir/ $dir/
+      fi
+    done
+    rm -rf $BACKUP_DIR
+  fi
   exit 1;
+
+else
+  # Remove backup.
+  rm -rf $BACKUP_DIR
 fi
 
 # Plupload library contains example files that could constitute a security risk,
