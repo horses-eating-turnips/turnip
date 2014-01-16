@@ -24,7 +24,7 @@ development. Each site is built as an installation profile.
 
 1. Initialize git (if files were copied), and add a remote:
    ```bash
-   git remote add origin git@github:foo/bar.git
+   git remote add origin git@github.com:foo/bar.git
    ```
 
    Make sure your remote points to a repository that is set up.
