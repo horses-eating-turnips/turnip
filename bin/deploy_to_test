@@ -31,7 +31,7 @@ INSTALLROOT=/var/www/$SUBDOMAIN
 #SITEINSTALL=1
 #RELOADDB=1
 
-# Branch to deploy from
+# Branch to deploy from. Typically `BRANCH=.`
 BRANCH=.
 
 ##### Things below here generally won't need to be changed #####
