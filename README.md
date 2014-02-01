@@ -37,6 +37,12 @@ development. Each site is built as an installation profile.
 
    All changes can then quickly be added via `git add -A`.
 
+1. Instantiate the subtheme. Note that this will perform an initial run of the build script. You'll have OpenSourcery's `Arcturus` Aurora subtheme flavor spun up in your theme directory:
+
+  ```bash
+  bin/init-subtheme
+  ```
+
 1. Customize `my_profile/my_profile.make`
 1. Run `bin/install` for local development
 1. To avoid having to redeclare your default origin each time you pull or push, run your first push as:
@@ -58,6 +64,7 @@ There are several bundled make files:
 * `base.make` - common modules and libraries
 * `images.make` - Media module and other image-related modules
 * `panels.make` - Panels modules related dependencies
+* `theme.make` - Dependencies for Arcturus/Aurora subthemes.
 
 If using dev versions of modules, specific commit hashes are
 preferable in the make files, rather than the more general dev branch.
