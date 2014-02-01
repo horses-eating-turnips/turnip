@@ -1,0 +1,81 @@
+#!/bin/bash
+
+#
+# This script initializes an Arcturus subtheme.
+#
+# You must have the OS-ACE ruby gem installed to use this script, i.e. either
+#   gem install compass-aurora-os
+# -- OR --
+#   gem update compass-aurora-os
+# before running this script.
+#
+# Then run this from the project root.
+#
+
+BASE_DIR=$(pwd)
+
+## Include config so we have the params to init.
+source bin/.config
+
+## Set BUILD=0 to prevent rebuild. Should be set to BUILD=1 on intial run.
+BUILD=1
+if [[ $BUILD = 1 ]]; then
+  # Run the rebuild script.
+  bin/rebuild
+fi
+
+##
+## Create symlinks for Bedrock defalt layouts.
+##
+
+## @TODO: make this a dynamic list
+LAYOUTS="adakite
+andesite
+basalt
+coal
+flint
+granite
+hawaiite
+obsidian
+pumice
+quartz
+variolite"
+
+## Make the symlinks for layout defaults.
+BEDROCK_PATH="$PROFILE/modules/contrib/bedrock"
+THEME_PATH="$PROFILE/themes/custom/$THEME"
+for layout in $LAYOUTS; do
+  cd $BASE_DIR
+  if [ -d $BEDROCK_PATH ]; then
+    LAYOUT_DIR="$THEME_PATH/sass/partials/layouts/$layout"
+    mkdir -p "$LAYOUT_DIR"
+    cd "$LAYOUT_DIR"
+    ln -s "../../../../../../../modules/contrib/bedrock/plugins/layouts/$layout/sass/partials/_$layout.scss" "_$layout.scss"
+  fi
+done
+cd "$BASE_DIR"
+
+##
+## Since compass doesn't yet have multiple image paths for vendor/app overrides,
+## we hackily symlink the to the icon directory in alphecaa from our image
+## directory.
+##
+## @see https://github.com/chriseppstein/compass/issues/1286
+##
+IMG_PATH="$THEME_PATH/images"
+mkdir -p "$IMG_PATH"
+cd "$IMG_PATH"
+ln -s ../vendor/alphecca/images/icons icons
+cd "$BASE_DIR"
+
+##
+## Initialize theme using OS-ACE
+##
+cd "$PROFILE/themes/custom"
+compass create "$THEME" -r aurora-os --using aurora-os/arcturus \
+--css-dir=css \
+--javascripts-dir=js \
+--fonts-dir=fonts \
+--images-dir=images
+cd "$THEME"
+bundle install
