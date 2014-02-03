@@ -63,8 +63,7 @@ cd "$BASE_DIR"
 ## @see https://github.com/chriseppstein/compass/issues/1286
 ##
 IMG_PATH="$THEME_PATH/images"
-VENDOR_PATH="$IMG_PATH/vendor/alphecca/"
-mkdir -p "$VENDOR_PATH"
+mkdir -p "$IMG_PATH"
 cd "$IMG_PATH"
 ln -s ../vendor/alphecca/images images
 cd "$BASE_DIR"
