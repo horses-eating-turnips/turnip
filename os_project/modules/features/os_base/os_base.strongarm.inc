@@ -44,8 +44,15 @@ function os_base_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'superfish_arrow_1';
+  $strongarm->name = 'superfish_amw_1';
   $strongarm->value = 1;
+  $export['superfish_amw_1'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'superfish_arrow_1';
+  $strongarm->value = 0;
   $export['superfish_arrow_1'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -213,7 +220,7 @@ function os_base_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'superfish_multicolumn_1';
-  $strongarm->value = 0;
+  $strongarm->value = 1;
   $export['superfish_multicolumn_1'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -255,14 +262,14 @@ function os_base_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'superfish_shadow_1';
-  $strongarm->value = 1;
+  $strongarm->value = 0;
   $export['superfish_shadow_1'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'superfish_slide_1';
-  $strongarm->value = 'vertical';
+  $strongarm->value = 'none';
   $export['superfish_slide_1'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -281,6 +288,13 @@ profiles/vista_campus/libraries/superfish/sfsmallscreen.js';
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'superfish_smallabt_1';
+  $strongarm->value = '2';
+  $export['superfish_smallabt_1'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'superfish_smallasa_1';
   $strongarm->value = 0;
   $export['superfish_smallasa_1'] = $strongarm;
@@ -289,7 +303,7 @@ profiles/vista_campus/libraries/superfish/sfsmallscreen.js';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'superfish_smallbp_1';
-  $strongarm->value = '768';
+  $strongarm->value = '800';
   $export['superfish_smallbp_1'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -400,8 +414,15 @@ profiles/vista_campus/libraries/superfish/sfsmallscreen.js';
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'superfish_touchbh_1';
+  $strongarm->value = '0';
+  $export['superfish_touchbh_1'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'superfish_touchbp_1';
-  $strongarm->value = '768';
+  $strongarm->value = '800';
   $export['superfish_touchbp_1'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -429,7 +450,7 @@ profiles/vista_campus/libraries/superfish/sfsmallscreen.js';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'superfish_touch_1';
-  $strongarm->value = '2';
+  $strongarm->value = '1';
   $export['superfish_touch_1'] = $strongarm;
 
   $strongarm = new stdClass();
