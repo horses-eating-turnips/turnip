@@ -36,7 +36,8 @@ includes[theme] = "theme.make"
 ; Project-specific modules, and overrides.
 
 ; Superfish
-projects[superfish][version] = "1.9"
+projects[superfish][download][branch] = "7.x-1.x"
+projects[superfish][download][revision] = "c799462"
 
 ; Follow
 projects[follow][version] = "2.0-alpha1"
@@ -48,8 +49,12 @@ projects[mollom][version] = "2.7"
 projects[libraries][version] = "2.1"
 
 ; Libraries
-libraries[superfish][type] = "get"
-libraries[superfish][url] = "https://github.com/mehrpadin/Superfish-for-Drupal.git"
+libraries[superfish][download][type] = "git"
+libraries[superfish][download][branch] = "master"
+libraries[superfish][download][revision] = "2670a36"
+libraries[superfish][download][url] = "https://github.com/mehrpadin/Superfish-for-Drupal.git"
+libraries[superfish][destination] = "libraries"
+libraries[superfish][directory_name] = "superfish"
 
 ; Profiler
 libraries[profiler][download][type] = "get"
