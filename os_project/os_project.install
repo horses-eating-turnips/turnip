@@ -33,8 +33,9 @@ function os_project_install() {
   variable_set('theme_default', $theme_name);
   theme_enable(array($theme_name));
 
-  // Place the content block.
+  // Default blocks.
   $blocks = array(
+    // Content.
     array(
       'module' => 'system',
       'delta' => 'main',
@@ -42,6 +43,18 @@ function os_project_install() {
       'status' => 1,
       'weight' => 0,
       'region' => 'content',
+      'pages' => '',
+      'cache' => -1,
+      'title' => '<none>',
+    ),
+    // Main menu.
+    array(
+      'module' => 'superfish',
+      'delta' => '1',
+      'theme' => $theme_name,
+      'status' => 1,
+      'weight' => 15,
+      'region' => 'header',
       'pages' => '',
       'cache' => -1,
       'title' => '<none>',
