@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ -z "$1" -o -z "$2" -o -z "$3" -o -z "$4" -o -z "$5"]; then
+if [ -z "$1" -o -z "$2" -o -z "$3" -o -z "$4" -o -z "$5" ]; then
   echo "Usage: $0 <machine_name> <theme_name> <Project Name> <Project Description> <Generate Theme Flag>"
   echo "Ex: $0 client_xyz xyz_foobar \"Web app ABC\" \"Client XYZ's ABC app enables users to browse a database of records.\" 1"
   exit 1
@@ -60,6 +60,6 @@ mv README.md README.dist.md
 echo -e "##$PROJECTNAME\n\n$DESCRIPTION" > README.md
 
 # Initialize Aurora-based subtheme with OS-ACE if not asked to stop.
-if [ "$5" -ne "0"]; then
+if [ "$5" -ne "0" ]; then
   bin/init-theme
 fi
