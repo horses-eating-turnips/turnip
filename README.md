@@ -55,7 +55,7 @@ distributed as a Ruby Gem: [OS-ACE](http://rubygems.org/gems/compass-aurora-os).
   Would instantite an install profile, but NOT spin up an Aurora theme. Similarly,
 
   ```bash
-  bin/make-install-profile my_profile my_theme "Short name" "Long name" 0
+  bin/make-install-profile my_profile my_theme "Short name" "Long name" 1
   ```
 
   Would instatiate and install profile, and generate an Aurora-based theme.
