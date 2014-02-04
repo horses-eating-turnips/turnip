@@ -1,7 +1,11 @@
 #!/bin/bash
+
+# Exit on any error.
+set -e
+
 if [ -z "$1" -o -z "$2" -o -z "$3" -o -z "$4" ]; then
-  echo "Usage: $0 <machine_name> <theme_name> <Project Name> <Project Description>"
-  echo "Ex: $0 client_xyz xyz_foobar \"Web app ABC\" \"Client XYZ's ABC app enables users to browse a database of records.\""
+  echo "Usage: $0 <machine_name> <theme_name> <Project Name> <Project Description> <Skip Generate Theme Flag>"
+  echo "Ex: $0 client_xyz xyz_foobar \"Web app ABC\" \"Client XYZ's ABC app enables users to browse a database of records.\" 1"
   exit 1
 fi
 
@@ -58,3 +62,8 @@ done
 # Move Turnip README.md over to README.dist.md
 mv README.md README.dist.md
 echo -e "##$PROJECTNAME\n\n$DESCRIPTION" > README.md
+
+# Initialize Aurora-based subtheme with OS-ACE if not asked to stop.
+if [ -z "$5" ]; then
+  bin/init-theme
+fi
