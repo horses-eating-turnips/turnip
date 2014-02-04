@@ -53,7 +53,7 @@ projects[menu_block][version] = "2.3"
 
 projects[menu_position][version] = "1.1"
 
-projects[navbar][version] = 1.3
+projects[navbar][version] = 1.4
 
 projects[redirect][version] = "1.0-rc1"
 
@@ -116,11 +116,11 @@ projects[diff][version] = "3.2"
 libraries[backbone][download][type] = "get"
 libraries[backbone][download][url] = "https://github.com/jashkenas/backbone/archive/1.0.0.tar.gz"
 
+libraries[ckeditor][download][type] = "get"
+libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.3.2/ckeditor_4.3.2_standard.zip"
+
 libraries[underscore][download][type] = "get"
 libraries[underscore][download][url] = "https://github.com/jashkenas/underscore/archive/1.5.2.zip"
-
-libraries[ckeditor][download][type] = "get"
-libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.3.1/ckeditor_4.3.1_standard.zip"
 
 libraries[footable][directory_name] = "FooTable"
 libraries[footable][download][revision] = "228b101"
