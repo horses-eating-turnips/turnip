@@ -12,7 +12,5 @@ install:
   - sudo pear channel-discover pear.drush.org && sudo pear install drush/drush
   - sudo drush
   - sudo chown -R $USER:$USER /home/$USER/.drush
-before_script:
+script:
   - bin/make-install-profile client_xyz xyz_foobar "Web app ABC" "Client XYZ's ABC app enables users to browse a database of records."
-
-script: bin/rebuild
