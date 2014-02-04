@@ -58,9 +58,9 @@ distributed as a Ruby Gem: [OS-ACE](http://rubygems.org/gems/compass-aurora-os).
   bin/make-install-profile my_profile my_theme "Short name" "Long name" 1
   ```
 
-  Would instatiate and install profile, and generate an Aurora-based theme.
+  Would instatiate an install profile, and generate an Aurora-based theme.
 
-   All changes can then quickly be added via `git add -A`.
+  All changes can then quickly be added via `git add -A`.
 
 1. Instantiate the subtheme. Note that this will perform an initial run of the build script. You'll have OpenSourcery's `Arcturus` Aurora subtheme flavor spun up in your theme directory:
 
