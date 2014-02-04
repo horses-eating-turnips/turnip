@@ -7,6 +7,9 @@ collaborate on the important parts of the project at hand. It includes
 a starting framework for using Behat for behavior driven
 development. Each site is built as an installation profile.
 
+A Turnip-based site may also work in tandem with OpenSourcery's Aurora Compass Extension to instantiate an Aurora-based theme. The compass extension is
+distributed as a Ruby Gem: [OS-ACE](http://rubygems.org/gems/compass-aurora-os). It is not necessary to use this theme stack wtih Turnip; it is a build-time option, as described in the installation steps below.
+
 [![Build Status](https://travis-ci.org/opensourcery/turnip.png?branch=7.x)](https://travis-ci.org/opensourcery/turnip)
 
 ![Turnip](https://raw.github.com/opensourcery/turnip/7.x/turnip.png)
@@ -29,11 +32,33 @@ development. Each site is built as an installation profile.
 
    Make sure your remote points to a repository that is set up.
 
+1. If you would like to instantiate your theme with the Aurora stack, make sure you have the latest OS-ACE version. Either intall it for the first time:
+
+  ```bash
+  gem install compass-aurora-os
+  ```
+
+  Or, be sure it's updated:
+
+  ```bash
+  gem update compass-aurora-os
+  ```
+
+  (You likely will need `sudo` for those, depending upon your environment.)
+
 1. Run `bin/make-install-profile` to instantiate an installation profile. For example
 
    ```bash
-   bin/make-install-profile my_profile my_theme "Short name" "Long name"
+   bin/make-install-profile my_profile my_theme "Short name" "Long name" 0
    ```
+
+  Would instantite an install profile, but NOT spin up an Aurora theme. Similarly,
+
+  ```bash
+  bin/make-install-profile my_profile my_theme "Short name" "Long name" 0
+  ```
+
+  Would instatiate and install profile, and generate an Aurora-based theme.
 
    All changes can then quickly be added via `git add -A`.
 
