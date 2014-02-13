@@ -6,7 +6,7 @@
 #
 
 # Add help
-if [[ $1 == *help ]]; then 
+if [[ $1 == *help ]]; then
   echo "Rebuilds the project by downloading specified components, setting links, and compiling sass."
   echo "rebuild should be run from the root project directory."
   echo ""
