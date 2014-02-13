@@ -74,7 +74,7 @@ fi
 
 # Create a backup location in case build fails.
 if [[ $no_backup -ne 1 ]]; then
-  BACKUP_DIR=`mktemp -d`
+  BACKUP_DIR=`mktemp -d tmp.XXXXXXX`
 
   for dir in $DIRECTORIES; do
     if [ -d "$dir" ]; then
