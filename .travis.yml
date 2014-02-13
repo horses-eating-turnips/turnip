@@ -17,8 +17,6 @@ install:
   - sudo apt-get update > /dev/null
   - sudo apt-get install php5-curl php5-gd php5-mysql > /dev/null
   - composer global require drush/drush:6.*
-  - sudo drush
-  - sudo chown -R $USER:$USER /home/$USER/.drush
   - touch shared/settings.local.php
   - mkdir shared/files
 before_script:
