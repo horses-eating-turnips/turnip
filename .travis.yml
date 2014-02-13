@@ -6,7 +6,7 @@ php:
 rvm:
   - 2.0.0p247
 env:
-  - PATH=$PATH:$COMPOSER_HOME/vendor/bin
+  - PATH=$PATH:/home/travis/.composer/vendor/bin
 
 before_install:
   - gem update --system
