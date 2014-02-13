@@ -13,7 +13,7 @@ install:
   - git reset --hard
   - git clean -dxf
   - sudo apt-get update > /dev/null
-  - sudo apt-get install php5-curl > /dev/null
+  - sudo apt-get install php5-curl php5-gd > /dev/null
   - sudo apt-get install php-pear
   - sudo pear channel-discover pear.drush.org && sudo pear install drush/drush
   - sudo drush
