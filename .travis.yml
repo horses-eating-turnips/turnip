@@ -14,8 +14,7 @@ install:
   - git clean -dxf
   - sudo apt-get update > /dev/null
   - sudo apt-get install php5-curl php5-gd > /dev/null
-  - sudo apt-get install php-pear
-  - sudo pear channel-discover pear.drush.org && sudo pear install drush/drush
+  - composer global require drush/drush:6.*
   - sudo drush
   - sudo chown -R $USER:$USER /home/$USER/.drush
   - touch shared/settings.local.php
