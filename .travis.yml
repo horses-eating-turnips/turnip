@@ -5,6 +5,8 @@ php:
   - 5.5
 rvm:
   - 2.0.0p247
+env:
+  - PATH=$PATH:$COMPOSER_HOME/vendor/bin
 
 before_install:
   - gem update --system
