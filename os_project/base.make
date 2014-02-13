@@ -15,7 +15,7 @@ projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths-11
 ; https://drupal.org/node/1417630#comment-6810906
 projects[ctools][patch][] = "https://drupal.org/files/ctools-views-content-custom-url-1417630-06.patch"
 
-projects[entity][version] = "1.2"
+projects[entity][version] = "1.3"
 
 projects[entitycache][version] = "1.2"
 
@@ -53,7 +53,7 @@ projects[menu_block][version] = "2.3"
 
 projects[menu_position][version] = "1.1"
 
-projects[navbar][version] = 1.2
+projects[navbar][version] = 1.4
 
 projects[redirect][version] = "1.0-rc1"
 
@@ -65,9 +65,13 @@ projects[token][version] = "1.5"
 
 projects[views][version] = "3.7"
 
-projects[wysiwyg][version] = "2.2"
-; Select theme css patch: http://drupal.org/node/1309040#comment-6107956
-projects[wysiwyg][patch][] = "http://drupal.org/files/1309040-22-select_theme_css.patch"
+projects[wysiwyg][download][branch] = "7.x-2.x"
+projects[wysiwyg][download][revision] = "ee64524"
+; Select theme css patch: https://drupal.org/node/1309040#comment-8008765
+projects[wysiwyg][patch][] = "https://drupal.org/files/wysiwyg-1309040-32-select-theme-styles.patch"
+; Support CKEditor 4.x's Advanced Content Filter setting to avoid destroying Media embeds.
+; https://drupal.org/node/1956778
+projects[wysiwyg][patch][] = "https://drupal.org/files/wysiwyg-ckeditor-acf-1956778-37.patch"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; DEVELOPMENT MODULES ;;;;;;;;;;;;;
@@ -112,13 +116,11 @@ projects[diff][version] = "3.2"
 libraries[backbone][download][type] = "get"
 libraries[backbone][download][url] = "https://github.com/jashkenas/backbone/archive/1.0.0.tar.gz"
 
-libraries[underscore][download][type] = "get"
-libraries[underscore][download][url] = "https://github.com/jashkenas/underscore/archive/1.4.4.zip"
+libraries[ckeditor][download][type] = "get"
+libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.3.2/ckeditor_4.3.2_standard.zip"
 
-libraries[tinymce][download][type] = "get"
-libraries[tinymce][download][url] = "https://github.com/downloads/tinymce/tinymce/tinymce_3.5.8.zip"
-libraries[tinymce][destination] = "libraries"
-libraries[tinymce][directory_name] = "tinymce"
+libraries[underscore][download][type] = "get"
+libraries[underscore][download][url] = "https://github.com/jashkenas/underscore/archive/1.5.2.zip"
 
 libraries[footable][directory_name] = "FooTable"
 libraries[footable][download][revision] = "228b101"

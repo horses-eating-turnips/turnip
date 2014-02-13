@@ -6,7 +6,7 @@
 #
 
 # Add help
-if [[ $1 == *help ]]; then 
+if [[ $1 == *help ]]; then
   echo "Rebuilds the project by downloading specified components, setting links, and compiling sass."
   echo "rebuild should be run from the root project directory."
   echo ""
@@ -14,6 +14,8 @@ if [[ $1 == *help ]]; then
   echo "--clean          Removes directories and files from a previous build."
   echo "--drush=\"...\"    Passes arguments to drush make. e.g. --drush=\"--debug\""
   echo "--compass=\"...\"  Passes arguments to compass. e.g. --compass=\"--no-debug-info\""
+  echo "--no-backup        Do not backup prior to build"
+  echo "--backup           Always backup and restore a failed build without prompting"
   exit
 fi
 
@@ -26,6 +28,35 @@ source bin/.config
 
 # Generate a complete Drupal build.
 echo "Building $PROJECTNAME..."
+
+# Set defaults.
+clean=0
+no_backup="prompt"
+
+# Parse the arguments
+for i in "$@"; do
+  case $i in
+    --clean)
+    clean=1
+    ;;
+    --drush=*)
+    drush="${i#*=}"
+    ;;
+    --compass=*)
+    compass="${i#*=}"
+    ;;
+    --no-backup)
+    no_backup=1
+    ;;
+    --backup)
+    no_backup=0
+    ;;
+    *)
+    echo "Unknown option \"$1\"!"
+    exit 2
+    ;;
+  esac
+done
 
 # Remove contrib directories
 DIRECTORIES="drupal
@@ -41,30 +72,60 @@ if [ -d drupal/sites/default ]; then
   chmod 777 drupal/sites/default
 fi
 
-for dir in $DIRECTORIES; do
-  if [ -d "$dir" ]; then
-    rm -rf $dir
-  fi
-done
+# Create a backup location in case build fails.
+if [[ $no_backup -ne 1 ]]; then
+  BACKUP_DIR=`mktemp -d tmp.XXXXXXX`
 
-# Clean flag, exit now.
-if [[ $1 = "--clean" ]]; then
-  exit
+  for dir in $DIRECTORIES; do
+    if [ -d "$dir" ]; then
+      mkdir -p $BACKUP_DIR/$dir
+      rsync -az $dir/ $BACKUP_DIR/$dir/
+      rm -rf $dir
+    fi
+  done
 fi
 
-# Parse the arguments
-for (( i=1; i<=$#; i++)); do
-  eval arg="\$$i"
-  arg=${arg/=/=\"}\"
-  eval ${arg:2}
-done
+# Clean flag, exit now.
+if [[ $clean -eq 1 ]]; then
+  # Remove backup.
+  rm -rf $BACKUP_DIR
+  exit
+fi
 
 # Build the drupal directory from the make file.
 drush make $drush --yes --contrib-destination=profiles/$PROFILE $PROFILE/$PROFILE.make drupal
 
 # Exit out if this build failed.
 if [ ! -d drupal ]; then
+
+  if [[ "$no_backup" == "prompt" ]]; then
+    # Prompt user for backup.
+    read -p "Build failed. Restore from backup (y/N)? " choice
+    case "$choice" in
+      y|Y|Yes)
+      no_backup=0
+      ;;
+      *)
+      echo "Not restoring backup."
+      no_backup=1
+      ;;
+    esac
+  fi
+
+  if [[ $no_backup -ne 1 ]]; then
+    for dir in $DIRECTORIES; do
+      if [ -d "$BACKUP_DIR/$dir" ]; then
+        mkdir -p $dir
+        rsync -az $BACKUP_DIR/$dir/ $dir/
+      fi
+    done
+    rm -rf $BACKUP_DIR
+  fi
   exit 1;
+
+else
+  # Remove backup.
+  rm -rf $BACKUP_DIR
 fi
 
 # Plupload library contains example files that could constitute a security risk,

@@ -2,7 +2,13 @@ language: php
 php:
   - 5.3
   - 5.4
+  - 5.5
+rvm:
+  - 2.0.0p247
 
+before_install:
+  - gem update --system
+  - gem install compass-aurora-os
 install:
   - git reset --hard
   - git clean -dxf
@@ -21,4 +27,6 @@ before_script:
   - echo -e "<?php\n\$databases = array(\n  'default' => array(\n    'default' => array(\n      'database' => 'turnip',\n      'username' => 'travis',\n      'password' => '',\n      'host' => 'localhost',\n      'port' => '',\n      'driver' => 'mysql',\n      'prefix' => '',\n    ),\n  ),\n);\n\n\$conf['install_profile'] = 'client_xyz';\n" > shared/settings.local.php
   - bin/make-install-profile client_xyz xyz_foobar "Web app ABC" "Client XYZ's ABC app enables users to browse a database of records."
 
-script: bin/install
+script:
+  - bin/make-install-profile client_xyz xyz_foobar "Web app ABC" "Client XYZ's ABC app enables users to browse a database of records."
+  - bin/install

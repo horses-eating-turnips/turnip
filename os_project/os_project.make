@@ -9,7 +9,7 @@ defaults[projects][subdir] = "contrib"
 ; Drupal core.
 core = "7.x"
 projects[drupal][type] = "core"
-projects[drupal][version] = "7.25"
+projects[drupal][version] = "7.26"
 ; Ensure plain text fields evaluate line breaks.
 projects[drupal][patch][] = "http://drupal.org/files/text-plain-1152216-24.patch"
 ; Resolve php notice thrown by the way PHP 5.4 handles array indexes vs 5.3. https://drupal.org/node/1824820#comment-6656728
@@ -35,6 +35,10 @@ includes[theme] = "theme.make"
 
 ; Project-specific modules, and overrides.
 
+; Superfish
+projects[superfish][download][branch] = "7.x-1.x"
+projects[superfish][download][revision] = "c799462"
+
 ; Follow
 projects[follow][version] = "2.0-alpha1"
 
@@ -45,6 +49,12 @@ projects[mollom][version] = "2.7"
 projects[libraries][version] = "2.1"
 
 ; Libraries
+libraries[superfish][download][type] = "git"
+libraries[superfish][download][branch] = "master"
+libraries[superfish][download][revision] = "2670a36"
+libraries[superfish][download][url] = "https://github.com/mehrpadin/Superfish-for-Drupal.git"
+libraries[superfish][destination] = "libraries"
+libraries[superfish][directory_name] = "superfish"
 
 ; Profiler
 libraries[profiler][download][type] = "get"

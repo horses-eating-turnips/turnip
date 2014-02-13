@@ -53,7 +53,7 @@ TIMESTAMP=`date +%Y-%m-%d.%H-%M-%S`.`git log -n 1 --format=%h`
 mkdir /tmp/$TIMESTAMP
 
 # Add -L to copy symlinks' referent files, so that we'll bring along our install profile
-rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.local.php --exclude=backup ./drupal/ /tmp/$TIMESTAMP/
+rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.local.php --exclude=backup  --include=core ./drupal/ /tmp/$TIMESTAMP/
 
 # We don't automate deploying files.
 rm -Rf /tmp/$TIMESTAMP/sites/default/files
@@ -64,7 +64,7 @@ ln -s $INSTALLROOT/shared/files /tmp/$TIMESTAMP/sites/default/files
 ln -s $INSTALLROOT/shared/settings.local.php /tmp/$TIMESTAMP/sites/default/settings.local.php
 
 ssh $USER@$HOST cp -Rp $DOCUMENTROOT/ $INSTALLROOT/releases/$TIMESTAMP
-rsync -azC --delete /tmp/$TIMESTAMP/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAMP/
+rsync -azC --delete --include=core /tmp/$TIMESTAMP/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAMP/
 
 # Change group to PHP's user
 #ssh $USER@$HOST chgrp -R www-data $INSTALLROOT

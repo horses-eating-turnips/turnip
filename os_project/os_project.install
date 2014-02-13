@@ -33,8 +33,9 @@ function os_project_install() {
   variable_set('theme_default', $theme_name);
   theme_enable(array($theme_name));
 
-  // Place the content block.
+  // Default blocks.
   $blocks = array(
+    // Content.
     array(
       'module' => 'system',
       'delta' => 'main',
@@ -42,6 +43,18 @@ function os_project_install() {
       'status' => 1,
       'weight' => 0,
       'region' => 'content',
+      'pages' => '',
+      'cache' => -1,
+      'title' => '<none>',
+    ),
+    // Main menu.
+    array(
+      'module' => 'superfish',
+      'delta' => '1',
+      'theme' => $theme_name,
+      'status' => 1,
+      'weight' => 15,
+      'region' => 'header',
       'pages' => '',
       'cache' => -1,
       'title' => '<none>',
@@ -77,6 +90,49 @@ function os_project_install() {
  * Tasks to run at the end of the installation process.
  */
 function os_project_install_profile_complete() {
+  os_project_init_magic();
+}
+
+/**
+ * Pre-config Magic module settings.
+ *
+ * The info file method of storing settings in code works for
+ * already-installed sites. When the initial install takes place
+ * the include/exclude CSS expressions use regex and break when
+ * read from the theme's .info. We give them initial values on
+ * install so install deployments work.
+ *
+ * @see https://drupal.org/node/2076061
+ * @see https://drupal.org/node/2045073
+ */
+function os_project_init_magic() {
+  $css_directives = array(
+    'system/*.css',
+    '~system/system.base.css',
+    '~system/system.messages.css',
+  );
+
+  $magic_settings = array(
+    'magic_embedded_mqs' => '0',
+    'magic_css_excludes' => implode("\n", $css_directives),
+    'magic_footer_js' => '0',
+    'magic_library_head' => '0',
+    'magic_experimental_js' => '0',
+    'magic_js_excludes' => '',
+    'magic_rebuild_registry' => '0',
+    'magic_viewport_indicator' => '0',
+    'magic_modernizr_debug' => '0',
+    'magic_performance__active_tab' => 'edit-dev',
+    'magic_css_excludes_regex' => array(
+      'exclude' => '/^(modules\/system\/(.*)\.css)$/',
+      'include' => '/^(modules\/system\/system\.base\.css|modules\/system\/system\.messages\.css)$/',
+    ),
+    'magic_js_excludes_regex' => '',
+  );
+
+  $config = profiler_v2_load_config('os_project');
+  $theme_name = $config['theme'];
+  variable_set('theme_' . $theme_name . '_settings', $magic_settings);
 }
 
 /**

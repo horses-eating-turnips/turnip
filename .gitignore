@@ -7,3 +7,4 @@
 /drupal
 .vagrant
 Vagrantfile.local
+bdd/behat.local.yml
