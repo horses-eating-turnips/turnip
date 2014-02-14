@@ -12,7 +12,7 @@ development. Each site is built as an installation profile.
 ![Turnip](https://raw.github.com/opensourcery/turnip/7.x/turnip.png)
 
 ## Dependencies
-The theming framework of choice for Turnip is the [Aurora Framework](http://snugug.github.io/Aurora/). In order to use this stack, you'll need your environment set up properly with Compass, Sass, Ruby, and a number of Ruby gems. It is possible to instantiate an install profile with turnip without instantiating a theme (see Install STEP??). The default is to spin up the theme with the install profile.
+The theming framework of choice for Turnip is the [Aurora Framework](http://snugug.github.io/Aurora/). In order to use this stack, you'll need your environment set up properly with Compass, Sass, Ruby, and a number of Ruby gems. It is possible to instantiate an install profile with turnip without instantiating a theme (see `skiptheme` flag, below). The default is to spin up the theme with the install profile.
 
 ### Install Compass and Sass
 If you are using modern web technologies, you probably already have this set up. If not, check out [Installing Compass and Sass Across All Platforms](http://snugug.com/musings/installing-sass-and-compass-across-all-platform).
