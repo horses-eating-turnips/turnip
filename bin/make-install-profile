@@ -64,7 +64,9 @@ done
 mv README.md README.dist.md
 echo -e "##$PROJECTNAME\n\n$DESCRIPTION" > README.md
 
-# Initialize Aurora-based subtheme with OS-ACE if not asked to stop.
-if [ -z "$5" ]; then
+# Initialize Aurora-based subtheme unless the skip flag was provided.
+# We can't get past the usage check unless the number of args is 4 or more
+# so a simple equality check here is enough to detect the skip flag.
+if [ $# -eq 4 ]; then
   bin/init-theme
 fi
