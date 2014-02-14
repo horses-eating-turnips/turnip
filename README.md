@@ -53,20 +53,7 @@ Again, you'll likely need admin (`sudo`) priveleges to update the gem.
    ```
 
    Make sure your remote points to a repository that is set up.
-
-1. If you would like to instantiate your theme with the Aurora stack, make sure you have the latest OS-ACE version. Either intall it for the first time:
-
-  ```bash
-  gem install compass-aurora-os
-  ```
-
-  Or, be sure it's updated:
-
-  ```bash
-  gem update compass-aurora-os
-  ```
-
-  (You likely will need `sudo` for those, depending upon your environment.)
+   
 
 1. Run `bin/make-install-profile` to instantiate an installation profile and spin up the `Arcturus` subtheme. For example
 
@@ -76,7 +63,7 @@ Again, you'll likely need admin (`sudo`) priveleges to update the gem.
 
   Would instantite an install profile, with an `Arcturus`-flavored Aurora subtheme.
   
-  However, addin gthe skiptheme flag would instatiate an install profile, and leave the theme directory empty with no theme generated:
+  However, adding the `skiptheme` flag would instatiate an install profile, and leave the theme directory empty with no theme generated:
 
   ```bash
   bin/make-install-profile my_profile my_theme "Short name" "Long name" skiptheme
