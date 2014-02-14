@@ -31,7 +31,7 @@ You'll likely need admin (`sudo`) priveleges for that command. This Gem is under
 
 ```bash
 gem update compass-aurora-os
-gem clean
+gem clean compass-aurora-os
 ```
 
 Again, you'll likely need admin (`sudo`) priveleges to update the gem.
