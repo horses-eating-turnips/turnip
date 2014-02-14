@@ -55,20 +55,18 @@ Again, you'll likely need admin (`sudo`) priveleges to update the gem.
    Make sure your remote points to a repository that is set up.
    
 
-1. Run `bin/make-install-profile` to instantiate an installation profile and spin up the `Arcturus` subtheme. For example
+1. Run `bin/make-install-profile` to instantiate an installation profile and spin up the `Arcturus` subtheme:
 
    ```bash
    bin/make-install-profile my_profile my_theme "Short name" "Long name"
    ```
 
-  Would instantite an install profile, with an `Arcturus`-flavored Aurora subtheme.
-  
-  However, adding the `skiptheme` flag would instatiate an install profile, and leave the theme directory empty with no theme generated:
+  This would instantite an install profile, with an `Arcturus`-flavored Aurora subtheme. However, adding the `skiptheme` flag would instatiate an install profile, and leave the theme directory empty with no theme generated:
 
   ```bash
   bin/make-install-profile my_profile my_theme "Short name" "Long name" skiptheme
   ```
-
+  
   All changes can then quickly be added via `git add -A`.
 
 1. Customize `my_profile/my_profile.make`
