@@ -17,8 +17,8 @@ The theming framework of choice for Turnip is the [Aurora Framework](http://snug
 ### Install Compass and Sass
 If you are using modern web technologies, you probably already have this set up. If not, check out [Installing Compass and Sass Across All Platforms](http://snugug.com/musings/installing-sass-and-compass-across-all-platform).
 
-### Install and Configure your Ruby Environment
-First, you'll need the Ruby environment itself so you can install Ruby gems. On a *nix-based machine, just use your package manager and look for Ruby (version 1.9.x). The steps for this vary widely depeding upon your development environment and OS. Just make sure you set up version 1.9.x.
+### Setup the Ruby Environment
+First, you'll need the Ruby environment itself so you can install Ruby gems. The steps for this vary widely depeding upon your development environment and OS. Just make sure you set up version 1.9.x.
 
 ### Install OpenSourcery's Aurora Compass Extension
 Having your Ruby environment setup, you can simply
