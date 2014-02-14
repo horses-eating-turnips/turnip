@@ -7,12 +7,34 @@ collaborate on the important parts of the project at hand. It includes
 a starting framework for using Behat for behavior driven
 development. Each site is built as an installation profile.
 
-A Turnip-based site may also work in tandem with OpenSourcery's Aurora Compass Extension to instantiate an Aurora-based theme. The compass extension is
-distributed as a Ruby Gem: [OS-ACE](http://rubygems.org/gems/compass-aurora-os). It is not necessary to use this theme stack wtih Turnip; it is a build-time option, as described in the installation steps below.
-
 [![Build Status](https://travis-ci.org/opensourcery/turnip.png?branch=7.x)](https://travis-ci.org/opensourcery/turnip)
 
 ![Turnip](https://raw.github.com/opensourcery/turnip/7.x/turnip.png)
+
+## Dependencies
+The theming framework of choice for Turnip is the [Aurora Framework](http://snugug.github.io/Aurora/). In order to use this stack, you'll need your environment set up properly with Compass, Sass, Ruby, and a number of Ruby gems. It is possible to instantiate an install profile with turnip without instantiating a theme (see Install STEP??). The default is to spin up the theme with the install profile.
+
+### Install Compass and Sass
+If you are using modern web technologies, you probably already have this set up. If not, check out [Installing Compass and Sass Across All Platforms](http://snugug.com/musings/installing-sass-and-compass-across-all-platform).
+
+### Install and Configure your Ruby Environment
+First, you'll need the Ruby environment itself so you can install Ruby gems. On a *nix-based machine, just use your package manager and look for Ruby (version 1.9.x). The steps for this vary widely depeding upon your development environment and OS. Just make sure you set up version 1.9.x.
+
+### Install OpenSourcery's Aurora Compass Extension
+Having your Ruby environment setup, you can simply
+
+```bash
+gem install compass-aurora-os
+```
+
+You'll likely need admin (`sudo`) priveleges for that command. This Gem is under active development, so if you already have the extension just be sure it's updated:
+
+```bash
+gem update compass-aurora-os
+gem clean
+```
+
+Again, you'll likely need admin (`sudo`) priveleges to update the gem.
 
 ## Installation
 
@@ -46,27 +68,21 @@ distributed as a Ruby Gem: [OS-ACE](http://rubygems.org/gems/compass-aurora-os).
 
   (You likely will need `sudo` for those, depending upon your environment.)
 
-1. Run `bin/make-install-profile` to instantiate an installation profile. For example
+1. Run `bin/make-install-profile` to instantiate an installation profile and spin up the `Arcturus` subtheme. For example
 
    ```bash
    bin/make-install-profile my_profile my_theme "Short name" "Long name"
    ```
 
-  Would instantite an install profile, but NOT spin up an Aurora theme. Similarly,
+  Would instantite an install profile, with an `Arcturus`-flavored Aurora subtheme.
+  
+  However, addin gthe skiptheme flag would instatiate an install profile, and leave the theme directory empty with no theme generated:
 
   ```bash
-  bin/make-install-profile my_profile my_theme "Short name" "Long name" 1
+  bin/make-install-profile my_profile my_theme "Short name" "Long name" skiptheme
   ```
-
-  Would instatiate an install profile, and generate an Aurora-based theme.
 
   All changes can then quickly be added via `git add -A`.
-
-1. Instantiate the subtheme. Note that this will perform an initial run of the build script. You'll have OpenSourcery's `Arcturus` Aurora subtheme flavor spun up in your theme directory:
-
-  ```bash
-  bin/init-subtheme
-  ```
 
 1. Customize `my_profile/my_profile.make`
 1. Run `bin/install` for local development
