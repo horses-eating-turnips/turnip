@@ -8,6 +8,10 @@ projects[fieldable_panels_panes][version] = "1.5"
 projects[fieldable_panels_panes][patch][] = "https://drupal.org/files/fieldable_panels_panes-title_use_view_modes-2092477-2.patch"
 
 projects[panelizer][version] = "3.1"
+; Fix access logic error: https://drupal.org/node/2024831#comment-8496667
+projects[panelizer][patch][] = "https://drupal.org/files/issues/panelizer-node-access-2024831-04_2.patch"
+; Fix button that should not be displayed: https://drupal.org/node/2199859#comment-8496751
+projects[panelizer][patch][] = "https://drupal.org/files/issues/panelizer-ipe-integration-fix-2199859-01.patch"
 
 projects[panels][version] = "3.3"
 ; https://drupal.org/node/1632898#comment-6412840 - This was commited Nov 16, 2012 and should be removed when updating to 3.4
