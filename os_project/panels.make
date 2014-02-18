@@ -19,8 +19,6 @@ projects[panelizer][patch][] = "https://drupal.org/files/issues/panelizer-ipe-in
 
 ; Pull latest panels including many fixes since 3.3.
 projects[panels][download][branch] = "7.x-3.x"
-projects[panels][download][revision] = "2bb470e"
-; PHP 5.4+ fix: https://drupal.org/comment/8262211#comment-8262211
-projects[panels][patch][] = "https://drupal.org/files/issues/panels-array_diff_assoc-1762290-22.patch"
+projects[panels][download][revision] = "baed7ee"
 
 projects[panels_breadcrumbs][version] = "2.1"
