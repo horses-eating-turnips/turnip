@@ -13,12 +13,10 @@ projects[panelizer][patch][] = "https://drupal.org/files/issues/panelizer-node-a
 ; Fix button that should not be displayed: https://drupal.org/node/2199859#comment-8496751
 projects[panelizer][patch][] = "https://drupal.org/files/issues/panelizer-ipe-integration-fix-2199859-01.patch"
 
-projects[panels][version] = "3.3"
-; https://drupal.org/node/1632898#comment-6412840 - This was commited Nov 16, 2012 and should be removed when updating to 3.4
-projects[panels][patch][] = "https://drupal.org/files/panels-n1632898-15.patch"
-; https://drupal.org/node/1613402#comment-6374724 - This was commited Feb 1, 2012 and should be removed when updating to 3.4
-projects[panels][patch][] = "https://drupal.org/files/panels_ipe_fix_ajax_1613402-9.patch"
-; Panels IPE Save Drops Context Specified in Page Manager https://drupal.org/node/1772834 - This was commited Sep 24, 2012 and should be removed when updating to 3.4
-projects[panels][patch][] = "https://drupal.org/files/1772834-fix-lost-context-6.patch"
+; Pull latest panels including many fixes since 3.3.
+projects[panels][download][branch] = "7.x-3.x"
+projects[panels][download][revision] = "2bb470e"
+; PHP 5.4+ fix: https://drupal.org/comment/8262211#comment-8262211
+projects[panels][patch][] = "https://drupal.org/files/issues/panels-array_diff_assoc-1762290-22.patch"
 
 projects[panels_breadcrumbs][version] = "2.1"
