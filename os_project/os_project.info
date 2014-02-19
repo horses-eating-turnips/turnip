@@ -27,6 +27,7 @@ dependencies[] = shortcut
 dependencies[] = taxonomy
 
 ; Contrib
+dependencies[] = bedrock
 dependencies[] = context_admin
 dependencies[] = ctools
 dependencies[] = entitycache
