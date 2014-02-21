@@ -275,19 +275,6 @@ function os_base_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'superfish_slp';
-  $strongarm->value = 'profiles/vista_campus/libraries/superfish/jquery.hoverIntent.minified.js
-profiles/vista_campus/libraries/superfish/jquery.bgiframe.min.js
-profiles/vista_campus/libraries/superfish/superfish.js
-profiles/vista_campus/libraries/superfish/supersubs.js
-profiles/vista_campus/libraries/superfish/supposition.js
-profiles/vista_campus/libraries/superfish/sftouchscreen.js
-profiles/vista_campus/libraries/superfish/sfsmallscreen.js';
-  $export['superfish_slp'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'superfish_smallabt_1';
   $strongarm->value = '2';
   $export['superfish_smallabt_1'] = $strongarm;
