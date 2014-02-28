@@ -187,3 +187,15 @@ function os_base_entity_info_alter(&$info) {
     unset($info['fieldable_panels_pane']['bundles']['fieldable_panels_pane']);
   }
 }
+
+/**
+ * Implements hook_media_browser_plugin_info_alter().
+ *
+ * Remove the YouTube media browser tab. YouTube embeds work via the 'Web' tab,
+ * no need to attempt to reproduce the YouTube search functionality in Drupal.
+ */
+function os_base_media_browser_plugin_info_alter(&$plugins) {
+  if (isset($plugins['youtube'])) {
+    unset($plugins['youtube']);
+  }
+}
