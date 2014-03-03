@@ -35,6 +35,8 @@ projects[features_override][patch][] = "http://drupal.org/files/export_breaks_co
 
 projects[fences][version] = "1.0"
 
+projects[field_formatter_settings][version] = "1.1"
+
 ; FooTable (responsive tables).
 projects[footable][download][branch] = "7.x-1.x"
 projects[footable][download][revision] = "b26f23d"
