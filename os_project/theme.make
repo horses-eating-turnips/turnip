@@ -11,7 +11,7 @@ projects[blockify][version] = "1.2"
 projects[magic][version] = "1.5"
 
 ; Modernizr
-projects[modernizr][version] = "3.1"
+projects[modernizr][version] = "3.2"
 
 ; Bedrock
 projects[bedrock][version] = "1.0-alpha1"
