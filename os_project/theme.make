@@ -14,10 +14,7 @@ projects[magic][version] = "1.5"
 projects[modernizr][version] = "3.1"
 
 ; Bedrock
-projects[bedrock][type] = "module"
-projects[bedrock][download][type] = "git"
-projects[bedrock][download][branch] = "7.x-1.x"
-projects[bedrock][download][url] = "https://github.com/opensourcery/bedrock.git"
+projects[bedrock][version] = "1.0-alpha1"
 
 ; Libraries
 
