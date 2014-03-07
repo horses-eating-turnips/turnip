@@ -27,7 +27,7 @@ Having your Ruby environment setup, you can simply
 gem install compass-aurora-os
 ```
 
-You'll likely need admin (`sudo`) priveleges for that command. This Gem is under active development, so if you already have the extension just be sure it's updated:
+You'll likely need admin (`sudo`) privileges for that command. This Gem is under active development, so if you already have the extension just be sure it's updated:
 
 ```bash
 gem update compass-aurora-os
