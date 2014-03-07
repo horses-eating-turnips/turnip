@@ -14,7 +14,7 @@ projects[magic][version] = "1.5"
 projects[modernizr][version] = "3.2"
 
 ; Bedrock
-projects[bedrock][version] = "1.0-alpha1"
+projects[bedrock][version] = "1.0-alpha2"
 
 ; Libraries
 
