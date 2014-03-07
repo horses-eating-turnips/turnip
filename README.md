@@ -38,6 +38,35 @@ Again, you'll likely need admin (`sudo`) priveleges to update the gem.
 
 ## Installation
 
+1. Turnip is best installed using [Drush](https://github.com/drush-ops/drush). Make sure you have a `drush` executable in your `$PATH` and then:
+
+    ```bash
+    drush dl turnip
+    drush turnip-init
+    ```
+
+    Drush will prompt you to set up the repository and build the base install profile. It will also set up the `turnip` remote to upstream Turnip. If you haven't set up your Ruby environment as described above, when prompted, you will want to skip building the theme. However, no theme can cause problems, so it's best to get your environment set up before installing Turnip. If you don't build a theme now, you can do it later by calling `bin/init-theme` from within the project root directory.
+
+1. Add all your newly updated files with `git add -A` and then commit them. Now is a good time to set up your own remote repository if you plan on using Git for version control (which you should!).
+
+1. Customize `my_profile/my_profile.make`.
+
+1. Run `bin/install` for local development.
+
+1. To avoid having to redeclare your default origin each time you pull or push, run your first push as:
+   ```bash
+   git push -u origin master
+   ```
+
+1. If this site has a production url, you can manually add it to `bin/.config` on the line `PRODUCTIONURL="http://"`.
+
+1. Custom modules or features should go in `my_project/modules/custom`
+   or `my_project/modules/features`. Any contrib modules put into the .make files will be placed into the appropriate directories automatically.
+
+1. Turnip assumes you will keep your sensitive database information in an uncommitted (gitignored) file called `settings.local.php`. Make any applicable changes to `settings.local.php.example` and save it as `settings.local.php`.
+
+## Manual setup
+
 1. Either copy all files into a new repository or clone this
    repository, keeping an upstream origin named `turnip`:
 
@@ -53,7 +82,7 @@ Again, you'll likely need admin (`sudo`) priveleges to update the gem.
    ```
 
    Make sure your remote points to a repository that is set up.
-   
+
 
 1. Run `bin/make-install-profile` to instantiate an installation profile and spin up the `Arcturus` subtheme:
 
@@ -66,16 +95,18 @@ Again, you'll likely need admin (`sudo`) priveleges to update the gem.
   ```bash
   bin/make-install-profile my_profile my_theme "Short name" "Long name" skiptheme
   ```
-  
+
   All changes can then quickly be added via `git add -A`.
 
-1. Customize `my_profile/my_profile.make`
-1. Run `bin/install` for local development
+1. Customize `my_profile/my_profile.make`.
+
+1. Run `bin/install` for local development.
+
 1. To avoid having to redeclare your default origin each time you pull or push, run your first push as:
    ```bash
    git push -u origin master
    ```
-1. If this site has a production url, you can manually add it to `bin/.config` on the line `PRODUCTIONURL="http://"`
+1. If this site has a production url, you can manually add it to `bin/.config` on the line `PRODUCTIONURL="http://"`.
 
 1. Custom modules or features should go in `my_project/modules/custom`
    or `my_project/modules/features`. Any contrib modules put into the .make files will be placed into the appropriate directories automatically.
