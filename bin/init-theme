@@ -28,22 +28,12 @@ fi
 ## Create symlinks for Bedrock defalt layouts.
 ##
 
-## @TODO: make this a dynamic list
-LAYOUTS="adakite
-andesite
-basalt
-coal
-flint
-granite
-hawaiite
-obsidian
-pumice
-quartz
-variolite"
-
 ## Make the symlinks for layout defaults.
 BEDROCK_PATH="$PROFILE/modules/contrib/bedrock"
 THEME_PATH="$PROFILE/themes/custom/$THEME"
+
+LAYOUTS=`ls -1 $BEDROCK_PATH/plugins/layouts`
+
 for layout in $LAYOUTS; do
   cd $BASE_DIR
   if [ -d $BEDROCK_PATH ]; then
