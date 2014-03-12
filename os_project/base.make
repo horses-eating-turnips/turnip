@@ -19,6 +19,8 @@ projects[entity][version] = "1.3"
 
 projects[entitycache][version] = "1.2"
 
+projects[entityreference][version] = "1.1"
+
 projects[elements][version] = "1.4"
 
 projects[features][version] = "2.0"
@@ -49,6 +51,8 @@ projects[html5_tools][download][revision] = "11e0c28"
 projects[jquery_update][download][branch] = "7.x-2.x"
 projects[jquery_update][download][revision] = "469fac0"
 
+projects[link][version] = "1.2"
+
 projects[linkchecker][version] = "1.1"
 
 projects[linked_field][version] = "1.9"
@@ -62,6 +66,12 @@ projects[navbar][version] = 1.4
 projects[redirect][version] = "1.0-rc1"
 
 projects[pathauto][version] = "1.2"
+
+projects[references_dialog][version] = "1.0-alpha4"
+; References_dialog patch for FPP.  https://drupal.org/comment/8200307#comment-8200307
+projects[references_dialog][patch][] = "https://drupal.org/files/issues/references_dialog_fieldable_panels_pane_support-2140535-3.patch"
+; Entity Reference incorrectly calls entity_access() https://drupal.org/comment/7893609#comment-7893609
+projects[references_dialog][patch][] = "https://drupal.org/files/references_dialog-wrong-call-to-entity_access-1780626-6.patch"
 
 projects[strongarm][version] = "2.0"
 
