@@ -120,6 +120,7 @@ projects[stage_file_proxy][version] = "1.4"
 
 projects[styleguide][subdir] = "development"
 projects[styleguide][version] = "1.1"
+projects[styleguide][patch][] = "https://drupal.org/files/issues/1004246-9-styleguide-maintenance-page.patch"
 
 projects[diff][subdir] = "development"
 projects[diff][version] = "3.2"
