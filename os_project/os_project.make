@@ -57,6 +57,8 @@ libraries[superfish][destination] = "libraries"
 libraries[superfish][directory_name] = "superfish"
 
 ; Profiler
-libraries[profiler][download][type] = "get"
-libraries[profiler][download][url] = "http://ftp.drupal.org/files/projects/profiler-7.x-2.0-beta2.tar.gz"
-
+libraries[profiler][download][type] = "git"
+libraries[profiler][download][branch] = "7.x-2.x"
+libraries[profiler][download][revision] = "2ed2140"
+; https://drupal.org/comment/7878427#comment-787842 Add support for FPP.
+libraries[profiler][patch][] = "https://drupal.org/files/fieldable-panels-panes-support-2093337-01.patch"
