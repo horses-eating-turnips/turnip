@@ -27,6 +27,9 @@ includes[images] = "images.make"
 ; Uncomment to use Panels.
 ;includes[panels] = "panels.make"
 
+; High-performance related modules.
+; includes[performance] = "performance.make"
+
 ; Uncomment to use Solr Search.
 ; includes[solr] = "solr.make"
 
