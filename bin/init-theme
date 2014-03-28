@@ -17,12 +17,9 @@ BASE_DIR=$(pwd)
 ## Include config so we have the params to init.
 source bin/.config
 
-## Set BUILD=0 to prevent rebuild. Should be set to BUILD=1 on intial run.
-BUILD=1
-if [[ $BUILD = 1 ]]; then
-  # Run the rebuild script.
-  bin/rebuild
-fi
+# Build bedrock and alphecca so they are in place for theme instantiation.
+drush make --contrib-destination=$PROFILE --no-core -y --projects=bedrock ./$PROFILE/$PROFILE.make
+drush make --contrib-destination=$PROFILE --no-core -y --libraries=alphecca ./$PROFILE/$PROFILE.make
 
 ##
 ## Create symlinks for Bedrock defalt layouts.
