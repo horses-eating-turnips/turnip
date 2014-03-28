@@ -27,7 +27,7 @@ libraries[modernizr][directory_name] = "modernizr"
 
 ; Alphecca Sass Framework
 libraries[alphecca][download][type] = "git"
-libraries[alphecca][download][branch] = "master"
+libraries[alphecca][download][tag] = "0.1.0"
 libraries[alphecca][download][url] = "https://github.com/opensourcery/alphecca.git"
 libraries[alphecca][destination] = "themes/custom/THEME/vendor"
 libraries[alphecca][download][directory_name] = "alphecca"
