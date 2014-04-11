@@ -1,13 +1,15 @@
-# PROJECTNAME #
+# PROJECTNAME
 PROJECTDESCRIPTION
 
-## Deployment plan ##
+## Deployment plan
 
-### Credentials ###
+### Credentials
+
 **Server** http://example.com/ (127.0.0.1)
+
 **Username** root
 
-### Drush config ###
+### Drush config
 
 ```php
 $aliases['example'] = array(
@@ -18,7 +20,7 @@ $aliases['example'] = array(
 );
 ```
 
-### SSH config ###
+### SSH config
 
 ```
 Host example
@@ -26,7 +28,7 @@ Host example
   User deploy
 ```
 
-### Deployment process ###
+### Deployment process
 
 Run within the project root:
 
@@ -43,3 +45,75 @@ reverts, etc., on the most recent database. If everything works:
 bin/deploy_to_production
 drush @example updb
 ```
+
+## Implementation Plan
+
+### Content Types
+
+* Basic page
+* Article
+
+### Feature X
+
+#### Feature dependencies
+
+* Feature Y
+
+#### Content Type dependencies
+
+* Article
+
+#### Role dependencies
+
+* Content creator
+* Content reviewer
+* Content publisher
+
+#### Workflow
+
+1. *Content creator* user creates an Article in *Draft*.
+1. *Content creator* sets the Article to *Ready for review*.
+1. *Content reviewer* sets the Article to either *Draft* or *Ready to publish*.
+1. *Content publisher* sets the Article to *Published*.
+1. The Article shows up in the appropriate views.
+
+#### Views
+
+##### News Feed
+
+* **Content pane** A listing of recent published Articles.
+
+#### Permissions
+
+##### Create own article content
+
+* Content creator
+
+##### Edit own article content
+
+* Content creator
+
+##### Moderate all content from *Draft* to *Ready for review*
+
+* Content creator
+* Content reviewer
+
+##### Moderate all content from *Ready for review* to *Draft*
+
+* Content creator
+* Content reviewer
+* Content publisher
+
+##### Moderate all content from *Ready for review* to *Ready to publish*
+
+* Content reviewer
+* Content publisher
+
+##### Moderate all content from *Ready to publish* to *Draft*
+
+* Content reviewer
+* Content publisher
+
+##### Moderate all content from *Ready to publish* to *Published*
+
+* Content publisher
