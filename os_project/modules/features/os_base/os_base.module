@@ -43,7 +43,7 @@ function os_base_menu_alter(&$items) {
 function os_base_form_alter(&$form, $form_state, $form_id) {
   switch ($form_id) {
     case 'node_type_form':
-      if (!isset($form['#node_type']->orig_type)) {
+      if (!isset($form['#node_type']->orig_type) || empty($form['#node_type']->orig_type)) {
         $options = array();
         // Set to published by default.
         $options[] = 'status';
