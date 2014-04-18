@@ -15,6 +15,9 @@ projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths-11
 ; https://drupal.org/node/1417630#comment-6810906
 projects[ctools][patch][] = "https://drupal.org/files/ctools-views-content-custom-url-1417630-06.patch"
 
+projects[email_confirm][version] = "1.1"
+projects[email_confirm][patch][] = "https://drupal.org/files/issues/clarify_email_change_message-2244011-1.patch"
+
 projects[entity][version] = "1.4"
 
 projects[entitycache][version] = "1.2"
