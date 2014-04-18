@@ -30,6 +30,7 @@ dependencies[] = taxonomy
 dependencies[] = bedrock
 dependencies[] = context_admin
 dependencies[] = ctools
+dependencies[] = email_confirm
 dependencies[] = entitycache
 dependencies[] = features
 dependencies[] = footable
