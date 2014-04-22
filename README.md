@@ -51,6 +51,10 @@ Again, you'll likely need admin (`sudo`) priveleges to update the gem.
 
 1. Customize `my_profile/my_profile.make`.
 
+1. Make a `files` directory in the `shared` directory.
+
+1. Copy `settings.local.php.example` to `settings.local.php` and fill in the databse parameters.
+
 1. Run `bin/install` for local development.
 
 1. To avoid having to redeclare your default origin each time you pull or push, run your first push as:
@@ -99,6 +103,10 @@ Again, you'll likely need admin (`sudo`) priveleges to update the gem.
   All changes can then quickly be added via `git add -A`.
 
 1. Customize `my_profile/my_profile.make`.
+
+1. Make a `files` directory in the `shared` directory.
+
+1. Copy `settings.local.php.example` to `settings.local.php` and fill in the databse parameters.
 
 1. Run `bin/install` for local development.
 
