@@ -14,11 +14,65 @@ development. Each site is built as an installation profile.
 ## Dependencies
 The theming framework of choice for Turnip is the [Aurora Framework](http://snugug.github.io/Aurora/). In order to use this stack, you'll need your environment set up properly with Compass, Sass, Ruby, and a number of Ruby gems. It is possible to instantiate an install profile with turnip without instantiating a theme (see `skiptheme` flag, below). The default is to spin up the theme with the install profile.
 
-### Install Compass and Sass
-If you are using modern web technologies, you probably already have this set up. If not, check out [Installing Compass and Sass Across All Platforms](http://snugug.com/musings/installing-sass-and-compass-across-all-platform).
-
 ### Setup the Ruby Environment
-First, you'll need the Ruby environment itself so you can install Ruby gems. The steps for this vary widely depeding upon your development environment and OS. Just make sure you set up version 1.9.x.
+First, you'll need the Ruby environment itself so you can install Ruby gems. For Ubuntu (inlcuding 14.04), the easiest way to do this is to use RVM.
+
+#### For Ubuntu and similar *NIXes
+
+First you'll need the ruby dependencies:
+
+```bash
+sudo apt-get update
+sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev
+```
+
+Next, the RVM dependencies:
+
+```bash
+cd ~
+sudo apt-get install libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
+```
+
+Setup RVM in your home directory.
+
+```bash
+curl -L https://get.rvm.io | bash -s stable
+source ~/.rvm/scripts/rvm
+echo "source ~/.rvm/scripts/rvm" >> ~/.bashrc
+```
+
+Install the ruby versions of choice. Note that Ubuntu ships with Ruby 1.9.1 and it may be a good idea to have it lying around, so we install that version plus the latest stable.
+
+```bash
+rvm install 1.9.1
+rvm install 2.1.1
+rvm use 2.1.1 --default
+```
+
+Check your available rubies:
+
+```bash
+rvm list
+```
+
+Check the current version:
+
+```bash
+ruby -v
+```
+
+For the purposes of developing with the White Horses of Helios stack, you want to be using the latest version.
+
+#### For OSX
+
+There are many tools available for managing ruby versions, of note is [JeweleryBox](https://jewelrybox.unfiniti.com/)
+
+### Install Compass and Sass
+If you are using modern web technologies, you probably already have this set up. If not, check out [Installing Compass and Sass Across All Platforms](http://snugug.com/musings/installing-sass-and-compass-across-all-platform). Or, simply:
+
+```bash
+gem install compass
+```
 
 ### Install OpenSourcery's Aurora Compass Extension
 Having your Ruby environment setup, you can simply
@@ -27,14 +81,12 @@ Having your Ruby environment setup, you can simply
 gem install compass-aurora-os
 ```
 
-You'll likely need admin (`sudo`) privileges for that command. This Gem is under active development, so if you already have the extension just be sure it's updated:
+This Gem is under active development, so if you already have the extension just be sure it's updated:
 
 ```bash
 gem update compass-aurora-os
 gem clean compass-aurora-os
 ```
-
-Again, you'll likely need admin (`sudo`) priveleges to update the gem.
 
 ## Installation
 
