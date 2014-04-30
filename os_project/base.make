@@ -99,7 +99,7 @@ projects[devel][subdir] = "development"
 projects[devel][version] = "1.4"
 
 projects[environment_indicator][subdir] = "development"
-projects[environment_indicator][version] = "2.0"
+projects[environment_indicator][version] = "2.2"
 
 projects[maillog][download][branch] = "7.x-1.x"
 projects[maillog][download][revision] = "2591153"
