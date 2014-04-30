@@ -17,6 +17,9 @@ $databases = array(
 $conf['preprocess_css'] = 0;
 $conf['preprocess_js'] = 0;
 
+// Disable page caching
+$conf['cache'] = 0;
+
 // Maximum error reporting.
 $conf['error_level'] = 2;
 
@@ -31,3 +34,10 @@ $conf['environment_indicator_color'] = 'green';
 
 // Views.
 $conf['views_ui_show_sql_query'] = 1;
+
+// Context Inline Editor
+$conf['context_reaction_block_all_regions'] = 1;
+$conf['context_ui_dialog_enabled'] = 1;
+
+// Temporary directory
+$conf['file_temporary_path'] = '/tmp';
