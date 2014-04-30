@@ -41,7 +41,9 @@ projects[field_formatter_settings][version] = "1.1"
 
 ; FooTable (responsive tables).
 projects[footable][download][branch] = "7.x-1.x"
-projects[footable][download][revision] = "b26f23d"
+projects[footable][download][revision] = "0878571"
+; Support later FooTable library: https://drupal.org/node/2212881#comment-8734427
+projects[footable][patch][] = "https://drupal.org/files/issues/footable-v2-2212881-01.patch"
 
 projects[google_analytics][version] = "1.3"
 
@@ -138,7 +140,6 @@ libraries[underscore][download][type] = "get"
 libraries[underscore][download][url] = "https://github.com/jashkenas/underscore/archive/1.5.2.zip"
 
 libraries[footable][directory_name] = "FooTable"
-libraries[footable][download][revision] = "228b101"
-libraries[footable][download][branch] = "V2"
+libraries[footable][download][tag] = "V2.0.1.4"
 libraries[footable][download][type] = "git"
 libraries[footable][download][url] = "https://github.com/bradvin/FooTable.git"
