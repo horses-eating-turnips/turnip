@@ -118,7 +118,7 @@ projects[os_testing][download][tag] = "7.x-1.0"
 projects[os_testing][download][url] = "https://github.com/opensourcery/os_testing.git"
 
 projects[stage_file_proxy][subdir] = "development"
-projects[stage_file_proxy][version] = "1.4"
+projects[stage_file_proxy][version] = "1.5"
 
 projects[styleguide][subdir] = "development"
 projects[styleguide][version] = "1.1"
