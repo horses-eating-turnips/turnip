@@ -1,6 +1,6 @@
 {
   "require": {
-    "drupal/drupal-extension": "*"
+    "drupal/drupal-extension": "1.0.*@stable"
   },
   "config": {
     "bin-dir": "bin/"
