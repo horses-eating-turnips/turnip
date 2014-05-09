@@ -96,7 +96,7 @@ projects[admin_menu][subdir] = "development"
 projects[admin_menu][version] = "3.0-rc4"
 
 projects[devel][subdir] = "development"
-projects[devel][version] = "1.4"
+projects[devel][version] = "1.5"
 
 projects[environment_indicator][subdir] = "development"
 projects[environment_indicator][version] = "2.2"
