@@ -53,6 +53,10 @@ cd drupal
 : ${TURNIP_DEVELOPER_MODULES:="devel diff styleguide views_ui"}
 drush en -y $TURNIP_DEVELOPER_MODULES
 
+# Disable modules for local development.
+: ${TURNIP_PRODUCTION_ONLY_MODULES:="update"}
+drush dis -y $TURNIP_PRODUCTION_ONLY_MODULES
+
 # Enable stage file proxy module.
 if [ "$PRODUCTIONURL" != "http://" ]; then
   echo "Enabling Stage File Proxy and configuring origin as '$PRODUCTIONURL'."
