@@ -1,0 +1,12 @@
+name = OpenSourcery Admin
+description = Enhancements to the Administrator experience.
+core = 7.x
+package = OpenSourcery
+version = 7.x-1.0
+project = os_admin
+dependencies[] = views
+dependencies[] = views_bulk_operations
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = os_admin_people
+features_exclude[dependencies][ctools] = ctools

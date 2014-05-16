@@ -1,0 +1,17 @@
+<?php
+/**
+ * @file
+ * Code for the OpenSourcery Admin feature.
+ */
+
+include_once 'os_admin.features.inc';
+
+/**
+ * Implements hook_menu_alter().
+ */
+function os_admin_menu_alter(&$items) {
+  // Re-point the /admin/people/create path back to the User module's
+  // callback, since Views is taking over /admin/people.
+  $items['admin/people/create']['page callback'] = 'user_admin';
+  $items['admin/people/create']['file'] = 'user.admin.inc';
+}
