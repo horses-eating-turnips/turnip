@@ -75,7 +75,7 @@ variables[dblog_row_limit] = 1000000
 variables[os_base_remove_core_image_styles] = 1
 
 ; Up image quality.
-variables[image_jpeg_quality] = 100
+variables[image_jpeg_quality] = 85
 
 ; If needed, override default user_register setting
 ; (which is 2). Possible values:
