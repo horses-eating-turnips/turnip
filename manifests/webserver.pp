@@ -16,6 +16,8 @@ package { "mysql-server": }
 # Required for drush make
 package { "zip": }
 package { "git": }
+# Developer Tools
+package { "vim": }
 
 # Solr and Tomcat. Un-comment to use:
 #class { 'solr::tomcat6': }
