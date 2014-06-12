@@ -105,7 +105,7 @@ gem clean compass-aurora-os
 
 1. Make a `files` directory in the `shared` directory.
 
-1. Copy `settings.local.php.example` to `settings.local.php` and fill in the databse parameters.
+1. Customize `settings.local.php` with your database parameters and any special configurations.
 
 1. Run `bin/install` for local development.
 
