@@ -81,6 +81,8 @@ projects[token][version] = "1.5"
 
 projects[views][version] = "3.7"
 
+projects[webform][version] = "3.20"
+
 projects[wysiwyg][download][branch] = "7.x-2.x"
 projects[wysiwyg][download][revision] = "ee64524"
 ; Select theme css patch: https://drupal.org/node/1309040#comment-8008765
