@@ -48,6 +48,9 @@ for i in "$@"; do
     --projects=*)
     projects="${i#*=}"
     ;;
+    --libraries=*)
+    libraries="${i#*=}"
+    ;;
     --no-backup)
     no_backup=1
     ;;
@@ -61,11 +64,20 @@ for i in "$@"; do
   esac
 done
 
-# If the --projects flag is specified, only build these projects.
-echo "$projects"
-if [ -n "$projects" ]; then
-  echo "Building only these projects from your make file: $projects"
-  drush make $drush --yes --contrib-destination=$PROFILE  --no-core --projects=$projects -y $2 $PROFILE/$PROFILE.make
+# If the --projects or --libraries flags were specified, then only
+# build the specified projects and/or libraries.
+echo "PROJECTS: $projects"
+echo "LIBRARIES: $libraries"
+if [ -n "$projects" ] || [-n "$projects"]; then
+  echo "Limiting build to specified packages..."
+  packages="";
+  if [-n "$projects ]; then
+    packages="--projects=$projects"
+  fi
+  if [ -n "$libraries" ]; then
+    packages="$packages --libraries=$libaries"
+  fi
+  drush make $drush --contrib-destination=$PROFILE --no-core -y $packages $PROFILE/$PROFILE.make
   echo "success"
   exit
 fi
