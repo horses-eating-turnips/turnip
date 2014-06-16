@@ -48,6 +48,9 @@ for i in "$@"; do
     --projects=*)
     projects="${i#*=}"
     ;;
+    --libraries=*)
+    libraries="${i#*=}"
+    ;;
     --no-backup)
     no_backup=1
     ;;
@@ -61,13 +64,11 @@ for i in "$@"; do
   esac
 done
 
-# If the --projects flag is specified, only build these projects.
-echo "$projects"
-if [ -n "$projects" ]; then
-  echo "Building only these projects from your make file: $projects"
-  drush make $drush --yes --contrib-destination=$PROFILE  --no-core --projects=$projects -y $2 $PROFILE/$PROFILE.make
-  echo "success"
-  exit
+# If the --projects and/or --libraries flags are specified, only build these projects.
+if [ -n "$projects$libraries" ]; then
+  echo "Building only these projects/libraries from your make file: $projects $libraries"
+    drush make $drush --yes --contrib-destination=$PROFILE  --no-core --projects=$projects --libraries=$libraries -y $2 $PROFILE/$PROFILE.make
+    exit
 fi
 
 # Remove contrib directories
