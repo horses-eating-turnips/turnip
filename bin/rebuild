@@ -66,19 +66,16 @@ done
 
 # If the --projects or --libraries flags were specified, then only
 # build the specified projects and/or libraries.
-echo "PROJECTS: $projects"
-echo "LIBRARIES: $libraries"
-if [ -n "$projects" ] || [-n "$projects"]; then
+if [ -n "$projects" ] || [ -n "$libraries" ]; then
   echo "Limiting build to specified packages..."
-  packages="";
-  if [-n "$projects ]; then
-    packages="--projects=$projects"
+  if [ -n "$projects" ]; then
+    proj="--projects=$projects"
   fi
   if [ -n "$libraries" ]; then
-    packages="$packages --libraries=$libaries"
+    lib="--libraries=$libraries"
   fi
-  drush make $drush --contrib-destination=$PROFILE --no-core -y $packages $PROFILE/$PROFILE.make
-  echo "success"
+  drush make $drush --contrib-destination=$PROFILE --no-core -y $proj $lib $PROFILE/$PROFILE.make
+  echo "Package rebuild succeeded."
   exit
 fi
 
