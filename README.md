@@ -244,7 +244,7 @@ $aliases['localhost'] = array(
   'ssh-options' => '-i /Users/my-username/.vagrant.d/insecure_private_key -p2222',
 );
 ```
-Example usage: `drush @localhost clear-cache all`
+Example usage: `drush @localhost cache-clear all`
 
 
 ### Adding contrib modules
