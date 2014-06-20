@@ -234,7 +234,7 @@ Vagrant configuration that will launch a Drupal site in a box.
    the one defined.
 
 #### Drush with Vagrant
-You can set up a Drush alias in your local environment to point to the currently active vagrant box. Adapt this entry to be inserted into your `~/.drush/aliases.drushrc.php` file:
+You can set up a Drush alias in your local environment to point to the currently active vagrant box. Adapt this entry to be inserted into your `~/.drush/aliases.drushrc.php` file (Drush 7.x/master only):
 ```
 $aliases['localhost'] = array(
   'uri' => 'localhost',
