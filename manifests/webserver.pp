@@ -62,8 +62,13 @@ exec { "install-drush":
     require => Package["php-pear"],
 }
 
-file { '/etc/apache2/httpd.conf':
-  ensure => file,
+file { "/etc/apache2":
+  ensure => directory,
+  before => File['/etc/apache2/httpd.conf'],
+}
+
+file { "/etc/apache2/httpd.conf":
+  ensure => present,
   owner  => 'root',
   group  => 'root',
   mode   => '0644',
