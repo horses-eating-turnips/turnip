@@ -16,6 +16,7 @@ package { "mysql-server": }
 # Required for drush make
 package { "zip": }
 package { "git": }
+package { "curl": }
 # Developer Tools
 package { "vim": }
 
