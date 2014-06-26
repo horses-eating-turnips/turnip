@@ -51,11 +51,65 @@ dependencies[] = os_base
 ;
 ; Users
 ;
+; "Super User" administrator account.
 users[admin][uid] = 1
 users[admin][name] = admin
 users[admin][mail] = admin@os_project.example.com
 users[admin][status] = 1
 users[admin][data][overlay] = 0
+users[admin][roles] = administrator
+
+;
+; Reserve a handfull of testing accounts.
+; As the project develops, configure these accounts to facilitate QA/testing.
+;
+users[test_two][uid] = 2
+users[test_two][name] = test_two
+users[test_two][mail] = test_two@os_project.example.com
+users[test_two][status] = 0
+users[test_two][data][overlay] = 0
+
+users[test_three][uid] = 3
+users[test_three][name] = test_three
+users[test_three][mail] = test_three@os_project.example.com
+users[test_three][status] = 0
+users[test_three][data][overlay] = 0
+
+users[test_four][uid] = 4
+users[test_four][name] = test_four
+users[test_four][mail] = test_four@os_project.example.com
+users[test_four][status] = 0
+users[test_four][data][overlay] = 0
+
+users[test_five][uid] = 5
+users[test_five][name] = test_five
+users[test_five][mail] = test_five@os_project.example.com
+users[test_five][status] = 0
+users[test_five][data][overlay] = 0
+
+users[test_six][uid] = 6
+users[test_six][name] = test_six
+users[test_six][mail] = test_six@os_project.example.com
+users[test_six][status] = 0
+users[test_six][data][overlay] = 0
+
+users[test_seven][uid] = 7
+users[test_seven][name] = test_seven
+users[test_seven][mail] = test_seven@os_project.example.com
+users[test_seven][status] = 0
+users[test_seven][data][overlay] = 0
+
+users[test_eight][uid] = 8
+users[test_eight][name] = test_eight
+users[test_eight][mail] = test_eight@os_project.example.com
+users[test_eight][status] = 0
+users[test_eight][data][overlay] = 0
+
+users[test_nine][uid] = 9
+users[test_nine][name] = test_nine
+users[test_nine][mail] = test_nine@os_project.example.com
+users[test_nine][status] = 0
+users[test_nine][data][overlay] = 0
 
 ;
 ; Variables
