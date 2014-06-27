@@ -43,6 +43,7 @@ dependencies[] = pathauto
 dependencies[] = redirect
 dependencies[] = strongarm
 dependencies[] = token
+dependencies[] = webform
 dependencies[] = wysiwyg
 
 ; Features
@@ -115,3 +116,42 @@ profiles/os_project/libraries/superfish/sfsmallscreen.js"
 ;nodes[about][menu][weight] = 0
 ;nodes[about][path][alias] = about
 ;nodes[about][path][pathauto] = 0
+
+; Contact Us Webform
+;nodes[contact_form][type] = webform
+;nodes[contact_form][title] = Contact
+;nodes[contact_form][body][und][0][value] = ''
+;nodes[contact_form][body][und][0][format] = full_html
+;nodes[contact_form][uid] = 1
+;nodes[contact_form][language] = und
+;nodes[contact_form][path][alias] = contact
+;nodes[contact_form][path][pathauto] = 0
+;nodes[contact_form][webform][roles][0] = 1
+;nodes[contact_form][webform][roles][1] = 2
+;nodes[contact_form][webform][block] = 1
+;nodes[contact_form][webform][confirmation] = '<p>Thank you. One of our team members will be in touch shortly.</p>'
+;nodes[contact_form][webform][components][1][form_key] = name
+;nodes[contact_form][webform][components][1][name] = Your Name
+;nodes[contact_form][webform][components][1][type] = textfield
+;nodes[contact_form][webform][components][1][mandatory] = 1
+;nodes[contact_form][webform][components][1][weight] = 0
+;nodes[contact_form][webform][components][1][pid] = 0
+;nodes[contact_form][webform][components][2][form_key] = email
+;nodes[contact_form][webform][components][2][name] = Your e-mail address
+;nodes[contact_form][webform][components][2][type] = email
+;nodes[contact_form][webform][components][2][mandatory] = 1
+;nodes[contact_form][webform][components][2][value] = %useremail
+;nodes[contact_form][webform][components][2][weight] = 1
+;nodes[contact_form][webform][components][2][pid] = 0
+;nodes[contact_form][webform][components][3][type] = textfield
+;nodes[contact_form][webform][components][3][form_key] = subject
+;nodes[contact_form][webform][components][3][name] = Subject
+;nodes[contact_form][webform][components][3][mandatory] = 1
+;nodes[contact_form][webform][components][3][weight] = 2
+;nodes[contact_form][webform][components][3][pid] = 0
+;nodes[contact_form][webform][components][7][form_key] = message
+;nodes[contact_form][webform][components][7][name] = Message
+;nodes[contact_form][webform][components][7][type] = textarea
+;nodes[contact_form][webform][components][7][mandatory] = 1
+;nodes[contact_form][webform][components][7][weight] = 3
+;nodes[contact_form][webform][components][7][pid] = 0
