@@ -16,7 +16,6 @@ dependencies[] = node
 dependencies[] = page_manager
 dependencies[] = strongarm
 dependencies[] = text
-dependencies[] = webform
 dependencies[] = wysiwyg
 features[ctools][] = file_entity:file_default_displays:1
 features[ctools][] = page_manager:pages_default:1
