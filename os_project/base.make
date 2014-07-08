@@ -45,7 +45,7 @@ projects[footable][download][revision] = "0878571"
 ; Support later FooTable library: https://drupal.org/node/2212881#comment-8734427
 projects[footable][patch][] = "https://drupal.org/files/issues/footable-v2-2212881-01.patch"
 
-projects[google_analytics][version] = "1.3"
+projects[google_analytics][version] = "1.4"
 
 projects[html5_tools][download][branch] = "7.x-1.x"
 projects[html5_tools][download][revision] = "11e0c28"
