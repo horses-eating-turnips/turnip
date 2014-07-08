@@ -55,7 +55,7 @@ projects[jquery_update][download][revision] = "469fac0"
 
 projects[link][version] = "1.2"
 
-projects[linkchecker][version] = "1.1"
+projects[linkchecker][version] = "1.2"
 
 projects[linked_field][version] = "1.9"
 
