@@ -36,4 +36,4 @@ libraries[alphecca][download][directory_name] = "alphecca"
 
 ; Aurora
 projects[aurora][type] = "theme"
-projects[aurora][version] = "3.2"
+projects[aurora][version] = "3.4"
