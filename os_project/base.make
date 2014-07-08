@@ -79,7 +79,7 @@ projects[strongarm][version] = "2.0"
 
 projects[token][version] = "1.5"
 
-projects[views][version] = "3.7"
+projects[views][version] = "3.8"
 
 projects[wysiwyg][download][branch] = "7.x-2.x"
 projects[wysiwyg][download][revision] = "ee64524"
