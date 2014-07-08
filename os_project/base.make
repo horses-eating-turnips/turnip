@@ -59,7 +59,7 @@ projects[linkchecker][version] = "1.2"
 
 projects[linked_field][version] = "1.9"
 
-projects[menu_block][version] = "2.3"
+projects[menu_block][version] = "2.4"
 
 projects[menu_position][version] = "1.1"
 
