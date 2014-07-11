@@ -26,6 +26,8 @@ projects[elements][version] = "1.4"
 projects[features][version] = "2.0"
 ; PDO exception if permissions are set in same feature as module creating them. http://drupal.org/node/1063204#comment-6350488
 projects[features][patch][] = "http://drupal.org/files/features_static_caches-1063204-32.patch"
+; Auto-add permissions to new node types https://www.drupal.org/node/2301315#comment-8958383
+projects[features][patch][] = "http://www.drupal.org/files/issues/features_auto_export_node_type_permissions-2301315-1.patch"
 
 ; Later dev commit fixes array/boolean mismatch.
 ; @see https://drupal.org/node/1915318
