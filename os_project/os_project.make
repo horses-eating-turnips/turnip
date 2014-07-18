@@ -45,8 +45,9 @@ projects[follow][version] = "2.0-alpha1"
 ; Mollom
 projects[mollom][version] = "2.10"
 
-; Libraries.
-projects[libraries][version] = "2.1"
+
+;; Libraries.
+projects[libraries][version] = "2.2"
 
 ; Libraries
 libraries[superfish][download][type] = "git"

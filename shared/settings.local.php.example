@@ -13,6 +13,10 @@ $databases = array(
   ),
 );
 
+/**
+ * Variables set here override both values in the variable table and those
+ * exported via Features/Strongarm. These are for DEVELOPMENT ONLY!
+ */
 // Disable CSS and JS aggregation for development.
 $conf['preprocess_css'] = 0;
 $conf['preprocess_js'] = 0;
@@ -28,12 +32,18 @@ $conf['stage_file_proxy_origin'] = 'http://www.example.com';
 $conf['stage_file_proxy_use_imagecache_root'] = TRUE;
 $conf['stage_file_proxy_origin_dir'] = 'sites/default/files';
 
+// Disable Core image styles security.
+// See http://drupal.stackexchange.com/questions/63226/drupal-7-20-image-styles-return-a-url-with-access-denied
+$conf['image_allow_insecure_derivatives'] = TRUE;
+
 // Environment indicator
 $conf['environment_indicator_text'] = 'LOCAL DEV';
 $conf['environment_indicator_color'] = 'green';
 
 // Views.
 $conf['views_ui_show_sql_query'] = 1;
+$conf['views_ui_show_master_display'] = 1;
+$conf['views_ui_show_advanced_help_warning'] = 1;
 
 // Context Inline Editor
 $conf['context_reaction_block_all_regions'] = 1;

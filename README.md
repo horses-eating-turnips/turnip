@@ -233,6 +233,20 @@ Vagrant configuration that will launch a Drupal site in a box.
    common example is for forwarding port 80 to a different port than
    the one defined.
 
+#### Drush with Vagrant
+You can set up a Drush alias in your local environment to point to the currently active vagrant box. Adapt this entry to be inserted into your `~/.drush/aliases.drushrc.php` file (Drush 7.x/master only):
+```
+$aliases['localhost'] = array(
+  'uri' => 'localhost',
+  'root' => '/vagrant/drupal',
+  'remote-user' => 'vagrant',
+  'remote-host' => 'localhost',
+  'ssh-options' => '-i /Users/my-username/.vagrant.d/insecure_private_key -p2222',
+);
+```
+Example usage: `drush @localhost cache-clear all`
+
+
 ### Adding contrib modules
 
 If you need to install a module that's **not** part of Turnip, add the module to the my_profile.make file (e.g. `projects[bad_judgement][version] = 1.0-rc39`).

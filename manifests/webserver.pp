@@ -16,6 +16,7 @@ package { "mysql-server": }
 # Required for drush make
 package { "zip": }
 package { "git": }
+package { "curl": }
 # Developer Tools
 package { "vim": }
 
@@ -60,4 +61,12 @@ exec { "install-drush":
     unless => "/usr/bin/which drush",
     command => "/usr/bin/pear channel-discover pear.drush.org; /usr/bin/pear upgrade-all; /usr/bin/pear install drush/drush; /usr/bin/drush -h",
     require => Package["php-pear"],
+}
+
+file { '/etc/apache2/httpd.conf':
+  ensure => file,
+  owner  => 'root',
+  group  => 'root',
+  mode   => '0644',
+  content => 'ServerName localhost',
 }

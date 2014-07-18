@@ -14,7 +14,7 @@ projects[magic][version] = "1.5"
 projects[modernizr][version] = "3.2"
 
 ; Bedrock
-projects[bedrock][version] = "1.0-alpha3"
+projects[bedrock][version] = "1.0-alpha6"
 
 ; Libraries
 
@@ -36,4 +36,4 @@ libraries[alphecca][download][directory_name] = "alphecca"
 
 ; Aurora
 projects[aurora][type] = "theme"
-projects[aurora][version] = "3.2"
+projects[aurora][version] = "3.4"
