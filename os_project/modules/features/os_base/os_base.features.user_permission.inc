@@ -15,6 +15,7 @@ function os_base_user_default_permissions() {
     'name' => 'access all webform results',
     'roles' => array(
       'administrator' => 'administrator',
+      'site editor' => 'site editor',
     ),
     'module' => 'webform',
   );
@@ -64,6 +65,8 @@ function os_base_user_default_permissions() {
     'name' => 'access own webform results',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+      'site editor' => 'site editor',
     ),
     'module' => 'webform',
   );
@@ -73,6 +76,7 @@ function os_base_user_default_permissions() {
     'name' => 'access own webform submissions',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'webform',
   );
@@ -101,6 +105,7 @@ function os_base_user_default_permissions() {
     'name' => 'create webform content',
     'roles' => array(
       'administrator' => 'administrator',
+      'site editor' => 'site editor',
     ),
     'module' => 'node',
   );
@@ -148,6 +153,7 @@ function os_base_user_default_permissions() {
     'name' => 'delete own webform content',
     'roles' => array(
       'administrator' => 'administrator',
+      'site editor' => 'site editor',
     ),
     'module' => 'node',
   );
@@ -204,6 +210,7 @@ function os_base_user_default_permissions() {
     'name' => 'edit own webform content',
     'roles' => array(
       'administrator' => 'administrator',
+      'site editor' => 'site editor',
     ),
     'module' => 'node',
   );
@@ -213,6 +220,7 @@ function os_base_user_default_permissions() {
     'name' => 'edit own webform submissions',
     'roles' => array(
       'administrator' => 'administrator',
+      'site editor' => 'site editor',
     ),
     'module' => 'webform',
   );
