@@ -43,7 +43,6 @@ dependencies[] = pathauto
 dependencies[] = redirect
 dependencies[] = strongarm
 dependencies[] = token
-dependencies[] = webform
 dependencies[] = wysiwyg
 
 ; Features
