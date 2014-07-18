@@ -129,7 +129,7 @@ profiles/os_project/libraries/superfish/sfsmallscreen.js"
 ;nodes[contact_form][webform][roles][0] = 1
 ;nodes[contact_form][webform][roles][1] = 2
 ;nodes[contact_form][webform][block] = 1
-;nodes[contact_form][webform][confirmation] = '<p>Thank you. One of our team members will be in touch shortly.</p>'
+;nodes[contact_form][webform][confirmation] = Thank you. One of our team members will be in touch shortly.
 ;nodes[contact_form][webform][components][1][form_key] = name
 ;nodes[contact_form][webform][components][1][name] = Your Name
 ;nodes[contact_form][webform][components][1][type] = textfield
