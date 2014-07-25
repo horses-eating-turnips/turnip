@@ -844,7 +844,7 @@ function os_base_user_default_permissions() {
   $permissions['use page manager'] = array(
     'name' => 'use page manager',
     'roles' => array(
-      'content editor' => 'content editor',
+      'developer' => 'developer',
     ),
     'module' => 'page_manager',
   );
