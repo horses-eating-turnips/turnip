@@ -123,7 +123,7 @@ projects[search_krumo][subdir] = "development"
 projects[search_krumo][version] = "1.5"
 
 projects[stage_file_proxy][subdir] = "development"
-projects[stage_file_proxy][version] = "1.5"
+projects[stage_file_proxy][version] = "1.6"
 
 projects[styleguide][subdir] = "development"
 projects[styleguide][version] = "1.1"
