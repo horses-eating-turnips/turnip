@@ -248,6 +248,7 @@ function os_base_user_default_permissions() {
   $permissions['administer menu'] = array(
     'name' => 'administer menu',
     'roles' => array(
+      'content editor' => 'content editor',
       'developer' => 'developer',
     ),
     'module' => 'menu',
