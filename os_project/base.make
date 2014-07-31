@@ -107,7 +107,7 @@ projects[maillog][download][branch] = "7.x-1.x"
 projects[maillog][download][revision] = "2591153"
 projects[maillog][subdir] = "development"
 ; Behat step-definitions: https://drupal.org/node/1932698#comment-7131840
-projects[maillog][patch][] = "https://drupal.org/files/behat-subcontext-1932698-1.patch"
+projects[maillog][patch][] = "https://www.drupal.org/files/issues/behat-subcontext-1932698-6.patch"
 
 projects[os_devel][type] = "module"
 projects[os_devel][subdir] = "development"
