@@ -99,7 +99,7 @@ gem clean compass-aurora-os
 
     Drush will prompt you to set up the repository and build the base install profile. It will also set up the `turnip` remote to upstream Turnip. If you haven't set up your Ruby environment as described above, when prompted, you will want to skip building the theme. However, no theme can cause problems, so it's best to get your environment set up before installing Turnip. If you don't build a theme now, you can do it later by calling `bin/init-theme` from within the project root directory.
 
-1. Add all your newly updated files with `git add -A` and then commit them. Now is a good time to set up your own remote repository if you plan on using Git for version control (which you should!).
+1. Add all your newly updated files with `git add -A` and then commit them. Now is a good time to set up your own remote repository if you plan on using Git for version control (which you should!). (See Step 2 under Manual Setup [below](https://github.com/opensourcery/turnip/blob/7.x/README.md#manual-setup). 
 
 1. Customize `my_profile/my_profile.make`.
 
