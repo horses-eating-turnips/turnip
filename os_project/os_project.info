@@ -62,6 +62,7 @@ users[admin][roles] = administrator
 ;
 ; Reserve a handfull of testing accounts.
 ; As the project develops, configure these accounts to facilitate QA/testing.
+; Delete them after the site launches or if they become unnecessary.
 ;
 users[test_two][uid] = 2
 users[test_two][name] = test_two
@@ -152,7 +153,6 @@ profiles/os_project/libraries/superfish/supersubs.js
 profiles/os_project/libraries/superfish/supposition.js
 profiles/os_project/libraries/superfish/sftouchscreen.js
 profiles/os_project/libraries/superfish/sfsmallscreen.js"
-
 
 ;
 ; Nodes
