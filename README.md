@@ -224,7 +224,7 @@ and consistent environment to develop on, Turnip ships with a default
 Vagrant configuration that will launch a Drupal site in a box.
 
 1. Make sure [Vagrant](http://docs.vagrantup.com/v1/docs/getting-started/index.html) and [Virtualbox](https://www.virtualbox.org/) are installed.
-1. Run `bin/install`
+1. Run `bin/install` on the server, by using 'vagrant ssh' then navigating to the /vagrant folder.
 1. At this point, [http://localhost:8888](http://localhost:8888) should be serving Drupal.
 1. Stop the server with `bin/stop`, and then restart with `bin/run`
 1. Customize the server in `manifests/webserver.pp`. An Apache Solr example is included if that is required for search.
