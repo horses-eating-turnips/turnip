@@ -5,7 +5,7 @@ api = 2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; CONTRIB ;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;; (alphabetical order) ;;;;;;;;;;;;;;;
-projects[breakpoints][version] = "1.1"
+projects[breakpoints][version] = "1.3"
 
 projects[context_admin][version] = "1.2"
 
