@@ -3,13 +3,13 @@ core = "7.x"
 api = 2
 
 ; Facet API
-;projects[facetapi][version] = "1.3"
+;projects[facetapi][version] = "1.5"
 
 ; Facet API Pretty Paths
-;projects[facetapi_pretty_paths][version] = "1.0"
+;projects[facetapi_pretty_paths][version] = "1.1"
 
 ; Search API
-projects[search_api][version] = "1.11"
+projects[search_api][version] = "1.13"
 
 ; Search API Attachments
 ;projects[search_api_attachments][version] = "1.3"
@@ -18,7 +18,7 @@ projects[search_api][version] = "1.11"
 ;projects[search_api_page] = "1.0-beta2"
 
 ; Search API Solr
-projects[search_api_solr][version] = "1.4"
+projects[search_api_solr][version] = "1.5"
 
 
 ; ApacheSolr
