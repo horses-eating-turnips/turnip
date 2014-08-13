@@ -23,7 +23,7 @@ projects[entityreference][version] = "1.1"
 
 projects[elements][version] = "1.4"
 
-projects[features][version] = "2.0"
+projects[features][version] = "2.2"
 ; PDO exception if permissions are set in same feature as module creating them. http://drupal.org/node/1063204#comment-6350488
 projects[features][patch][] = "http://drupal.org/files/features_static_caches-1063204-32.patch"
 
