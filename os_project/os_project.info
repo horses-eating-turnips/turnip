@@ -60,7 +60,7 @@ users[admin][data][overlay] = 0
 ;
 ; Variables
 ;
-;variables[site_frontpage] = TODO
+variables[site_frontpage] = about
 ;variables[site_404] =
 variables[site_mail] = admin@os_project.dev
 variables[site_name] = PROJECTNAME
@@ -103,18 +103,18 @@ profiles/os_project/libraries/superfish/sfsmallscreen.js"
 ; Nodes
 ;
 ;; About page.
-;nodes[about][type] = page
-;nodes[about][title] = About
-;nodes[about][body][und][0][value] = PLACEHOLDER
-;nodes[about][body][und][0][format] = full_html
-;nodes[about][uid] = 1
-;nodes[about][language] = und
+nodes[about][type] = page
+nodes[about][title] = About
+nodes[about][body][und][0][value] = PLACEHOLDER
+nodes[about][body][und][0][format] = full_html
+nodes[about][uid] = 1
+nodes[about][language] = und
 ;nodes[about][menu][enabled] = 1
 ;nodes[about][menu][link_title] = About
 ;nodes[about][menu][menu_name] = main-menu
 ;nodes[about][menu][weight] = 0
-;nodes[about][path][alias] = about
-;nodes[about][path][pathauto] = 0
+nodes[about][path][alias] = about
+nodes[about][path][pathauto] = 0
 
 ; Contact Us Webform
 ;nodes[contact_form][type] = webform
