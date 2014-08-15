@@ -99,7 +99,7 @@ gem clean compass-aurora-os
 
     Drush will prompt you to set up the repository and build the base install profile. It will also set up the `turnip` remote to upstream Turnip. If you haven't set up your Ruby environment as described above, when prompted, you will want to skip building the theme. However, no theme can cause problems, so it's best to get your environment set up before installing Turnip. If you don't build a theme now, you can do it later by calling `bin/init-theme` from within the project root directory.
 
-1. Add all your newly updated files with `git add -A` and then commit them. Now is a good time to set up your own remote repository if you plan on using Git for version control (which you should!).
+1. Add all your newly updated files with `git add -A` and then commit them. Now is a good time to set up your own remote repository if you plan on using Git for version control (which you should!). (See Step 2 under Manual Setup [below](https://github.com/opensourcery/turnip/blob/7.x/README.md#manual-setup)). 
 
 1. Customize `my_profile/my_profile.make`.
 
@@ -224,7 +224,7 @@ and consistent environment to develop on, Turnip ships with a default
 Vagrant configuration that will launch a Drupal site in a box.
 
 1. Make sure [Vagrant](http://docs.vagrantup.com/v1/docs/getting-started/index.html) and [Virtualbox](https://www.virtualbox.org/) are installed.
-1. Run `bin/install`
+1. Run `bin/install` on the server, by using 'vagrant ssh' then navigating to the /vagrant folder.
 1. At this point, [http://localhost:8888](http://localhost:8888) should be serving Drupal.
 1. Stop the server with `bin/stop`, and then restart with `bin/run`
 1. Customize the server in `manifests/webserver.pp`. An Apache Solr example is included if that is required for search.

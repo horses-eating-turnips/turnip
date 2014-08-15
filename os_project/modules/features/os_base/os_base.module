@@ -199,3 +199,16 @@ function os_base_media_browser_plugin_info_alter(&$plugins) {
     unset($plugins['youtube']);
   }
 }
+
+/**
+ * Implements hook_features_pipe_node_alter().
+ */
+function os_base_features_pipe_node_alter(&$more, $data, $export) {
+  foreach ($data as $node_type) {
+    if (node_type_get_type($node_type)) {
+      foreach (array_keys(node_list_permissions($node_type)) as $permission) {
+        $more['user_permission'][] = $permission;
+      }
+    }
+  }
+}

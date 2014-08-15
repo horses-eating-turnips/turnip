@@ -5,17 +5,17 @@ api = 2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; CONTRIB ;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;; (alphabetical order) ;;;;;;;;;;;;;;;
-projects[breakpoints][version] = "1.1"
+projects[breakpoints][version] = "1.3"
 
 projects[context_admin][version] = "1.2"
 
-projects[ctools][version] = "1.3"
+projects[ctools][version] = "1.4"
 ; http://drupal.org/node/1120028#comment-5792282
 projects[ctools][patch][] = "http://drupal.org/files/page-manager-admin-paths-1120028-08.patch"
 ; https://drupal.org/node/1417630#comment-6810906
 projects[ctools][patch][] = "https://drupal.org/files/ctools-views-content-custom-url-1417630-06.patch"
 
-projects[entity][version] = "1.4"
+projects[entity][version] = "1.5"
 
 projects[entitycache][version] = "1.2"
 
@@ -23,7 +23,7 @@ projects[entityreference][version] = "1.1"
 
 projects[elements][version] = "1.4"
 
-projects[features][version] = "2.0"
+projects[features][version] = "2.2"
 ; PDO exception if permissions are set in same feature as module creating them. http://drupal.org/node/1063204#comment-6350488
 projects[features][patch][] = "http://drupal.org/files/features_static_caches-1063204-32.patch"
 
@@ -45,7 +45,7 @@ projects[footable][download][revision] = "0878571"
 ; Support later FooTable library: https://drupal.org/node/2212881#comment-8734427
 projects[footable][patch][] = "https://drupal.org/files/issues/footable-v2-2212881-01.patch"
 
-projects[google_analytics][version] = "1.3"
+projects[google_analytics][version] = "2.0"
 
 projects[html5_tools][download][branch] = "7.x-1.x"
 projects[html5_tools][download][revision] = "11e0c28"
@@ -55,11 +55,11 @@ projects[jquery_update][download][revision] = "469fac0"
 
 projects[link][version] = "1.2"
 
-projects[linkchecker][version] = "1.1"
+projects[linkchecker][version] = "1.2"
 
 projects[linked_field][version] = "1.9"
 
-projects[menu_block][version] = "2.3"
+projects[menu_block][version] = "2.4"
 
 projects[menu_position][version] = "1.1"
 
@@ -79,7 +79,9 @@ projects[strongarm][version] = "2.0"
 
 projects[token][version] = "1.5"
 
-projects[views][version] = "3.7"
+projects[views][version] = "3.8"
+
+projects[webform][version] = "3.20"
 
 projects[wysiwyg][download][branch] = "7.x-2.x"
 projects[wysiwyg][download][revision] = "ee64524"
@@ -99,13 +101,13 @@ projects[devel][subdir] = "development"
 projects[devel][version] = "1.5"
 
 projects[environment_indicator][subdir] = "development"
-projects[environment_indicator][version] = "2.2"
+projects[environment_indicator][version] = "2.5"
 
 projects[maillog][download][branch] = "7.x-1.x"
 projects[maillog][download][revision] = "2591153"
 projects[maillog][subdir] = "development"
 ; Behat step-definitions: https://drupal.org/node/1932698#comment-7131840
-projects[maillog][patch][] = "https://drupal.org/files/behat-subcontext-1932698-1.patch"
+projects[maillog][patch][] = "https://www.drupal.org/files/issues/behat-subcontext-1932698-6.patch"
 
 projects[os_devel][type] = "module"
 projects[os_devel][subdir] = "development"
@@ -121,7 +123,7 @@ projects[search_krumo][subdir] = "development"
 projects[search_krumo][version] = "1.5"
 
 projects[stage_file_proxy][subdir] = "development"
-projects[stage_file_proxy][version] = "1.5"
+projects[stage_file_proxy][version] = "1.6"
 
 projects[styleguide][subdir] = "development"
 projects[styleguide][version] = "1.1"
