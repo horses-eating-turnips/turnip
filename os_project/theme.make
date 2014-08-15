@@ -7,6 +7,9 @@ api = 2
 ; Blockify
 projects[blockify][version] = "1.2"
 
+; Chosen
+projects[chosen][version] = "2.0-beta4"
+
 ; Magic
 projects[magic][version] = "1.5"
 
@@ -17,6 +20,10 @@ projects[modernizr][version] = "3.2"
 projects[bedrock][version] = "1.0-alpha3"
 
 ; Libraries
+
+; Chosen
+libraries[chosen][download][type] = "get"
+libraries[chosen][download][url] = "https://github.com/harvesthq/chosen/releases/download/1.0.0/chosen_v1.0.0.zip"
 
 ; Modernizr
 libraries[modernizr][download][type] = "get"
