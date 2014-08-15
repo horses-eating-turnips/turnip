@@ -45,6 +45,12 @@ for i in "$@"; do
     --compass=*)
     compass="${i#*=}"
     ;;
+    --projects=*)
+    projects="${i#*=}"
+    ;;
+    --libraries=*)
+    libraries="${i#*=}"
+    ;;
     --no-backup)
     no_backup=1
     ;;
@@ -57,6 +63,13 @@ for i in "$@"; do
     ;;
   esac
 done
+
+# If the --projects and/or --libraries flags are specified, only build these projects.
+if [ -n "$projects$libraries" ]; then
+  echo "Building only these projects/libraries from your make file: $projects $libraries"
+    drush make $drush --yes --contrib-destination=$PROFILE  --no-core --projects=$projects --libraries=$libraries -y $2 $PROFILE/$PROFILE.make
+    exit
+fi
 
 # Remove contrib directories
 DIRECTORIES="drupal
