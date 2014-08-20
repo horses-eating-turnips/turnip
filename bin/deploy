@@ -9,7 +9,7 @@
 #
 show_help() {
 cat <<EOF
-  Usage: bin/rebuild [options] {dev|test|production}
+  Usage: $0 [options] {dev|test|production}
   Deploys $PROJECTNAME to ENVIRONMENT, which can be one of "dev", "test", or "production"
 EOF
 }
