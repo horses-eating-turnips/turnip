@@ -2,34 +2,87 @@
 
 ##
 # @file
-# OpenSourcery Drupal Deployment Script
-#
-# @todo This currently won't work for initial deployment to a Drupal
-# host. Several things still need to be done manually the first time
-# around--creating directory structure: releases, shared/files,
-# modifying/uploading settings.php
+# OpenSourcery Drupal deployment script
 
-# Load config
+##
+# Show help.
+#
+show_help() {
+cat <<EOF
+  Usage: bin/rebuild [options] {dev|test|production}
+  Deploys $PROJECTNAME to ENVIRONMENT, which can be one of "dev", "test", or "production"
+EOF
+}
+
+# Load config.
 if [ ! -e bin/.config ]; then
   echo "Error: could not find configuration file. Please run make-install-profile."
   exit 2
 fi
 source bin/.config
 
-# Change $SUBDOMAIN accordingly, e.g. <mountain name>
-# Rather than set $USER, use the user we were run as.
-SUBDOMAIN=
-HOST=gargravarr
-INSTALLROOT=/var/www/$SUBDOMAIN
+# Parse the arguments.
+environment=0
+init=0
+for i in "$@"; do
+  case $i in
+    "--help"|"-h")
+    show_help >&2
+    exit 1
+    ;;
+    dev|test|production)
+    environment=$i
+    ;;
+    --init=dev|--init=test|--init=production)
+    init=1
+    environment="${i#*=}"
+    ;;
+    *)
+    echo "Unknown option \"$1\"!"
+    echo "Try '$0 --help' for more information."
+    exit 2
+    ;;
+  esac
+done
 
-# Default behavior: Don't touch the test host's database.
-#
-# Two other (mutually exclusive) behaviors:
-# - SITEINSTALL=1 # Run `drush site-install`.
-# - RELOADDB=1    # Reload the latest production database.
-# Uncomment one, if applicable:
-#SITEINSTALL=1
-#RELOADDB=1
+# Initializes config file.
+if [[ $init -eq 1 ]]; then
+  echo "HOST=\"\"" > bin/.config.$environment
+  echo "INSTALLROOT=\"\"" >> bin/.config.$environment
+
+  if [[ "$environment" != "production" ]]; then
+    echo "" >> bin/.config.$environment
+    echo "# Default behavior: Don't touch the test host's database." >> bin/.config.$environment
+    echo "# Two other (mutually exclusive) behaviors:" >> bin/.config.$environment
+    echo "# - SITEINSTALL=1 # Run 'drush site-install'." >> bin/.config.$environment
+    echo "# - RELOADDB=1    # Reload the latest production database." >> bin/.config.$environment
+    echo "# Uncomment one, if applicable:" >> bin/.config.$environment
+    echo "#SITEINSTALL=1" >> bin/.config.$environment
+    echo "#RELOADDB=1" >> bin/.config.$environment
+    exit 0
+  fi
+fi
+
+# Load environment-specific configuration.
+if [[ ! -e bin/.config.$environment ]]; then
+  echo "Error: no configuration file found for the specified environment!"
+  echo "Please edit 'bin/.config.$environment' accordingly:"
+  echo "HOST=www.example.com"
+  echo "INSTALLROOT=/var/www/example"
+  echo ""
+  echo "You can also run '$0 --init=$environment"
+  exit 2
+fi
+source bin/.config.$environment
+
+if [[ -z $HOST ]]; then
+  echo "No HOST is specified in bin/.config.$environment!"
+  exit 2
+fi
+if [[ -z $INSTALLROOT ]]; then
+  echo "No INSTALLROOT is specified in bin/.config.$environment!"
+  exit 2
+fi
 
 # Branch to deploy from. Typically `BRANCH=.`
 BRANCH=.
