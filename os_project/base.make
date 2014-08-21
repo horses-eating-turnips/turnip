@@ -100,9 +100,6 @@ projects[admin_menu][version] = "3.0-rc4"
 projects[devel][subdir] = "development"
 projects[devel][version] = "1.5"
 
-projects[environment_indicator][subdir] = "development"
-projects[environment_indicator][version] = "2.5"
-
 projects[maillog][download][branch] = "7.x-1.x"
 projects[maillog][download][revision] = "2591153"
 projects[maillog][subdir] = "development"
@@ -128,6 +125,9 @@ projects[stage_file_proxy][version] = "1.6"
 projects[styleguide][subdir] = "development"
 projects[styleguide][version] = "1.1"
 projects[styleguide][patch][] = "https://drupal.org/files/issues/1004246-9-styleguide-maintenance-page.patch"
+
+; Which Environment?
+projects[which_environment][version] = "1.1"
 
 projects[diff][subdir] = "development"
 projects[diff][version] = "3.2"
