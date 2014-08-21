@@ -9,3 +9,4 @@
 Vagrantfile.local
 bdd/behat.local.yml
 /nbproject
+.idea
