@@ -121,11 +121,11 @@ drush @$SUBDOMAIN fra -y
 # Clear caches.
 drush @$SUBDOMAIN cc all
 
-# Enable the environment indicator module.
-echo "Enabling environment indicator module."
-drush @$SUBDOMAIN en -y environment_indicator
-drush @$SUBDOMAIN role-add-perm "anonymous user" "access environment indicator"
-drush @$SUBDOMAIN role-add-perm "authenticated user" "access environment indicator"
+# Enable the which_environment module.
+echo "Enabling which_environment module."
+drush @$SUBDOMAIN en -y which_environment
+drush @$SUBDOMAIN role-add-perm "anonymous user" "view which environment"
+drush @$SUBDOMAIN role-add-perm "authenticated user" "view which environment"
 
 # Enable stage file proxy module.
 if [ "$PRODUCTIONURL" != "http://" ]; then
