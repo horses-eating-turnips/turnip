@@ -36,9 +36,10 @@ $conf['stage_file_proxy_origin_dir'] = 'sites/default/files';
 // See http://drupal.stackexchange.com/questions/63226/drupal-7-20-image-styles-return-a-url-with-access-denied
 $conf['image_allow_insecure_derivatives'] = TRUE;
 
-// Environment indicator
-$conf['environment_indicator_text'] = 'LOCAL DEV';
-$conf['environment_indicator_color'] = 'green';
+// Which Environment
+$conf['which_environment'] = array(
+  'type' => 'Local Dev',
+);
 
 // Views.
 $conf['views_ui_show_sql_query'] = 1;
