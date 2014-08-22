@@ -11,11 +11,23 @@ PHPCS_CODING_STANDARD=Drupal
 PHPCS_IGNORE=
 TMP_STAGING=".tmp_staging"
 
-# parse config
-CONFIG_FILE=$(dirname $0)/config
-if [ -e $CONFIG_FILE ]; then
-    . $CONFIG_FILE
-fi
+# comma-seperated list of sniffs from the standard that should be used
+# use `phpcs --standard=PSR1 -e` to list sniffs for your standard
+PHPCS_SNIFFS=
+
+PROFILE_DIRECTORY=os_project
+
+# egrep compatible pattern of  files to be checked
+# represents anything in the 
+PHPCS_FILE_PATTERN="($PROFILE_DIRECTORY.+\.(php|module|install|test|profile|them
+e)|custom.+\.inc)$"
+
+# ignore warnings
+PHPCS_IGNORE_WARNINGS=1
+
+# encoding
+PHPCS_ENCODING=utf-8
+
 
 # simple check if code sniffer is set up correctly
 if [ ! -x $PHPCS_BIN ]; then
