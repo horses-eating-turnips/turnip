@@ -31,6 +31,7 @@ features[filter][] = plain_text
 features[node][] = page
 features[node][] = webform
 features[page_manager_pages][] = sub_page
+features[page_manager_pages][] = welcome_page
 features[user_permission][] = access all webform results
 features[user_permission][] = access contextual links
 features[user_permission][] = access navbar

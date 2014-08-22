@@ -9,3 +9,4 @@ Feature: Basic anonymous site functionality
     Scenario: Anonymous user can see the home page
       When I visit "/"
       Then I should get a "200" HTTP response
+      And I should not see "Welcome to Turnip by OpenSourcery"
