@@ -19,8 +19,7 @@ PROFILE_DIRECTORY=os_project
 
 # egrep compatible pattern of  files to be checked
 # represents anything in the 
-PHPCS_FILE_PATTERN="($PROFILE_DIRECTORY.+\.(php|module|install|test|profile|them
-e)|custom.+\.inc)$"
+PHPCS_FILE_PATTERN="($PROFILE_DIRECTORY.+\.(php|module|install|test|profile|theme)|custom.+\.inc)$"
 
 # ignore warnings
 PHPCS_IGNORE_WARNINGS=1
