@@ -42,6 +42,7 @@ $options['structure-tables'] = array(
     'cache_views',
     'cache_views_data',
     'history',
+    'maillog',
     'sessions',
     'watchdog'
   ),
