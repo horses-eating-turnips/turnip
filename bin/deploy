@@ -3,6 +3,11 @@
 ##
 # @file
 # OpenSourcery Drupal deployment script
+#
+# This file should not generally be edited. Configurations are
+# specified per-environment, in the various .config files in the `bin`
+# directory. For instance, `.config.dev`, `.config.production`.
+#
 
 ##
 # Show help.
@@ -11,7 +16,18 @@ show_help() {
 cat <<EOF
   Usage: $0 [options] {dev|test|production}
   Deploys $PROJECTNAME to ENVIRONMENT, which can be one of "dev", "test", or "production"
+
+  --init=ENVIRONMENT  Initializes the corresponding .config.ENVIRONMENT variable.
+                      Allowed options are 'dev', 'test', and 'production'.
 EOF
+}
+
+##
+# Ensures and/or creates deployment structure.
+#
+ensure_directories() {
+  ssh $USER@$HOST "ls $INSTALLROOT/shared > /dev/null 2>&1" || ssh $USER@$HOST "mkdir $INSTALLROOT/shared"
+  ssh $USER@$HOST "ls $INSTALLROOT/releases > /dev/null 2>&1" || ssh $USER@$HOST "mkdir $INSTALLROOT/releases"
 }
 
 # Load config.
@@ -48,8 +64,11 @@ done
 # Initializes config file.
 if [[ $init -eq 1 ]]; then
   echo "HOST=\"\"" > bin/.config.$environment
+  echo "USER=\"\"" >> bin/.config.$environment
   echo "INSTALLROOT=\"\"" >> bin/.config.$environment
+  echo "DIRECTORY=\"./drupal\"" >> bin/.config.$environment
 
+  # Add build variables for other environments. See `bin/build`.
   if [[ "$environment" != "production" ]]; then
     echo "" >> bin/.config.$environment
     echo "# Default behavior: Don't touch the test host's database." >> bin/.config.$environment
@@ -79,125 +98,70 @@ if [[ -z $HOST ]]; then
   echo "No HOST is specified in bin/.config.$environment!"
   exit 2
 fi
+if [[ -z $USER ]]; then
+  echo "No USER is specified in bin/.config.$environment!"
+  exit 2
+fi
 if [[ -z $INSTALLROOT ]]; then
   echo "No INSTALLROOT is specified in bin/.config.$environment!"
   exit 2
 fi
-
-# Branch to deploy from. Typically `BRANCH=.`
-BRANCH=.
-
-##### Things below here generally won't need to be changed #####
-
-if [ -n "$RELOADDB" ] && [ -n "$SITEINSTALL" ]; then
-  echo "ERROR: Both RELOADDB and SITEINSTALL options specified. Specify one, the other, or neither."
-  exit 1
+# Ensure the install root exists.
+ssh $USER@$HOST "ls $INSTALLROOT > /dev/null 2>&1"
+if [[ $? -gt 0 ]]; then
+  echo "The path $INSTALLROOT does not exist on $HOST!"
+  exit 2
 fi
 
-if [ ! -n "$RELOADDB" ] && [ ! -n "$SITEINSTALL" ]; then
-  echo "WARNING: Both RELOADDB and SITEINSTALL options are disabled!"
-  echo "If you are building a new project that has not yet been deployed, please enable SITEINSTALL."
-  echo "If you are working on an existing project that has been deployed, please update database at db/production_current.sql.gz and enable RELOADDB."
+# Ensure/initialize directory structure.
+ensure_directories
+if [[ $? -gt 0 ]]; then
+  echo "Failed to ensure that the shared and releases directories are available at $HOST:$INSTALLROOT"
+  exit 2
 fi
 
-# If SUBDOMAIN isn't set, INSTALLROOT would become /var/www// and we'd blow
-# away the permissions of every test host on the test server.
-if [ -z "$SUBDOMAIN" ]; then
-  echo "ERROR: You must set SUBDOMAIN (within $0) before running this script."
-  exit 1
-fi
-
-if [ ! -d ./drupal ]; then
-  echo "ERROR: ./drupal directory does not exist; nothing to deploy."
-  exit 1
-fi
-
-# Test that this drush alias exists.
-ALIAS=`drush sa @$SUBDOMAIN`
-if [ -z "$ALIAS" ]; then
-  echo "Didn't find a drush alias for $SUBDOMAIN"
+if [ ! -d $DIRECTORY ]; then
+  echo "ERROR: $DIRECTORY directory does not exist; nothing to deploy."
   exit 1
 fi
 
 # Deploy into a meaningfully named directory inside of the releases directory.
 TIMESTAMP=`date +%Y-%m-%d.%H-%M-%S`.`git log -n 1 --format=%h`
 
+# If current exists, copy remote for faster rsync.
+exists=`ssh $USER@$HOST "ls -l $INSTALLROOT/current > /dev/null 2>&1"`
+if [[ $? -eq 0 ]]; then
+  ssh $USER@$HOST "cp -Rp $INSTALLROOT/current/ $INSTALLROOT/releases/$TIMESTAMP"
+fi
+
 # Add -L to copy symlinks' referent files, so that we'll bring along our install profile
-cp -Rp $INSTALLROOT/current/ $INSTALLROOT/releases/$TIMESTAMP
-rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.local.php --exclude=backup --include=core --delete $BRANCH/drupal/ $INSTALLROOT/releases/$TIMESTAMP/
+rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.local.php --exclude=backup --include=core --delete $DIRECTORY/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAMP/
 
 # Create links to settings and files.
-if [ ! -h $INSTALLROOT/releases/$TIMESTAMP/sites/default/files ]; then
-  ln -s $INSTALLROOT/shared/files $INSTALLROOT/releases/$TIMESTAMP/sites/default/files
+exists=`ssh $USER@$HOST "ls -l $INSTALLROOT/releases/$TIMESTAMP/sites/default/files" > /dev/null 2>&1`
+if [[ $exists -gt 0 ]]; then
+  ssh $USER@$HOST "ln -s $INSTALLROOT/shared/files $INSTALLROOT/releases/$TIMESTAMP/sites/default/files"
 fi
-if [ ! -h $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php ]; then
-  ln -s $INSTALLROOT/shared/settings.local.php $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php
+exists=`ssh $USER@$HOST "ls -l $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php" > /dev/null 2>&1`
+if [[ $exists -gt 0 ]]; then
+  ssh $USER@$HOST "ln -s $INSTALLROOT/shared/settings.local.php $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php"
 fi
-
 
 # Remove old release link and link the new version.
-if [ -h $INSTALLROOT/current ]; then
-  rm $INSTALLROOT/current
+exists=`ssh $USER@$HOST "ls -l $INSTALLROOT/current > /dev/null 2>&1"`
+COMMAND="ln -s $INSTALLROOT/releases/$TIMESTAMP $INSTALLROOT/current"
+if [[ $exists -gt 0 ]]; then
+  COMMAND="rm $INSTALLROOT/current && $COMMAND"
 fi
-ln -s $INSTALLROOT/releases/$TIMESTAMP $INSTALLROOT/current
-
-if [ -n "$SITEINSTALL" ]; then
-  # Re-install the site.
-  drush @$SUBDOMAIN site-install -y --uri=default $PROFILE
-  if [ $? -gt 0 ]; then
-    exit 1
-  fi
-fi
-
-if [ -n "$RELOADDB" ]; then
-  # Reload database from latest production dump.
-  drush @$SUBDOMAIN sql-drop -y
-  if [ -f $WORKSPACE/db/production_current.sql.gz ]; then
-    gunzip -c $WORKSPACE/db/production_current.sql.gz | drush @$SUBDOMAIN sql-cli
-  else
-    echo "ERROR: Database dump not found."
-    exit 1
-  fi
-fi
-
-# Run any update hooks.
-drush @$SUBDOMAIN updatedb -y
-
-# TODO this is a bug in drush: need to manually remove command cache,
-# or the features command isn't found until after the bash script
-# completes.
-rm -rf ~/.drush/cache/default/*
-
-# Features revert.
-drush @$SUBDOMAIN fra -y
-
-# Clear caches.
-drush @$SUBDOMAIN cc all
-
-# Enable the environment indicator module.
-echo "Enabling environment indicator module."
-drush @$SUBDOMAIN en -y environment_indicator
-drush @$SUBDOMAIN role-add-perm "anonymous user" "access environment indicator"
-drush @$SUBDOMAIN role-add-perm "authenticated user" "access environment indicator"
-
-# Enable stage file proxy module.
-if [ "$PRODUCTIONURL" != "http://" ]; then
-  echo "Enabling Stage File Proxy and configuring origin as '$PRODUCTIONURL'."
-  drush @$SUBDOMAIN en -y stage_file_proxy
-  drush @$SUBDOMAIN vset stage_file_proxy_origin $PRODUCTIONURL
-fi
-
-# Enable the os_testing helper module.
-drush @$SUBDOMAIN en -y os_testing
-
-# Fix file directory ownership to www-data.
-chown -R :www-data $INSTALLROOT/shared/files
+ssh $USER@$HOST "$COMMAND"
 
 # Remove all but the last 4 builds in the releases directory.
-cd $INSTALLROOT/releases
+DIRS=`ssh $USER@$HOST "ls -1r $INSTALLROOT/releases | tail -n +5"`
+if [[ -n $DIRS ]]; then
+  ssh $USER@$HOST "cd $INSTALLROOT/releases && rm -rf $DIRS"
+fi
+
 # Fix 7.x perms to sites/default directory.
-chmod u+w */sites/default
-rm -rf `ls -1r | tail -n +5`
-cd -
+ssh $USER@$HOST "chmod u+w $INSTALLROOT/releases/*/sites/default"
 
 echo "Deployment complete"
