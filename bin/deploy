@@ -13,12 +13,30 @@
 # Show help.
 #
 show_help() {
-cat <<EOF
-  Usage: $0 [options] {dev|test|production}
-  Deploys $PROJECTNAME to ENVIRONMENT, which can be one of "dev", "test", or "production"
+  # Get a list of environments, comma separated.
+  conffiles=( bin/.config.*)
+  environments=$(printf ", %s" "${conffiles[@]#bin/.config.}")
+  environments=${environments:1}
 
-  --init=ENVIRONMENT  Initializes the corresponding .config.ENVIRONMENT variable.
-                      Allowed options are 'dev', 'test', and 'production'.
+cat <<EOF
+  Usage: $0 [options]
+  Deploys $PROJECTNAME. The following environment variables must be available:
+
+    \$HOST          The hostname that will be connected to via SSH
+    \$USER          The username for the SSH connection
+    \$PORT          The SSH port
+    \$INSTALLROOT   The root turnip installation directory on \$HOST
+    \$DIRECTORY     The drupal installation directory in the local repository
+
+  The normal way to provide these variables is to source the relevant
+  environment config file before executing $0. The environments currently with
+  available configurations are:
+
+    $environments
+
+  Options:
+    --help/-h       Show this help text
+    --init/-i       Initializes a .config.ENVIRONMENT file
 EOF
 }
 
@@ -30,15 +48,14 @@ ensure_directories() {
   ssh $USER@$HOST -p $PORT "ls $INSTALLROOT/releases > /dev/null 2>&1" || ssh $USER@$HOST "mkdir $INSTALLROOT/releases"
 }
 
-# Load config.
+# Load project-wide config.
 if [ ! -e bin/.config ]; then
-  echo "Error: could not find configuration file. Please run make-install-profile."
+  echo "Error: could not find configuration file. Please use `drush turnip-init` to install."
   exit 2
 fi
 source bin/.config
 
 # Parse the arguments.
-environment=0
 init=0
 for i in "$@"; do
   case $i in
@@ -46,12 +63,8 @@ for i in "$@"; do
     show_help >&2
     exit 1
     ;;
-    dev|test|production)
-    environment=$i
-    ;;
-    --init=dev|--init=test|--init=production)
+    "--init"|"-i")
     init=1
-    environment="${i#*=}"
     ;;
     *)
     echo "Unknown option \"$1\"!"
@@ -63,12 +76,39 @@ done
 
 # Initializes config file.
 if [[ $init -eq 1 ]]; then
-  echo "HOST=\"\"" > bin/.config.$environment
-  echo "USER=\"\"" >> bin/.config.$environment
-  echo "INSTALLROOT=\"\"" >> bin/.config.$environment
-  echo "DIRECTORY=\"./drupal\"" >> bin/.config.$environment
+  read -p "Provide a name for this environment: " environment
+  if [[ -f bin/.config.$environment ]]; then
+    echo "ERROR: The environment \"$environment\" already exists."
+    return 3;
+  fi
+  echo "Do you have server parameters (e.g., host and user account)?"
+  select yn in "Yes" "No"; do
+    case $yn in
+      Yes )
+      read -p "What is the SSH hostname? " HOSTNAME
+      read -p "What is the SSH username? " USERNAME
+      read -p "What is the SSH port? " PORT
+      read -p "What is the installation directory on the server? " INSTALLROOT
+      echo "export HOST=\"$HOST\"" > bin/.config.$environment
+      echo "export USER=\"$USER\"" >> bin/.config.$environment
+      echo "export PORT=\"$PORT\"" >> bin/.config.$environment
+      echo "export INSTALLROOT=\"$INSTALLROOT\"" >> bin/.config.$environment
+      echo "export DIRECTORY=\"./drupal\"" >> bin/.config.$environment
+      echo "You can now edit bin/.config.$environment with any other changes"
+      break;;
+      No )
+      echo "export HOST=\"\"" > bin/.config.$environment
+      echo "export USER=\"\"" >> bin/.config.$environment
+      echo "export PORT=\"\"" >> bin/.config.$environment
+      echo "export INSTALLROOT=\"\"" >> bin/.config.$environment
+      echo "export DIRECTORY=\"./drupal\"" >> bin/.config.$environment
+      echo "You will need to edit bin/.config.$environment with the relevant information."
+      break;;
+    esac
+  done
 
   # Add build variables for other environments. See `bin/build`.
+  # TODO: These should probably be project-wide, rather than per-environment.
   if [[ "$environment" != "production" ]]; then
     echo "" >> bin/.config.$environment
     echo "# Default behavior: Don't touch the test host's database." >> bin/.config.$environment
@@ -78,8 +118,9 @@ if [[ $init -eq 1 ]]; then
     echo "# Uncomment one, if applicable:" >> bin/.config.$environment
     echo "#SITEINSTALL=1" >> bin/.config.$environment
     echo "#RELOADDB=1" >> bin/.config.$environment
-    exit 0
   fi
+
+  exit 0
 fi
 
 # Load environment-specific configuration.
@@ -92,20 +133,28 @@ if [[ ! -e bin/.config.$environment ]]; then
   echo "You can also run '$0 --init=$environment"
   exit 2
 fi
-source bin/.config.$environment
 
 if [[ -z $HOST ]]; then
-  echo "No HOST is specified in bin/.config.$environment!"
+  echo "No HOST is specified! Please ensure the \$HOST environment variable is set!"
   exit 2
 fi
 if [[ -z $USER ]]; then
-  echo "No USER is specified in bin/.config.$environment!"
+  echo "No USER is specified! Please ensure the \$USER environment variable is set!"
+  exit 2
+fi
+if [[ -z $PORT ]]; then
+  echo "No PORT is specified! Please ensure the \$PORT environment variable is set!"
   exit 2
 fi
 if [[ -z $INSTALLROOT ]]; then
-  echo "No INSTALLROOT is specified in bin/.config.$environment!"
+  echo "No INSTALLROOT is specified! Please ensure the \$INSTALLROOT environment variable is set!"
   exit 2
 fi
+if [[ -z $DIRECTORY ]]; then
+  echo "No DIRECTORY is specified! Please ensure the \$INSTALLROOT environment variable is set!"
+  exit 2
+fi
+
 # Ensure the install root exists.
 ssh $USER@$HOST -p $PORT "ls $INSTALLROOT > /dev/null 2>&1"
 if [[ $? -gt 0 ]]; then
