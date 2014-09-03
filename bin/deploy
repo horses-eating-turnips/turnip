@@ -26,8 +26,8 @@ EOF
 # Ensures and/or creates deployment structure.
 #
 ensure_directories() {
-  ssh $USER@$HOST "ls $INSTALLROOT/shared > /dev/null 2>&1" || ssh $USER@$HOST "mkdir $INSTALLROOT/shared"
-  ssh $USER@$HOST "ls $INSTALLROOT/releases > /dev/null 2>&1" || ssh $USER@$HOST "mkdir $INSTALLROOT/releases"
+  ssh $USER@$HOST -p $PORT "ls $INSTALLROOT/shared > /dev/null 2>&1" || ssh $USER@$HOST "mkdir $INSTALLROOT/shared"
+  ssh $USER@$HOST -p $PORT "ls $INSTALLROOT/releases > /dev/null 2>&1" || ssh $USER@$HOST "mkdir $INSTALLROOT/releases"
 }
 
 # Load config.
@@ -107,7 +107,7 @@ if [[ -z $INSTALLROOT ]]; then
   exit 2
 fi
 # Ensure the install root exists.
-ssh $USER@$HOST "ls $INSTALLROOT > /dev/null 2>&1"
+ssh $USER@$HOST -p $PORT "ls $INSTALLROOT > /dev/null 2>&1"
 if [[ $? -gt 0 ]]; then
   echo "The path $INSTALLROOT does not exist on $HOST!"
   exit 2
@@ -125,43 +125,46 @@ if [ ! -d $DIRECTORY ]; then
   exit 1
 fi
 
-# Deploy into a meaningfully named directory inside of the releases directory.
-TIMESTAMP=`date +%Y-%m-%d.%H-%M-%S`.`git log -n 1 --format=%h`
+# Deploy into a meaningfully named directory inside of the releases directory,
+# but allow the environment to specify the timestamp if desired.
+if [[ -z $TIMESTAMP ]]; then
+  TIMESTAMP=`date +%Y-%m-%d.%H-%M-%S`.`git log -n 1 --format=%h`
+fi
 
 # If current exists, copy remote for faster rsync.
-exists=`ssh $USER@$HOST "ls -l $INSTALLROOT/current > /dev/null 2>&1"`
+exists=`ssh $USER@$HOST -p $PORT "ls -l $INSTALLROOT/current > /dev/null 2>&1"`
 if [[ $? -eq 0 ]]; then
-  ssh $USER@$HOST "cp -Rp $INSTALLROOT/current/ $INSTALLROOT/releases/$TIMESTAMP"
+  ssh $USER@$HOST -p $PORT "cp -Rp $INSTALLROOT/current/ $INSTALLROOT/releases/$TIMESTAMP"
 fi
 
 # Add -L to copy symlinks' referent files, so that we'll bring along our install profile
-rsync -LazC --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.local.php --exclude=backup --include=core --delete $DIRECTORY/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAMP/
+rsync -LazC -e "ssh -p $PORT" --exclude=sites/all/files --exclude=sites/default/files --exclude=sites/default/settings.local.php --exclude=backup --include=core --delete $DIRECTORY/ $USER@$HOST:$INSTALLROOT/releases/$TIMESTAMP/
 
 # Create links to settings and files.
-exists=`ssh $USER@$HOST "ls -l $INSTALLROOT/releases/$TIMESTAMP/sites/default/files" > /dev/null 2>&1`
+exists=`ssh $USER@$HOST -p $PORT "ls -l $INSTALLROOT/releases/$TIMESTAMP/sites/default/files" > /dev/null 2>&1`
 if [[ $exists -gt 0 ]]; then
-  ssh $USER@$HOST "ln -s $INSTALLROOT/shared/files $INSTALLROOT/releases/$TIMESTAMP/sites/default/files"
+  ssh $USER@$HOST -p $PORT "ln -s $INSTALLROOT/shared/files $INSTALLROOT/releases/$TIMESTAMP/sites/default/files"
 fi
-exists=`ssh $USER@$HOST "ls -l $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php" > /dev/null 2>&1`
+exists=`ssh $USER@$HOST -p $PORT "ls -l $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php" > /dev/null 2>&1`
 if [[ $exists -gt 0 ]]; then
-  ssh $USER@$HOST "ln -s $INSTALLROOT/shared/settings.local.php $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php"
+  ssh $USER@$HOST -p $PORT "ln -s $INSTALLROOT/shared/settings.local.php $INSTALLROOT/releases/$TIMESTAMP/sites/default/settings.local.php"
 fi
 
 # Remove old release link and link the new version.
-exists=`ssh $USER@$HOST "ls -l $INSTALLROOT/current > /dev/null 2>&1"`
+exists=`ssh $USER@$HOST -p $PORT"ls -l $INSTALLROOT/current > /dev/null 2>&1"`
 COMMAND="ln -s $INSTALLROOT/releases/$TIMESTAMP $INSTALLROOT/current"
 if [[ $exists -gt 0 ]]; then
   COMMAND="rm $INSTALLROOT/current && $COMMAND"
 fi
-ssh $USER@$HOST "$COMMAND"
+ssh $USER@$HOST -p $PORT "$COMMAND"
 
 # Remove all but the last 4 builds in the releases directory.
-DIRS=`ssh $USER@$HOST "ls -1r $INSTALLROOT/releases | tail -n +5"`
+DIRS=`ssh $USER@$HOST -p $PORT "ls -1r $INSTALLROOT/releases | tail -n +5"`
 if [[ -n $DIRS ]]; then
-  ssh $USER@$HOST "cd $INSTALLROOT/releases && rm -rf $DIRS"
+  ssh $USER@$HOST -p $PORT "cd $INSTALLROOT/releases && rm -rf $DIRS"
 fi
 
 # Fix 7.x perms to sites/default directory.
-ssh $USER@$HOST "chmod u+w $INSTALLROOT/releases/*/sites/default"
+ssh $USER@$HOST -p $PORT "chmod u+w $INSTALLROOT/releases/*/sites/default"
 
 echo "Deployment complete"
